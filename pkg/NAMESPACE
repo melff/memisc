@@ -1,0 +1,280 @@
+useDynLib(memisc)
+import(stats,grid,lattice,methods,MASS)
+importFrom(utils,toLatex,head,tail,capture.output)
+export(
+      contr,
+      contr.treatment,
+      contr.sum,
+      cases,
+      colrename,
+      dimrename,
+      mtable,
+      write.mtable,
+      getSummary,
+      getSummary.glm,
+      getSummary.lm,
+      getSummary.polr,
+      getSummary.simex,
+      getSummary.lmer,
+      getSummary.expcoef.glm,
+      applyTemplate,
+      #get.substr,
+      getSummaryTemplate,
+      setSummaryTemplate,
+      getCoefTemplate,
+      setCoefTemplate,
+      recode,
+      relabel,
+      relabel4,
+      rename,
+      rowrename,
+      Simulate,
+      default_bucket,
+      textfile_bucket,
+      put_into,
+      pour_out,
+      sample.data.frame,
+      sample.data.set,
+      interrupt,
+      trimws,
+      genTable,
+      #wtable,
+      Table,
+      Descriptives,
+      percent,
+      percent.default,
+      percent.logical,
+      By,
+#      allequal,
+      Sapply,
+      Lapply,
+      sort.data.frame,
+      sort.data.set,
+      to.data.frame,
+#       to.array,
+      as.array,
+      prediction.frame,
+      Termplot,
+      panel.errbars,
+      as.item,
+#       code.plan,
+#       "code.plan<-",
+#      as.code.plan,
+#      import.code.plan,
+      labels,
+      "labels<-",
+#      as.labels,
+#      has.value.labels,
+#      nlabels,
+      value.filter,
+      valid.values,
+      missing.values,
+      valid.range,
+      "valid.values<-",
+      "valid.range<-",
+      "missing.values<-",
+      measurement,
+      "measurement<-",
+      include.missings,
+      annotation,
+      "annotation<-",
+      description,
+      "description<-",
+      wording,
+      "wording<-",
+      is.missing,
+      is.valid,
+      nvalid,
+      is.nominal,
+      is.ordinal,
+      is.interval,
+      is.ratio,
+      contrasts,
+      "contrasts<-",
+      data.set,
+      as.data.set,
+      is.data.set,
+      retain,
+      #split.matrix,
+      #coll.arrays,
+      #coll.vectors,
+      #numericIfPossible,
+      #toLatex.ftable,
+      foreach,
+      syms,
+      as.symbols,
+#       xapply,
+#       groupwise,
+      Substitute,
+      mkHelpDir,
+      collect,
+      fapply,
+      include,
+      uninclude,
+      detach.sources,
+      UnZip,
+      "%nin%",
+      codebook,
+      spss.fixed.file,
+      spss.portable.file,
+      spss.system.file,
+      Stata.file,
+      #seekData,
+      #readData,
+      query,
+      relabel4
+      #,
+      #rofile,
+      #readfixed,
+      #readfixedsubset,
+      #roreadline
+      )
+S3method(aggregate,formula)
+S3method(getSummary,lm)
+S3method(getSummary,glm)
+S3method(print,mtable)
+S3method(format,mtable)
+S3method(toLatex,default)
+S3method(toLatex,matrix)
+S3method(toLatex,mtable)
+S3method(toLatex,ftable)
+S3method(relabel,mtable)
+S3method(Termplot,default)
+S3method(relabel,default)
+S3method(relabel,factor)
+S3method(reorder,matrix)
+S3method(reorder,array)
+S3method(prediction.frame,default)
+S3method(collect,default)
+S3method(collect,matrix)
+S3method(collect,array)
+S3method(collect,table)
+S3method(collect,data.frame)
+S3method(collect,data.set)
+S3method(collect,by)
+S3method(fapply,default)
+S3method(percent,default)
+S3method(percent,logical)
+S3method(By,default)
+S3method(By,data.frame)
+S3method(sample,data.frame)
+S3method(sample,data.set)
+S3method(print,bucket)
+S3method(dim,default_bucket)
+S3method(as.matrix,default_bucket)
+S3method(as.data.frame,default_bucket)
+S3method(pour_out,default_bucket)
+S3method(put_into,textfile_bucket)
+S3method(pour_out,textfile_bucket)
+S3method(dim,textfile_bucket)
+S3method(as.data.frame,textfile_bucket)
+S3method(as.matrix,textfile_bucket)
+S3method("[",bucket)
+# S3method(groupwise,default)
+
+exportClasses(
+  atomic,
+#   "atomic or NULL",
+#   "atomic or factor",
+#   "character or NULL",
+  value.labels,
+#   "value.labels or NULL",
+  value.filter,
+#   "value.filter or NULL",
+  valid.values,
+  valid.range,
+  missing.values,
+  annotation,
+  item,
+  double,
+  integer.item,
+  double.item,
+  character.item,
+  numeric.item,
+  item.vector,
+  named.list,
+  item.list,
+  data.set,
+  spss.fixed.importer,
+  spss.portable.importer,
+  spss.system.importer,
+  Stata.importer,
+  importer,
+#   index,
+#   strict.index,
+  codebook
+  )
+
+exportMethods(
+    as.item,
+    labels,
+    "labels<-",
+    value.filter,
+    valid.values,
+    missing.values,
+    valid.range,
+    "valid.values<-",
+    "valid.range<-",
+    "missing.values<-",
+    measurement,
+    "measurement<-",
+    annotation,
+    "annotation<-",
+    Arith,
+    Compare,
+    Math,
+    Math2,
+    Summary,
+    format,
+    print,
+    show,
+    unique,
+    "[",
+    "[<-",
+#     "$",
+    row.names,
+    dimnames,
+    as.array,
+    as.vector,
+    as.character,
+    as.numeric,
+    as.integer,
+    as.factor,
+    as.ordered,
+    contrasts,
+    "contrasts<-",
+    summary,
+    within,
+    "%in%",
+    recode,
+    dim,
+    subset,
+#     as.data.frame,
+    initialize,
+    coerce,
+    Table,
+    Descriptives,
+    codebook,
+    #seekData,
+    #readData,
+    query
+    )
+S3method(as.data.frame,character.item)
+S3method(as.data.frame,double.item)
+S3method(as.data.frame,integer.item)
+#S3method(dim,data.set)
+#S3method("[",data.set)
+#S3method("[<-",data.set)
+# S3method("[[",data.set)
+S3method("[[<-",data.set)
+S3method(str,data.set)
+# S3method(subset,data.set)
+#S3method(within,data.set)
+S3method(str,integer.item)
+S3method(str,double.item)
+S3method(str,character.item)
+S3method(as.list,data.set)
+S3method(as.data.frame,data.set)
+S3method(cbind,data.set)
+S3method(fapply,data.set)
+S3method(print,descriptions)

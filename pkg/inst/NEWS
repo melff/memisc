@@ -1,0 +1,68 @@
+2010-07-16:
+  - fixed a bug in 'Simulate' that caused it to fail in certain situations
+    in R version >= 2.11.
+
+2010-04-12:
+  - 'toLatex(mtable(<something>),useDcolumn=FALSE)' should now produce useable
+    LaTeX output ($'s are added to the table entries).
+
+2010-04-09:
+  - 'By' works now with 'genTable' and 'aggregate.formula'. It gains a 'data.frame'
+    method, which better cooperates with calls to 'lm'-like functions. Their results
+    get a 'data' component containing the subset of the data frame that was given
+    as 'data' argument to the call of 'By'.
+
+2010-04-08:
+  - fixed bug in 'cases'. It works now with target expressions even with 'within'.
+  - 'write.mtable' now handles a 'forLaTeX=TRUE' option in a more convenient way.
+  - 'mtable' now handles objects of classes "polr" and "simex", thanks to a contribution
+    from Christopher N. Lawrence (Texas A&M International University)
+  - support for 'mtable' output for "glm" objects with exponentiated coefficients
+    and prelininary support for "lmer" object added, thanks to a contribution from
+    Dave Atkins (Unversity of Washington). Also the coef.styles are changed to be
+    more convenient.
+
+2010-04-07:
+  - fixed bug in C-level function 'read_sysfile_subset' that caused spurious errors
+    while importing SPSS 'system' files with long strings.
+
+2010-03-18:
+  - patch to trimws to make it locale-neutral
+
+2010-03-11:
+  - fixed bugs in mtable and format.mtable. Short 'summary.stats'
+    arguments or 'summary.stats=FALSE' should work now.
+
+2010-03-06:
+  - fixed bug in genTable/percentage: total counts disappeared if
+    a factor level had the same name as the name given to the total count
+  - changed the default value of the 'digits' option of the matrix method
+    of the toLatex generic to the more sensible getOption("digits")
+  - the matrix method of the toLatex generic gains new optional arguments
+    'show.vars', 'show.xvar', and 'show.yvar', which determine whether
+    the name of the row and/or the column variable should be shown if
+    the matrix is a 2-dimensional table.
+
+2010-03-02:
+  - fixed minor bug in 'cases' function
+
+2009-11-11:
+  - correction bug in .unLoad function.
+
+2009-10-14:
+  - removed 'extended' arguments from calls to 'regexpr' and 'sub' etc. (for compatibility
+    with R 2.11)
+
+2009-08-19:
+  - corrected documentation for mtable (\usepackage instead of usepackage)
+  - completed documentation for contrasts generic
+  - fixed bug in the internals for 'spss.portable.file':
+    'SPSS Por' to ascii and 'SPSS Por' to integer translation tables
+    were one item too short.
+
+2009-06-02:
+  - as.factor methods for item vectors adapted to new factor function
+    in R 2.10.0
+  - Fixed bug in sample.data.frame and sample.data.set methods:
+    Samples were drawn only from the first m observations, where m is
+    the number of variables in the data frame/data set.

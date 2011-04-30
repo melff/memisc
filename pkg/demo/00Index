@@ -1,0 +1,6 @@
+anes48                  Analysing the 1948 American National Election Study
+monte.carlo             A simple Monte Carlo study of the consequences of infinite moments of a random variable
+lm.monte.carlo          A simple Monte Carlo study of Ordinary Least Squares
+random.walk             Random walks and flights
+schelling               Schelling's neighbourhood segregation model
+Termplot                Compare terms of different models graphically

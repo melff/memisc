@@ -1,0 +1,5 @@
+/memisc_*.tar.gz
+*.[oa]
+*.so
+*~
+
