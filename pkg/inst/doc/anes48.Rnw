@@ -1,0 +1,519 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+
+\def\code#1{\texttt{#1}}
+\usepackage{mathptmx}
+\usepackage{courier}
+\usepackage{fancyvrb}
+\usepackage{dcolumn}
+\usepackage{booktabs}
+\usepackage{txfonts}
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\fvset{fontsize=\small}
+\usepackage[noae]{Sweave}
+\begin{document}
+% \VignetteIndexEntry{Analysing the American National Election Study of 1948}
+\title{Analysing the American National Election Study
+  of 1948 using the \code{memisc} package}
+\author{Martin Elff\\University of Essex}
+
+\maketitle
+\section{Introduction}
+This vignette gives an example for the analysis of a typical social science data set.
+It is the data file of the \emph{American National Election Study} of
+1948\footnote{National Election Studies, 1948:
+\emph{Post-Election Study [dataset].} Ann Arbor, MI: University of Michigan, Center for Political Studies [producer and distributor], 1999.
+ANES Dataset ID: 1948.T; ICPSR Study Number: 7218.
+\par
+These materials are based on work supported by the National Science Foundation under Grant Nos.: SBR-9707741, SBR-9317631, SES-9209410, SES-9009379, SES-8808361, SES-8341310, SES-8207580, and SOC77-08885.
+\par
+Any opinions, findings and conclusions or recommendations expressed in these materials are those of the author(s) and do not necessarily reflect those of the National Science Foundation.
+},
+available from the American National Election Studies website
+(\url{http://www.electionstudies.org}). The data file contains data
+from to USA-wide surveys conducted October and November 1948
+by the Survey Research Centre, University Michigan
+(principal investigators: Angus Campbell and Robert L.\ Kahn). The
+total number of cases in the data set is 662 and the number of variables
+is 65
+(more details about this
+data set can be found
+at \url{http://www.electionstudies.org/studypages/1948prepost/1948prepost.htm}).
+
+With 662 cases and 65 variables, the 1948 ANES data set is relatively
+small as compared to current social science data sets. Such larger data
+sets can be processed along the same lines as in this vignette.
+Unlike the 1948 ANES data,
+their size as well as, in some cases, legal restrictions prohibit the
+inclusion of such a data set into the package, however.
+
+This vignette starts with a demontration how a data file can be
+examined before loading it and how a subset of the data can be loaded
+into memory.
+After loading this subset into memory, some desciptive analyses are
+conducted that showcase the construction of contingency tables and of
+general tables of desriptive statistics using the
+\code{genTable} function. In addition, a logit analysis
+is demonstrated and the collection of several logit coefficients into
+a comprehensive table by the \texttt{mtable} function.
+
+It should be noted that the analyses reported in the following are conducted
+only for purpose of demonstrating the features of the package and are
+not to be considered of conclusive scientific evidence of any kind.
+
+\section{Reading In a ``Portable'' SPSS Data File}
+We start with importing the data into R.
+The following code extracts the SPSS portable file
+``\code{NES1948.POR}'' from
+zip file ``\code{NES1948.ZIP}'' delivered with the \code{memisc} package.
+<<echo=FALSE>>=
+options(width=72)
+@
+<<>>=
+library(memisc)
+options(digits=3)
+nes1948.por <- UnZip("anes/NES1948.ZIP","NES1948.POR",package="memisc")
+@
+Now the portable file is in a temporary directory and the path
+to the file is contained in the string variable \code{nes1948.por}.
+In the next step, the file is declared as a SPSS/PSPP ``portable''
+file using the function \code{PSPPportable}, which as first argument
+takes the path to the file in question. \code{PSPPportable}
+reads in the information about the variables contained in the data
+set and counts the
+number of cases in the file. That is, standard
+I/O operations are used on the file, but the data read in are just
+thrown away without allocating core memory for the data.
+This counting of cases can, of course, be suppressed if it would
+take to long.
+<<>>=
+nes1948 <- spss.portable.file(nes1948.por)
+print(nes1948)
+@
+At this stage, the data are not loaded into the memory yet.
+But we can see which variables exist inside
+the data set:
+<<>>=
+names(nes1948)
+@
+We also can ask for a description (``variable label'') for each variable:
+<<>>=
+description(nes1948)
+@
+or even a code book using
+<<eval=FALSE>>=
+codebook(nes1948)
+@
+(this is not shown
+here because the output would have taken more then thirty pages).
+
+\subsection{Reading In a Subset of the Data}
+After we have decided which variables to use we can read in a subset of
+the data:
+\begin{Verbatim}[frame=single,numbers=left,numbersep=1pt]
+vote.48 <- subset(nes1948,
+              select=c(
+                  v480018,
+                  v480029,
+                  v480030,
+                  v480045,
+                  v480046,
+                  v480047,
+                  v480048,
+                  v480049,
+                  v480050
+                  ))
+\end{Verbatim}
+
+<<eval=TRUE>>=
+vote.48 <- subset(nes1948,
+              select=c(
+                  v480018,
+                  v480029,
+                  v480030,
+                  v480045,
+                  v480046,
+                  v480047,
+                  v480048,
+                  v480049,
+                  v480050
+                  ))
+@
+The subset of the ANES 1948 we read in is now contained in the
+variable \code{vote.48}, which contains an object of class \code{data.set}.
+A \code{data.set} is an ``embellished'' version of a \code{data.frame},
+a data structure intended to contained \code{labelled} vectors.
+\code{labelled} vectors contain the all the special information
+attached to the variables in the original data set, such as
+variable labels, value labels, and general missing values.
+A short summary of this special information shows up after a
+call to \code{str}.
+<<>>=
+str(vote.48)
+@
+This output shows, for example, that variable \code{v480018}
+has the description (variable label) ``DID R VOTE/FOR WHOM'' is considered as
+having nominal level of measurement, has seven value labels
+and one defined missing value.
+
+Since the variable names in the ANES data set are not very mnemonic,
+we rename the variables:
+\begin{Verbatim}[frame=single,numbers=left,numbersep=1pt]
+vote.48 <- rename(vote.48,
+                  v480018 = "vote",
+                  v480029 = "occupation.hh",
+                  v480030 = "unionized.hh",
+                  v480045 = "gender",
+                  v480046 = "race",
+                  v480047 = "age",
+                  v480048 = "education",
+                  v480049 = "total.income",
+                  v480050 = "religious.pref"
+        )
+\end{Verbatim}
+
+<<>>=
+vote.48 <- rename(vote.48,
+                  v480018 = "vote",
+                  v480029 = "occupation.hh",
+                  v480030 = "unionized.hh",
+                  v480045 = "gender",
+                  v480046 = "race",
+                  v480047 = "age",
+                  v480048 = "education",
+                  v480049 = "total.income",
+                  v480050 = "religious.pref"
+        )
+@
+Before we start with analyses, we take a closer look at
+the data.
+<<>>=
+codebook(vote.48)
+@
+We now have obtained a \emph{codebook}, which contains information
+of the class and type of the variables in the data set,
+the value labels and defined missing values, and counts of
+the distinct values of the variables.
+
+\section{Analysis}
+\subsection{Some Descriptive Analyses}
+We start our analyses with a contingency table, but first
+we make some preparations: We recode the variables of
+interest into a smaller number of categories in order to
+get results that are easier to read and interpret.
+\begin{Verbatim}[frame=single,numbers=left,numbersep=1pt]
+vote.48 <- within(vote.48,{
+  vote3 <- recode(vote,
+    1   -> "Truman",
+    2   -> "Dewey",
+    3:4 -> "Other"
+    )
+  occup4 <- recode(occupation.hh,
+    10:20 -> "Upper white collar",
+    30    -> "Other white collar",
+    40:70 -> "Blue collar",
+    80    -> "Farmer"
+    )
+  relig3 <- recode(religious.pref,
+    1   -> "Protestant",
+    2   -> "Catholic",
+    3:5 -> "Other/none"
+    )
+   race2 <- recode(race,
+    1 -> "White",
+    2 -> "Black"
+    )
+  })
+\end{Verbatim}
+
+<<>>=
+vote.48 <- within(vote.48,{
+  vote3 <- recode(vote,
+    1 -> "Truman",
+    2 -> "Dewey",
+    3:4 -> "Other"
+    )
+  occup4 <- recode(occupation.hh,
+    10:20 -> "Upper white collar",
+    30 -> "Other white collar",
+    40:70 -> "Blue collar",
+    80 -> "Farmer"
+    )
+  relig3 <- recode(religious.pref,
+    1 -> "Protestant",
+    2 -> "Catholic",
+    3:5 -> "Other,none"
+    )
+   race2 <- recode(race,
+    1 -> "White",
+    2 -> "Black"
+    )
+  })
+@
+
+Having constructed the unordered factors
+\code{vote3}, \code{occup4}, \code{relig3}, and \code{race2} we can
+proceed examining the association the vote, occupational class,
+relgious denomination, and race. First, we look upon a simple
+contingency table. We use the \code{toLatex} method defined
+for tables to get a nicely formatted output. (The generic
+function \code{toLatex} is defined in package \code{utils}.)
+\begin{center}
+<<results=tex>>=
+toLatex(xtabs(~vote3+occup4,data=vote.48))
+@
+\end{center}
+\vspace{12pt}\par
+Tables of percentages may seem more informative about the impact
+of various factors on the vote. So we use the function
+\code{genTable} to obtain such tables of percentages:
+\begin{center}
+<<results=tex>>=
+toLatex(t(genTable(percent(vote3)~occup4,data=vote.48)),
+  digits=c(1,1,1,0))
+@
+\end{center}
+
+Obviously, voters from farmer and blue collar worker households
+were especially supportive of President Truman, while voters
+of upper white collar background largely supported
+the Republican Candidate Dewey.
+
+\begin{center}
+<<results=tex>>=
+toLatex(t(genTable(percent(vote3)~relig3,data=vote.48)),
+  digits=c(1,1,1,0))
+@
+\end{center}
+
+This table shows that Catholics and adherents of other denominations
+were more supportive of Truman than of Dewey.
+
+\begin{center}
+<<results=tex>>=
+toLatex(t(genTable(percent(vote3)~race2,data=vote.48)),
+  digits=c(1,1,1,0))
+@
+\end{center}
+
+African Americans apparently supported Truman by a large majority. The
+number of members of this group in the sample is very small, however,
+so that such an inference would be very shaky.
+
+\begin{center}
+<<results=tex>>=
+inc.tab <- t(genTable(percent(vote3)~total.income,data=vote.48))
+rownames(inc.tab) <- gsub("$","\\$",rownames(inc.tab),fixed=TRUE)
+toLatex(inc.tab,digits=c(1,1,1,0))
+@
+\end{center}
+
+The table of percentage of vote by income suggests that income had
+some considerable influence on the choice either of Truman or of Dewey,
+but the unequal distribution of income categories warrants a more
+refined analysis that takes into account the uncertainty about the
+vote percentages. Therefore, the percentages of support for Truman
+broken down by income is plotted along with confidence intervals,
+showcasing the \code{panel.errbars} function of package \code{memisc}:
+<<echo=FALSE>>=
+options(width=60)
+@
+<<>>=
+agg.inc <- aggregate(percent(vote3,ci=TRUE)~total.income,data=vote.48)
+agg.inc.errbars <- xyplot(cbind(Percentage,upper,lower)~total.income,
+        data=subset(agg.inc,vote3=="Truman"),
+        panel=panel.errbars,
+        xlab="Household income",
+        ylab="Percentage voting for Truman",
+        pch=19,ewidth=0.2,
+        scales=list(x=list(
+          rot=90
+          )),
+        )
+@
+% Automatic inclusion does not work here - why?
+<<eval=FALSE>>=
+print(agg.inc.errbars)
+@
+<<results=hide,echo=FALSE>>=
+trellis.device(pdf,file="agg-inc-errbars.pdf",width=6,height=6)
+print(agg.inc.errbars)
+dev.off()
+trellis.device(postscript,file="agg-inc-errbars.eps",width=6,height=6)
+print(agg.inc.errbars)
+dev.off()
+@
+<<echo=FALSE>>=
+options(width=72)
+@
+\begin{center}
+\includegraphics{agg-inc-errbars}
+\end{center}
+
+The plot suggests that Truman found support especially among the middle- and lower-income
+groups. However, as the counts in the table of percentages already suggested, the
+number of members of lower-income groups in the sample is too small to make precise
+statements about the level of support for Truman in these groups: For the lowest
+income group, the 95\% confidence interval ranges from below 20 percent to above 80 percent.
+
+Occupational class is more evenly distributed in the sample, thus it may be possible
+to obtain more precise estimates of the percentages of support for Truman for occupational
+classes:
+<<>>=
+agg.occup <- aggregate(percent(vote3,ci=TRUE)~occup4,data=vote.48)
+agg.occup.errbars <- xyplot(cbind(Percentage,upper,lower)~occup4,
+        data=subset(agg.occup,vote3=="Truman"),
+        panel=panel.errbars,
+        xlab="Occupation head of household",
+        ylab="Percentage voting for Truman",
+        pch=19,ewidth=0.2,
+        scales=list(x=list(
+          rot=90
+          )),
+        )
+@
+% Automatic inclusion does not work here - why?
+<<eval=FALSE>>=
+print(agg.occup.errbars)
+@
+<<results=hide,echo=FALSE>>=
+trellis.device(pdf,file="agg-occup-errbars.pdf",width=6,height=6)
+print(agg.occup.errbars)
+dev.off()
+trellis.device(postscript,file="agg-occup-errbars.eps",width=6,height=6)
+print(agg.occup.errbars)
+dev.off()
+@
+\begin{center}
+\includegraphics{agg-occup-errbars}
+\end{center}
+The upper and lower white-collar and blue-collar classes are quite distinct
+with regard to the percentages of support for Truman. The point estimates
+of the percentages are outside the confidence intervals of the respective
+other occupational classes, the confidence intervals do not even overlap.
+However, it is not clear whether farmers are distinct from the blue-collar
+and lower white-collar classes.
+
+\subsection{Logit Modelling of Candidate Choice}
+
+In the following we conduct a logit analysis of the vote for Truman.
+First, we assign non-standard contrasts the categorical predictors.
+Here, the function \code{contr} is used to assign treatment (dummy)
+contrasts to \code{occup4} and \code{total.income} with
+baseline category 3 and 4, respectively.
+<<>>=
+vote.48 <- within(vote.48,{
+  contrasts(occup4) <- contr("treatment",base = 3)
+  contrasts(total.income) <- contr("treatment",base = 4)
+  })
+@
+We now fit some logistic regression models of the
+impact occupational class, income, and religious denomination
+on the vote choice supporting Truman. The contrasts of
+the occupational class and income factors are such that they
+compare the choices of the members of the blue-collar class
+with all other classes and the middle income group (\$ 2000-2999)
+with the other income groups. The religious denomination factor
+compares Protestants with Catholics and those with other or
+no denominations.
+<<>>=
+model1 <- glm((vote3=="Truman")~occup4,data=vote.48,
+              family="binomial")
+model2 <- glm((vote3=="Truman")~total.income,data=vote.48,
+              family="binomial")
+model3 <- glm((vote3=="Truman")~occup4+total.income,data=vote.48,
+              family="binomial")
+model4 <- glm((vote3=="Truman")~relig3,data=vote.48,
+              family="binomial")
+model5 <- glm((vote3=="Truman")~occup4+relig3,data=vote.48,
+              family="binomial")
+@
+First, we use \code{mtable} to construct a comparative table
+of the estimates of \code{model1},
+\code{model2}, and \code{model3}. We thus can compare
+the impact of occupational class and income on the choice of
+candidate Truman.
+<<>>=
+mtable(model1,model2,model3,summary.stats=c("Nagelkerke R-sq.","Deviance","AIC","N"))
+@
+\code{mtable} returns an object of class \code{"mtable"}. The
+\code{print} method for this class produces output as seen above.
+This output has a format close to the requirements of social science
+publications. With the \code{toLatex} method for objects of this
+class one can produce almost publication-ready output:
+
+\begin{center}
+\footnotesize
+<<results=tex>>=
+toLatex(relabel(mtable(
+            "Model 1"=model1,
+            "Model 2"=model2,
+            "Model 3"=model3,
+            summary.stats=c("Nagelkerke R-sq.","Deviance","AIC","N")),
+          "[(]Intercept[)]"="\\\\emph{Intercept}",
+          "[$]"="\\\\$",
+          UNDER="under",
+          "AND OVER"="and over",
+          occup4="Occup. class",
+          total.income="Income",
+          gsub=TRUE
+          ),
+          ddigits=5
+        )
+@
+\end{center}
+
+The comparison of the pseudo-R-Square values of model 1 and 2 suggests that
+occupational class has a stronger influence on a preference for Truman than
+household income. Indeed, if occupational class is taken into account, the
+effect of income is no longer statistically significant as the column
+corresponding to model 3 indicates.
+
+Second, we compare the effect of occupational class and religious denomination
+on the preference for Truman along the same lines as above. We use
+\code{mtable} to collect the estimates of \code{model1}, \code{model4},
+and \code{model5} into a common table.
+
+\begin{center}
+\footnotesize
+<<results=tex>>=
+toLatex(relabel(mtable(
+              "Model 1"=model1,
+              "Model 4"=model4,
+              "Model 5"=model5,
+              summary.stats=c("Nagelkerke R-sq.","Deviance","AIC","N")),
+          "[(]Intercept[)]"="\\\\emph{Intercept}",
+            occup4="Occup. class",
+            relig3="Religion",
+            gsub=TRUE
+            ),
+          ddigits=5)
+@
+\end{center}
+
+A comparison of the pseudo-R-squared values suggests that also the effect of
+religious denomination is weaker than that of occupational class. However,
+as the third column in the above table indicates the effect of religious
+denomination remains statistically significant.
+
+<<>>=
+Tp35 <- Termplot(model3,model5,se=TRUE,residuals="none",xrot=90)#,models="columns")
+@
+<<eval=FALSE>>=
+print(Tp35)
+@
+<<results=hide,echo=FALSE>>=
+trellis.device(pdf,file="Tp35.pdf",width=7,height=7)
+print(Tp35)
+dev.off()
+trellis.device(postscript,file="Tp35.eps",width=7,height=7)
+print(Tp35)
+dev.off()
+@
+\begin{center}
+\includegraphics[width=\linewidth]{Tp35}
+\end{center}
+
+\end{document}
