@@ -35,7 +35,7 @@ setValidity("data.set",function(object){
     wrong.names <- object@names[!isItemVector]
     wront.lengths <- sapply(object,length)
     paste(
-    if(length(which(wrong.length)) > 1) "elements have" else "element has",
+    if(length(which(wrong.lengths)) > 1) "elements have" else "element has",
     "wrong length: ",
       paste(
         paste("class(",wrong.names,") = ",wrong.classes,sep=""),

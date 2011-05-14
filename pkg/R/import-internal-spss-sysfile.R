@@ -32,7 +32,6 @@ spss.readaux <- function(f)
 spss.dictterm <- function(f)
   .Call("read_sysfile_dict_term",f)
 
-
 parseSysHeader <- function(file){
   header <- spss.readheader(file)
   swapcode <- header$swap_code
@@ -58,13 +57,27 @@ parseSysHeader <- function(file){
     names(aux) <- auxtype
     auxiliaries <- c(auxiliaries,aux)
   }
-  sysmis <- auxiliaries$info_flt64["sysmis"]
-  highest <- auxiliaries$info_flt64["highest"]
-  lowest <- auxiliaries$info_flt64["lowest"]
+  if(length(auxiliaries$info_flt64)){
+
+    sysmis  <- auxiliaries$info_flt64["sysmis"]
+    highest <- auxiliaries$info_flt64["highest"]
+    lowest  <- auxiliaries$info_flt64["lowest"]
+  }
+  else{
+
+    warning("file lacks info_flt64 record, using defaults")
+
+    info_flt64 <- .Call("dflt_info_flt64",file)
+    sysmis  <- info_flt64["sysmis"]
+    highest <- info_flt64["highest"]
+    lowest  <- info_flt64["lowest"]
+  }
+  attr(file,"sysmis") <- sysmis
+  attr(file,"highest") <- highest
+  attr(file,"lowest") <- lowest
   if(spss.testcode(file)==999) start.data <- spss.dictterm(file)
   else stop("did not find dictionary termination code")
   #message("\nstart of data:",p$start.data)
-  attr(file,"sysmis") <- sysmis
   attr(file,"data_pos") <- start.data
 
   if(length(auxiliaries$longVariableNames)){
