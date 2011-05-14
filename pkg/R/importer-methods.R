@@ -1,5 +1,5 @@
 setMethod("as.data.set","importer",function(x,row.names=NULL,optional=NULL,
-                    compress.storage.modes=TRUE,...){
+                    compress.storage.modes=FALSE,...){
   seekData(x)
   res <- readData(x,n=nrow(x))
   if(compress.storage.modes)
@@ -29,7 +29,7 @@ setMethod("dim","importer",function(x){
 # setMethod("names","importer",function(x)names(x@frame))
 
 
-bracket.importer <- function(x,Nargs,i,j,drop=TRUE,compress.storage.modes=TRUE,...){
+bracket.importer <- function(x,Nargs,i,j,drop=TRUE,compress.storage.modes=FALSE,...){
   mycall <- match.call()
   mspl <- missing(compress.storage.modes)
   mdrp <- missing(drop)

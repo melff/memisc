@@ -73,7 +73,7 @@ Stata.file(file)
 \S4method{subset}{importer}(x, subset, select, drop = FALSE, \dots)
 
 \S4method{as.data.set}{importer}(x,row.names=NULL,optional=NULL,
-                    compress.storage.modes=TRUE,\dots)
+                    compress.storage.modes=FALSE,\dots)
 
 }
 \arguments{

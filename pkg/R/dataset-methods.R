@@ -368,36 +368,37 @@ print.data.set <- function(x,max.obs=Inf,width=Inf,...){
   }
   else
     res <- frame
-  dn <- dimnames(res)
-  res <- lapply(res,format)
-  attr(res,"class") <- "data.frame"
-  row.names(res) <- dn[[1]]
 
+  varn <- names(res)
+  rown <- rownames(res)
+
+  res <- lapply(res,format)
+  res <- mapply(c,varn,res)
+  res <- apply(res,2,format,justify="right")
+  res <- apply(cbind(c("",rown),res),2,format,justify="right")
+  
   if(is.finite(width) && ncol(res)){
-    width <- width - (if(nrow(res)) max(nchar(attr(res,"row.names"))) else 0) - 5
-    names.w <- cumsum(nchar(names(res),"w")+1)
-    var.w <- cumsum(nchar(sapply(res,"[",1),"w")+1)
-    if(any(names.w > width) || any(var.w > width)){
-      dots <- "..."
-      width <- width - nchar(dots,"w") - 2
-      ww <- ifelse(names.w > var.w,names.w,var.w)
-      use <- seq_len(max(which(ww < width)))
-      res <- res[use]
-      res$... <- rep("...",nrow(res))
+
+    ww <- cumsum(nchar(res[1,])+1)-1
+    if(any(ww > width)){
+
+      keep <- which(ww < width - 3)
+      res <- cbind(res[,keep],"...")
     }
   }
 
   if(is.finite(max.obs) && nrow(res)){
-    print(res)
+
     mkdots <- function(n) paste(rep(".",n),collapse="")
-    rnw <- max(nchar(attr(res,"row.names")))
-    var.w <- nchar(sapply(res,"[",1),"w")
-    names.w <- nchar(names(res),"w")
-    ww <- ifelse(names.w > var.w,names.w,var.w)
-    cat(sapply(c(rnw,ww),mkdots))
-    cat("\n(",nrow(res)," of ",nrow.x," observations shown)\n",sep="")
+    ww <- nchar(res[1,])
+    res <- rbind(res,sapply(ww,mkdots))
+    res <- apply(res,1,paste,collapse=" ")
+    res <- c(res,paste("(",length(res)," of ",nrow.x," observations shown)",sep=""))
     }
-  else print(res)
+  else
+    res <- apply(res,1,paste,collapse=" ")
+
+  writeLines(res)
 }
 
 setMethod("show","data.set",function(object){
