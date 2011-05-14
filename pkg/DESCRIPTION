@@ -2,8 +2,8 @@ Package: memisc
 Type: Package
 Title: Tools for Management of Survey Data, Graphics, Programming,
         Statistics, and Simulation
-Version: 0.95-31
-Date: 2010-07-16
+Version: 0.95-32
+Date: 2011-05-14
 Author: Martin Elff
 Maintainer: Martin Elff <melff@essex.ac.uk>
 Description: One of the aims of this package is to make life easier for
@@ -20,6 +20,3 @@ License: GPL-2
 LazyLoad: Yes
 Depends: lattice, grid, stats, methods, utils, MASS
 URL: http://www.martin-elff.net/software/memisc/
-Packaged: 2010-07-16 17:48:33 UTC; elff
-Repository: CRAN
-Date/Publication: 2010-07-24 20:21:04

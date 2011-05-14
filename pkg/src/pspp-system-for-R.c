@@ -22,6 +22,8 @@ typedef struct {
   int swap_code;
   long data_pos;
   R_flt64 sysmis;
+  R_flt64 highest;
+  R_flt64 lowest;
 } sys_file;
 
 typedef union {
@@ -29,6 +31,10 @@ typedef union {
   char as_char[8];
 } sys_word;
 
+static double second_lowest_double_val();
+#define SYSMIS -DBL_MAX
+#define HIGHEST DBL_MAX
+#define LOWEST second_lowest_double_val()
 
 
 /** sysfile tools **/
@@ -44,6 +50,9 @@ void init_sys_file(sys_file *s){
   s->case_size = 0;
   s->bias = 100.;
   s->swap_code = 0;
+  s->sysmis = SYSMIS;
+  s->highest = HIGHEST;
+  s->lowest = LOWEST;
   fseek(s->f,0,SEEK_SET);
 }
 
@@ -102,6 +111,9 @@ int sys_read_case(sys_file *s){
     for(j = 0; j < s->case_size; j++){
       for(;s->bytes[k]==0 && k < 8; k++){ /* Ignore "0" bytes */
 //         continue;
+#ifdef DEBUG
+        Rprintf("\n0-byte ignored");
+#endif
       }
       if(k >= 8) /* Read new command bytes */{
         read_len = fread(s->bytes,1,8,s->f);
@@ -685,6 +697,8 @@ SEXP read_sysfile_aux(SEXP SysFile){
     for(i = 0; i < count; i++)
       sys_read_real(REAL(data)+i,s);
     s->sysmis = REAL(data)[0];
+    s->highest = REAL(data)[1];
+    s->lowest = REAL(data)[2];
     static const char* flt64names[] = {
       "sysmis",
       "highest",
@@ -701,6 +715,7 @@ SEXP read_sysfile_aux(SEXP SysFile){
 #ifdef DEBUG
     PrintValue(ans);
 #endif
+#undef DEBUG
     return ans;
   }
   else if (subtype == aux_var){
@@ -812,6 +827,35 @@ SEXP read_sysfile_aux(SEXP SysFile){
   return R_NilValue;
 }
 
+SEXP dflt_info_flt64 (SEXP SysFile){
+
+  sys_file *s = get_sys_file(SysFile);
+  s->sysmis  = SYSMIS;
+  s->highest = HIGHEST;
+  s->lowest  = LOWEST;
+
+  SEXP data, datanames;
+  int i;
+  
+  PROTECT(data = allocVector(REALSXP,3));
+  PROTECT(datanames = allocVector(STRSXP,3));
+  REAL(data)[0] = s->sysmis;
+  REAL(data)[1] = s->highest;
+  REAL(data)[2] = s->lowest;
+  static const char* flt64names[] = {
+    "sysmis",
+    "highest",
+    "lowest"
+  };
+  for(i = 0; i < 3; i++){
+    SET_STRING_ELT(datanames,i,mkChar(flt64names[i]));
+  }
+  SET_NAMES(data,datanames);
+  UNPROTECT(2);
+
+  return data;
+}
+
 SEXP read_sysfile_dict_term (SEXP SysFile){
 #ifdef DEBUG
   Rprintf("\nread_sysfile_dict_term");
@@ -850,7 +894,6 @@ SEXP rewind_sysfile(SEXP SysFile){
 
 
 #define STRMAX 256
-
 SEXP read_sysfile_data (SEXP SysFile, SEXP what,
                         SEXP s_ncases, SEXP s_types){
     sys_file *s = get_sys_file(SysFile);
@@ -1076,6 +1119,9 @@ SEXP read_sysfile_subset (SEXP SysFile, SEXP what,
     char char_buf[STRMAX];
    if(s->case_size == 0) error("case size is zero after buffer allocation -- why??");
    R_flt64 swapped_sysmis = dswap(s->sysmis,s->swap_code);
+#ifdef DEBUG
+   Rprintf("\nswapped_sysmis = %g",swapped_sysmis);
+#endif
    ii = 0;
     for(i = 0; i < ncases; i++){
       read_len = sys_read_case(s);
@@ -1164,6 +1210,7 @@ SEXP read_sysfile_subset (SEXP SysFile, SEXP what,
     UNPROTECT(5);
     return data;
 }
+#undef DEBUG
 
 SEXP check_pointer(SEXP ptr){
   if(TYPEOF(ptr) != EXTPTRSXP) return ScalarLogical(0);
@@ -1192,4 +1239,35 @@ SEXP restore_sysfile(SEXP SysFile){
     s->buf = Calloc(s->case_size,R_flt64);
     UNPROTECT(1);
     return SysFile;
+}
+
+
+#define FPREP_IEEE754 754
+#define FPREP FPREP_IEEE754
+/*
+ * This comes from package 'foreign' which again had copied the code
+ * from an older version of PSPP
+*/
+static double
+second_lowest_double_val()
+{
+  /* PORTME: Set the value for second_lowest_value, which is the
+     "second lowest" possible value for a double.  This is the value
+     for LOWEST on MISSING VALUES, etc. */
+#if FPREP == FPREP_IEEE754
+#ifdef WORDS_BIGENDIAN
+    union {
+        unsigned char c[8];
+        double d;
+    } second_lowest = {{0xff, 0xef, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe}};
+#else
+    union {
+        unsigned char c[8];
+        double d;
+    } second_lowest = {{0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xef, 0xff}};
+#endif
+    return second_lowest.d;
+#else /* FPREP != FPREP_IEEE754 */
+#error Unknown floating-point representation.
+#endif /* FPREP != FPREP_IEEE754 */
 }
