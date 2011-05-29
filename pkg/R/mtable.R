@@ -48,6 +48,8 @@ getCoefTemplate <- function(style){
 
 
 getSummary <- function(obj,alpha=.05,...) UseMethod("getSummary")
+setGeneric("getSummary")
+
 
 getSummary.lm <- function(obj,
             alpha=.05,
@@ -126,6 +128,7 @@ getSummary.glm <- function(obj,
     L0.pwr <- exp(-smry$null.deviance/N)
     #LM.pwr <- exp(-smry$deviance/N)
 
+    Aldrich.Nelson <- LR/(LR+N)
     McFadden <- 1- smry$deviance/smry$null.deviance
     Cox.Snell <- 1 - exp(-LR/N)
     Nagelkerke <- Cox.Snell/(1-L0.pwr)
@@ -134,6 +137,7 @@ getSummary.glm <- function(obj,
     LR <- NA
     df <- NA
     p <- NA
+    Aldrich.Nelson <- NA
     McFadden <- NA
     Cox.Snell <- NA
     Nagelkerke <- NA
@@ -148,6 +152,7 @@ getSummary.glm <- function(obj,
           p             = p,
           logLik        = ll,
           deviance      = deviance,
+          Aldrich.Nelson = Aldrich.Nelson,
           McFadden      = McFadden,
           Cox.Snell       = Cox.Snell,
           Nagelkerke    = Nagelkerke,
@@ -336,7 +341,7 @@ mtable <- function(...,
                     coef.style=getOption("coef.style"),
                     summary.stats=TRUE,
                     factor.style=getOption("factor.style"),
-                    getSummary=function(obj,...)UseMethod("getSummary"),
+                    getSummary=eval.parent(quote(getSummary)),
                     float.style=getOption("float.style"),
                     digits=min(3,getOption("digits")),
                     drop=TRUE
@@ -934,7 +939,7 @@ relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
  return(x)
 }
 
-## The following two functions are contributed by
+## The following three functions are contributed by
 ## Christopher N. Lawrence, Ph.D. <c.n.lawrence@gmail.com>
 ## Assistant Professor of Political Science
 ## Texas A&M International University
@@ -976,6 +981,7 @@ getSummary.polr <- function(obj,
     L0.pwr <- exp(-deviance(null.model)/N)
     #LM.pwr <- exp(-smry$deviance/N)
 
+    Aldrich.Nelson <- LR/(LR+N)
     McFadden <- 1 - dev/deviance(null.model)
     Cox.Snell <- 1 - exp(-LR/N)
     Nagelkerke <- Cox.Snell/(1-L0.pwr)
@@ -984,6 +990,7 @@ getSummary.polr <- function(obj,
     LR <- NA
     df <- NA
     p <- NA
+    Aldrich.Nelson <- NA
     McFadden <- NA
     Cox.Snell <- NA
     Nagelkerke <- NA
@@ -997,6 +1004,7 @@ getSummary.polr <- function(obj,
           p             = p,
           logLik        = ll,
           deviance      = dev,
+          Aldrich.Nelson = Aldrich.Nelson,
           McFadden      = McFadden,
           Cox.Snell       = Cox.Snell,
           Nagelkerke    = Nagelkerke,
@@ -1009,6 +1017,80 @@ getSummary.polr <- function(obj,
 
   #sumstat <- drop(applyTemplate(sumstat,template=sumstat.template))
   list(coef=coef,sumstat=sumstat,contrasts=obj$contrasts,xlevels=smry$xlevels,call=obj$call)
+}
+
+getSummary.clm <- function(obj,
+            alpha=.05,
+            ...){
+
+  smry <- summary(obj)
+  N <- if(length(weights(obj))) sum(weights(obj))
+    else smry$nobs
+
+  cf <- coef(smry)
+
+  ## Move threshold parameters to end
+  thresholds <- names(obj$xi)
+  parameters <- rownames(cf)
+  cf <- rbind(cf[setdiff(parameters, thresholds),], cf[thresholds,])
+  
+  lower <- qnorm(p=alpha/2,mean=cf[,1],sd=cf[,2])
+  upper <- qnorm(p=1-alpha/2,mean=cf[,1],sd=cf[,2])
+
+  cf <- cbind(cf,lower,upper)
+
+  colnames(cf) <- c("est","se","stat","p","lwr","upr")
+  null.model <- update(obj, location=paste(names(obj$model[1]), " ~ 1"))
+
+  ll <- logLik(obj)
+  ll0 <- logLik(null.model)
+
+  LR <- 2*(ll-ll0)
+  df <- null.model$df.residual - smry$df.residual
+
+  dev <- -2*ll
+
+  if(df > 0){
+    p <- pchisq(LR,df,lower.tail=FALSE)
+    L0.pwr <- exp(2*ll0/N)
+    #LM.pwr <- exp(-smry$deviance/N)
+
+    Aldrich.Nelson <- LR/(LR+N)
+    McFadden <- 1 - dev/(-2*ll0)
+    Cox.Snell <- 1 - exp(-LR/N)
+    Nagelkerke <- Cox.Snell/(1-L0.pwr)
+    }
+  else {
+    LR <- NA
+    df <- NA
+    p <- NA
+    Aldrich.Nelson <- NA
+    McFadden <- NA
+    Cox.Snell <- NA
+    Nagelkerke <- NA
+    }
+
+  AIC <- AIC(obj)
+  BIC <- AIC(obj,k=log(N))
+  sumstat <- c(
+          LR             = LR,
+          df         = df,
+          p             = p,
+          logLik        = ll,
+          deviance      = dev,
+          Aldrich.Nelson = Aldrich.Nelson,
+          McFadden      = McFadden,
+          Cox.Snell       = Cox.Snell,
+          Nagelkerke    = Nagelkerke,
+          AIC           = AIC,
+          BIC           = BIC,
+          N             = N
+          )
+
+  #cf <- apply(cf,1,applyTemplate,template=coef.template)
+
+  #sumstat <- drop(applyTemplate(sumstat,template=sumstat.template))
+  list(coef=cf,sumstat=sumstat,contrasts=obj$contrasts,xlevels=smry$xlevels,call=obj$call)
 }
 
 getSummary.simex <- function(obj,
@@ -1036,6 +1118,7 @@ getSummary.simex <- function(obj,
                LR=NA,
                df=NA,
                p=NA,
+               Aldrich.Nelson=NA,
                McFadden=NA,
                Cox.Snell=NA,
                Nagelkerke=NA,
@@ -1079,6 +1162,7 @@ getSummary.expcoef.glm <- function (obj, alpha = 0.05, ...)
     if (df > 0) {
         p <- pchisq(LR, df, lower.tail = FALSE)
         L0.pwr <- exp(-smry$null.deviance/N)
+        Aldrich.Nelson <- LR/(LR+N)
         McFadden <- 1 - smry$deviance/smry$null.deviance
         Cox.Snell <- 1 - exp(-LR/N)
         Nagelkerke <- Cox.Snell/(1 - L0.pwr)
@@ -1087,6 +1171,7 @@ getSummary.expcoef.glm <- function (obj, alpha = 0.05, ...)
         LR <- NA
         df <- NA
         p <- NA
+        Aldrich.Nelson <- NA
         McFadden <- NA
         Cox.Snell <- NA
         Nagelkerke <- NA
@@ -1095,6 +1180,7 @@ getSummary.expcoef.glm <- function (obj, alpha = 0.05, ...)
     BIC <- AIC(obj, k = log(N))
     sumstat <- c(phi = phi, LR = LR, df = df, p = p, logLik = ll,
         deviance = deviance, McFadden = McFadden, Cox.Snell = Cox.Snell,
+        Aldrich.Nelson = Aldrich.Nelson,
         Nagelkerke = Nagelkerke, AIC = AIC, BIC = BIC, N = N)
     list(coef = coef, sumstat = sumstat, contrasts = obj$contrasts,
         xlevels = obj$xlevels, call = obj$call)
@@ -1112,7 +1198,8 @@ getSummary.lmer <- function (obj, alpha = 0.05, ...)
     upper <- qnorm(p = 1 - alpha/2, mean = coef[, 1], sd = coef[,
         2])
     if (ncol(smry@coefs) == 3) {
-      p <- (1 - pnorm(smry@coefs[,3]))*2 # NOTE: no p-values for lmer() due to
+      ## BUGFIX: should be abs(.) here
+      p <- (1 - pnorm(abs(smry@coefs[,3])))*2 # NOTE: no p-values for lmer() due to
                           # unclear dfs; calculate p-values based on z
       coef <- cbind(coef, p, lower, upper)
     } else {
@@ -1122,8 +1209,8 @@ getSummary.lmer <- function (obj, alpha = 0.05, ...)
     #phi <- smry$dispersion
     #LR <- smry$null.deviance - smry$deviance
     #df <- smry$df.null - smry$df.residual
-    ll <- logLik(obj)[1]
-    deviance <- deviance(obj)
+    ll <- smry@logLik[1]
+    deviance <- smry@deviance[['ML']]
     #if (df > 0) {
     #    p <- pchisq(LR, df, lower.tail = FALSE)
     #    L0.pwr <- exp(-smry$null.deviance/N)
@@ -1154,9 +1241,15 @@ getSummary.lmer <- function (obj, alpha = 0.05, ...)
     #sumstat <- c(phi = phi, LR = LR, df = df, p = p, logLik = ll,
     #    deviance = deviance, McFadden = McFadden, Cox.Snell = Cox.Snell,
     #    Nagelkerke = Nagelkerke, AIC = AIC, BIC = BIC, N = N)
-    sumstat <- c(logLik = ll, deviance = deviance, AIC = AIC, BIC = BIC)
+    sumstat <- c(logLik = ll, deviance = deviance, AIC = AIC, BIC = BIC,
+                 N = obj@dims[['n']], phi=NA, LR=NA, df=NA, p=NA, McFadden=NA,
+                 Cox.Snell=NA, Nagelkerke=NA, Aldrich.Nelson=NA)
     list(coef = coef, sumstat = sumstat,
-       contrasts = attr(model.matrix(obj), "contrasts"),
+       contrasts = attr(obj@X, "contrasts"),
         xlevels = NULL, call = obj@call)
 }
 
+## lmer objects renamed to mer since 0.999375-16
+getSummary.mer <- getSummary.lmer
+
+## if(require('lme4')) setMethod("getSummary", "mer", getSummary.mer)

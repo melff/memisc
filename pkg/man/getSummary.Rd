@@ -5,7 +5,9 @@
 \alias{getSummary.polr}
 \alias{getSummary.simex}
 \alias{getSummary.lmer}
+\alias{getSummary.mer}
 \alias{getSummary.expcoef.glm}
+\alias{getSummary.clm}
 
 
 \title{Get Model Summaries for Use with "mtable"}
@@ -18,6 +20,8 @@
   \method{getSummary}{polr}(obj, alpha=.05,\dots)
   \method{getSummary}{simex}(obj, alpha=.05,\dots)
   \method{getSummary}{lmer}(obj, alpha=.05,\dots)
+  \method{getSummary}{mer}(obj, alpha=.05,\dots)
+  \method{getSummary}{clm}(obj, alpha=.05,\dots)
 
   # Method for 'glm' objects - to report
   # exponentiated coefficients.
