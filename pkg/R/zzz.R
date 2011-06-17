@@ -117,8 +117,8 @@
   )
 
 
-assign("SummaryTemplates",.SummaryTemplates, env=.memiscEnv)
-assign("CoefTemplates",.CoefTemplates, env=.memiscEnv)
+assign("SummaryTemplates",.SummaryTemplates, envir=.memiscEnv)
+assign("CoefTemplates",.CoefTemplates, envir=.memiscEnv)
 
 sampleGeneric <- function(x, size, replace = FALSE, prob=NULL,...)
   UseMethod("sample")
@@ -146,7 +146,7 @@ memisc_env <- environment()
   if(any(car_pkg == .packages(TRUE))){
     do.call("require",list(package=car_pkg))
     car_recode <- getFromNamespace("recode",ns=car_pkg)
-    assign("car_recode",car_recode,env=memisc_env)
+    assign("car_recode",car_recode,envir=memisc_env)
   }
 #   if(any(lme4_pkg == .packages(TRUE))){
 #     do.call("require",list(package=lme4_pkg))

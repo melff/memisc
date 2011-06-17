@@ -189,6 +189,9 @@ mtable(berk1,drop=FALSE,summary.stats=c("Deviance","N"))
 mtable(berk0,berk1,berk2,summary.stats=c("Deviance","N"))
 
 mtable(berk0,berk1,berk2,
+          coef.style="horizontal",
+          summary.stats=c("Deviance","AIC","N"))
+mtable(berk0,berk1,berk2,
           coef.style="stat",
           summary.stats=c("Deviance","AIC","N"))
 mtable(berk0,berk1,berk2,

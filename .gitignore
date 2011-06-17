@@ -3,3 +3,12 @@
 *.so
 *~
 
+/pkg/man/.Rhistory
+/memisc
+/extras
+/requests
+/test
+/pkg.Rcheck
+/*.Rcheck
+.gitignore
+.Rhistory
