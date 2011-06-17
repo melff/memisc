@@ -256,9 +256,5 @@ c NA 30
   of a function.
 }
 
-\section{Other Facilities}{
-\code{\link{mkHelpDir}} is a modification of \code{\link[utils]{make.packages.html}}
-that constructs HTML help pages permanently instead of temporarily.
-}
 
 \keyword{misc}

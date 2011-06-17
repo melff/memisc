@@ -101,7 +101,6 @@ export(
 #       xapply,
 #       groupwise,
       Substitute,
-      mkHelpDir,
       collect,
       fapply,
       include,

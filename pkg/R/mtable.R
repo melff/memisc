@@ -24,12 +24,12 @@ str.has <- function(text,has,not=NULL,how=c("all","any")){
 setCoefTemplate <- function(...){
   args <- list(...)
   argnames <- names(args)
-  CoefTemplates <- get("CoefTemplates", env=.memiscEnv)
+  CoefTemplates <- get("CoefTemplates", envir=.memiscEnv)
   OldCoefTemplates <- CoefTemplates
     for(coef.style in argnames){
       CoefTemplates[[coef.style]] <- args[[coef.style]]
   }
-  assign("CoefTemplates",CoefTemplates, env=.memiscEnv)
+  assign("CoefTemplates",CoefTemplates, envir=.memiscEnv)
   return(invisible(OldCoefTemplates))
 }
 
@@ -41,7 +41,7 @@ getFirstMatch <- function(x,n){
 }
 
 getCoefTemplate <- function(style){
-  CoefTemplates <- get("CoefTemplates", env=.memiscEnv)
+  CoefTemplates <- get("CoefTemplates", envir=.memiscEnv)
   if(missing(style)) return(CoefTemplates)
   else return(CoefTemplates[[style]])
 }
@@ -168,7 +168,7 @@ getSummary.glm <- function(obj,
 }
 
 getSummaryTemplate <- function(x){
-  SummaryTemplates <- get("SummaryTemplates", env=.memiscEnv)
+  SummaryTemplates <- get("SummaryTemplates", envir=.memiscEnv)
   if(missing(x)) return(SummaryTemplates)
   if(is.character(x)) cls <- x
   else cls <- class(x)
@@ -178,11 +178,11 @@ getSummaryTemplate <- function(x){
 setSummaryTemplate <- function(...){
   args <- list(...)
   argnames <- names(args)
-  OldSummaryTemplates <- SummaryTemplates <- get("SummaryTemplates", env=.memiscEnv)
+  OldSummaryTemplates <- SummaryTemplates <- get("SummaryTemplates", envir=.memiscEnv)
   for(cls in argnames){
       SummaryTemplates[[cls]] <- args[[cls]]
   }
-  assign("SummaryTemplates",SummaryTemplates,env=.memiscEnv)
+  assign("SummaryTemplates",SummaryTemplates,envir=.memiscEnv)
   return(invisible(OldSummaryTemplates))
 }
 
@@ -368,7 +368,7 @@ mtable <- function(...,
   if(lctdims>2) stop("can\'t handle templates with dim>2")
   getCoef1 <- function(coef,contrasts,xlevels){
         dimnames(coef)[[1]] <- prettyNames(dimnames(coef)[[1]],
-                        contrast=contrasts,
+                        contrasts=contrasts,
                         xlevels=xlevels,
                         factor.style=factor.style)
         adims <- if(length(dim(coef))==2) 1 else c(1,3)
@@ -757,7 +757,8 @@ format.mtable <- function(x,
     }
     else ans <- coefs
 
-    header <- character(1:length(col.vars))
+    header <- character(length(col.vars))
+    
     for(i in 1:length(col.vars)){
       tmp.header <- character(NCOL(ans))
       cv <- col.vars[[i]]
