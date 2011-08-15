@@ -38,16 +38,18 @@ gget.pattern.with.args <- function(pattern,text){
 
 get.pattern <- function(pattern,text){
     start <- regexpr(pattern,text)
-    stop <- start + attr(start,"match.length") - 1
     start[start < 1] <- Inf
+    stop <- start + attr(start,"match.length") - 1
     mapply(substr,text,start,stop,USE.NAMES=FALSE)
 }
 
 get.pattern.with.args <- function(pattern,text){
     start <- regexpr(pattern,text)
-    stop <- start + attr(start,"match.length") - 1
-    start[start < 1] <- Inf
-    start1 <- ifelse(attr(start,"match.length")>=1,stop+1,Inf)
+    sane <- start > 0
+    stop <- start[sane] + attr(start,"match.length")[sane] - 1
+    start1 <- ifelse(attr(start,"match.length")[sane]>=1,stop+1,Inf)
+    start <- start[sane]
+    text <- text[sane]
     stop1 <- nchar(text)
     pats <- mapply(substr,text,start,stop,USE.NAMES=FALSE)
     args <- mapply(substr,text,start1,stop1,USE.NAMES=FALSE)
@@ -127,11 +129,12 @@ spss.parse.labels <- function(file){
     labels <- text[ii%%2==0]
     text <- text[ii%%2==1]
     text <- gsub("\\s+"," ",paste(text,collapse=" "))
-    text <- strsplit(text,"\\s*/\\s*")[[1]]
+    text <- strsplit(text,"\\s*[/;]\\s*")[[1]]
     
     pa <- get.pattern.with.args("^[A-Za-z][A-Za-z0-9_]*\\s+",text)
-    variables <- tolower(pa$matches)
-    values <- strsplit(pa$args," ")
+    valid.matches <- !sapply(pa$matches,is.na)
+    variables <- tolower(pa$matches[valid.matches])
+    values <- strsplit(pa$args[valid.matches]," ")
     values <- lapply(values,as.numeric)
     variables <- trimws(variables)
     names(values) <- variables
@@ -164,7 +167,7 @@ spss.parse.missing.values <- function(file){
     lorange <- suppressWarnings(get.pattern("lo[west]*\\s+thru\\s+[0-9]+[.]?[0-9]*\\s+",miss.specs))
     miss.specs <- gsub("lo[west]*\\s+thru\\s+[0-9]+[.]?[0-9]*\\s+","",miss.specs)
     miss.vals <- lapply(strsplit(miss.specs,",\\s*"),function(x){
-      x <- as.numeric(x)
+      x <- suppressWarnings(as.numeric(x))
       x[!is.na(x)]
       })
     uprange <- as.numeric(gsub("\\s+thru\\s+hi[ghest]*","",uprange))
