@@ -1,3 +1,7 @@
+2011-08-15:
+  - Made internal functions of 'spss.fixed.file' robuster against syntax errors
+    in the spss-controls files (codes.file, labels.file, etc.)
+
 2011-06-17:
   - Removed mkHelpDir() that has not worked for a while because of architectural
     changes in R.
