@@ -1,6 +1,6 @@
 useDynLib(memisc)
 import(stats,grid,lattice,methods,MASS)
-importFrom(utils,toLatex,head,tail,capture.output)
+importFrom(utils,toLatex,head,tail,capture.output,getFromNamespace)
 export(
       contr,
       contr.treatment,
@@ -35,8 +35,6 @@ export(
       textfile_bucket,
       put_into,
       pour_out,
-      sample.data.frame,
-      sample.data.set,
       interrupt,
       trimws,
       genTable,
@@ -151,8 +149,6 @@ S3method(percent,default)
 S3method(percent,logical)
 S3method(By,default)
 S3method(By,data.frame)
-S3method(sample,data.frame)
-S3method(sample,data.set)
 S3method(print,bucket)
 S3method(dim,default_bucket)
 S3method(as.matrix,default_bucket)
@@ -251,6 +247,7 @@ exportMethods(
     codebook,
     #seekData,
     #readData,
+    sample,
     query
     )
 S3method(as.data.frame,character.item)

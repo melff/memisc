@@ -444,7 +444,7 @@ print.item.vector <- function(x,
         x <- format(x,use.labels=use.labels,...)
         x <- trimws(x)
         xw <- cumsum(nchar(x,"w")+1)
-        hdr <- paste(" [","1:",length(x),"]",sep="")
+        hdr <- paste(" [","1:",l,"]",sep="")
         width <- width - nchar(hdr)
         if(any(xw > width)){
           dots <- mkdots(3)

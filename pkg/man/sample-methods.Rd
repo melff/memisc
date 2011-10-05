@@ -1,6 +1,7 @@
 \name{sample-methods}
-\alias{sample.data.frame}
-\alias{sample.data.set}
+\alias{sample,data.frame-method}
+\alias{sample,data.set-method}
+\alias{sample,importer-method}
 \title{Take a Sample from a Data Frame-like Object}
 \description{
   The methods below are convenience short-cuts to
@@ -10,8 +11,9 @@
   data frame/data set.
 }
 \usage{
-\method{sample}{data.frame}(x, size, replace = FALSE, prob = NULL, \dots)
-\method{sample}{data.set}(x, size, replace = FALSE, prob = NULL, \dots)
+\S4method{sample}{data.frame}(x, size, replace = FALSE, prob = NULL)
+\S4method{sample}{data.set}(x, size, replace = FALSE, prob = NULL)
+\S4method{sample}{importer}(x, size, replace = FALSE, prob = NULL)
 }
 \arguments{
   \item{x}{a data frame or data set.}
@@ -20,6 +22,10 @@
   \item{replace}{a logical value, determines whether
     sampling takes place with or without replacement.}
   \item{prob}{a vector of sampling probabities or NULL.}
-  \item{\dots}{further arguments, ignored.}
 }
 \value{A data frame or data set.}
+
+\examples{
+for(.i in 1:4)
+  print(sample(iris,5))
+}

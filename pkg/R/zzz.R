@@ -120,13 +120,6 @@
 assign("SummaryTemplates",.SummaryTemplates, envir=.memiscEnv)
 assign("CoefTemplates",.CoefTemplates, envir=.memiscEnv)
 
-sampleGeneric <- function(x, size, replace = FALSE, prob=NULL,...)
-  UseMethod("sample")
-environment(sampleGeneric) <- baseenv()
-sample.default <- base::sample
-formals(sample.default) <- formals(sampleGeneric)
-environment(sample.default) <- baseenv()
-
 car_recode <- function (var, recodes, as.factor.result, levels)
   stop("package 'car' is not available")
 
@@ -140,18 +133,11 @@ memisc_env <- environment()
   options(Simulation.chunk.size=1000)
   options(print.use.value.labels=TRUE)
   options(show.max.obs=25)
-  require(utils)
-  require(stats)
 
   if(any(car_pkg == .packages(TRUE))){
-    do.call("require",list(package=car_pkg))
     car_recode <- getFromNamespace("recode",ns=car_pkg)
     assign("car_recode",car_recode,envir=memisc_env)
   }
-#   if(any(lme4_pkg == .packages(TRUE))){
-#     do.call("require",list(package=lme4_pkg))
-#     setMethod("getSummary", "mer", getSummary.mer)
-#   }
 
   options(coef.style="default")
   options(baselevel.sep="/")
@@ -163,15 +149,10 @@ memisc_env <- environment()
         "*"=.05
     ))
   options(labelled.factor.coerce.NA = FALSE)
-  assignInNamespace(".sample.orig",base::sample , ns = "base")
-  assignInNamespace("sample.default",sample.default , ns = "base")
-  assignInNamespace("sample",sampleGeneric , ns = "base")
 }
 
 
 .onUnload <- function(libpath)
 {
-    assignInNamespace("sample",  base::.sample.orig,  ns = "base")
-
     library.dynam.unload("memisc", libpath)
 }

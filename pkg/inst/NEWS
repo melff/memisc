@@ -1,3 +1,15 @@
+2011-10-05:
+  - Adapted the package to R 2.14.0 (by eliminating calls to 'require'
+    in the '.onLoad' function)
+  - Changed the methods for data frames, 'data.set' and 'importer' objects
+    of the function 'sort' from S3 to S4
+
+2011-08-26:
+  - Fixed a bug in internal function 'compress.storage.mode.double' that caused
+    it to create NA's where it should not.
+  - Fixed a bug in the print method for items that caused it to report their length
+    incorrectly
+
 2011-08-15:
   - Made internal functions of 'spss.fixed.file' robuster against syntax errors
     in the spss-controls files (codes.file, labels.file, etc.)
