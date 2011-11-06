@@ -1,3 +1,8 @@
+2011-11-06:
+  - Added a 'rep' method for 'item.vector' objects.
+  - Applied patch sent by Masahiro Hayashi <rinm884@gmail.com> to fix bugs
+    in 'vector' method of 'recode'.
+
 2011-10-05:
   - Adapted the package to R 2.14.0 (by eliminating calls to 'require'
     in the '.onLoad' function)

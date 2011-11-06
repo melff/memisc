@@ -35,6 +35,7 @@
 \alias{format,item.vector-method}
 \alias{show,item.vector-method}
 \alias{print,item.vector-method}
+\alias{rep,item.vector-method}
 \alias{Compare,numeric.item,character-method}
 \alias{Compare,character,numeric.item-method}
 \alias{Arith,numeric.item,numeric.item-method}

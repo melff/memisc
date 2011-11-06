@@ -604,3 +604,11 @@ setMethod("%in%",signature(x="numeric.item",table="character"),function(x,table)
    x <- vl@.Data[match(x,vl@values)]
    x %in% table
 })
+
+setMethod("rep",signature(x="item.vector"),function(x,...){
+
+  ans <- x
+  ans@.Data <- rep(x@.Data,...)
+  ans
+})
+
