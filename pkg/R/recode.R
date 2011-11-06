@@ -130,14 +130,14 @@ setMethod("recode","vector",function(x,...,otherwise=NA){
     has.min <- paste(lapply(oldcodes[has.range],"[[",2)) == "min"
     has.max <- paste(lapply(oldcodes[has.range],"[[",3)) == "max"
     if(any(has.min)){
-      min.list <- list(min=min(x))
+      min.list <- list(min=min(x, na.rm=TRUE))
       oldcodes[has.range][has.min] <- lapply(
                 oldcodes[has.range][has.min],
                 function(x) do.call("substitute",list(x,min.list))
                 )
     }
     if(any(has.max)){
-      max.list <- list(max=max(x))
+      max.list <- list(max=max(x, na.rm=TRUE))
       oldcodes[has.range][has.max] <- lapply(
                 oldcodes[has.range][has.max],
                 function(x) do.call("substitute",list(x,max.list))
@@ -158,7 +158,7 @@ setMethod("recode","vector",function(x,...,otherwise=NA){
   torecode <- sapply(oldcodes,eval,envir=environment())
   if(!is.matrix(torecode)) torecode <- t(oldcodes)
   newcodes <- sapply(newcodes,eval,parent.frame())
-  nevtrue <- colSums(torecode) == 0
+  nevtrue <- colSums(torecode, na.rm=TRUE) == 0
   if(any(nevtrue)){
     nrecng <- paste(recodings[nevtrue])
     if(length(nrecng)>1)
@@ -166,7 +166,7 @@ setMethod("recode","vector",function(x,...,otherwise=NA){
     else
       warning("recoding ",nrecng," has no consequences")
   }
-  ambiguous <- rowSums(torecode) > 1
+  ambiguous <- rowSums(torecode, na.rm=TRUE) > 1
   if(any(ambiguous))
     stop("recoding request is ambiguous")
   y <- if(is.character(newcodes)) as.character(x) else x
@@ -176,7 +176,9 @@ setMethod("recode","vector",function(x,...,otherwise=NA){
     y[torecode[,i]] <- newcodes[i]
   }
   if(is.na(otherwise) || otherwise!="copy"){
+	if(is.character(otherwise)) newcodes <- c(newcodes, otherwise)
     recoded <- as.logical(rowSums(torecode))
+	recoded[is.na(recoded)] <- TRUE
     tmp <- as.vector(otherwise,mode=storage.mode(y))
     length(otherwise) <- length(y)
     otherwise[] <- tmp

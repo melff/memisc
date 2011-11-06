@@ -221,6 +221,7 @@ exportMethods(
     unique,
     "[",
     "[<-",
+    "rep",
 #     "$",
     row.names,
     dimnames,
