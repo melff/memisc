@@ -48,7 +48,7 @@ getCoefTemplate <- function(style){
 
 
 getSummary <- function(obj,alpha=.05,...) UseMethod("getSummary")
-setGeneric("getSummary")
+# setGeneric("getSummary")
 
 
 getSummary.lm <- function(obj,
@@ -1140,6 +1140,8 @@ getSummary.simex <- function(obj,
 ## Center for the Study of Health and Risk Behaviors
 ## Department of  Psychiatry and Behavioral Science
 ## Unversity of Washington
+
+getSummary.expcoef <- function(obj, alpha = 0.05, ...) UseMethod("getSummary.expcoef")
 
 getSummary.expcoef.glm <- function (obj, alpha = 0.05, ...)
 {

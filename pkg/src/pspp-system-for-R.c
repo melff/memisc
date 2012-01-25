@@ -533,22 +533,24 @@ SEXP read_sysfile_value_labels (SEXP SysFile){
   protectcounter += 2;
   int i;
   double value;
-  char *label;
+
+  char *labbuf = S_alloc(256,1);
+  
   for(i = 0; i < nlabels; i++){
     sys_read_real(&value,s);
     REAL(values)[i] = value;
-    unsigned char lablen;
+    unsigned char lablen, readlen;
     sys_read(&lablen,1,s);
-    lablen = (lablen/8)*8+7;
-    label = S_alloc(lablen+1,1);
-    sys_read(label,lablen,s);
+    readlen = (lablen/8)*8+7;
+    sys_read(labbuf,readlen,s);
+    labbuf[lablen] = 0;
 #ifdef DEBUG
     Rprintf("\nvalues[%d]=%g",i,value);
-    Rprintf("\nlabels[%d]=|%s|",i,label);
+    Rprintf("\nlabels[%d]=|%s|",i,labbuf);
     Rprintf("\nlength(labels[%d])=%d",i,lablen);
 #endif
-    trim(label,lablen);
-    SET_STRING_ELT(labels,i,mkChar(label));
+    trim(labbuf,lablen);
+    SET_STRING_ELT(labels,i,mkChar(labbuf));
   }
   SET_NAMES(values,labels);
 //   long pos = ftell(f);

@@ -1,5 +1,6 @@
 \name{getSummary}
 \alias{getSummary}
+\alias{getSummary.expcoef}
 \alias{getSummary.lm}
 \alias{getSummary.glm}
 \alias{getSummary.polr}
@@ -25,7 +26,7 @@
 
   # Method for 'glm' objects - to report
   # exponentiated coefficients.
-  getSummary.expcoef.glm(obj, alpha=.05,\dots)
+  \method{getSummary.expcoef}{glm}(obj, alpha=.05,\dots)
 }
 \arguments{
   \item{obj}{a model object, e.g. of class \code{lm} or \code{glm}}
