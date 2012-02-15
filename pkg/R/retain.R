@@ -17,5 +17,5 @@ retain <- function (..., list = character(0), envir = parent.frame(),force=FALSE
     obs <- ls(envir=envir)
     if(!all(list %in% obs)) stop("cannot retain undefined objects")
     to.remove <- obs[!(obs %in% list)]
-    .Internal(remove(to.remove, envir, FALSE))
+    remove(list=to.remove, envir=envir, inherits=FALSE)
 }
