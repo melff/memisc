@@ -1,33 +1,3 @@
-SapplyOLD <- function (X, FUN, ..., test.dim=FALSE, simplify = TRUE, USE.NAMES = TRUE){
-  sapply.call <- match.call()
-  sapply.call$test.dim <- NULL
-  sapply.call[[1]] <- as.name("sapply")
-  Y <- eval(sapply.call,parent.frame())
-  if(!test.dim && !is.array(X)) return(Y)
-  dimX <- dim(X)
-  dimnamesX <- dimnames(X)
-  dimY <- dim(Y)
-  if(!length(dimY)){
-    return(structure(unname(Y),dim=dimX,dimnames=dimnamesX))
-  }
-  else {
-    if(test.dim && length(dim(Y1 <- FUN(X[[1]])))) {
-      dimY <- c(dim(Y1),dimX)
-      if(length(dimnames(Y1)))
-        dimnamesY <- c(dimnames(Y1),dimnamesX)
-      else
-        dimnamesY <- c(vector(mode="list",length=length(dim(Y1))),dimnamesX)
-    }
-    else {
-      dimY <- c(dim(Y)[1],dimX)
-      if(length(rownames(Y)))
-        dimnamesY <- c(dimnames(Y)[1],dimnamesX)
-      else
-        dimnamesY <- c(list(NULL),dimnamesX)
-    }
-    return(structure(unname(Y),dim=dimY,dimnames=dimnamesY))
-  }
-}
 
 Sapply <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE){
     FUN <- match.fun(FUN)
@@ -83,23 +53,7 @@ Sapply <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE){
 Lapply <- function(X, FUN, ...)
      Sapply(X, FUN, ..., simplify = FALSE, USE.NAMES = FALSE)
 
-# Lapply <- function(X,FUN,...){
-#     FUN <- match.fun(FUN)
-#     if(length(dim(X))){
-#         d.ans <- dim(X)
-#         dn.ans <- if(length(dimnames(X))) dimnames(X) else NULL
-#         if (!is.vector(X) || is.object(X))
-#         X <- as.list(X)
-#         return(array(
-#             .Internal(lapply(X,FUN)),
-#             dim=d.ans,dimnames=dn.ans))
-#     }
-#     else {
-#         if (!is.vector(X) || is.object(X))
-#         X <- as.list(X)
-#         return(.Internal(lapply(X,FUN)))
-#     }
-# }
+
 
 numericIfPossible <- function(x){
     if(is.atomic(x)) return(.numericIfPossible(x))

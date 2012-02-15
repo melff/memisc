@@ -1,3 +1,13 @@
+2012-02-14:
+  - Replaced calls to .Internal(sample()) by calls to sample.int() and eliminated
+    call to .Internal(int.unzip()). The package now depends on R >= 2.9.0
+
+2012-01-25:
+  - Fixed reading of value labels from SPSS system files - no garbage at the end of the labels.
+
+2011-12-07:
+  - Fixed "getSummary" and "getSummary.expcoef" S3-generic functions.
+
 2011-11-06:
   - Added a 'rep' method for 'item.vector' objects.
   - Applied patch sent by Masahiro Hayashi <rinm884@gmail.com> to fix bugs
