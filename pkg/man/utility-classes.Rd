@@ -5,6 +5,7 @@
 \alias{item.list-class}
 \alias{initialize,item.list-method}
 \alias{initialize,named.list-method}
+\alias{coerce,data.set,named.list-method}
 \alias{show,named.list-method}
 \alias{atomic-class}
 \alias{double-class}

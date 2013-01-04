@@ -1,3 +1,6 @@
+2013-01-04:
+  - Updated contact email address. Corrected "initialize" method for "data.set" objects.
+
 2012-02-14:
   - Replaced calls to .Internal(sample()) by calls to sample.int() and eliminated
     call to .Internal(int.unzip()). The package now depends on R >= 2.9.0
