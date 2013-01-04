@@ -17,6 +17,7 @@ setValidity("named.list",function(object){
 })
 
 setValidity("data.set",function(object){
+
   isItemVector <- sapply(object,is,"item.vector")
   if(!all(isItemVector)) {
     wrong.els <- object[!isItemVector]
@@ -30,7 +31,7 @@ setValidity("data.set",function(object){
       )
     )
   }
-  else if(any(length(object@row.names) != sapply(object,length))){
+  else if(any(length(object@row_names) != sapply(object,length))){
     wrong.els <- object[!isItemVector]
     wrong.names <- object@names[!isItemVector]
     wront.lengths <- sapply(object,length)
@@ -42,7 +43,7 @@ setValidity("data.set",function(object){
         collapse=", "
       ),
     "where",
-    length(object@row.names),
+    length(object@row_names),
     "is required"
     )
   }
@@ -91,12 +92,16 @@ setLength <- function(x,n){
 }
 
 setMethod("initialize","data.set",function(.Object,...,row.names=NULL,document=character()){
-  cl <- class(.Object)
-  .Object <- new("item.list",...)
-  nr <- max(sapply(.Object,length))
-  .Object <- lapply(.Object,setLength,n=nr)
-  .Object <- lapply(.Object,as.item)
-  class(.Object) <- cl
+
+  args <- list(...)
+  if(is.list(args[[1]])) args <- unclass(args[[1]])
+  nr <- max(sapply(args,length))
+  args <- lapply(args,setLength,n=nr)
+  args <- lapply(args,as.item)
+
+  .Object@.Data <- unname(args)
+  .Object@names <- as.character(names(args))
+
   if (is.null(row.names))
       row.names <- seq_len(nr)
   else {
@@ -110,8 +115,13 @@ setMethod("initialize","data.set",function(.Object,...,row.names=NULL,document=c
   }
   .Object@row_names <- row.names
   .Object@document <- document
-  asS4(.Object)
+
+  if(validObject(.Object)) .Object
 })
+
+setAs("data.set","named.list",function(from,to){
+  new(to,structure(from@.Data,names=from@names))
+  })
 
 # dim.data.set <- dim.data.frame
 setMethod("dim","data.set",function(x)

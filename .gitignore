@@ -12,3 +12,4 @@
 /*.Rcheck
 .gitignore
 .Rhistory
+.Rproj.user
