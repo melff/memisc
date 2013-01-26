@@ -135,7 +135,7 @@ spss.parse.labels <- function(file){
     valid.matches <- !sapply(pa$matches,is.na)
     variables <- tolower(pa$matches[valid.matches])
     values <- strsplit(pa$args[valid.matches]," ")
-    values <- lapply(values,as.numeric)
+    values <- lapply(values,numericIfPossible)
     variables <- trimws(variables)
     names(values) <- variables
     lv <- seq_along(variables)

@@ -1,3 +1,24 @@
+2013-01-26:
+  - Included getSummary methods
+     - for objects of classes "ivreg", "tobit" (from package "AER"),
+                              "hurdle", "zeroinfl" (from package "pscl"),
+                              "betareg" (from package "betareg"),
+                              "multinom" (from package "nnet"),
+                              contributed by Achim Zeileis
+    - for objects of classes "polr" (from package "MASS"),
+                             "clm" (from package "ordinal"),
+                             "simex" (from package "simex"),
+                             contributed by Christopher N. Lawrence
+    - for objects of classes "coxph", "survreg" (from package "survival"),
+                             "aftreg", "phreg", "weibreg" (from package "eha"),
+                             contributed by Jason W. Morgan,
+    - for exponentiated coefficients in glm-models,
+                             contributed by Dave Atkins.
+  - Made the 'spss.fixed.file' importer function more robust:
+      - It works now, even if 'varlab.file', 'codes.file',
+        or 'missval.file' arguments are missing. (This was broken by an earlier revision.)
+      - It now handles value labels of character string variables correctly.
+    
 2013-01-04:
   - Updated contact email address. Corrected "initialize" method for "data.set" objects.
 

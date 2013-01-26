@@ -15,31 +15,20 @@ spss.fixed.file <- function(
     check.file(columns.file,error=TRUE)
     data.spec <- spss.parse.data.spec(columns.file)
     types <- data.spec$types
+#     browser()
     varlabs <- if(length(varlab.file) && check.file(varlab.file,error=TRUE)) spss.parse.variable.labels(varlab.file)
-               else vector(length(types),mode="list")
+               else NULL #vector(length(types),mode="list")
     vallabs <- if(length(codes.file) && check.file(codes.file,error=TRUE)) spss.parse.labels(codes.file)
-               else vector(length(types),mode="list")
+               else NULL #vector(length(types),mode="list")
     missings <- if(length(missval.file) && check.file(missval.file,error=TRUE)) spss.parse.missing.values(missval.file)
-               else vector(length(types),mode="list")
+               else NULL #vector(length(types),mode="list")
     variables <- vector(length(types),mode="list")
     names(variables) <- names(types)
     variables[types==1] <- list(new("double.item"))
     variables[types==2] <- list(new("character.item"))
-    variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
-    variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs)
-    variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
-#     for(n in names(variables)){
-#       v <- if(types[n]==1) new("double.item") else new("character.item")
-#       desc <- varlabs[n]
-#       if(is.finite(desc))
-#         annotation(v) <- c(description=desc)
-#       labs <- vallabs[[n]]
-#       if(length(labs))
-#         labels(v) <- labs
-#       mval <- missings[[n]]
-#       if(length(mval))
-#         missing.values(v) <- mval
-#     }
+    if(length(varlabs)) variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
+    if(length(vallabs)) variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs)
+    if(length(missings)) variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
 
     nlines <- if(count.cases) {
         maxlenline <- data.spec$stop[length(data.spec$stop)]
