@@ -46,13 +46,11 @@ export(
       percent.default,
       percent.logical,
       By,
-#      allequal,
       Sapply,
       Lapply,
       sort.data.frame,
       sort.data.set,
       to.data.frame,
-#       to.array,
       as.array,
       prediction.frame,
       Termplot,
@@ -89,16 +87,9 @@ export(
       as.data.set,
       is.data.set,
       retain,
-      #split.matrix,
-      #coll.arrays,
-      #coll.vectors,
-      #numericIfPossible,
-      #toLatex.ftable,
       foreach,
       syms,
       as.symbols,
-#       xapply,
-#       groupwise,
       Substitute,
       collect,
       fapply,
@@ -112,15 +103,8 @@ export(
       spss.portable.file,
       spss.system.file,
       Stata.file,
-      #seekData,
-      #readData,
       query,
       relabel4
-      #,
-      #rofile,
-      #readfixed,
-      #readfixedsubset,
-      #roreadline
       )
 S3method(aggregate,formula)
 S3method(getSummary,lm)
@@ -162,17 +146,11 @@ S3method(dim,textfile_bucket)
 S3method(as.data.frame,textfile_bucket)
 S3method(as.matrix,textfile_bucket)
 S3method("[",bucket)
-# S3method(groupwise,default)
 
 exportClasses(
   atomic,
-#   "atomic or NULL",
-#   "atomic or factor",
-#   "character or NULL",
   value.labels,
-#   "value.labels or NULL",
   value.filter,
-#   "value.filter or NULL",
   valid.values,
   valid.range,
   missing.values,
@@ -192,8 +170,6 @@ exportClasses(
   spss.system.importer,
   Stata.importer,
   importer,
-#   index,
-#   strict.index,
   codebook
   )
 
@@ -224,7 +200,6 @@ exportMethods(
     "[",
     "[<-",
     "rep",
-#     "$",
     row.names,
     dimnames,
     as.array,
@@ -242,28 +217,19 @@ exportMethods(
     recode,
     dim,
     subset,
-#     as.data.frame,
     initialize,
     coerce,
     Table,
     Descriptives,
     codebook,
-    #seekData,
-    #readData,
     sample,
     query
     )
 S3method(as.data.frame,character.item)
 S3method(as.data.frame,double.item)
 S3method(as.data.frame,integer.item)
-#S3method(dim,data.set)
-#S3method("[",data.set)
-#S3method("[<-",data.set)
-# S3method("[[",data.set)
 S3method("[[<-",data.set)
 S3method(str,data.set)
-# S3method(subset,data.set)
-#S3method(within,data.set)
 S3method(str,integer.item)
 S3method(str,double.item)
 S3method(str,character.item)
@@ -272,3 +238,5 @@ S3method(as.data.frame,data.set)
 S3method(cbind,data.set)
 S3method(fapply,data.set)
 S3method(print,descriptions)
+
+
