@@ -1,6 +1,6 @@
 2013-01-27:
   - Minor improvement of 'codebook' output for external SPSS data sets.
-
+  - Fixed a bug in 'dumbswap.c' discovered while building a windows binary.
   
 2013-01-26:
   - Included getSummary methods

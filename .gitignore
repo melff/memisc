@@ -10,6 +10,15 @@
 /test
 /pkg.Rcheck
 /*.Rcheck
+/memisc-*
 .gitignore
 .Rhistory
 .Rproj.user
+/lt23-10-1.tex
+/lt23-10-2.tex
+/lt789.tex
+/memisc_*.zip
+/memisc_*.tar.gz
+/memisc.Rproj
+/.RData
+/texput.log

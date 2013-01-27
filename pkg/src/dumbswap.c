@@ -60,11 +60,11 @@ float dumb_fswap(float x, int swap_code){
   if(!swap_code) return x;
   union {
     float f;
-    char bytes[2];
+    char bytes[4];
   } from;
   union {
     float f;
-    char bytes[2];
+    char bytes[4];
   } to;
   from.f = x;
   to.bytes[0] = from.bytes[3];
