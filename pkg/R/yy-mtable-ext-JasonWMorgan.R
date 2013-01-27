@@ -128,3 +128,5 @@ getSummary.weibreg <- function(obj, alpha = 0.05, ...) {
   getSummary.aftreg(obj, alpha = alpha, ...)
 }
 
+
+

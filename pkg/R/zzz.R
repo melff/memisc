@@ -12,7 +12,7 @@ memisc_env <- environment()
   options(print.use.value.labels=TRUE)
   options(show.max.obs=25)
 
-  if(any(car_pkg == .packages(TRUE))){
+  if(car_pkg %in% .packages(TRUE)){
     car_recode <- getFromNamespace("recode",ns=car_pkg)
     assign("car_recode",car_recode,envir=memisc_env)
   }

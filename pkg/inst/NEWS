@@ -1,3 +1,7 @@
+2013-01-27:
+  - Minor improvement of 'codebook' output for external SPSS data sets.
+
+  
 2013-01-26:
   - Included getSummary methods
      - for objects of classes "ivreg", "tobit" (from package "AER"),

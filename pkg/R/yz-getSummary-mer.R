@@ -1,3 +1,5 @@
+## Originally contributed by Jason W. Morgan
+
 setSummaryTemplate(mer = c("Log-likelihood" = "($logLik:f#)",
                      "Deviance" = "($deviance:f#)",
                      "AIC" = "($AIC:f#)",

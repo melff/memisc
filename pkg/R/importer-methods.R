@@ -335,7 +335,7 @@ fixupcodebookEntryMetric <- function(cbe){
     cbe@stats$tab <- tab
   }
   
-  moments <- cbe@stats$moments
+  moments <- unname(cbe@stats$moments)
   m.1 <- moments[1]
   m.2 <- moments[2] - m.1^2
   m.3 <- moments[3] - 3*moments[2]*m.1 - 2*m.1^3
