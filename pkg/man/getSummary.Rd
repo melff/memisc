@@ -14,6 +14,12 @@
 \alias{getSummary.aftreg}
 \alias{getSummary.phreg}
 \alias{getSummary.weibreg}
+\alias{getSummary.ivreg}
+\alias{getSummary.tobit}
+\alias{getSummary.hurdle}
+\alias{getSummary.zeroinfl}
+\alias{getSummary.betareg}
+\alias{getSummary.multinom}
 
 \title{Get Model Summaries for Use with "mtable"}
 \description{A generic function and methods to collect coefficients
@@ -31,6 +37,13 @@
   \method{getSummary}{aftreg}(obj, alpha=.05,\dots)
   \method{getSummary}{phreg}(obj, alpha=.05,\dots)
   \method{getSummary}{weibreg}(obj, alpha=.05,\dots)
+  \method{getSummary}{ivreg}(obj, alpha=.05,\dots)
+  \method{getSummary}{tobit}(obj, alpha=.05,\dots)
+  \method{getSummary}{hurdle}(obj, alpha=.05,\dots)
+  \method{getSummary}{zeroinfl}(obj, alpha=.05,\dots)
+  \method{getSummary}{betareg}(obj, alpha=.05,\dots)
+  \method{getSummary}{multinom}(obj, alpha=.05,\dots)
+    
 
   # Method for 'glm' objects - to report
   # exponentiated coefficients.

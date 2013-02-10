@@ -1,3 +1,14 @@
+2012-02-10:
+  - getSummary methods for "ivreg", "tobit" (from package "AER"),
+    "hurdle", "zeroinfl" (from package "pscl"),
+    "betareg" (from package "betareg"),
+    "multinom" (from package "nnet"),
+    contributed by Achim Zeileis,
+    were included into the package, but had not been exported yet
+    from the package namespace.
+    This is now fixed.
+              
+
 2013-01-27:
   - Minor improvement of 'codebook' output for external SPSS data sets.
   - Fixed a bug in 'dumbswap.c' discovered while building a windows binary.
