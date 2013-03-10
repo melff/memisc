@@ -1,15 +1,14 @@
 Package: memisc
 Type: Package
-Title: Tools for Management of Survey Data, Graphics, Programming,
-        Statistics, and Simulation
+Title: Tools for Management of Survey Data, Graphics, Programming, Statistics, and
+          Simulation
 Version: 0.96-3
-Date: 2013-02-20
-Authors@R: c(person("Martin","Elff",role=c("aut","cre"),email="martin.elff@uni-konstanz.de"),
-            person(c("Christopher"," N."),"Lawrence",role="ctb"),
-            person(c("Jason","W."),"Morgan",role="ctb"),
-            person("Zeileis","Achim",role="ctb"),
-            person("Dave","Atkins",role="ctb")
-            )
+Date: 2013-02-10
+Authors@R:
+          c(person("Martin","Elff",role=c("aut","cre"),email="martin.elff@uni-konstanz.de"),
+          person(c("Christopher"," N."),"Lawrence",role="ctb"),
+          person(c("Jason","W."),"Morgan",role="ctb"),
+          person("Zeileis","Achim",role="ctb"), person("Dave","Atkins",role="ctb") )
 Author: Martin Elff
   (with contributions from
     Christopher N. Lawrence,

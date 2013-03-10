@@ -1,12 +1,10 @@
-## Originally contributed by Jason W. Morgan
-
 setSummaryTemplate(mer = c("Log-likelihood" = "($logLik:f#)",
                      "Deviance" = "($deviance:f#)",
                      "AIC" = "($AIC:f#)",
                      "BIC" = "($BIC:f#)",
                      "N" = "($N:d)"))
 
-getSummary.mer <- function (obj, alpha = 0.05, ...) {
+getSummary.mer <- function (obj, alpha = 0.05, varPar.as.coef=TRUE, ...) {
   ## BUGFIX by M.E. 2012-07-24
   ## For whatever reason a simple call to summary does not work...
 
@@ -27,7 +25,13 @@ getSummary.mer <- function (obj, alpha = 0.05, ...) {
 
   ## BUGFIX by M.E. 2012-07-25: Standard deviations are not standard errors!
   VarPar <- cbind(as.numeric(RE[,3]), NA, NA,NA,NA,NA)
-  rownames(VarPar) <- RE[,1]
+  
+  for(ii in 1:nrow(RE)){
+    if(!nzchar(RE[ii,1])) RE[ii,1] <- RE[ii-1,1]
+  }
+  rownames(VarPar) <- paste0("Var(",RE[,2],"|",RE[,1],")")
+  
+  
   colnames(coef) <- colnames(VarPar) <- c("est", "se", "stat", "p", "lwr", "upr")
 
   
@@ -48,7 +52,10 @@ getSummary.mer <- function (obj, alpha = 0.05, ...) {
   sumstat <- c(logLik = ll, deviance = deviance, AIC = AIC,
                BIC = BIC, N = N)
   ## Return model summary.
-  list(estimates=list(coef = coef, Variance=VarPar),
+  
+  if(varPar.as.coef)
+    coef <- rbind(coef,VarPar)
+  list(coef= coef,
        sumstat = sumstat, extra.stats= G,
        contrasts = Contr, ## Reuse 'Contr'
        xlevels = xlevels, call = obj@call)

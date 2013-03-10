@@ -1,7 +1,3 @@
-2012-02-20:
-  - Deleted example code from yy-mtable-ext-AchimZeileis.R (It was made harmless by if(FALSE) but
-    nevertheless leads to a `NOTE' on R-devel)
-
 2012-02-10:
   - getSummary methods for "ivreg", "tobit" (from package "AER"),
     "hurdle", "zeroinfl" (from package "pscl"),
