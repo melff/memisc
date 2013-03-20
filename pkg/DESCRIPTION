@@ -2,8 +2,8 @@ Package: memisc
 Type: Package
 Title: Tools for Management of Survey Data, Graphics, Programming, Statistics, and
           Simulation
-Version: 0.96-3
-Date: 2013-02-10
+Version: 0.96-4
+Date: 2013-03-20
 Authors@R:
           c(person("Martin","Elff",role=c("aut","cre"),email="martin.elff@uni-konstanz.de"),
           person(c("Christopher"," N."),"Lawrence",role="ctb"),
@@ -29,4 +29,4 @@ Description: One of the aims of this package is to make life easier for
 License: GPL-2
 LazyLoad: Yes
 Depends: R (>= 2.9.0), lattice, grid, stats, methods, utils, MASS
-URL: http://www.martin-elff.net/software/memisc/
+URL: http://www.martin-elff.net/software/memisc/,http://memisc.r-forge.r-project.org/

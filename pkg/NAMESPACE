@@ -117,9 +117,9 @@ export(
       relabel4
       )
 S3method(aggregate,formula)
-S3method(getSummary,lm)
-S3method(getSummary,glm)
-S3method(getSummary.expcoef,glm)
+#S3method(getSummary,lm)
+#S3method(getSummary,glm)
+#S3method(getSummary.expcoef,glm)
 S3method(print,mtable)
 S3method(format,mtable)
 S3method(toLatex,default)
