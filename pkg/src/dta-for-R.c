@@ -3,6 +3,7 @@
 #include <string.h>
 #include <Rmath.h>
 #include <stdio.h>
+#include <limits.h>
 #include <Rinternals.h>
 #include "memisc.h"
 #include "dumbswap.h"
@@ -97,7 +98,7 @@ dta_file *get_dta_file(SEXP s_file){
 
 int dta_read_byte(dta_file *dtaf){
   char target;
-  int read_len = fread(&target,1,1,dtaf->f);
+  size_t read_len = fread(&target,1,1,dtaf->f);
   if(!read_len) return NA_INTEGER;
   if(target == DTA_NA_BYTE) return NA_INTEGER;
   else return (int)target;
@@ -105,7 +106,7 @@ int dta_read_byte(dta_file *dtaf){
 
 int dta_read_short(dta_file *dtaf){
   short target;
-  int read_len = fread(&target,2,1,dtaf->f);
+  size_t read_len = fread(&target,2,1,dtaf->f);
   if(!read_len) return NA_INTEGER;
   sswap_if(target,dtaf->swap);
   if(target == DTA_NA_SHORT) return NA_INTEGER;
@@ -114,7 +115,7 @@ int dta_read_short(dta_file *dtaf){
 
 int dta_read_int(dta_file *dtaf){
   int target;
-  int read_len = fread(&target,4,1,dtaf->f);
+  size_t read_len = fread(&target,4,1,dtaf->f);
   if(!read_len) return NA_INTEGER;
   iswap_if(target,dtaf->swap);
   if(target == DTA_NA_LONG) return NA_INTEGER;
@@ -123,7 +124,7 @@ int dta_read_int(dta_file *dtaf){
 
 double dta_read_float(dta_file *dtaf){
   float target;
-  int read_len = fread(&target,4,1,dtaf->f);
+  size_t read_len = fread(&target,4,1,dtaf->f);
   if(!read_len) return NA_REAL;
   fswap_if(target,dtaf->swap);
   if(target == DTA_NA_FLOAT) return NA_REAL;
@@ -132,7 +133,7 @@ double dta_read_float(dta_file *dtaf){
 
 double dta_read_double(dta_file *dtaf){
   double target;
-  int read_len = fread(&target,8,1,dtaf->f);
+  size_t read_len = fread(&target,8,1,dtaf->f);
   if(!read_len) return NA_REAL;
   dswap_if(target,dtaf->swap);
   if(target == DTA_NA_DOUBLE) return NA_REAL;
@@ -140,7 +141,7 @@ double dta_read_double(dta_file *dtaf){
 }
 
 int dta_read_string(dta_file *dtaf, char* target, int nchar){
-  int read_len = fread(target,1,nchar,dtaf->f);
+  int read_len = (int)fread(target,1,nchar,dtaf->f); // can safely assume that retval will not be larger than INT_MAX ...
   return read_len;
 }
 
@@ -158,7 +159,7 @@ SEXP dta_skip_records(SEXP s_dta_file, SEXP s_n){
 
 SEXP dta_ftell (SEXP s_file){
   dta_file *dtaf = get_dta_file(s_file);
-  return ScalarInteger(ftell(dtaf->f));
+  return ScalarInteger(ftell32(dtaf->f));
 }
 
 SEXP dta_feof (SEXP s_file){
@@ -297,7 +298,7 @@ SEXP dta_trans_types(SEXP s_types){
       case 'f': RAW(typelist)[i] = DTA_FLOAT; break;
       case 'd': RAW(typelist)[i] = DTA_DOUBLE; break;
       default:
-        if(RAW(s_types)[i] >= 0x80) RAW(typelist)[i] = RAW(s_types)[i] - 0x7f;
+        if(RAW(s_types)[i] >= 0x80) RAW(typelist)[i] = (Rbyte)(RAW(s_types)[i] - 0x7f);
         else RAW(typelist)[i] = 0;
         break;
       }
@@ -371,14 +372,14 @@ SEXP dta_read_expansion_fields(SEXP s_dta_file, SEXP s_shortext){
         fseek(dtaf->f,len,SEEK_CUR);
     else break;
   }
-  dtaf->start_data = ftell(dtaf->f);
+  dtaf->start_data = ftell32(dtaf->f);
   return R_NilValue;
 }
 
 SEXP dta_seek_data(SEXP s_dta_file){
   dta_file *dtaf = get_dta_file(s_dta_file);
   int ret = fseek(dtaf->f,dtaf->start_data,SEEK_SET);
-  if(ret == 0) return ScalarInteger(ftell(dtaf->f));
+  if(ret == 0) return ScalarInteger(ftell32(dtaf->f));
   else return ScalarInteger(NA_INTEGER);
 }
 

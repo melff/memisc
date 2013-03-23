@@ -12,7 +12,7 @@
 int _R_atoi(char *text){
   char *end_ptr;
   if(!strlen(text)) return NA_INTEGER; 
-  int result = strtol(text,&end_ptr,10);
+  int result = (int)strtol(text,&end_ptr,10);
   if(!isdigit(end_ptr[-1])) return NA_INTEGER;
   else return result;
 }

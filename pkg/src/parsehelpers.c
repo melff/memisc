@@ -78,7 +78,7 @@ SEXP firstnum(SEXP s_text){
 SEXP is_floatspec(SEXP s_text){
   PROTECT(s_text = AS_CHARACTER(s_text));
   const char *text = CHAR(STRING_ELT(s_text,0));
-  int pos, sl = strlen(text);
+  size_t pos, sl = strlen(text);
 #ifdef DEBUG
   Rprintf("Tested string: %s\n",text);
 #endif
@@ -100,7 +100,7 @@ SEXP is_floatspec(SEXP s_text){
 SEXP has_digits(SEXP s_text){
   PROTECT(s_text = AS_CHARACTER(s_text));
   const char *text = CHAR(STRING_ELT(s_text,0));
-  int pos, sl = strlen(text);
+  size_t pos, sl = strlen(text);
 #ifdef DEBUG
   Rprintf("Tested string: %s\n",text);
 #endif
@@ -118,7 +118,7 @@ SEXP has_digits(SEXP s_text){
 SEXP get_digits(SEXP s_text){
   PROTECT(s_text = AS_CHARACTER(s_text));
   const char *text = CHAR(STRING_ELT(s_text,0));
-  int pos, startpos = -1, stoppos = -1, sl = strlen(text);
+  size_t pos, startpos = -1, stoppos = -1, sl = strlen(text);
   for(pos = 0; pos < sl; pos++){
     if(isdigit(text[pos])){
       startpos = pos;
@@ -136,7 +136,7 @@ SEXP get_digits(SEXP s_text){
     }
   }
   if(stoppos < 0) stoppos = sl;
-  int reslen = stoppos-startpos;
+  size_t reslen = stoppos-startpos;
   char *result = R_alloc(reslen+1,1);
   memset(result,0,reslen+1);
   memcpy(result,text+startpos,reslen);
@@ -158,7 +158,7 @@ SEXP str_contains(SEXP s_text, SEXP s_target){
     return ScalarLogical(FALSE);
   }
 
-  int tlen = strlen(target), i;
+  size_t tlen = strlen(target), i;
   for(i = 0; i+tlen <= strlen(text); i++) {
     if(memcmp(text + i,target,tlen)== 0){
       UNPROTECT(2);

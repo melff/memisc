@@ -6,6 +6,12 @@
 #include <Rinternals.h>
 #include "memisc.h"
 
+int ftell32 (FILE *f){
+  size_t tellval = ftell(f);
+  if(tellval > INT_MAX) error("ftell: return value to large");
+  return (int)tellval;
+}
+
 FILE *rofile_FILE(SEXP s_file);
 SEXP rofile_fclose(SEXP s_file)
 {
@@ -55,7 +61,7 @@ FILE *rofile_FILE(SEXP s_file){
 
 SEXP roftell (SEXP s_file){
   FILE *f = rofile_FILE(s_file);
-  return ScalarInteger(ftell(f));
+  return ScalarInteger(ftell32(f));
 }
 
 /*int seek_code[] = { SEEK_SET, SEEK_CUR, SEEK_END };*/ 
@@ -78,10 +84,10 @@ SEXP rofseek (SEXP s_file, SEXP s_pos, SEXP s_whence){
 
 SEXP rofreadline(SEXP s_file){
   FILE *f = rofile_FILE(s_file);
-  int found = 0, nlines=1, i, sl;
+  int found = 0, nlines=1;
+  size_t i, sl, offset = 0;
   char *buf = S_alloc(bufsize,1);
   char *tmp;
-  int offset = 0;
   while(!found){
     tmp = buf + offset;
     tmp = fgets(tmp,bufsize,f);

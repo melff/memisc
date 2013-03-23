@@ -104,7 +104,7 @@ static const unsigned char Por2int_tab[256] =
     255,255,255,255,255,255
   };
 
-
+// #define DEBUG
 int Por2int(int len, char* text){
   int i, curr, target, stop, sign;
   sign = 1;
@@ -173,21 +173,21 @@ double Por2double(int len, char* text){
   }
   for(tmp = text; tmp < end; tmp++){
     if(*tmp == '.'){
-      l_charact = tmp - text;
+      l_charact = (int)(tmp - text);
       tmp++;
       t_mant = tmp;
-      l_mant = end - tmp;
+      l_mant = (int)(end - tmp);
       break;
     }
     if(*tmp == '+' || *tmp == '-'){
-      l_charact = tmp - text;
+      l_charact = (int)(tmp - text);
       if(*tmp == '+')
         exp_sign = 1;
       if(*tmp == '-')
         exp_sign = -1;
       tmp++;
       t_exp = tmp;
-      l_exp = end - tmp;
+      l_exp = (int)(end - tmp);
       exponent = Por2int(l_exp,t_exp);
       if(exp_sign == -1){ /** "un-normalize" **/
         if(exponent >= l_charact){
@@ -253,7 +253,7 @@ void initPorStreamBuf(porStreamBuf *b){
   Rprintf("\nb = %d",b);
 #endif
   int i;
-  for(i = 0; i < 256; i++) b->translate[i] = i;
+  for(i = 0; i < 256; i++) b->translate[i] = (unsigned char)i;
   b->pos = 0;
   b->line = 0;
   b->at_end = FALSE;
@@ -297,7 +297,7 @@ int fillPorStreamBuf(porStreamBuf *b) {
     b->at_end = TRUE;
     return 0;
   }
-  int fpos = ftell(b->f);
+  int fpos = ftell32(b->f);
   char *dummy = fgets((char *)b->buf,BUFSIZE,b->f);
   if(!dummy) {
       fseek(b->f,fpos,SEEK_SET);
@@ -309,7 +309,7 @@ int fillPorStreamBuf(porStreamBuf *b) {
 #ifdef DEBUG
   Rprintf("\nbuffer = |%s|",b->buf);
 #endif
-  int i, len = strlen((char *)b->buf), prtlen = 0;
+  int i, len = (int)strlen((char *)b->buf), prtlen = 0;
   for(i = 0; i < len; i++) b->buf[i] = b->translate[(int)b->buf[i]];
   /* The following is for buggy portable files with short lines */
 
@@ -331,7 +331,7 @@ int fillPorStreamBuf(porStreamBuf *b) {
   b->line++;
   return prtlen;
 }
-#undef DEBUG
+// #undef DEBUG
 
 /** Internal functions to read from a porStreamBuf **/
 
@@ -592,7 +592,7 @@ int readIntPorStream1 (porStreamBuf *b){
 #ifdef DEBUG
     Rprintf("\nans =  %s",ans);
 #endif
-    int len = strlen(ans);
+    int len = (int)strlen(ans);
 #ifdef DEBUG
     Rprintf("\nresult =  %d",Por2int(len,ans));
 #endif
@@ -624,7 +624,7 @@ double readDoublePorStream1 (porStreamBuf *b){
 
     /*if(ans[strlen(ans)-1] == '*') return NA_REAL;*/
     ans[strlen(ans)-1] = '\0'; /* chop off '/'*/
-    int len = strlen(ans);
+    int len = (int)strlen(ans);
 
 #ifdef DEBUG
     Rprintf("\tresult = |%f|",Por2double(len,ans));
@@ -970,7 +970,7 @@ SEXP countCasesPorStream(SEXP porStream, SEXP s_types){
   UNPROTECT(1);
   return ScalarInteger(i);
 }
-#undef DEBUG
+//#undef DEBUG
 
 SEXP readSubsetPorStream(SEXP porStream, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_types){
   porStreamBuf *b = get_porStreamBuf(porStream);
