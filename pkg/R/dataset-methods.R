@@ -344,7 +344,8 @@ data.set <- function(..., row.names = NULL, check.rows = FALSE, check.names = TR
     c(args,
       row.names=row.names,
       check.rows=check.rows,
-      check.names=check.names
+      check.names=check.names,
+      stringsAsFactors=stringsAsFactors
     ))
   new("data.set",
     frame,

@@ -920,12 +920,11 @@ SEXP countCasesPorStream(SEXP porStream, SEXP s_types){
   int *types = INTEGER(s_types);
 
 
-  int i, j, k;
+  int i, j;
   char *charbuf;
   int charbuflen = 0;
   for(j = 0; j < nvar; j++){
       if(types[j]!=0 && types[j] > charbuflen) charbuflen = types[j];
-      k++;
   }
   charbuf = R_alloc(charbuflen+1,sizeof(char));
 

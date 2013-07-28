@@ -36,7 +36,7 @@ static double second_lowest_double_val();
 #define HIGHEST DBL_MAX
 #define LOWEST second_lowest_double_val()
 
-
+#undef DEBUG
 /** sysfile tools **/
 
 void init_sys_file(sys_file *s){
@@ -167,7 +167,7 @@ int sys_read_case(sys_file *s){
   }
   return 0; /* -Wall */
 }
-#undef DEBUG
+
 
 
 /** sysfile objects **/
@@ -199,7 +199,7 @@ SEXP NewSysFile (SEXP name){
     return ans;
   }
 }
-#undef DEBUG
+
 
 SEXP sys_file_restore_from_attrib(SEXP SysFile, sys_file *s,const char* attribname){
   SEXP ans = getAttrib(SysFile,install(attribname));
@@ -437,7 +437,7 @@ SEXP read_sysfile_var(SEXP SysFile){
         Rprintf("\nas real = %.9e",curr_var.missing_values[i]);
         }
 #endif
-#undef DEBUG
+
   }
 
 
@@ -539,9 +539,9 @@ SEXP read_sysfile_value_labels (SEXP SysFile){
   for(i = 0; i < nlabels; i++){
     sys_read_real(&value,s);
     REAL(values)[i] = value;
-    int lablen, readlen;
+    unsigned char lablen, readlen;
     sys_read(&lablen,1,s);
-    readlen = (lablen/8)*8+7;
+    readlen = (unsigned char)((lablen/8)*8+7);
     sys_read(labbuf,readlen,s);
     labbuf[lablen] = 0;
 #ifdef DEBUG
@@ -582,7 +582,7 @@ SEXP read_sysfile_value_labels (SEXP SysFile){
 #endif
   return ans;
 }
-#undef DEBUG
+
 
 
 SEXP read_sysfile_document(SEXP SysFile){
@@ -717,7 +717,6 @@ SEXP read_sysfile_aux(SEXP SysFile){
 #ifdef DEBUG
     PrintValue(ans);
 #endif
-#undef DEBUG
     return ans;
   }
   else if (subtype == aux_var){
@@ -1212,7 +1211,7 @@ SEXP read_sysfile_subset (SEXP SysFile, SEXP what,
     UNPROTECT(5);
     return data;
 }
-#undef DEBUG
+
 
 SEXP check_pointer(SEXP ptr){
   if(TYPEOF(ptr) != EXTPTRSXP) return ScalarLogical(0);

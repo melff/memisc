@@ -1,3 +1,7 @@
+2013-07-28:
+  - fix of 'data.set()' and 'Table()' functions.
+    Thanks to Gabor Grothendiek and Jeremy Jackson 
+
 2013-03-20:
   - getSummary method for "mer" objects was broken and now is fixed.
 

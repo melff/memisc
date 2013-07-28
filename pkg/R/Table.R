@@ -64,16 +64,17 @@ setMethod("Table",signature(x="item.vector"),
           lvl <- vl@.Data
           valid <- !is.missing2(vvl,x@value.filter)
           i <- match(x@.Data,vvl,nomatch=0L)
-          if(!length(weights))
+          if(!length(weights)){
             tab <- tabulate(i,nbins=length(vvl))
+            names(tab) <- as.character(vl@values)
+            }
           else {
-            f <- factor(i,levels=1:max(i))
+            f <- factor(x@.Data,levels=vvl)
             good <- is.finite(weights) & is.finite(f)
             tmp <- rowsum(weights[good],f[good])
             tab <- structure(rep(0,nlevels(f[good])),names=levels(f))
             tab[rownames(tmp)] <- tmp[]
           }
-          names(tab) <- as.character(vl@values)
           lab <- if(style=="codebook") sQuote(vl@.Data) else vl@.Data
         }
         else {
