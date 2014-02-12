@@ -20,7 +20,7 @@ function (which.given, which.panel, var.name, factor.levels,
             which.given, sep = ".")))
     gp.text <- gpar(col = par.strip.text$col, alpha = par.strip.text$alpha,
         lineheight = par.strip.text$lineheight, fontfamily = par.strip.text$fontfamily,
-        fontface = lattice:::chooseFace(par.strip.text$fontface, par.strip.text$font),
+        fontface = if(is.null(par.strip.text$fontface)) par.strip.text$font else par.strip.text$fontface,
         cex = par.strip.text$cex)
     name <- var.name[which.given]
     level <- which.panel[which.given]
@@ -48,7 +48,7 @@ function (which.given, which.panel, var.name, factor.levels,
                 1), c("npc", "mm"))), gp = gpar(col = fg, fill = fg))
         else grid.rect(y = unit(r %*% c(0.5, 0.5), "npc"), height = max(unit(c(diff(r),
             1), c("npc", "mm"))), gp = gpar(col = fg, fill = fg))
-        lattice:::paste.and.draw(name, getStripText(which.given,which.panel,stripTexts), sep = sep,
+        paste.and.draw(name, getStripText(which.given,which.panel,stripTexts), sep = sep,
             horizontal = horizontal, showl = strip.names[2],
             showr = strip.levels[2], gp = gp.text)
     }
@@ -69,7 +69,7 @@ function (which.given, which.panel, var.name, factor.levels,
             }
         }
         if (style %in% c(1, 3)) {
-            lattice:::paste.and.draw(name, getStripText(which.given,which.panel,stripTexts), sep = sep,
+            paste.and.draw(name, getStripText(which.given,which.panel,stripTexts), sep = sep,
                 horizontal = horizontal, showl = strip.names[1],
                 showr = strip.levels[1], gp = gp.text)
         }
@@ -96,6 +96,58 @@ function (which.given, which.panel, var.name, factor.levels,
     grid::upViewport()
 }
 
+## Copied from lattice, because R CMD --check warns about lattice:::paste.and.draw
+paste.and.draw <-
+    function(left, right, sep = " : ",
+             horizontal = TRUE,
+             center = TRUE,
+             showl = TRUE,
+             showr = TRUE,
+             gp = gpar())
+{
+    ## We are already in a viewport.  Essentially want to draw
+    ## paste(left, right, sep = sep) in the middle.  The catch is,
+    ## left and right (maybe even sep) may be expressions.  The easy
+    ## solution is to draw sep in the middle and left and right on
+    ## either side.  The better solution is to combine and then
+    ## center.
+
+    if (showl || showr)
+    {
+        shows <- showl && showr
+        wsep <- unit(0.5 * shows, "strwidth", list(sep))
+        offset <- unit(0.5, "npc")
+        if (center)
+            offset <-
+                offset +
+                    (if (showl) unit(0.5, "strwidth", list(left)) else unit(0, "mm")) -
+                        (if (showr) unit(0.5 * showr, "strwidth", list(right)) else unit(0, "mm"))
+        if (horizontal)
+        {
+            if (shows) grid.text(sep, x = offset,
+                                 name = trellis.grobname("sep", type="strip"),
+                                 gp = gp)
+            if (showl) grid.text(left, x = offset - wsep,
+                                 name = trellis.grobname("textl", type="strip"),
+                                 gp = gp, just = "right")
+            if (showr) grid.text(right, x = offset + wsep,
+                                 name = trellis.grobname("textr", type="strip"),
+                                 gp = gp, just = "left")
+        }
+        else
+        {
+            if (shows) grid.text(sep, y = offset,
+                                 name = trellis.grobname("sep", type="strip.left"),
+                                 gp = gp, rot = 90)
+            if (showl) grid.text(left, y = offset - wsep,
+                                 name = trellis.grobname("textl", type="strip.left"),
+                                 gp = gp, just = "right", rot = 90)
+            if (showr) grid.text(right, y = offset + wsep,
+                                 name = trellis.grobname("textr", type="strip.left"),
+                                 gp = gp, just = "left", rot = 90)
+        }
+    }
+}
 
 
 

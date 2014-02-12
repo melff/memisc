@@ -313,7 +313,7 @@ int fillPorStreamBuf(porStreamBuf *b) {
   for(i = 0; i < len; i++) b->buf[i] = b->translate[(int)b->buf[i]];
   /* The following is for buggy portable files with short lines */
 
-  for(i = len; i >= 0; i++){
+  for(i = len-1; i >= 0; i++){
     if (b->buf[i] >= 32) /* found a printable character*/ {
       prtlen = i+1;
       break;
@@ -673,6 +673,7 @@ SEXP NewPorStream (SEXP name){
   Rprintf("\nfile = %d",b->f);
 #endif
   if(b->f == NULL){
+    Free(b);
     UNPROTECT(1);
     return R_NilValue;
   }
@@ -718,6 +719,7 @@ SEXP closePorStream (SEXP porStream){
   porStreamBuf *b = R_ExternalPtrAddr(porStream);
   if (b != NULL) {
       fclose(b->f);
+      Free(b);
       /*Rprintf("\n'portable' file closed\n");*/
       R_ClearExternalPtr(porStream);
   }

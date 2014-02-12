@@ -108,6 +108,7 @@ interrupt(msg=NULL)
     A data frame that contains experimental conditions and simulation results.
 }
 \examples{
+\dontrun{
 Normal.example <- function(mean=0,sd=1,n=10){
   x <- rnorm(n=n,mean=mean,sd=sd)
   c(
@@ -142,8 +143,6 @@ expr.simres <- Simulate(
 
 genTable(c(mean(result),sd(result))~sd+n+mean,data=expr.simres)
 
-
-\dontrun{
 ## This takes a little bit longer
 lm.example <- function(a=0,b=1,n=101,xrange=c(-1,1),serr=1){
   x <- seq(from=xrange[1],to=xrange[2],length=n)
