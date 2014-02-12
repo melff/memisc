@@ -313,7 +313,8 @@ int fillPorStreamBuf(porStreamBuf *b) {
   for(i = 0; i < len; i++) b->buf[i] = b->translate[(int)b->buf[i]];
   /* The following is for buggy portable files with short lines */
 
-  for(i = len-1; i >= 0; i++){
+  for(i = len-1; i >= 0; i--){
+    /*if(i >= BUFSIZE) error("out of bounds error");*/
     if (b->buf[i] >= 32) /* found a printable character*/ {
       prtlen = i+1;
       break;

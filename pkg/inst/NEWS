@@ -1,7 +1,8 @@
-2013-12-04:
+2013-12-06:
   - fixes out-of-bound error and memory leak in 'pspp-portableStream-for-R.c'
     reported by Prof. Ripley.  Eliminated calls to non-exported functions from 'lattice'.
     Marked all example code of 'Simulate' as 'dontrun' to save time during package checks.
+    Also did some cosmetic changes to the package vignette 'anes48'.
 
 2013-09-19:
   - fixes of some namespace import issues.
