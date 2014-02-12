@@ -11,7 +11,6 @@ function (which.given, which.panel, var.name, factor.levels,
         FALSE), sep = " : ", style = 1, horizontal = TRUE, bg = trellis.par.get("strip.background")$col[which.given],
     fg = trellis.par.get("strip.shingle")$col[which.given], par.strip.text = trellis.par.get("add.text"),stripTexts=NULL)
 {
-    require(grid)
     if (horizontal)
         grid::pushViewport(viewport(y = (which.given - 0.5)/length(which.panel),
             height = 1/length(which.panel), name = paste("strip.default",
@@ -131,7 +130,6 @@ Termplot.default <- function(object,
         layout=NULL
   ){
   residuals <- match.arg(residuals)
-  if(!require(lattice)) stop("Termplot needs the lattice package")
   if(!missing(object) && !length(object$terms) && length(object[[1]]$terms)){
     m0 <- m <- match.call()
     m[[1]] <- Termplot.lmList

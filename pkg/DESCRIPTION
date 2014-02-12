@@ -2,19 +2,14 @@ Package: memisc
 Type: Package
 Title: Tools for Management of Survey Data, Graphics, Programming, Statistics, and
           Simulation
-Version: 0.96-6
-Date: 2013-07-28
+Version: 0.96-7
+Date: 2013-09-19
 Authors@R:
           c(person("Martin","Elff",role=c("aut","cre"),email="martin.elff@uni-konstanz.de"),
           person(c("Christopher"," N."),"Lawrence",role="ctb"),
           person(c("Jason","W."),"Morgan",role="ctb"),
-          person("Zeileis","Achim",role="ctb"), person("Dave","Atkins",role="ctb") )
+          person("Achim","Zeileis",role="ctb"), person("Dave","Atkins",role="ctb") )
 Author: Martin Elff
-  (with contributions from
-    Christopher N. Lawrence,
-    Dave Atkins,
-    Jason W. Morgan,
-    and Achim Zeileis)
 Maintainer: Martin Elff <martin.elff@uni-konstanz.de>
 Description: One of the aims of this package is to make life easier for
         useRs who deal with survey data sets. It provides an
@@ -28,5 +23,7 @@ Description: One of the aims of this package is to make life easier for
         programming, and simulation are provided.
 License: GPL-2
 LazyLoad: Yes
-Depends: R (>= 2.9.0), lattice, grid, stats, methods, utils, MASS
+Depends: R (>= 2.9.0), lattice, stats, methods, utils, MASS
+Suggests: car, splines
+Imports: grid
 URL: http://www.martin-elff.net/software/memisc/,http://memisc.r-forge.r-project.org/

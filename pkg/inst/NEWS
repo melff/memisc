@@ -1,3 +1,6 @@
+2013-09-19:
+  - fixes of some namespace import issues.
+
 2013-07-28:
   - fix of 'data.set()' and 'Table()' functions.
     Thanks to Gabor Grothendiek and Jeremy Jackson 
