@@ -1,3 +1,9 @@
+2014-08-19:
+  - modified some code that Prof Ripley thinks looks 'suspicious'.
+
+2014-06-24:
+  - Change of SPSS variable names to lower case is now optional (but still the default).
+
 2014-03-10:
   - Removed modification to getSummary.clm that slipped in from a development branch.
 

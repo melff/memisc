@@ -3,7 +3,8 @@ spss.system.file <- function(
     varlab.file=NULL,
     codes.file=NULL,
     missval.file=NULL,
-    count.cases=TRUE
+    count.cases=TRUE,
+    to.lower=TRUE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -76,6 +77,12 @@ spss.system.file <- function(
     attr(ptr,"ncases") <- ncases
     document <- data.spec$document
     data.spec$document <- NULL
+    
+    if(to.lower){
+      names(variables) <- tolower(names(variables))
+    }
+    
+    
     new("spss.system.importer",
       variables,
       ptr=ptr,

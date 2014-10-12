@@ -116,8 +116,8 @@ genTable <- function (formula,
       else
         rownames(res) <- seq_len(nrow(res))
     }
-    else if(!length(names(dimnames(res))[1]))
-      names(dimnames(res))[1] <- deparse(fcall)
+    #else if(!length(names(dimnames(res))[1]))
+    #  names(dimnames(res))[1] <- deparse(fcall)
    }
 
    by.dimnames <- lapply(by,function(x)as.character(sort(unique(x))))

@@ -62,9 +62,9 @@ spss.parse.data.spec <- function(file){
     has.data.list <- grep("data\\s+list\\s+",text,ignore.case=TRUE)
     if(!length(has.data.list)) stop("could not find 'data list' statement")
     if(length(has.data.list)>1) stop("too many 'data list' statments")
-    text <- tolower(text[has.data.list])
+    text <- text[has.data.list]
     text <- strsplit(text,"/",fixed=TRUE)[[1]]
-    header <- text[1]
+    header <- tolower(text[1])
     text <- text[-1]
     if(length(text)>1) stop("multiline format not yet implemented")
     skip <- gget.pattern("skip\\s*=\\s*[0-9]",header)
@@ -76,11 +76,11 @@ spss.parse.data.spec <- function(file){
     text <- gsub("\\(\\s+","(",text)
     text <- gsub("\\s+\\)",")",text)
     text <- gsub("\\s*-\\s*","-",text)
-    pa <- gget.pattern.with.args("\\s[a-z][a-z0-9_]*",text)
+    pa <- gget.pattern.with.args("\\s[A-Za-z][A-Za-z0-9_]*",text)
     variables <- trimws(pa$matches)
     specs <- trimws(pa$args)
     specs <- strsplit(specs,"\\s+")
-    format.specs <- sapply(specs,function(x)x[2])
+    format.specs <- tolower(sapply(specs,function(x)x[2]))
     specs <- sapply(specs,function(x)x[1])
     format.specs[is.na(format.specs)] <- ""
     is.string <- format.specs=="(a)"
@@ -108,7 +108,7 @@ spss.parse.variable.labels <- function(file){
     text <- gsub("variable\\s+labels\\s+","",text,ignore.case=TRUE)
     text <- strsplit(text,"\"")[[1]]
     ii <- seq_along(text)
-    variables <- tolower(text[ii%%2==1])
+    variables <- text[ii%%2==1]
     variables <- trimws(variables[-length(variables)])
     labels <- text[ii%%2==0]
     names(labels) <- variables
@@ -133,7 +133,7 @@ spss.parse.labels <- function(file){
     
     pa <- get.pattern.with.args("^[A-Za-z][A-Za-z0-9_]*\\s+",text)
     valid.matches <- !sapply(pa$matches,is.na)
-    variables <- tolower(pa$matches[valid.matches])
+    variables <- pa$matches[valid.matches]
     values <- strsplit(pa$args[valid.matches]," ")
     values <- lapply(values,numericIfPossible)
     variables <- trimws(variables)
@@ -159,7 +159,7 @@ spss.parse.missing.values <- function(file){
     text <- trimws(gsub("\\s+"," ",text))
     text <- strsplit(text,"\\(|\\)")[[1]]
     ii <- seq_along(text)
-    variables <- tolower(trimws(text[ii%%2==1]))
+    variables <- trimws(text[ii%%2==1])
     variables <- gsub("/","",variables,fixed=TRUE)
     miss.specs <- tolower(text[ii%%2==0])
     uprange <- suppressWarnings(get.pattern("[0-9]+[.]?[0-9]*\\s+thru\\s+hi[ghest]*",miss.specs))

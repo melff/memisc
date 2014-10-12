@@ -1,8 +1,6 @@
 car_recode <- function (var, recodes, as.factor.result, levels)
   stop("package 'car' is not available")
 
-car_pkg <-"car"
-lme4_pkg <- "lme4"
 memisc_env <- environment()
 
 
@@ -12,9 +10,8 @@ memisc_env <- environment()
   options(print.use.value.labels=TRUE)
   options(show.max.obs=25)
 
-  if(requireNamespace(car_pkg,quietly = TRUE)){
-    car_recode <- getFromNamespace("recode",ns=car_pkg)
-    assign("car_recode",car_recode,envir=memisc_env)
+  if(requireNamespace("car",quietly = TRUE)){
+    assign("car_recode",car::recode,envir=memisc_env)
   }
 
   options(coef.style="default")

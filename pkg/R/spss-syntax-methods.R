@@ -4,7 +4,8 @@ spss.fixed.file <- function(
     varlab.file=NULL,
     codes.file=NULL,
     missval.file=NULL,
-    count.cases=TRUE
+    count.cases=TRUE,
+    to.lower=TRUE
     ){
     file <- force(file)
     columns.file <- force(columns.file)
@@ -23,12 +24,24 @@ spss.fixed.file <- function(
     missings <- if(length(missval.file) && check.file(missval.file,error=TRUE)) spss.parse.missing.values(missval.file)
                else NULL #vector(length(types),mode="list")
     variables <- vector(length(types),mode="list")
-    names(variables) <- names(types)
+
+    var.names <- names(types)
+    names(variables) <- tolower(var.names)
     variables[types==1] <- list(new("double.item"))
     variables[types==2] <- list(new("character.item"))
-    if(length(varlabs)) variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
-    if(length(vallabs)) variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs)
-    if(length(missings)) variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
+
+    if(length(varlabs)){
+      n <- tolower(names(varlabs))
+      variables[n] <- mapply("description<-",variables[n],as.list(varlabs))
+    }
+    if(length(vallabs)){
+      n <- tolower(names(vallabs))
+      variables[n] <- mapply("labels<-",variables[n],vallabs)
+    } 
+    if(length(missings)){
+      n <- tolower(names(missings))
+      variables[n] <- mapply("missing.values<-",variables[n],missings)
+    } 
 
     nlines <- if(count.cases) {
         maxlenline <- data.spec$stop[length(data.spec$stop)]
@@ -37,6 +50,11 @@ spss.fixed.file <- function(
         nlines <- .Call("countlines",fptr,maxlenline)
      } else NA_integer_
      attr(fptr,"nlines") <- nlines
+
+    if(!to.lower){
+      names(variables) <- var.names
+    }
+
      new("spss.fixed.importer",
       variables,
       ptr=fptr,

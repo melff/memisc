@@ -13,7 +13,7 @@ getSummary.polr <- function(obj,
 
   smry <- summary(obj)
   N <- if(length(weights(obj))) sum(weights(obj))
-    else smry$nobs
+    else nobs(obj)
 
   coef <- smry$coef
 
@@ -29,7 +29,7 @@ getSummary.polr <- function(obj,
   coef <- cbind(coef,pvals,lower,upper)
 
   colnames(coef) <- c("est","se","stat","p","lwr","upr")
-  null.model <- update(obj, paste(names(obj$model[1]), " ~ 1"))
+  null.model <- update(obj, .~1)
 
   LR <- deviance(null.model) - deviance(obj)
   df <- null.model$df.residual - smry$df.resid
@@ -101,7 +101,8 @@ getSummary.clm <- function(obj,
   cf <- cbind(cf,lower,upper)
   
   colnames(cf) <- c("est","se","stat","p","lwr","upr")
-  null.model <- update(obj, location=paste(names(obj$model[1]), " ~ 1"))
+  #null.model <- update(obj, location=paste(names(obj$model[1]), " ~ 1"))
+  null.model <- update(obj, .~1)
   
   ll <- logLik(obj)
   ll0 <- logLik(null.model)

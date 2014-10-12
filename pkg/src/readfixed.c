@@ -52,11 +52,13 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
     SET_VECTOR_ELT(data,j,lengthgets(x,n));
   }
   item = R_alloc(maxlen+1,1);
-
+#undef DEBUG
+#ifdef DEBUG
+  Rprintf("Requested number of lines: %d\n",n);
+#endif  
   for(i = 0; i < n; i++){
     memset(buffer,0,max_lenline+3);
     buffer = fgets(buffer,max_lenline+3,f);
-#undef DEBUG
 #ifdef DEBUG
     Rprintf("Requested line length: %d\n",max_lenline);
     Rprintf("Actual line length: %d\n",strlen(buffer));

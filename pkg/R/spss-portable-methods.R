@@ -3,7 +3,8 @@ spss.portable.file <- function(
     varlab.file=NULL,
     codes.file=NULL,
     missval.file=NULL,
-    count.cases=TRUE
+    count.cases=TRUE,
+    to.lower=TRUE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -56,6 +57,11 @@ spss.portable.file <- function(
     } else
         ncases <- NA
     attr(ptr,"ncases") <- ncases
+    
+    if(to.lower){
+      names(variables) <- tolower(names(variables))
+    }
+    
     document <- data.spec$document
     data.spec$document <- NULL
     new("spss.portable.importer",

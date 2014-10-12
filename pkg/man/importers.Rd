@@ -52,20 +52,23 @@ spss.fixed.file(file,
   varlab.file=NULL,
   codes.file=NULL,
   missval.file=NULL,
-  count.cases=TRUE
+  count.cases=TRUE,
+  to.lower=TRUE
   )
 
 spss.portable.file(file,
   varlab.file=NULL,
   codes.file=NULL,
   missval.file=NULL,
-  count.cases=TRUE)
+  count.cases=TRUE,
+  to.lower=TRUE)
 
 spss.system.file(file,
   varlab.file=NULL,
   codes.file=NULL,
   missval.file=NULL,
-  count.cases=TRUE)
+  count.cases=TRUE,
+  to.lower=TRUE)
 
 Stata.file(file)
 
@@ -91,6 +94,7 @@ Stata.file(file)
     \item{count.cases}{logical; should cases in file be counted? This
       takes effect only if the data file does not already contain information
       about the number of cases.}
+    \item{to.lower}{logical; should variable names changed to lower case?}
     \item{subset}{a logical vector or an expression containing variables
         from the external data file that evaluates to logical. }
     \item{select}{a vector of variable names from the external data file.
