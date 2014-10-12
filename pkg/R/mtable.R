@@ -104,7 +104,7 @@ getSummary.glm <- function(obj,
             ...){
 
   smry <- summary(obj)
-  N <- if(length(weights(obj))) sum(weights(obj))
+  N <- if(length(weights(obj))) sum(weights(obj),na.rm=TRUE)
     else sum(smry$df[1:2])
 
   coef <- smry$coef

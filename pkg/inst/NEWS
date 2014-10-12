@@ -1,3 +1,6 @@
+2014-09-08:
+  - 'getSummary.glm' now takes care of missing values in weights of glm objects.
+
 2014-08-19:
   - modified some code that Prof Ripley thinks looks 'suspicious'.
 
