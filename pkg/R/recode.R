@@ -184,7 +184,11 @@ setMethod("recode","vector",function(x,...,otherwise=NA){
     otherwise[] <- tmp
     y[!recoded] <- otherwise[!recoded]
   }
-  if(is.character(y)) y <- factor(y,levels=newcodes)
+  if(is.character(y)) {
+    levels <- sort(unique(y[y%nin%newcodes]))
+    levels <- c(levels,newcodes)
+    y <- factor(y,levels=levels)
+  }
   return(y)
 })
 
