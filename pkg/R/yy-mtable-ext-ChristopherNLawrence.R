@@ -81,41 +81,46 @@ getSummary.polr <- function(obj,
 }
 
 getSummary.clm <- function(obj,
-            alpha=.05,
-            ...){
-
+                           alpha=.05,
+                           ...){
+  
   smry <- summary(obj)
   N <- if(length(weights(obj))) sum(weights(obj))
-    else smry$nobs
-
+  else smry$nobs
+  
   cf <- coef(smry)
-
+  
+  ## Move threshold parameters to end
+  thresholds <- names(obj$xi)
+  parameters <- rownames(cf)
+  cf <- rbind(cf[setdiff(parameters, thresholds),], cf[thresholds,])
+  
   lower <- qnorm(p=alpha/2,mean=cf[,1],sd=cf[,2])
   upper <- qnorm(p=1-alpha/2,mean=cf[,1],sd=cf[,2])
-
+  
   cf <- cbind(cf,lower,upper)
-
+  
   colnames(cf) <- c("est","se","stat","p","lwr","upr")
   null.model <- update(obj, location=paste(names(obj$model[1]), " ~ 1"))
-
+  
   ll <- logLik(obj)
   ll0 <- logLik(null.model)
-
+  
   LR <- 2*(ll-ll0)
   df <- null.model$df.residual - smry$df.residual
-
+  
   dev <- -2*ll
-
+  
   if(df > 0){
     p <- pchisq(LR,df,lower.tail=FALSE)
     L0.pwr <- exp(2*ll0/N)
     #LM.pwr <- exp(-smry$deviance/N)
-
+    
     Aldrich.Nelson <- LR/(LR+N)
     McFadden <- 1 - dev/(-2*ll0)
     Cox.Snell <- 1 - exp(-LR/N)
     Nagelkerke <- Cox.Snell/(1-L0.pwr)
-    }
+  }
   else {
     LR <- NA
     df <- NA
@@ -124,33 +129,29 @@ getSummary.clm <- function(obj,
     McFadden <- NA
     Cox.Snell <- NA
     Nagelkerke <- NA
-    }
-
+  }
+  
   AIC <- AIC(obj)
   BIC <- AIC(obj,k=log(N))
   sumstat <- c(
-          LR             = LR,
-          df         = df,
-          p             = p,
-          logLik        = ll,
-          deviance      = dev,
-          Aldrich.Nelson = Aldrich.Nelson,
-          McFadden      = McFadden,
-          Cox.Snell       = Cox.Snell,
-          Nagelkerke    = Nagelkerke,
-          AIC           = AIC,
-          BIC           = BIC,
-          N             = N
-          )
-
-  betanames <- names(obj$beta)
-  alphanames <- names(obj$alpha)
-  list(estimates=list(coef=cf[betanames,,drop=FALSE],
-                      thresholds=cf[alphanames,,drop=FALSE]),
-    sumstat=sumstat,
-    contrasts=obj$contrasts,
-    xlevels=smry$xlevels,
-    call=obj$call)
+    LR             = LR,
+    df         = df,
+    p             = p,
+    logLik        = ll,
+    deviance      = dev,
+    Aldrich.Nelson = Aldrich.Nelson,
+    McFadden      = McFadden,
+    Cox.Snell       = Cox.Snell,
+    Nagelkerke    = Nagelkerke,
+    AIC           = AIC,
+    BIC           = BIC,
+    N             = N
+  )
+  
+  #cf <- apply(cf,1,applyTemplate,template=coef.template)
+  
+  #sumstat <- drop(applyTemplate(sumstat,template=sumstat.template))
+  list(coef=cf,sumstat=sumstat,contrasts=obj$contrasts,xlevels=smry$xlevels,call=obj$call)
 }
 
 getSummary.simex <- function(obj,

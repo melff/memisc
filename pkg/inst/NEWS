@@ -1,3 +1,6 @@
+2014-03-10:
+  - Removed modification to getSummary.clm that slipped in from a development branch.
+
 2013-12-06:
   - fixes out-of-bound error and memory leak in 'pspp-portableStream-for-R.c'
     reported by Prof. Ripley.  Eliminated calls to non-exported functions from 'lattice'.
