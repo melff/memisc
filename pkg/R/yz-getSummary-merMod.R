@@ -67,7 +67,7 @@ getSummary.merMod <- function (obj, alpha = 0.05, varPar.as.coef=TRUE, ...) {
   if(!isREML)
     deviance <- deviance(obj)
   else 
-    deviance <- REMLcrit(obj)
+    deviance <- lme4::REMLcrit(obj)
   AIC <- AIC(obj)
   BIC <- BIC(obj)
   
