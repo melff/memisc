@@ -83,6 +83,8 @@ parseSysHeader <- function(file){
     longVariableNames <- auxiliaries$longVariableNames
     longVariableNames <- strsplit(longVariableNames,"\t")[[1]]
     longVariableNames <- strsplit(longVariableNames,"=")
+    longVariableNames <- sapply(longVariableNames,function(lvn)
+        structure(lvn[2],names=lvn[1]))
     ii <- match(names(longVariableNames),names(variables))
     names(variables)[ii] <- unname(longVariableNames)
   }
