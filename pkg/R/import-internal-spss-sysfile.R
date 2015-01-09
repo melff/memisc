@@ -77,6 +77,7 @@ parseSysHeader <- function(file){
   if(spss.testcode(file)==999) start.data <- spss.dictterm(file)
   else stop("did not find dictionary termination code")
   #message("\nstart of data:",p$start.data)
+  attr(file,"sysmis") <- sysmis
   attr(file,"data_pos") <- start.data
 
   if(length(auxiliaries$longVariableNames)){
