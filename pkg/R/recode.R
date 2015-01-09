@@ -156,7 +156,7 @@ setMethod("recode","vector",function(x,...,otherwise=NA){
                           as.call(list(as.symbol("%in%"),as.symbol("x"),x))
                           )
   torecode <- sapply(oldcodes,eval,envir=environment())
-  if(!is.matrix(torecode)) torecode <- t(oldcodes)
+  if(!is.matrix(torecode)) torecode <- t(torecode)
   newcodes <- sapply(newcodes,eval,parent.frame())
   nevtrue <- colSums(torecode, na.rm=TRUE) == 0
   if(any(nevtrue)){

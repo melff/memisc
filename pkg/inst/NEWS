@@ -1,3 +1,6 @@
+2014-12-14: 
+  - Correct buglet in 'recode' method for numeric vectors
+
 2014-11-04:
   - Fixed silly bug introduced in recent update: Long variable names in SPSS "sav" files should work again now.
 
