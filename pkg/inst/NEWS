@@ -1,3 +1,8 @@
+2015-01-25:
+  - Explicitly export S3 method as required by package check by more recent R version
+  - Added github URL
+  - Listed packages that are 'enhanced' by supporting them for `mtable`
+
 2014-12-14: 
   - Correct buglet in 'recode' method for numeric vectors
 

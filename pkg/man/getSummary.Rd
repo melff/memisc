@@ -6,7 +6,6 @@
 \alias{getSummary.clm}
 \alias{getSummary.polr}
 \alias{getSummary.simex}
-\alias{getSummary.expcoef}
 \alias{getSummary.expcoef.glm}
 \alias{getSummary.aftreg}
 \alias{getSummary.coxph}
@@ -14,6 +13,7 @@
 \alias{getSummary.survreg}
 \alias{getSummary.weibreg}
 \alias{getSummary.mer}
+\alias{getSummary.merMod}
 \alias{getSummary.ivreg}
 \alias{getSummary.tobit}
 \alias{getSummary.hurdle}
@@ -30,6 +30,7 @@
   
   \method{getSummary}{lm}(obj, alpha=.05,\dots)
   \method{getSummary}{glm}(obj, alpha=.05,\dots)
+  \method{getSummary}{merMod}(obj, alpha=.05, varPar.as.coef = TRUE, \dots)
 
   # These are contributed by Christopher N. Lawrence
   \method{getSummary}{clm}(obj, alpha=.05,\dots)

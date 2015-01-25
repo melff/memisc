@@ -23,6 +23,7 @@ export(
       getSummary.phreg,
       getSummary.weibreg,
       getSummary.mer,
+      getSummary.merMod,
       getSummary.expcoef,
       getSummary.expcoef.glm,
       getSummary.ivreg,
@@ -117,9 +118,26 @@ export(
       relabel4
       )
 S3method(aggregate,formula)
-#S3method(getSummary,lm)
-#S3method(getSummary,glm)
-#S3method(getSummary.expcoef,glm)
+S3method(getSummary,aftreg)
+S3method(getSummary,betareg)
+S3method(getSummary,clm)
+S3method(getSummary,coxph)
+S3method(getSummary,glm)
+S3method(getSummary,hurdle)
+S3method(getSummary,ivreg)
+S3method(getSummary,lm)
+S3method(getSummary,mer)
+S3method(getSummary,merMod)
+S3method(getSummary,multinom)
+S3method(getSummary,phreg)
+S3method(getSummary,polr)
+S3method(getSummary,simex)
+S3method(getSummary,survreg)
+S3method(getSummary,tobit)
+S3method(getSummary,weibreg)
+S3method(getSummary.expcoef,glm)
+S3method(sort,data.frame)
+S3method(sort,data.set)
 S3method(print,mtable)
 S3method(format,mtable)
 S3method(toLatex,default)
