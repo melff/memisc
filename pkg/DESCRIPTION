@@ -2,7 +2,7 @@ Package: memisc
 Type: Package
 Title: Tools for Management of Survey Data, Graphics, Programming, Statistics, and
           Simulation
-Version: 0.96-11
+Version: 0.97-0
 Date: 2014-01-25
 Author: Martin Elff (with contributions by Christopher N. Lawrence, Dave Atkins, Jason W. Morgan, and Achim Zeileis)
 Maintainer: Martin Elff <elff@gmx.com>

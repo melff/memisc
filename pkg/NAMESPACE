@@ -115,7 +115,8 @@ export(
       spss.system.file,
       Stata.file,
       query,
-      relabel4
+      relabel4,
+      Iconv
       )
 S3method(aggregate,formula)
 S3method(getSummary,aftreg)
@@ -266,5 +267,10 @@ S3method(as.data.frame,data.set)
 S3method(cbind,data.set)
 S3method(fapply,data.set)
 S3method(print,descriptions)
+S3method(Iconv,item)
+S3method(Iconv,value.labels)
+S3method(Iconv,annotation)
+S3method(Iconv,data.set)
+S3method(Iconv,importer)
 
 
