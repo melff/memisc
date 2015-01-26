@@ -48,6 +48,14 @@ codebookStatsMetric <- function(x){
     )
 }
 
+setMethod("as.character","codebook",function(x,...){
+  width <- getOption("width")
+  toprule <- paste(rep("=",width),collapse="")
+  midrule <- paste(rep("-",width),collapse="")
+  out <- mapply(format,x=x,name=names(x),toprule=toprule,midrule=midrule)
+  unlist(out)
+})
+
 setMethod("show","codebook",function(object){
   width <- getOption("width")
   toprule <- paste(rep("=",width),collapse="")
