@@ -10,7 +10,7 @@
   and/or the corresponding percentages of an atomic vector,
   factor or \code{"item.vector"} object.
   This function is intended for use with
-  \code{\link{aggregate.formula}} or \code{\link{genTable}}.
+  \code{\link{Aggregate}} or \code{\link{genTable}}.
   The \code{"item.vector"} method is the workhorse
   of \code{\link{codebook}}.
   }
@@ -45,7 +45,7 @@
 }
 \examples{
   with(as.data.frame(UCBAdmissions),Table(Admit,Freq))
-  aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
+  Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
 
   A <- sample(c(1:5,9),size=100,replace=TRUE)
   labels(A) <- c(a=1,b=2,c=3,d=4,e=5,dk=9)

@@ -1,23 +1,22 @@
-\name{aggragate.formula}
-\alias{aggregate.formula}
+\name{genTable}
+\alias{Aggregate}
 \alias{genTable}
 \alias{fapply}
 \alias{fapply.default}
-\title{Data Frames and Tables of Descriptive Statistics}
+\title{Generic Tables and Data Frames of Descriptive Statistics}
 \description{
-  \code{aggregate.formula} constructs a data frame of summaries conditional on
-  given values of independent variables given by a formula. It is a method
-  of the generic function \code{aggregate} applied to \code{formula} objects.
+  \code{genTable} creates a table of arbitrary summaries conditional on
+  given values of independent variables given by a formula.
 
-  \code{genTable} does the same, but produces a \code{table}.
+  \code{Aggregate} does the same, but returns a \code{data.frame} instead.
 
   \code{fapply} is a generic function that dispatches on its \code{data}
-  argument. It is called internally by \code{aggregate.formula} and \code{genTable}.
-  Methods for this function can be used to adapt \code{aggregate.formula} and
+  argument. It is called internally by \code{Aggregate} and \code{genTable}.
+  Methods for this function can be used to adapt \code{Aggregate} and
   \code{genTable} to data sources other than data frames.
   }
 \usage{
-\method{aggregate}{formula}(x, data=parent.frame(), subset=NULL,
+Aggregate(formula, data=parent.frame(), subset=NULL,
       sort = TRUE, names=NULL, addFreq=TRUE, as.vars=1,
       drop.constants=TRUE,\dots)
 
@@ -29,7 +28,7 @@ fapply(formula,data,\dots) # calls UseMethod("fapply",data)
       names=NULL, addFreq=TRUE,\dots)
 }
 \arguments{
-  \item{x, formula}{a formula. The right hand side includes one or more
+  \item{formula}{a formula. The right hand side includes one or more
   grouping variables separated by '+'. These may be factors, numeric,
   or character vectors. The left hand side may be empty,
   a numerical variable, a factor, or an expression.
@@ -38,7 +37,7 @@ fapply(formula,data,\dots) # calls UseMethod("fapply",data)
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{sort}{a logical value; determines the order in which the aggregated
-    data appear in the data frame returned by \code{aggregate.formula}.
+    data appear in the data frame returned by \code{Aggregate}.
     If \code{sort} is TRUE, then the returned data frame is sorted by
     the values of the grouping variables, if \code{sort} is FALSE,
     the order of resulting data frame corresponds to the order in which
@@ -82,10 +81,10 @@ fapply(formula,data,\dots) # calls UseMethod("fapply",data)
     If a single numeric variable is on the left hand side, frequency
     counts weighted by this variable are computed. In these cases,
     \code{genTable} is equivalent to \code{\link[stats]{xtabs}} and
-    \code{aggregate.formula} is equivalent to \code{as.data.frame(xtabs(\dots))}.
+    \code{Aggregate} is equivalent to \code{as.data.frame(xtabs(\dots))}.
 }
 \value{
-    \code{aggregate.formula}
+    \code{Aggregate}
     results in a data frame with conditional summaries and unique value combinations
     of conditioning variables.
 
@@ -102,21 +101,21 @@ ex.data <- within(ex.data,
                     )
                   )
 
-aggregate(~mu+sigma,data=ex.data)
-aggregate(mean(x)~mu+sigma,data=ex.data)
-aggregate(mean(x)~mu+sigma,data=ex.data,name="Average")
-aggregate(c(mean(x),sd(x))~mu+sigma,data=ex.data)
-aggregate(c(Mean=mean(x),StDev=sd(x),N=length(x))~mu+sigma,data=ex.data)
+Aggregate(~mu+sigma,data=ex.data)
+Aggregate(mean(x)~mu+sigma,data=ex.data)
+Aggregate(mean(x)~mu+sigma,data=ex.data,name="Average")
+Aggregate(c(mean(x),sd(x))~mu+sigma,data=ex.data)
+Aggregate(c(Mean=mean(x),StDev=sd(x),N=length(x))~mu+sigma,data=ex.data)
 genTable(c(Mean=mean(x),StDev=sd(x),N=length(x))~mu+sigma,data=ex.data)
 
-aggregate(table(Admit)~.,data=UCBAdmissions)
-aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
-aggregate(Admit~.,data=UCBAdmissions)
-aggregate(percent(Admit)~.,data=UCBAdmissions)
-aggregate(percent(Admit)~Gender,data=UCBAdmissions)
-aggregate(percent(Admit)~Dept,data=UCBAdmissions)
-aggregate(percent(Gender)~Dept,data=UCBAdmissions)
-aggregate(percent(Admit)~Dept,data=UCBAdmissions,Gender=="Female")
+Aggregate(table(Admit)~.,data=UCBAdmissions)
+Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
+Aggregate(Admit~.,data=UCBAdmissions)
+Aggregate(percent(Admit)~.,data=UCBAdmissions)
+Aggregate(percent(Admit)~Gender,data=UCBAdmissions)
+Aggregate(percent(Admit)~Dept,data=UCBAdmissions)
+Aggregate(percent(Gender)~Dept,data=UCBAdmissions)
+Aggregate(percent(Admit)~Dept,data=UCBAdmissions,Gender=="Female")
 genTable(percent(Admit)~Dept,data=UCBAdmissions,Gender=="Female")
 }
 \keyword{misc}

@@ -6,7 +6,7 @@
 \description{
   \code{percent} returns a table of percentages along with
   the percentage base. It will be useful
-  in conjunction with \code{\link{aggregate.formula}}.
+  in conjunction with \code{\link{Aggregate}} or \code{\link{genTable}}.
 }
 \usage{
   percent(x,\dots)
@@ -72,6 +72,6 @@ ex.data <- within(ex.data,x.grp <- cases( x < 0,
                                           ))
 genTable(percent(x.grp)~mean+sd,data=ex.data)
 
-aggregate(percent(Admit,weight=Freq)~Gender+Dept,data=UCBAdmissions)
+Aggregate(percent(Admit,weight=Freq)~Gender+Dept,data=UCBAdmissions)
 }
 \keyword{univar}

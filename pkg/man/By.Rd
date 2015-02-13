@@ -25,7 +25,7 @@ By(formula,expr,data=parent.frame())
 }
 \examples{
 
-berkeley <- aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
+berkeley <- Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
 (Bres <- By(~Dept,glm(cbind(Admitted,Rejected)~Gender,family="binomial"),data=berkeley))
 # The results all have 'data' components
 str(Bres[[1]]$data)

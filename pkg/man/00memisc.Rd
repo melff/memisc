@@ -112,8 +112,8 @@ The tools in this package can be grouped into five major categories:
   can be reported conditional on levels of factors. Also conditional
   percentages of a factor can be obtained using this function.
 
-  In addition a \code{\link[=aggregate.formula]{formula}} method for the \code{\link{aggregate}} generic
-  function is provided, see. It has the same syntax as \code{genTable}, but
+  In addition an \code{Aggragate} 
+  function is provided, which has the same syntax as \code{genTable}, but
   gives a data frame of descriptive statistics instead of a \code{table}
   object. 
 

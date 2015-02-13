@@ -27,28 +27,28 @@ t.normal.simres <- within(t.normal.simres,{
   n <- factor(n)
   })
 
-t.normal.mean <- aggregate(
+t.normal.mean <- Aggregate(
               c(
                 mean=mean(mean),
                 sd=sd(mean)
               )~df+n,
           data=t.normal.simres,sort=TRUE)
 
-t.normal.stddev <- aggregate(
+t.normal.stddev <- Aggregate(
               c(
                 mean=mean(sd),
                 sd=sd(sd)
               )~df+n,
           data=t.normal.simres,sort=TRUE)
 
-t.normal.median <- aggregate(
+t.normal.median <- Aggregate(
               c(
                 mean=mean(median),
                 sd=sd(median)
               )~df+n,
           data=t.normal.simres,sort=TRUE)
 
-t.normal.mad <- aggregate(
+t.normal.mad <- Aggregate(
               c(
                 mean=mean(mad),
                 sd=sd(mad)

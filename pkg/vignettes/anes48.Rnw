@@ -322,7 +322,7 @@ showcasing the \code{panel.errbars} function of package \code{memisc}:
 options(width=60)
 @
 <<>>=
-agg.inc <- aggregate(percent(vote3,ci=TRUE)~total.income,data=vote.48)
+agg.inc <- Aggregate(percent(vote3,ci=TRUE)~total.income,data=vote.48)
 agg.inc.errbars <- xyplot(cbind(Percentage,upper,lower)~total.income,
         data=subset(agg.inc,vote3=="Truman"),
         panel=panel.errbars,
@@ -363,7 +363,7 @@ Occupational class is more evenly distributed in the sample, thus it may be poss
 to obtain more precise estimates of the percentages of support for Truman for occupational
 classes:
 <<>>=
-agg.occup <- aggregate(percent(vote3,ci=TRUE)~occup4,data=vote.48)
+agg.occup <- Aggregate(percent(vote3,ci=TRUE)~occup4,data=vote.48)
 agg.occup.errbars <- xyplot(cbind(Percentage,upper,lower)~occup4,
         data=subset(agg.occup,vote3=="Truman"),
         panel=panel.errbars,

@@ -31,7 +31,7 @@ Lapply(X, FUN, ...)
 }
 
 \examples{
-berkeley <- aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
+berkeley <- Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
 berktest1 <- By(~Dept+Gender,
                 glm(cbind(Admitted,Rejected)~1,family="binomial"),
                 data=berkeley)

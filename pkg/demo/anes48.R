@@ -73,7 +73,7 @@ t(genTable(percent(vote3)~race2,data=vote.48))
 
 t(genTable(percent(vote3)~total.income,data=vote.48))
 
-print(agg.inc <- aggregate(percent(vote3,ci=TRUE)~total.income,data=vote.48))
+print(agg.inc <- Aggregate(percent(vote3,ci=TRUE)~total.income,data=vote.48))
 
 if(interactive())
   old.prompt <- devAskNewPage(TRUE)
@@ -89,7 +89,7 @@ xyplot(cbind(Percentage,upper,lower)~total.income,
           )),
         )
 
-agg.occup <- aggregate(percent(vote3,ci=TRUE)~occup4,data=vote.48)
+agg.occup <- Aggregate(percent(vote3,ci=TRUE)~occup4,data=vote.48)
 
 xyplot(cbind(Percentage,upper,lower)~occup4,
         data=subset(agg.occup,vote3=="Truman"),

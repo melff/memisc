@@ -156,7 +156,7 @@ genTable <- function (formula,
    as.table(drop(res))
 }
 
-aggregate.formula <- function (x,
+Aggregate <- function (formula,
                         data = parent.frame(),
                         subset = NULL,
                         sort=TRUE,
@@ -166,8 +166,7 @@ aggregate.formula <- function (x,
                         drop.constants=TRUE,
                         ...)
 {
-   formula <- x
-   rm(x)
+   
    m <- match.call()
    parent <- parent.frame()
 

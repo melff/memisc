@@ -1,3 +1,9 @@
+2015-02-13:
+  - Removed 'aggregate.formula' method as it conflicts with a method of the name that was included
+    into the 'base' R package more or less recenlty.
+  - Removed 'include' and 'uninclude' since it modifies (in a benign way though) the global namespace,
+    which is discouraged by recently changed CRAN policies.
+
 2015-01-25:
   - Explicitly export S3 method as required by package check by more recent R version
   - Added github URL

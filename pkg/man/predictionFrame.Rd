@@ -48,7 +48,7 @@ str(prediction.frame(lm2,
                   type="terms",
                   residuals="standardized"))
 
-berkeley <- aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
+berkeley <- Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
 berk2 <- glm(cbind(Admitted,Rejected)~Gender+Dept,data=berkeley,family="binomial")
 
 str(prediction.frame(berk2,

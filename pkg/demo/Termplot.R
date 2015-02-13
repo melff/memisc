@@ -5,7 +5,7 @@ lm0 <- lm(sr ~ pop15 + pop75,              data = LifeCycleSavings)
 lm1 <- lm(sr ~                 dpi + ddpi, data = LifeCycleSavings)
 lm2 <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 
-berkeley <- aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
+berkeley <- Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
 berk0 <- glm(cbind(Admitted,Rejected)~1,data=berkeley,family="binomial")
 berk1 <- glm(cbind(Admitted,Rejected)~Gender,data=berkeley,family="binomial")
 berk2 <- glm(cbind(Admitted,Rejected)~Gender+Dept,data=berkeley,family="binomial")

@@ -174,7 +174,7 @@ file.show(file123)
 write.mtable(mtable123,forLaTeX=TRUE,file=texfile123)
 file.show(texfile123)}
 
-berkeley <- aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
+berkeley <- Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
 
 berk0 <- glm(cbind(Admitted,Rejected)~1,data=berkeley,family="binomial")
 berk1 <- glm(cbind(Admitted,Rejected)~Gender,data=berkeley,family="binomial")

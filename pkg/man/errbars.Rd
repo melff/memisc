@@ -28,9 +28,9 @@ if(interactive())
   old.prompt <- grid::grid.prompt(TRUE)
 }
 
-applications <- aggregate(percent(Dept,weight=Freq,ci=TRUE)~Gender,
+applications <- Aggregate(percent(Dept,weight=Freq,ci=TRUE)~Gender,
                                       data=UCBAdmissions)
-admissions <- aggregate(
+admissions <- Aggregate(
         percent(Admit=="Admitted",weight=Freq,ci=TRUE)~Dept+Gender,
                                       data=UCBAdmissions)
 xyplot(cbind(Percentage,lower,upper)~Gender|Dept,data=admissions,
