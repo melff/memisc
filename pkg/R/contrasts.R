@@ -13,6 +13,7 @@ contr <- function(type,...){
   fun
 }
 
+setMethod("contrasts","factor",function(x,...)stats::contrasts(x,...))
 
 ## Copied from stats:contrasts and modified
 ## Original copyright (C) 1995-2013 The R Core Team
@@ -48,7 +49,7 @@ setMethod("contrasts","item",function(x,contrasts=TRUE)
     ctr
 })
 
-## copied from stats:contrasts<- and modified
+## copied from stats:contrasts<- and modified 
 ## Original copyright (C) 1995-2013 The R Core Team
 
 setMethod("contrasts<-","item",function(x,how.many,value){

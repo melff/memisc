@@ -48,6 +48,7 @@ setGeneric("as.array",
   )
 
 contrasts <- function(x,...) stats::contrasts(x,...)
+#contrasts <- function(x,...) stats::contrasts(x,...)
 setGeneric("contrasts",
   function(x,...) standardGeneric("contrasts")
 )
