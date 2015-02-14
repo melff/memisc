@@ -47,7 +47,6 @@ setGeneric("as.array",
   function(x,...)standardGeneric("as.array")
   )
 
-contrasts <- function(x,...) stats::contrasts(x,...)
 #contrasts <- function(x,...) stats::contrasts(x,...)
 setGeneric("contrasts",
   function(x,...) standardGeneric("contrasts")
@@ -57,3 +56,9 @@ setGeneric("contrasts",
 # setGeneric("contrasts<-",
 #   function(x,how.many,value) standardGeneric("contrasts<-")
 # )
+
+Write <- function(x,...) UseMethod("Write")
+
+# setGeneric("Write",
+#            function(object,...)
+#              standardGeneric("Write"))

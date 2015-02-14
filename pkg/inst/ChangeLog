@@ -1,5 +1,7 @@
 2015-02-14:
   - Modified file structure somewhat and added some lines do clarify credit for code.
+  - Added documentation for 'as.character' method for 'codebook' objects.
+  - Implemented 'Write()' convenience function for 'descriptions' objects.
 
 2015-02-13:
   - Removed 'aggregate.formula' method as it conflicts with a method of the name that was included

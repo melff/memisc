@@ -6,6 +6,7 @@
 \alias{codebook-class}
 \alias{format,codebookEntry-method}
 \alias{show,codebook-method}
+\alias{as.character,codebook-method}
 \title{Generate a Codebook of a Data Set}
 \description{
   Function \code{codebook} collects documentation about an item,
@@ -19,13 +20,14 @@ codebook(x)
 \S4method{codebook}{importer}(x)
 }
 \arguments{
-  \item{x}{an \code{\link{item}},  \code{\link{data.set}} or \code{\link{importer}} object.}
+  \item{x}{an \code{\link{item}},  \code{\link{data.set}} or \code{\link{importer}} object for \code{codebook()}}
 }
 \value{
   An object of class "codebook", for which a \code{\link{show}} method exists that
   produces a nicely formatted output.
 }
 \examples{
+
 Data <- data.set(
           vote = sample(c(1,2,3,8,9,97,99),size=300,replace=TRUE),
           region = sample(c(rep(1,3),rep(2,2),3,99),size=300,replace=TRUE),
@@ -65,8 +67,15 @@ Data <- within(Data,{
   missing.values(region) <- c(97,99)
 })
 
+description(Data)
 
 codebook(Data)
 
+\dontrun{
+Write(descrition(Data),
+           file="Data-desc.txt")
+Write(codebook(Data),
+           file="Data-cdbk.txt")
+  }
 }
 \keyword{manip}

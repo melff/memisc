@@ -506,6 +506,15 @@ print.descriptions <- function(x,quote=FALSE,...){
   writeLines(ans)
 }
 
+Write.descriptions <- function(x,file=stdout(),...){
+  out <- c(
+    "",
+    paste("",format(names(x),justify="left"),format(x,justify="left")),
+    ""
+  )
+  writeLines(out,con=file)
+}
+
 setMethod("unique","data.set",function(x, incomparables = FALSE, ...){
   frame <- structure(x@.Data,row.names=x@row_names,names=x@names,class="data.frame")
   new("data.set",

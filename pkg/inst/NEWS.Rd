@@ -11,8 +11,9 @@
       \item New generic function \code{Iconv()} that allows to change the character enconding of variable
       descriptions and value labels. It has methods for \code{"data.set"}, \code{"importer"}, \code{"item"},
       \code{"annotation"}, and \code{"value.label"} objects.
-      \item There is now a method of \code{as.character()} for \code{"codebook"} objects, to allow
-      output of codebooks to text files.
+      \item There is now a method of \code{as.character()} for \code{"codebook"} objects and a convenience
+      function \code{Write()} with methods for \code{"codebook"} and \code{"description"} to make it more
+      convenient to direct the output of \code{codebook()} and \code{description()} into text files.
       \item A method for \code{"merMod"} objects of the \code{getSummary()} generic function. 
       \code{mtable()} now should be able (again) to handle estimation results produced by \code{lmer()} and \code{glmer()} from 
       package 'lme4'.

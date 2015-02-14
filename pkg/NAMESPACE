@@ -114,7 +114,8 @@ export(
       Stata.file,
       query,
       relabel4,
-      Iconv
+      Iconv,
+      Write
       )
 S3method(getSummary,aftreg)
 S3method(getSummary,betareg)
@@ -269,5 +270,6 @@ S3method(Iconv,value.labels)
 S3method(Iconv,annotation)
 S3method(Iconv,data.set)
 S3method(Iconv,importer)
-
+S3method(Write,descriptions)
+S3method(Write,codebook)
 
