@@ -426,53 +426,6 @@ setMethod("print","data.set",function(x,...)print.data.set(x,...))
 
 # summary.data.set <- summary.data.frame
 
-#copied and modified from base
-setMethod("summary","data.set",
-  function(object, maxsum = 7, digits = max(3, getOption("digits") -3), ...){
-    z <- lapply(as.list(object), summary, maxsum = maxsum, digits = 12,
-        ...)
-    nv <- length(object)
-    nm <- names(object)
-    lw <- numeric(nv)
-    nr <- max(unlist(lapply(z, NROW)))
-    for (i in 1:nv) {
-        sms <- z[[i]]
-        if (is.matrix(sms)) {
-            cn <- paste(nm[i], gsub("^ +", "", colnames(sms)),
-                sep = ".")
-            tmp <- format(sms)
-            if (nrow(sms) < nr)
-                tmp <- rbind(tmp, matrix("", nr - nrow(sms),
-                  ncol(sms)))
-            sms <- apply(tmp, 1, function(x) paste(x, collapse = "  "))
-            wid <- sapply(tmp[1, ], nchar, type = "w")
-            blanks <- paste(character(max(wid)), collapse = " ")
-            pad0 <- floor((wid - nchar(cn, type = "w"))/2)
-            pad1 <- wid - nchar(cn, type = "w") - pad0
-            cn <- paste(substring(blanks, 1, pad0), cn, substring(blanks,
-                1, pad1), sep = "")
-            nm[i] <- paste(cn, collapse = "  ")
-            z[[i]] <- sms
-        }
-        else {
-            lbs <- format(names(sms))
-            sms <- paste(lbs, ":", format(sms, digits = digits),
-                "  ", sep = "")
-            lw[i] <- nchar(lbs[1], type = "w")
-            length(sms) <- nr
-            z[[i]] <- sms
-        }
-    }
-    z <- unlist(z, use.names = TRUE)
-    dim(z) <- c(nr, nv)
-    blanks <- paste(character(max(lw) + 2), collapse = " ")
-    pad <- floor(lw - nchar(nm, type = "w")/2)
-    nm <- paste(substring(blanks, 1, pad), nm, sep = "")
-    dimnames(z) <- list(rep.int("", nr), nm)
-    attr(z, "class") <- c("table")
-    z
-})
-
 is.data.set <- function(x) is(x,"data.set")
 
 str.data.set <- function (object, ...)
@@ -564,3 +517,55 @@ setMethod("unique","data.set",function(x, incomparables = FALSE, ...){
 
 fapply.data.set <- function(formula,data,...)
   fapply.default(formula,data=as.data.frame(data,optional=TRUE),...)
+  
+  
+## Copied and modified from base package
+## Original copyright (C) 1995-2013 The R Core Team
+
+setMethod("summary","data.set",
+  function(object, maxsum = 7, digits = max(3, getOption("digits") -3), ...){
+    z <- lapply(as.list(object), summary, maxsum = maxsum, digits = 12,
+        ...)
+    nv <- length(object)
+    nm <- names(object)
+    lw <- numeric(nv)
+    nr <- max(unlist(lapply(z, NROW)))
+    for (i in 1:nv) {
+        sms <- z[[i]]
+        if (is.matrix(sms)) {
+            cn <- paste(nm[i], gsub("^ +", "", colnames(sms)),
+                sep = ".")
+            tmp <- format(sms)
+            if (nrow(sms) < nr)
+                tmp <- rbind(tmp, matrix("", nr - nrow(sms),
+                  ncol(sms)))
+            sms <- apply(tmp, 1, function(x) paste(x, collapse = "  "))
+            wid <- sapply(tmp[1, ], nchar, type = "w")
+            blanks <- paste(character(max(wid)), collapse = " ")
+            pad0 <- floor((wid - nchar(cn, type = "w"))/2)
+            pad1 <- wid - nchar(cn, type = "w") - pad0
+            cn <- paste(substring(blanks, 1, pad0), cn, substring(blanks,
+                1, pad1), sep = "")
+            nm[i] <- paste(cn, collapse = "  ")
+            z[[i]] <- sms
+        }
+        else {
+            lbs <- format(names(sms))
+            sms <- paste(lbs, ":", format(sms, digits = digits),
+                "  ", sep = "")
+            lw[i] <- nchar(lbs[1], type = "w")
+            length(sms) <- nr
+            z[[i]] <- sms
+        }
+    }
+    z <- unlist(z, use.names = TRUE)
+    dim(z) <- c(nr, nv)
+    blanks <- paste(character(max(lw) + 2), collapse = " ")
+    pad <- floor(lw - nchar(nm, type = "w")/2)
+    nm <- paste(substring(blanks, 1, pad), nm, sep = "")
+    dimnames(z) <- list(rep.int("", nr), nm)
+    attr(z, "class") <- c("table")
+    z
+})
+
+  

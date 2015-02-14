@@ -1,3 +1,6 @@
+2015-02-14:
+  - Modified file structure somewhat and added some lines do clarify credit for code.
+
 2015-02-13:
   - Removed 'aggregate.formula' method as it conflicts with a method of the name that was included
     into the 'base' R package more or less recenlty.
