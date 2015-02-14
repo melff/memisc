@@ -9,7 +9,7 @@
   - Removed 'include' and 'uninclude' since it modifies (in a benign way though) the global namespace,
     which is discouraged by recently changed CRAN policies.
 
-2015-02-26:
+2015-01-26:
   - Added 'as.character' method for 'codebook' objects, to allow conveniently write the to files using 'writeLines'
 
 2015-01-25:
