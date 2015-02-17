@@ -7,7 +7,11 @@
 #include "memisc.h"
 
 
-/** Code translation **/ /*From foreign package*/
+/** Code translation **/ 
+/* 
+  The following 6 lines are copied verbatim from pfm-read.c of the 'foreign package'.
+  Original copyright Copyright (C) 1997-9, 2000, 2001 Free Software Foundation, Inc.
+*/
 static const unsigned char latin1_tab[256] = {
     "                                                                "
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ."

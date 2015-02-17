@@ -26,7 +26,7 @@
 \alias{initialize,spss.fixed.importer-method}
 \alias{initialize,Stata.importer-method}
 
-\title{Object Oriented Intervace to Foreign Files}
+\title{Object Oriented Interface to Foreign Files}
 \description{
 Importer objects are objects that refer to an external
 data file. Currently only Stata files,
@@ -38,10 +38,8 @@ importer file into a \code{\link{data.set}} using
 
 The \code{importer} mechanism is more flexible and extensible
 than \code{\link[foreign]{read.spss}} and  \code{\link[foreign]{read.dta}}
-of package "foreign", as most of the
-parsing of the file headers is done in R.
-They are also
-adapted to load efficiently large data sets.
+of package "foreign", as most of the parsing of the file headers is done in R.
+It is also adapted to efficiently load large data sets.
 Most importantly, importer objects support the
 \code{\link{labels}}, \code{\link{missing.values}},
 and \code{\link{description}}s, provided by this package.
@@ -131,7 +129,8 @@ Objects of class \code{"importer"} have at least the following two slots:
 The \code{as.data.frame} for \code{importer} objects does
 the actual data import and returns a data frame. Note that in contrast
 to \code{\link[foreign]{read.spss}}, the variable names of the
-resulting data frame will be lower case. If long variable names
+resulting data frame will be lower case, unless the importer function
+is called with \code{to.lower=FALSE}. If long variable names
 are defined (in case of a PSPP/SPSS system file), they take
 precedence and are \emph{not} coerced to lower case.
 }
@@ -161,6 +160,12 @@ precedence and are \emph{not} coerced to lower case.
     subclasses of \code{"importer"}.
     These functions are not callable
     from outside the package, however.
+    
+    Since the functions described here are more or less complete rewrite
+    based on the description of the file structure provided
+    by the documenation for PSPP, they are perhaps not as thorougly tested as the 
+    functions in the \code{foreign} package, apart from the frequent use
+    by the author of this package.
 }
 \examples{
 # Extract American National Election Study of 1948
