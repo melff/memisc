@@ -13,12 +13,12 @@ contr <- function(type,...){
   fun
 }
 
-setMethod("contrasts","factor",function(x,...)stats::contrasts(x,...))
+setMethod("contrasts","ANY",function(x,contrasts=TRUE,...)stats::contrasts(x,contrasts=contrasts,...))
 
 ## Copied from stats:contrasts and modified
 ## Original copyright (C) 1995-2013 The R Core Team
 
-setMethod("contrasts","item",function(x,contrasts=TRUE)
+setMethod("contrasts","item",function(x,contrasts=TRUE,...)
 {
     if(measurement(x) %nin% c("nominal","ordinal"))
       warning("contrasts(x,...) called with non-categorical x")

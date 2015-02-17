@@ -33,10 +33,10 @@
 contr(type,\dots)
 contr.treatment(n, base=1,contrasts=TRUE)
 contr.sum(n,base=NULL,contrasts=TRUE)
-\S4method{contrasts}{item}(x,contrasts=TRUE)
+\S4method{contrasts}{item}(x,contrasts=TRUE,\dots)
 \S4method{contrasts}{item}(x,how.many) <- value
 # These methods are defined implicitely by making 'contrasts' generic.
-\S4method{contrasts}{ANY}(x,contrasts=TRUE)
+\S4method{contrasts}{ANY}(x,contrasts=TRUE,\dots)
 \S4method{contrasts}{ANY}(x,how.many) <- value
 }
 \arguments{
