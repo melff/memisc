@@ -21,6 +21,11 @@
     into factors with sorted unique values (after recoding) as levels.
     }
   }
+  \subsection{USER-VISIBLE CHANGES}{
+   \itemize{
+     \item \code{getSummary.expCoef} is renamed into \code{getSummary_expCoef}.
+   }
+  }
   \subsection{DEFUNCT}{
     \itemize{
       \item S3 method \code{aggregate.formula} has been removed from the package to avoid

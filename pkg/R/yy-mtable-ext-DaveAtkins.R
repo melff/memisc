@@ -5,9 +5,9 @@
 ## Department of  Psychiatry and Behavioral Science
 ## Unversity of Washington
 
-getSummary.expcoef <- function(obj, alpha = 0.05, ...) UseMethod("getSummary.expcoef")
+getSummary_expcoef <- function(obj, alpha = 0.05, ...) UseMethod("getSummary_expcoef")
 
-getSummary.expcoef.glm <- function (obj, alpha = 0.05, ...)
+getSummary_expcoef.glm <- function (obj, alpha = 0.05, ...)
 {
     smry <- summary(obj)
     N <- if (length(weights(obj)))

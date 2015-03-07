@@ -1,3 +1,6 @@
+2015-03-07:
+  - Renamed 'getSummary.expCoef' into 'getSummary_expCoef' to avoid R CMD check fussiness.
+
 2015-02-14:
   - Modified file structure somewhat and added some lines do clarify credit for code.
   - Added documentation for 'as.character' method for 'codebook' objects.
