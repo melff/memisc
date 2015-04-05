@@ -44,6 +44,16 @@
                                           c("est","se")
                                           ))
 
+.CoefTemplates$ci.horizontal<- matrix(c(est="($est:#)",
+                                           lwr="[($lwr:#)",
+                                           upr="($upr:#)]"),
+                                      ncol=3,nrow=1,byrow=TRUE,
+                                      dimnames=list(
+                                        c("est"),
+                                        c("est","lwr","upr")
+                                      ))
+
+
 .CoefTemplates$ci.p <- c(est="($est:#)",
                                         p="(($p:#))",
                                         lwr="[($lwr:#)",
