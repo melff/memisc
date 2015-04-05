@@ -1,6 +1,6 @@
-- Add new output fromats to mtables:
-  - simple html
-  - html with centering on decimal commas/dots
+- Add new output formats to mtables:
+  - simple html (DONE)
+  - html with centering on decimal commas/dots (DONE)
   - markdown
   
 - Copy 'percentages.R' from research project to R package and document it
