@@ -1,4 +1,4 @@
-mtable_format_screen <- function(x,
+mtable_format_print <- function(x,
           topsep="=",
           bottomsep="=",
           sectionsep="-",

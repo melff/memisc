@@ -35,7 +35,7 @@ mtable_format_html <- function(x,
     coeftitles[j,i] <- rv
   }
 
-  coeftitles[] <- mk_td(coeftitles)
+  coeftitles[] <- mk_td(coeftitles, style="padding-left: 0.3em;")
   
   if(split.dec)
     coefs[] <- mk_td_spltDec(coefs)
@@ -71,9 +71,9 @@ mtable_format_html <- function(x,
     smsr.titles[,1] <- nms.smrs
     n <- nrow(summaries)
     
-    smsr.titles[1,] <- mk_td(smsr.titles[1,],style=paste0("border-top: ",midrule,"px solid;"))
-    smsr.titles[-c(1,n),] <- mk_td(smsr.titles[-c(1,n),])
-    smsr.titles[n,] <- mk_td(smsr.titles[n,],style=paste0("border-bottom: ",bottomrule,"px solid;"))
+    smsr.titles[1,] <- mk_td(smsr.titles[1,],style=paste0("border-top: ",midrule,"px solid; padding-left: 0.3em;"))
+    smsr.titles[-c(1,n),] <- mk_td(smsr.titles[-c(1,n),],style="padding-left: 0.3em;")
+    smsr.titles[n,] <- mk_td(smsr.titles[n,],style=paste0("border-bottom: ",bottomrule,"px solid; padding-left: 0.3em;"))
 
     if(split.dec){
       
@@ -119,94 +119,9 @@ mtable_format_html <- function(x,
            sbody,
            "</table>")
   
-  ans <- paste0(ans,"\n")
+  ans <- paste0(ans,collapse="\n")
   return(ans)
 }
 
-
-mk_elem <- function(x,type,extra="",attribs=list(),...,linebreaks=FALSE,indent=0){
-  start_tag <- paste0("<",type)
-  if(nzchar(extra))
-    start_tag <- paste(start_tag,extra)
-  end_tag <- paste0("</",type,">")
-  
-  if(!missing(x)) 
-    start_tag <- rep(start_tag,length(x))
-  
-  attribs <- c(attribs,list(...))
-  if(length(attribs)){
-    for(n in names(attribs)){
-      attrib <- character(length(start_tag))
-      attrib[] <- paste0("\"",attribs[[n]],"\"")
-      use <- nzchar(attrib)
-      start_tag[use] <- paste0(start_tag[use]," ",n,"=",attrib[use])
-    }
-  }
-  start_tag <- paste0(start_tag,">")
-  
-  if(linebreaks && indent>0)
-    indent <- paste0(rep(" ",indent),collapse="")
-  else indent <- ""  
-  
-  if(!missing(x)){
-    if(linebreaks){
-      x <- paste0(indent,"   ",x,"\n")
-      start_tag <- paste0(indent,start_tag,"\n")
-      end_tag <- paste0(indent,end_tag,"\n")
-    }
-    res <- paste0(start_tag,x,end_tag)
-  }
-  else {
-    res <- start_tag
-    if(linebreaks)
-      res <- paste0(indent,res,"\n")
-  }
-  
-  return(res)
-}
- 
-mk_td <- function(x,...)mk_elem(x,type="td",...,linebreaks=FALSE)
-mk_th <- function(x,...)mk_elem(x,type="th",...,linebreaks=FALSE)
-mk_tr <- function(x,...) mk_elem(x,type="tr",...,linebreaks=FALSE)
-
-show_html <- function(x,...){
-  tf <- tempfile()
-  tf <- paste0(tf,".html")
-  cat(mtable_format_html(x,...),file=tf)
-  file.show(tf)
-  file.remove(tf)
-}
-
-spltDec <- function(x,at="."){
-  y <- strsplit(x,at,fixed=TRUE)
-  y1 <- sapply(y,"[",1)
-  y3 <- sapply(y,"[",2)
-  y1[is.na(y1)] <- ""
-  y3[is.na(y3)] <- ""
-  y2 <- ifelse(grepl("[[:digit:]]+",y3),at,"")
-  y <- rbind(y1,y2,y3)
-  as.vector(y)
-}
-
-mk_td_spltDec <- function(x,style=""){
-  
-  if(!is.matrix(x))
-    x <- t(as.matrix(x))
-  
-  tmp <- as.vector(t(x))
-  
-  stl <- c("text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;",
-           "text-align: center; margin-left: 0px; padding-left: 0px; margin-right: 0px; padding-right: 0px; width: 1px;",
-           "text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;")
-  if(nzchar(style))
-    style <- paste(style,stl)
-  else
-    style <- stl
-  
-  tmp <- mk_td(tmp,
-                style=style)
-  matrix(tmp,
-         nrow=nrow(x),
-         ncol=ncol(x),
-         byrow=TRUE)
-}
+format_html.mtable <- function(x,...)
+  mtable_format_html(x,...)

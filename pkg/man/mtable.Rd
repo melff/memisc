@@ -3,14 +3,15 @@
 \alias{relabel.mtable}
 \alias{format.mtable}
 \alias{print.mtable}
-\alias{toLatex.mtable}
 \alias{write.mtable}
+\alias{toLatex.mtable}
+
 \title{Comparative Table of Model Estimates}
 \description{
   \code{mtable} produces a table of estimates for several models.
   }
 \usage{
-mtable(...,coef.style=getOption("coef.style"),
+mtable(\dots,coef.style=getOption("coef.style"),
     summary.stats=TRUE,
     factor.style=getOption("factor.style"),
     getSummary=eval.parent(quote(getSummary)),
@@ -20,47 +21,20 @@ mtable(...,coef.style=getOption("coef.style"),
   )
 \method{relabel}{mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
 
-\method{format}{mtable}(x,
-    coef.title="Coefficients",
-    summary.title="Summaries",
-    colsep="\t",
-    rowsep="\n",
-    trim=TRUE,
-    trimleft=trim,
-    trimright=trim,
-    center.at=NULL,
-    align.integers=c("dot","right","left"),
-    topsep="",
-    bottomsep="",
-    sectionsep="",
-    compact=TRUE,
-    forLaTeX=FALSE,
-    useDcolumn=TRUE,
-    colspec=if (useDcolumn)
-        paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
-        else "r",
-    LaTeXdec=".",
-    ddigits=getOption("digits"),
-    useBooktabs=TRUE,
-    toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
-    midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
-    cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
-    bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
-    interaction.sep = if(forLaTeX) " $\\\\times$ " else " x ",
-    center.summaries=FALSE,
-    ...
+\method{format}{mtable}(x,target=c("print","LaTeX","HTML","delim"),
+    \dots
     )
 
-\method{print}{mtable}(x,trim=FALSE,center.at=getOption("OutDec"),
-    colsep=" ",
-    topsep="=",bottomsep="=",sectionsep="-",...)
+\method{print}{mtable}(x,
+    center.at=getOption("OutDec"),
+    topsep="=",bottomsep="=",sectionsep="-",\dots)
 
+write.mtable(object,file="",\dots)
 \method{toLatex}{mtable}(object,...)
-
-write.mtable(object,file="",...)
 }
 \arguments{
-     \item{...}{as argument to \code{mtable}: several model objects, e.g. of class \code{\link{lm}}; as argument to \code{print.mtable},
+     \item{\dots}{as argument to \code{mtable}: several model objects, e.g. of class 
+     \code{\link{lm}}; as argument to \code{print.mtable},
      \code{toLatex.mtable}, \code{write.mtable}: further arguments
      passed to \code{format.mtable}; as argument to \code{format.mtable}:
      further arguments passed to \code{format.default};
@@ -90,43 +64,21 @@ write.mtable(object,file="",...)
         dropped if only one model is given as argument?}
      \item{x, object}{an object of class \code{mtable}}
      \item{gsub, warn, fixed}{logical values, see \code{\link{relabel}}}
-     \item{coef.title}{a character vector, the title for the reported coefficients.}
-     \item{summary.title}{a character vector, the title for the reported model summaries.}
-     \item{colsep}{a character string which seperates the columns in the output.}
-     \item{rowsep}{a character string which seperates the rows in the output.}
-     \item{trim}{should leading and trailing spaces be trimmed?}
-     \item{trimleft}{should leading spaces be trimmed?}
-     \item{trimright}{should trailing spaces be trimmed?}
+     \item{target}{a character string which indicates the target format.
+     Currenlty the targets
+     "print" (see \code{\link{mtable_format_print}}),
+     "LaTeX" (see \code{\link{mtable_format_latex}}),
+     "HTML" (see \code{\link{mtable_format_html}}), and
+     "delim" (see \code{\link{mtable_format_delim}})
+     are supported.
+     }
      \item{center.at}{a character string on which resulting values are centered.
         Typically equal to ".". This is the default when \code{forLaTeX==TRUE}.
         If \code{NULL}, reported values are not centered.}
-     \item{align.integers}{how to align integer values.}
      \item{topsep}{a character string that is recycled to a top rule.}
      \item{bottomsep}{a character string that is recycled to a bottom rule.}
      \item{sectionsep}{a character string that is recycled to seperate coefficients
         from summary statistics.}
-     \item{compact}{logical value; if TRUE, entries in the table are
-      not aligned in any way, giving the table the most compact form.}
-     \item{forLaTeX}{should LaTeX code be produced?}
-     \item{useDcolumn}{should the \code{dcolumn} LaTeX package be used?
-          If true, you will have to include \code{\\usepackage{dcolumn}} into
-          the preamble of your LaTeX document.}
-     \item{colspec}{LaTeX table column format specifyer(s).}
-     \item{LaTeXdec}{the decimal point in the final LaTeX output.}
-     \item{ddigits}{alignment specification or digits after the decimal point.}
-     \item{useBooktabs}{should the \code{booktabs} LaTeX package be used?
-          If true, you will have to include \code{\\usepackage{booktabs}} into
-          the preamble of your LaTeX document.}
-     \item{toprule}{appearance of the top border of the LaTeX \code{tabular} environment.}
-     \item{midrule}{how are coefficients and summary statistics
-        separated in the LaTeX \code{tabular} environment.}
-     \item{cmidrule}{appearance of rules under section headings.}
-     \item{bottomrule}{appearance of the bottom border of the LaTeX \code{tabular} environment.}
-     \item{interaction.sep}{a character string that separates factors that are involved
-        in an interaction effect}
-     \item{center.summaries}{logical value; if TRUE, summaries for
-      each model are centered below the columns that correspond to
-      the respective model coefficients. }
      \item{file}{a file where to write to; defaults to console output.}
 }
 \details{
@@ -207,18 +159,24 @@ mtable(berk0,berk1,berk2,
           coef.style="ci.p.horizontal",
           summary.stats=c("Deviance","AIC","N"))
 mtable(berk0,berk1,berk2,
+          coef.style="ci.horizontal",
+          summary.stats=c("Deviance","AIC","N"))
+mtable(berk0,berk1,berk2,
           coef.style="all",
           summary.stats=c("Deviance","AIC","N"))
 mtable(berk0,berk1,berk2,
           coef.style="all.nostar",
           summary.stats=c("Deviance","AIC","N"))
 
-mtable(by(berkeley,berkeley$Dept,function(x)glm(cbind(Admitted,Rejected)~Gender,
+mtable(by(berkeley,berkeley$Dept,
+  function(x)glm(cbind(Admitted,Rejected)~Gender,
         data=x,family="binomial")),
       summary.stats=c("Likelihood-ratio","N"))
 
 
-mtable(By(~Gender,glm(cbind(Admitted,Rejected)~Dept,family="binomial"),
+mtable(By(~Gender,
+  glm(cbind(Admitted,Rejected)~Dept,
+        family="binomial"),
         data=berkeley),
       summary.stats=c("Likelihood-ratio","N"))
 

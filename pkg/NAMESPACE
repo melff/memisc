@@ -1,7 +1,6 @@
 useDynLib(memisc)
 import(stats,grid,lattice,methods,MASS)
 importFrom(utils,toLatex,head,tail,capture.output,getFromNamespace)
-exportPattern("mtable_format_*")
 export(
       contr,
       contr.treatment,
@@ -117,7 +116,12 @@ export(
       relabel4,
       Iconv,
       Write,
-      show_html
+      mtable_format_print,
+      mtable_format_latex,
+      mtable_format_html,
+      mtable_format_delim,
+      show_html,
+      write_html
       )
 S3method(getSummary,aftreg)
 S3method(getSummary,betareg)

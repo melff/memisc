@@ -1,7 +1,6 @@
 mtable_format_delim <- function(x,
           colsep="\t",
           rowsep="\n",
-          topsep="",
           interaction.sep = " x ",
           ...
           ){
@@ -59,7 +58,7 @@ mtable_format_delim <- function(x,
   ans <- paste(leaders,ans,sep=colsep)
   ans <- ans[-x$kill.header]
   ans <- paste(ans,rowsep,sep="")
-  return(ans)
+  return(paste(ans,collapse=""))
 }
 
 
