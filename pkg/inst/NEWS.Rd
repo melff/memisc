@@ -1,7 +1,16 @@
 \name{NEWS}
 \title{memisc News}
 \encoding{UTF-8}
-
+\section{Current (Development) Version}{
+  \subsection{NEW FEATURES}{
+  \itemize{
+    \item Support for exporting \code{mtable} results into HTML format is now
+    supported. This should make it easier to import them into HTML or word-processing
+    documents (that support importing HTML). A preview of the HTML is made available
+    by the new (generic) function \code{show_html}.
+    }
+  }
+}
 \section{Version 0.97 }{
   \subsection{NEW FEATURES}{
     \itemize{
