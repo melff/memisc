@@ -1,9 +1,23 @@
+mtable_format_stdstyle <- c(
+  "padding-top"="0px",
+  "padding-bottom"="0px",
+  "margin-top"="0px",
+  "margin-bottom"="0px"
+)
+
 mtable_format_html <- function(x,
                                interaction.sep = " &times; ",
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                ...
 ){
+  
+  style <- mtable_format_stdstyle
+  firstcol <- c("padding-left"="0.3em")
+  toprule <- c("border-top"=paste0(midrule,"px solid"))
+  bottomrule <- c("border-bottom"=paste0(midrule,"px solid"))
+  midrule_above <- c("border-top"=paste0(midrule,"px solid"))
+  midrule <- c("border-bottom"=paste0(midrule,"px solid"))
   
   coldims <- dim(x$coefficients)[x$as.col]
   nhrows <- length(coldims)
@@ -35,12 +49,12 @@ mtable_format_html <- function(x,
     coeftitles[j,i] <- rv
   }
 
-  coeftitles[] <- mk_td(coeftitles, style="padding-left: 0.3em;")
+  coeftitles[] <- mk_td(coeftitles, style=proc_style(upd_vect(style,firstcol)))
   
   if(split.dec)
-    coefs[] <- mk_td_spltDec(coefs)
+    coefs[] <- mk_td_spltDec(coefs, style=proc_style(style))
   else 
-    coefs[] <- mk_td(coefs)
+    coefs[] <- mk_td(coefs, style=proc_style(style))
   
   body <- cbind(coeftitles,coefs)
   body <- apply(body,1,paste0,collapse="")
@@ -66,26 +80,26 @@ mtable_format_html <- function(x,
       summaries <- t(apply(summaries,1,spltDec))
     }
     
+  
     smsr.titles <- matrix("",nrow=nrow(summaries),
                              ncol=ncol(coeftitles))
     smsr.titles[,1] <- nms.smrs
     n <- nrow(summaries)
     
-    smsr.titles[1,] <- mk_td(smsr.titles[1,],style=paste0("border-top: ",midrule,"px solid; padding-left: 0.3em;"))
-    smsr.titles[-c(1,n),] <- mk_td(smsr.titles[-c(1,n),],style="padding-left: 0.3em;")
-    smsr.titles[n,] <- mk_td(smsr.titles[n,],style=paste0("border-bottom: ",bottomrule,"px solid; padding-left: 0.3em;"))
+    smsr.titles[1,] <- mk_td(smsr.titles[1,],style=proc_style(upd_vect(style,firstcol,midrule_above)))
+    smsr.titles[-c(1,n),] <- mk_td(smsr.titles[-c(1,n),],style=proc_style(upd_vect(style,firstcol)))
+    smsr.titles[n,] <- mk_td(smsr.titles[n,],style=proc_style(upd_vect(style,firstcol,bottomrule)))
 
     if(split.dec){
       
-      summaries[1,] <- mk_td_spltDec(summaries[1,],style=paste0("border-top: ",midrule,"px solid;"))
-      summaries[-c(1,n),] <- mk_td_spltDec(summaries[-c(1,n),])
-      summaries[n,] <- mk_td_spltDec(summaries[n,],style=paste0("border-bottom: ",bottomrule,"px solid;"))
+      summaries[1,] <- mk_td_spltDec(summaries[1,],style=proc_style(upd_vect(style,midrule_above)))
+      summaries[-c(1,n),] <- mk_td_spltDec(summaries[-c(1,n),],style=proc_style(style))
+      summaries[n,] <- mk_td_spltDec(summaries[n,],style=proc_style(upd_vect(style,bottomrule)))
     } else {
-      summaries[1,] <- mk_td(summaries[1,],style=paste0("border-top: ",midrule,"px solid;"))
-      summaries[-c(1,n),] <- mk_td(summaries[-c(1,n),])
-      summaries[n,] <- mk_td(summaries[n,],style=paste0("border-bottom: ",bottomrule,"px solid;"))
+      summaries[1,] <- mk_td(summaries[1,],style=proc_style(upd_vect(style,midrule_above)))
+      summaries[-c(1,n),] <- mk_td(summaries[-c(1,n),],style=proc_style(style))
+      summaries[n,] <- mk_td(summaries[n,],style=proc_style(upd_vect(style,bottomrule)))
     }
-    
     sbody <- cbind(smsr.titles,summaries)
     sbody <- apply(sbody,1,paste0,collapse="")
     sbody <- mk_tr(sbody)
@@ -98,13 +112,14 @@ mtable_format_html <- function(x,
     n <- ncol(coefs)%/%m
     attribs <- list()
     attribs$colspan <- n
-    style <- ""
+    hstyle <- upd_vect(style,"text-align"="center")
     if(i == 1)
-      style <- paste0(style,"border-top: ",toprule,"px solid; text-align: center;")
+      hstyle <- upd_vect(hstyle,toprule)
     if(i == length(col.vars))
-      style <- paste0(style,"border-bottom: ",midrule,"px solid; text-align: center;")
-    if(nzchar(style))
-      attribs$style <- style
+      hstyle <- upd_vect(hstyle,midrule)
+    hstyle <- proc_style(hstyle)
+    if(nzchar(hstyle))
+      attribs$style <- hstyle
     
     htmp1 <- mk_td(rep("",ncol(coeftitles)),attribs=attribs["style"])
     htmp2 <- mk_td(cv,attribs=attribs)
@@ -113,7 +128,7 @@ mtable_format_html <- function(x,
   header <- sapply(header,paste0,collapse="")
   header <- mk_tr(header)
   
-  ans <- c("<table style=\"border-collapse: collapse;\">",
+  ans <- c("<table class=\"mtable\" style=\"border-collapse: collapse;\">",
            header,
            body,
            sbody,

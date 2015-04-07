@@ -40,7 +40,8 @@ write_html <- function(x,file,...)
 format_html <- function(x,...)
   UseMethod("format_html")
 
-mk_elem <- function(x,type,extra="",attribs=list(),...,linebreaks=FALSE,indent=0){
+mk_elem <- function(x,type,extra="",attribs=list(),
+                    ...,linebreaks=FALSE,indent=0){
   start_tag <- paste0("<",type)
   if(nzchar(extra))
     start_tag <- paste(start_tag,extra)
@@ -96,6 +97,7 @@ spltDec <- function(x,at="."){
   as.vector(y)
 }
 
+
 mk_td_spltDec <- function(x,style=""){
   
   if(!is.matrix(x))
@@ -117,4 +119,26 @@ mk_td_spltDec <- function(x,style=""){
          nrow=nrow(x),
          ncol=ncol(x),
          byrow=TRUE)
+}
+
+proc_style <- function(...){
+  x <- c(...)
+  if(!length(x)) return("")
+  nms <- names(x)
+  x <- as.character(x)
+  prop_titles <- nms[nzchar(nms) & nzchar(x)]
+  ii <- match(prop_titles,nms)
+  props <- x[ii]
+  if(length(props)){
+    props <- paste0(prop_titles,": ",props,";")
+    paste(props,collapse=" ")
+  }
+  else ""
+}
+
+upd_vect <- function(x,...){
+  y <- c(...)
+  n <- names(y)
+  x[n] <- y
+  x
 }
