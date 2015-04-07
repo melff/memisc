@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{memisc News}
 \encoding{UTF-8}
-\section{Current (Development) Version}{
+\section{Version 0.98}{
   \subsection{NEW FEATURES}{
   \itemize{
     \item Support for exporting \code{mtable} results into HTML format is now
