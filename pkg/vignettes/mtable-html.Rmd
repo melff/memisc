@@ -18,15 +18,15 @@ Next, we put them together into a table with `mtable()`.
 mtable123 <- mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2,
                     summary.stats=c("sigma","R-squared","F","p","N"))
 ```
-Third, we improve the appearance of the results by relabeling the `mtable` object, and show the results in the console window.
+Third, we improve the appearance of the results by relabeling the `mtable` object.
 ```{r, comment=NA}
-(mtable123 <- relabel(mtable123,
+mtable123 <- relabel(mtable123,
                       "(Intercept)" = "Constant",
                       pop15 = "Percentage of population under 15",
                       pop75 = "Percentage of population over 75",
                       dpi = "Real per-capita disposable income",
                       ddpi = "Growth rate of real per-capita disp. income"
-))
+)
 ```
 Finally we view the results in HTML format.
 ```{r, results='asis'}
