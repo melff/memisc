@@ -243,6 +243,7 @@ exportMethods(
     as.factor,
     as.ordered,
     contrasts,
+    as.data.set,
     "contrasts<-",
     summary,
     within,

@@ -527,7 +527,18 @@ setMethod("unique","data.set",function(x, incomparables = FALSE, ...){
 fapply.data.set <- function(formula,data,...)
   fapply.default(formula,data=as.data.frame(data,optional=TRUE),...)
   
-  
+setMethod("as.data.set","list",function(x,row.names=NULL,optional=NULL,
+                                        compress.storage.modes=TRUE,...){
+  class(x) <- "data.frame"
+  if(length(row.names)){
+    if(length(row.names)!=nrow(x)) stop("row.names argument has wrong length")
+    attr(x,"row.names") <- row.names
+  }
+  else
+    attr(x,"row.names") <- seq_len(nrow(x))
+  new("data.set",x)
+})
+
 ## Copied and modified from base package
 ## Original copyright (C) 1995-2013 The R Core Team
 
