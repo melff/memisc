@@ -154,10 +154,21 @@ mtable_format_latex <- function(x,
   )
   
   leader.spec <- paste(rep("l",length(row.vars)),collapse="")
-  coef.spec <- character(ncol(coefs)/length(rev(col.vars)[[1]]))
-  coef.spec[] <- colspec
-  coef.spec <- paste(coef.spec,collapse="")
-  tabspec <- c(leader.spec,rep(coef.spec,length(rev(col.vars)[[1]])))
+  
+  if(length(col.vars) > 1){
+    
+    sz.eq <- ncol(coefs)/length(rev(col.vars)[[1]])
+    n.eq <- length(rev(col.vars)[[1]])
+    coef.spec <- matrix("",nrow=n.eq,ncol=sz.eq)
+    coef.spec[] <- colspec
+    coef.spec <- apply(coef.spec,1,paste,collapse="")
+  }
+  else {
+    coef.spec <- character(ncol(coefs))
+    coef.spec[] <- colspec
+  }
+  
+  tabspec <- c(leader.spec,coef.spec)
   if(length(col.vars) > 1)
     tabspec <- paste(tabspec,collapse="c")
   else
