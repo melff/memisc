@@ -1,5 +1,5 @@
 % \VignetteIndexEntry{Analysing the American National Election Study of 1948}
-% \VignetteEngine{knitr::knitr}
+% \VignetteEngine{knitr::rmarkdown}
 # Introduction
 
 This vignette gives an example for the analysis of a typical social science data set.
