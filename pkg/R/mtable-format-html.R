@@ -34,7 +34,7 @@ mtable_format_html <- function(x,
                   col.vars=rev(x$as.col)
   )
   infos <- attributes(coefs)
-  
+
   coefs <- trimws(coefs)
   coefs[] <- gsub("-","&minus;",coefs[],fixed=TRUE)
   if(split.dec){
@@ -42,7 +42,7 @@ mtable_format_html <- function(x,
   }
   
   row.vars <- infos$row.vars[-x$kill.col]
-  col.vars <- infos$col.vars[-x$kill.col]
+  col.vars <- infos$col.vars[-x$kill.header]
   
   coeftitles <- matrix("",nrow=nrow(coefs),ncol=length(row.vars))
   for(i in 1:length(row.vars)){
@@ -111,26 +111,37 @@ mtable_format_html <- function(x,
   
   header <- list()
   mm <- 1
-  for(i in rev(1:length(col.vars))){
+  ncc <- ncol(coefs)
+  
+  for(i in 1:length(col.vars)){
+    
     cv <- col.vars[[i]]
     ncv <- length(cv)
-    attribs <- list(colspan=mm)
+    
+    cv <- rep(cv,mm)
     mm <- mm*ncv
-    cv <- rep(cv,m%/%mm)
+    
+    colspan <- ncc%/%mm
+    
+    attribs <- list(colspan=colspan)
     
     hstyle <- upd_vect(style,align.center,lrpad)
     if(i == 1)
       hstyle <- upd_vect(hstyle,toprule)
+    
+    hstyle1 <- upd_vect(hstyle,midrule)
+    
     if(i == length(col.vars))
       hstyle <- upd_vect(hstyle,midrule)
     
-    if(nzchar(hstyle))
-      attribs$style <- proc_style(hstyle)
+    attribs$style <- proc_style(hstyle1)
     
     htmp1 <- mk_td(rep("",ncol(coeftitles)),style=proc_style(hstyle))
     htmp2 <- mk_td(cv,attribs=attribs)
-    header <- c(list(c(htmp1,htmp2)),header)
+    
+    header <- c(header,list(c(htmp1,htmp2)))
   }
+  
   header <- sapply(header,paste0,collapse="")
   header <- mk_tr(header)
   
