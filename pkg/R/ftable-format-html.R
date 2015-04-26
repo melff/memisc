@@ -37,13 +37,20 @@ format_html.ftable <- function(x,
   fo <- format
   format <- integer(m)
   format[] <- fo
-  body <- array(trimws(x),dim=dim(x))
+  
+  body <- array("",dim=dim(x))
+  for(i in seq(along=digits)) {
+    #print(digits[i])
+    body[,i] <- formatC(x[,i],digits=digits[i],format=format[i])
+  }
+  
+  body <- array(trimws(body),dim=dim(x))
   body[] <- gsub("-","&minus;",body[],fixed=TRUE)
-  if(split.dec && digits > 0){
+  if(split.dec){
     body <- t(apply(body,1,spltDec))
   }
   
-  if(split.dec && any(digits > 0)){
+  if(split.dec){
     body[-n,] <- mk_td_spltDec(body[-n,], style=proc_style(style))
     body[n,] <- mk_td_spltDec(body[n,], style=proc_style(upd_vect(style,bottomrule)))
   }
@@ -89,7 +96,10 @@ format_html.ftable <- function(x,
   for(i in rev(1:n.col.vars)){
     cv <- col.vars[[i]]
     ncv <- length(cv)
-    attribs <- list(colspan=mm)
+    if(split.dec)
+      attribs <- list(colspan=mm*3)
+    else
+      attribs <- list(colspan=mm)
     mm <- mm*ncv
     cv <- rep(cv,m%/%mm)
     
@@ -99,32 +109,48 @@ format_html.ftable <- function(x,
     if(i == n.col.vars)
       hstyle <- upd_vect(hstyle,midrule)
     if(any(nzchar(hstyle)))
-      attribs$style <- proc_style(hstyle)
+      
     
-    if(n.col.vars > 1){
-      if(i == n.col.vars && show.titles)
-        htmp1 <- mk_td(c(names(row.vars),names(col.vars)[i]),
+    if(show.titles){
+      if(n.col.vars == 1){
+        hstyle <- upd_vect(hstyle,bottomrule)
+        
+        if(!nzchar(names(col.vars)))
+          hstyle <- upd_vect(hstyle,toprule)
+        
+        htmp1 <- mk_td(c(names(row.vars),""),
                        style=proc_style(upd_vect(hstyle,align.left)))
-      else
-        htmp1 <- mk_td(c(rep("",n.row.vars),names(col.vars)[i]),
-                       style=proc_style(upd_vect(hstyle,align.left)))
+      }
+      else {
+        if(i == n.col.vars){
+          htmp1 <- mk_td(c(names(row.vars),names(col.vars)[i]),
+                         style=proc_style(upd_vect(hstyle,align.left)))
+        }
+        else
+          htmp1 <- mk_td(c(rep("",n.row.vars),names(col.vars)[i]),
+                         style=proc_style(upd_vect(hstyle,align.left)))
+      }      
     }
-    else if(show.titles)
-      htmp1 <- mk_td(c(names(row.vars),""),
-                     style=proc_style(upd_vect(hstyle,align.left)))
-    else
+    else 
       htmp1 <- mk_td(rep("",ncol(leaders)),style=proc_style(hstyle))
+    
+    attribs$style <- proc_style(hstyle)
     htmp2 <- mk_td(cv,attribs=attribs)
     header <- c(list(c(htmp1,htmp2)),header)
   }
   if(show.titles && n.col.vars == 1){
-    hstyle <- upd_vect(style,toprule,lrpad)
-    htmp1 <- mk_td(rep("",ncol(leaders)),
-                   style=proc_style(hstyle))
-    attribs <- list(colspan=ncol(x),
-                    style=proc_style(upd_vect(hstyle,align.center,midrule)))
-    htmp2 <- mk_td(names(col.vars),attribs=attribs)
-    header <- c(list(c(htmp1,htmp2)),header)
+    if(nzchar(names(col.vars))){
+      hstyle <- upd_vect(style,toprule,lrpad)
+      htmp1 <- mk_td(rep("",ncol(leaders)),
+                     style=proc_style(hstyle))
+      colspan <- ncol(x)
+      if(split.dec) 
+        colspan <- colspan*3
+      attribs <- list(colspan=colspan,
+                      style=proc_style(upd_vect(hstyle,align.center,midrule)))
+      htmp2 <- mk_td(names(col.vars),attribs=attribs)
+      header <- c(list(c(htmp1,htmp2)),header)
+    }
   }
   header <- sapply(header,paste0,collapse="")
   header <- mk_tr(header)
