@@ -108,6 +108,7 @@ export(
       UnZip,
       "%nin%",
       codebook,
+      wild.codes,
       spss.fixed.file,
       spss.portable.file,
       spss.system.file,
@@ -256,6 +257,7 @@ exportMethods(
     Table,
     Descriptives,
     codebook,
+    wild.codes,
     sample,
     query
     )
