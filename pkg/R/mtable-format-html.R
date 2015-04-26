@@ -18,6 +18,10 @@ mtable_format_html <- function(x,
   bottomrule <- c("border-bottom"=paste0(midrule,"px solid"))
   midrule_above <- c("border-top"=paste0(midrule,"px solid"))
   midrule <- c("border-bottom"=paste0(midrule,"px solid"))
+  align.right <- c("text-align"="right")  
+  align.left <- c("text-align"="left")  
+  align.center <- c("text-align"="center")
+  lrpad <- c("padding-left"="0.3em","padding-right"="0.3em")
   
   coldims <- dim(x$coefficients)[x$as.col]
   nhrows <- length(coldims)
@@ -54,7 +58,7 @@ mtable_format_html <- function(x,
   if(split.dec)
     coefs[] <- mk_td_spltDec(coefs, style=proc_style(style))
   else 
-    coefs[] <- mk_td(coefs, style=proc_style(style))
+    coefs[] <- mk_td(coefs, style=proc_style(upd_vect(style,lrpad)))
   
   body <- cbind(coeftitles,coefs)
   body <- apply(body,1,paste0,collapse="")
@@ -106,24 +110,26 @@ mtable_format_html <- function(x,
   } else sbody <- NULL
   
   header <- list()
-  for(i in 1:length(col.vars)){
+  mm <- 1
+  for(i in rev(1:length(col.vars))){
     cv <- col.vars[[i]]
-    m <- length(cv)
-    n <- ncol(coefs)%/%m
-    attribs <- list()
-    attribs$colspan <- n
-    hstyle <- upd_vect(style,"text-align"="center")
+    ncv <- length(cv)
+    attribs <- list(colspan=mm)
+    mm <- mm*ncv
+    cv <- rep(cv,m%/%mm)
+    
+    hstyle <- upd_vect(style,align.center,lrpad)
     if(i == 1)
       hstyle <- upd_vect(hstyle,toprule)
     if(i == length(col.vars))
       hstyle <- upd_vect(hstyle,midrule)
-    hstyle <- proc_style(hstyle)
-    if(nzchar(hstyle))
-      attribs$style <- hstyle
     
-    htmp1 <- mk_td(rep("",ncol(coeftitles)),attribs=attribs["style"])
+    if(nzchar(hstyle))
+      attribs$style <- proc_style(hstyle)
+    
+    htmp1 <- mk_td(rep("",ncol(coeftitles)),style=proc_style(hstyle))
     htmp2 <- mk_td(cv,attribs=attribs)
-    header[[i]] <- c(htmp1,htmp2)
+    header <- c(list(c(htmp1,htmp2)),header)
   }
   header <- sapply(header,paste0,collapse="")
   header <- mk_tr(header)
