@@ -1,15 +1,18 @@
-\name{show_html}
+\name{format_html}
 \alias{show_html}
+\alias{format_html}
 \alias{write_html}
 \title{
- Show Objects in HTML Format or Write them to a File
+ Format Objects in HTML, show the HTML Format or Write it to a File
 }
 \description{
  \code{show_html} is for showing objects (at present only
  'mtable' results) in a convenient way in HTML format. 
  \code{write_html} writes them in HTML format into a file.
+ Both functions call the generic \code{format_html} for the format conversion.
 }
 \usage{
+format_html(x, ...)
 show_html(x, output = NULL, ...)
 write_html(x, file, ...)
 }

@@ -122,7 +122,8 @@ export(
       mtable_format_html,
       mtable_format_delim,
       show_html,
-      write_html
+      write_html,
+      format_html
       )
 S3method(getSummary,aftreg)
 S3method(getSummary,betareg)
@@ -282,3 +283,5 @@ S3method(Iconv,importer)
 S3method(Write,descriptions)
 S3method(Write,codebook)
 
+S3method(format_html,mtable)
+S3method(format_html,ftable)
