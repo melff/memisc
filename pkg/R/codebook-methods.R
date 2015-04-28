@@ -65,15 +65,6 @@ setMethod("show","codebook",function(object){
   writeLines(out)
 })
 
-# setMethod("Write",signature(x="codebook"),
-#           function(x,file=stdout(),...){
-#             width <- getOption("width")
-#             toprule <- paste(rep("=",width),collapse="")
-#             midrule <- paste(rep("-",width),collapse="")
-#             out <- mapply(format,x=x,name=names(x),toprule=toprule,midrule=midrule)
-#             out <- unlist(out)
-#             writeLines(out,con=file)
-#           })
 
 Write.codebook <- function(x,file=stdout(),...){
   width <- getOption("width")
@@ -87,8 +78,8 @@ Write.codebook <- function(x,file=stdout(),...){
 
 setMethod("format","codebookEntry",
   function(x,name="",width=getOption("width"),
-          toprule=toprule,
-          midrule=midrule
+          toprule=paste(rep("=",width),collapse=""),
+          midrule=paste(rep("-",width),collapse="")
       ){
 
   annot <- x@annotation
