@@ -40,6 +40,43 @@ write_html <- function(x,file,...)
 format_html <- function(x,...)
   UseMethod("format_html")
 
+
+mk_tags <- function(type,extra="",attribs=list(),...){
+  start_tag <- paste0("<",type)
+  if(nzchar(extra))
+    start_tag <- paste(start_tag,extra)
+  end_tag <- paste0("</",type,">")
+  
+  attribs <- c(attribs,list(...))
+  if(length(attribs)){
+    for(n in names(attribs)){
+      attrib <- character(length(start_tag))
+      attrib[] <- paste0("\"",attribs[[n]],"\"")
+      use <- nzchar(attrib)
+      start_tag[use] <- paste0(start_tag[use]," ",n,"=",attrib[use])
+    }
+  }
+  start_tag <- paste0(start_tag,">")
+
+  c(start_tag,end_tag)
+}
+
+mk_scope <- function(x,type,extra="",attribs=list(),...){
+  tags <- mk_tags(type,extra,attribs,...)
+  c(tags[1],x,tags[2])
+}
+
+mk_div <- function(x,extra="",attribs=list(),...)
+  mk_scope(x,type="div",extra,attribs,...)
+
+mk_p <- function(x,extra="",attribs=list(),...)
+  mk_scope(x,type="p",extra,attribs,...)
+
+
+mk_table <- function(x,extra="",attribs=list(),...)
+  mk_scope(x,type="table",extra,attribs,...)
+
+
 mk_elem <- function(x,type,extra="",attribs=list(),
                     ...,linebreaks=FALSE,indent=0){
   start_tag <- paste0("<",type)
@@ -86,6 +123,9 @@ mk_td <- function(x,...)mk_elem(x,type="td",...,linebreaks=FALSE)
 mk_th <- function(x,...)mk_elem(x,type="th",...,linebreaks=FALSE)
 mk_tr <- function(x,...) mk_elem(x,type="tr",...,linebreaks=FALSE)
 
+mk_span <- function(x,...) mk_elem(x,type="span",...,linebreaks=FALSE)
+
+
 spltDec <- function(x,at="."){
   y <- strsplit(x,at,fixed=TRUE)
   y1 <- sapply(y,"[",1)
@@ -108,7 +148,7 @@ mk_td_spltDec <- function(x,style=""){
   stl <- c("text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;",
            "text-align: center; margin-left: 0px; padding-left: 0px; margin-right: 0px; padding-right: 0px; width: 1px;",
            "text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;")
-  if(nzchar(style))
+  if(any(nzchar(style)))
     style <- paste(style,stl)
   else
     style <- stl
