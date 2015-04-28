@@ -32,7 +32,7 @@ setGeneric("measurement<-",function(x,value)
 setGeneric("as.measurement.level",function(x)standardGeneric("as.measurement.level"))
 
 
-setGeneric("as.data.set",function(x,row.names=NULL,optional=NULL,...)standardGeneric("as.data.set"))
+setGeneric("as.data.set",function(x,row.names=NULL,...)standardGeneric("as.data.set"))
 
 setGeneric("codebook",function(x)standardGeneric("codebook"))
 setGeneric("wild.codes",function(x)standardGeneric("wild.codes"))

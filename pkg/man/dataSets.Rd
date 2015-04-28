@@ -10,6 +10,7 @@
 \alias{as.data.frame.data.set}
 \alias{str.data.set}
 \alias{as.data.set}
+\alias{as.data.set,list-method}
 \alias{[<-,data.set-method}
 \alias{[,data.set,atomic,atomic,ANY-method}
 \alias{[,data.set,atomic,missing,ANY-method}
@@ -41,7 +42,8 @@
 data.set(\dots,row.names = NULL, check.rows = FALSE, check.names = TRUE,
     stringsAsFactors = default.stringsAsFactors(),
                  document = NULL)
-as.data.set(x, row.names=NULL, optional=NULL, \dots)
+as.data.set(x, row.names=NULL, \dots)
+\S4method{as.data.set}{list}(x,row.names=NULL,\dots)
 is.data.set(x)
 \method{as.data.frame}{data.set}(x, row.names = NULL, optional = FALSE, \dots)
 \S4method{within}{data.set}(data, expr, \dots)

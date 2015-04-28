@@ -527,8 +527,7 @@ setMethod("unique","data.set",function(x, incomparables = FALSE, ...){
 fapply.data.set <- function(formula,data,...)
   fapply.default(formula,data=as.data.frame(data,optional=TRUE),...)
   
-setMethod("as.data.set","list",function(x,row.names=NULL,optional=NULL,
-                                        compress.storage.modes=TRUE,...){
+setMethod("as.data.set","list",function(x,row.names=NULL,...){
   class(x) <- "data.frame"
   if(length(row.names)){
     if(length(row.names)!=nrow(x)) stop("row.names argument has wrong length")
