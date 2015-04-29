@@ -128,8 +128,20 @@ format_html.codebookEntry <- function(x,name="",
 }
 
 format_html.codebook <- function(x,toprule=2,
-                                 midrule=1)
+                                 midrule=1,
+                                 padding=3,
+                                 var_tag="code",
+                                 varstyle=c("font-weight"="bold","font-size"="110%"),
+                                 varid_prefix="",
+                                 title_tag="p",
+                                 ...)
 {
-  out <- mapply(format_html,x=x,name=names(x),toprule=toprule,midrule=midrule)
+  out <- mapply(format_html,x=x,name=names(x),
+                MoreArgs = list(
+                    toprule=toprule,midrule=midrule,
+                    padding=padding,var_tag=var_tag,
+                    varstyle=varstyle,varid_prefix=varid_prefix,
+                    title_tag=title_tag
+                  ))
   mk_div(unlist(out),class="codebook")
 }

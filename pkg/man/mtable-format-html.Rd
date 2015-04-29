@@ -3,16 +3,16 @@
 \alias{format_html.mtable}
 \title{HTML Formatting for 'mtable' Results}
 \description{
-  This functions formats 'mtable' objects into HTML format.
+  These functions formats 'mtable' objects into HTML format.
   }
 \usage{
-  mtable_format_html(x,
+mtable_format_html(x,
                     interaction.sep = " &times; ",
                     toprule=2,midrule=1,bottomrule=2,
                     split.dec=TRUE,
                     \dots
   )
-  \method{format_html}{mtable}(x,
+\method{format_html}{mtable}(x,
                     interaction.sep = " &times; ",
                     toprule=2,midrule=1,bottomrule=2,
                     split.dec=TRUE,
