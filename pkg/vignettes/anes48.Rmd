@@ -1,5 +1,6 @@
 % \VignetteIndexEntry{Analysing the American National Election Study of 1948}
 % \VignetteEngine{knitr::rmarkdown}
+
 # Introduction
 
 This vignette gives an example for the analysis of a typical social science data set.
@@ -181,9 +182,7 @@ Having constructed the unordered factors
 `vote3`, `occup4`, `relig3`, and `race2` we can
 proceed examining the association the vote, occupational class,
 relgious denomination, and race. First, we look upon a simple
-contingency table. We use the `toLatex` method defined
-for tables to get a nicely formatted output. (The generic
-function `toLatex` is defined in package `utils`.)
+contingency table. 
 
 ```{r}
 xtabs(~vote3+occup4,data=vote.48)
@@ -222,57 +221,26 @@ so that such an inference would be very shaky.
 
 
 ```{r}
-inc.tab <- t(genTable(percent(vote3)~total.income,data=vote.48))
-inc.tab
+t(genTable(percent(vote3)~total.income,data=vote.48))
 ```
-
-
 The table of percentage of vote by income suggests that income had
 some considerable influence on the choice either of Truman or of Dewey,
 but the unequal distribution of income categories warrants a more
 refined analysis that takes into account the uncertainty about the
 vote percentages. Therefore, the percentages of support for Truman
-broken down by income is plotted along with confidence intervals,
-showcasing the `panel.errbars` function of package `memisc`:
-```{r,vote3-total-income}
-agg.inc <- Aggregate(percent(vote3,ci=TRUE)~total.income,data=vote.48)
-agg.inc.errbars <- xyplot(cbind(Percentage,upper,lower)~total.income,
-        data=subset(agg.inc,vote3=="Truman"),
-        panel=panel.errbars,
-        xlab="Household income",
-        ylab="Percentage voting for Truman",
-        pch=19,ewidth=0.2,
-        scales=list(x=list(
-          rot=90
-          )),
-        )
-print(agg.inc.errbars)
+broken down by income shown with confidence intervals:
+```{r}
+inc.tab <- genTable(percent(vote3,ci=TRUE)~total.income,data=vote.48)
+ftable(inc.tab,row.vars=c(3,2))
 ```
-
-The plot suggests that Truman found support especially among the middle- and lower-income
-groups. However, as the counts in the table of percentages already suggested, the
-number of members of lower-income groups in the sample is too small to make precise
-statements about the level of support for Truman in these groups: For the lowest
-income group, the 95% confidence interval ranges from below 20 percent to above 80 percent.
 
 Occupational class is more evenly distributed in the sample, thus it may be possible
 to obtain more precise estimates of the percentages of support for Truman for occupational
 classes:
-```{r,vote3-occup4}
-agg.occup <- Aggregate(percent(vote3,ci=TRUE)~occup4,data=vote.48)
-agg.occup.errbars <- xyplot(cbind(Percentage,upper,lower)~occup4,
-        data=subset(agg.occup,vote3=="Truman"),
-        panel=panel.errbars,
-        xlab="Occupation head of household",
-        ylab="Percentage voting for Truman",
-        pch=19,ewidth=0.2,
-        scales=list(x=list(
-          rot=90
-          )),
-        )
-print(agg.occup.errbars)
+```{r}
+occup.tab <- genTable(percent(vote3,ci=TRUE)~occup4,data=vote.48)
+ftable(occup.tab,row.vars=c(3,2))
 ```
-
 The upper and lower white-collar and blue-collar classes are quite distinct
 with regard to the percentages of support for Truman. The point estimates
 of the percentages are outside the confidence intervals of the respective
@@ -376,7 +344,3 @@ religious denomination is weaker than that of occupational class. However,
 as the third column in the above table indicates the effect of religious
 denomination remains statistically significant.
 
-```{r,Termplot-mod35,fig.width=9,fig.height=9}
-Tp35 <- Termplot(model3,model5,se=TRUE,residuals="none",xrot=90)#,models="columns")
-print(Tp35)
-```

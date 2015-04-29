@@ -7,12 +7,11 @@
 work with \code{R} easier for the author of this package
 and are submitted to the public in the hope that they will be also be useful to others.
 
-The tools in this package can be grouped into five major categories:
+The tools in this package can be grouped into four major categories:
 \itemize{
   \item Data preparation and management
   \item Data analysis
   \item Presentation of analysis results
-  \item Simulation
   \item Programming
 }
 }
@@ -126,16 +125,6 @@ The tools in this package can be grouped into five major categories:
   Therefore there is no need to \code{\link{attach}} the data frame
   or to use the dollar operator.
   
-
-\strong{Graphical Model Comparison}
-
-  \code{\link{Termplot}} is a variant and an extension of \code{\link[stats]{termplot}}:
-  The plots are similar to those of \code{termplot} but uses \code{\link[lattice]{lattice}}
-  graphics. Also \code{Termplot} can be used on more than one model and allows
-  to compare the fit of linear or non-linear effect specifications of different
-  models.
-
-  Use \code{example(Termplot)} or \code{demo(Termplot)} for an example.
 }
 \section{Presentation of Results of Statistical Analysis}{
 \strong{Publication-Ready Tables of Coefficients}
@@ -183,16 +172,7 @@ results produced by \code{\link{genTable}} can be coerced into
 for the \code{toLatex} function is defined which coerces its
 argument to a matrix and applies the matrix method of \code{toLatex}.
 }
-\section{Simulation}{
-The \code{memisc} package defines a function \code{\link{Simulate}},
-which can be used to conduct simulation experiments: For a given
-number of replications and given sets of parameters (which can
-be varied across experimental conditions) data are generated and
-can summarized afterwards by other methods.
 
-Use \code{example(Simulate)}, \code{demo(monte.carlo)}, \code{demo(lm.monte.carlo)},
-\code{demo(random.walk)}, or \code{demo(schellings)} for examples.
-}
 \section{Programming}{
 \strong{Looping over Variables}
 

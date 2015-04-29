@@ -203,31 +203,6 @@ We start our analyses with a contingency table, but first
 we make some preparations: We recode the variables of
 interest into a smaller number of categories in order to
 get results that are easier to read and interpret.
-% \begin{Verbatim}[frame=single,numbers=left,numbersep=1pt]
-% vote.48 <- within(vote.48,{
-%   vote3 <- recode(vote,
-%     1   -> "Truman",
-%     2   -> "Dewey",
-%     3:4 -> "Other"
-%     )
-%   occup4 <- recode(occupation.hh,
-%     10:20 -> "Upper white collar",
-%     30    -> "Other white collar",
-%     40:70 -> "Blue collar",
-%     80    -> "Farmer"
-%     )
-%   relig3 <- recode(religious.pref,
-%     1   -> "Protestant",
-%     2   -> "Catholic",
-%     3:5 -> "Other/none"
-%     )
-%    race2 <- recode(race,
-%     1 -> "White",
-%     2 -> "Black"
-%     )
-%   })
-% \end{Verbatim}
-% 
 <<>>=
 vote.48 <- within(vote.48,{
   vote3 <- recode(vote,
@@ -315,42 +290,12 @@ some considerable influence on the choice either of Truman or of Dewey,
 but the unequal distribution of income categories warrants a more
 refined analysis that takes into account the uncertainty about the
 vote percentages. Therefore, the percentages of support for Truman
-broken down by income is plotted along with confidence intervals,
-showcasing the \code{panel.errbars} function of package \code{memisc}:
-<<echo=FALSE>>=
-options(width=60)
-@
+broken down by income shown with confidence intervals:
 <<>>=
-agg.inc <- Aggregate(percent(vote3,ci=TRUE)~total.income,data=vote.48)
-agg.inc.errbars <- xyplot(cbind(Percentage,upper,lower)~total.income,
-        data=subset(agg.inc,vote3=="Truman"),
-        panel=panel.errbars,
-        xlab="Household income",
-        ylab="Percentage voting for Truman",
-        pch=19,ewidth=0.2,
-        scales=list(x=list(
-          rot=90
-          )),
-        )
+inc.tab <- genTable(percent(vote3,ci=TRUE)~total.income,data=vote.48)
+ftable(inc.tab,row.vars=c(3,2))
 @
-% Automatic inclusion does not work here - why?
-<<eval=FALSE>>=
-print(agg.inc.errbars)
-@
-<<results=hide,echo=FALSE>>=
-trellis.device(pdf,file="agg-inc-errbars.pdf",width=6,height=6)
-print(agg.inc.errbars)
-dev.off()
-trellis.device(postscript,file="agg-inc-errbars.eps",width=6,height=6)
-print(agg.inc.errbars)
-dev.off()
-@
-<<echo=FALSE>>=
-options(width=72)
-@
-\begin{center}
-\includegraphics{agg-inc-errbars}
-\end{center}
+
 
 The plot suggests that Truman found support especially among the middle- and lower-income
 groups. However, as the counts in the table of percentages already suggested, the
@@ -362,33 +307,9 @@ Occupational class is more evenly distributed in the sample, thus it may be poss
 to obtain more precise estimates of the percentages of support for Truman for occupational
 classes:
 <<>>=
-agg.occup <- Aggregate(percent(vote3,ci=TRUE)~occup4,data=vote.48)
-agg.occup.errbars <- xyplot(cbind(Percentage,upper,lower)~occup4,
-        data=subset(agg.occup,vote3=="Truman"),
-        panel=panel.errbars,
-        xlab="Occupation head of household",
-        ylab="Percentage voting for Truman",
-        pch=19,ewidth=0.2,
-        scales=list(x=list(
-          rot=90
-          )),
-        )
+occup.tab <- genTable(percent(vote3,ci=TRUE)~occup4,data=vote.48)
+ftable(occup.tab,row.vars=c(3,2))
 @
-% Automatic inclusion does not work here - why?
-<<eval=FALSE>>=
-print(agg.occup.errbars)
-@
-<<results=hide,echo=FALSE>>=
-trellis.device(pdf,file="agg-occup-errbars.pdf",width=6,height=6)
-print(agg.occup.errbars)
-dev.off()
-trellis.device(postscript,file="agg-occup-errbars.eps",width=6,height=6)
-print(agg.occup.errbars)
-dev.off()
-@
-\begin{center}
-\includegraphics{agg-occup-errbars}
-\end{center}
 The upper and lower white-collar and blue-collar classes are quite distinct
 with regard to the percentages of support for Truman. The point estimates
 of the percentages are outside the confidence intervals of the respective
@@ -497,23 +418,5 @@ A comparison of the pseudo-R-squared values suggests that also the effect of
 religious denomination is weaker than that of occupational class. However,
 as the third column in the above table indicates the effect of religious
 denomination remains statistically significant.
-
-<<>>=
-Tp35 <- Termplot(model3,model5,se=TRUE,residuals="none",xrot=90)#,models="columns")
-@
-<<eval=FALSE>>=
-print(Tp35)
-@
-<<results=hide,echo=FALSE>>=
-trellis.device(pdf,file="Tp35.pdf",width=7,height=7)
-print(Tp35)
-dev.off()
-trellis.device(postscript,file="Tp35.eps",width=7,height=7)
-print(Tp35)
-dev.off()
-@
-\begin{center}
-\includegraphics[width=\linewidth]{Tp35}
-\end{center}
 
 \end{document}

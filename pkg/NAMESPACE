@@ -42,12 +42,6 @@ export(
       relabel4,
       rename,
       rowrename,
-      Simulate,
-      default_bucket,
-      textfile_bucket,
-      put_into,
-      pour_out,
-      interrupt,
       genTable,
       Aggregate,
       #wtable,
@@ -63,9 +57,6 @@ export(
       sort.data.set,
       to.data.frame,
       as.array,
-      prediction.frame,
-      Termplot,
-      panel.errbars,
       as.item,
       labels,
       "labels<-",
@@ -151,12 +142,10 @@ S3method(toLatex,matrix)
 S3method(toLatex,mtable)
 S3method(toLatex,ftable)
 S3method(relabel,mtable)
-S3method(Termplot,default)
 S3method(relabel,default)
 S3method(relabel,factor)
 S3method(reorder,matrix)
 S3method(reorder,array)
-S3method(prediction.frame,default)
 S3method(collect,default)
 S3method(collect,matrix)
 S3method(collect,array)
@@ -169,17 +158,6 @@ S3method(percent,default)
 S3method(percent,logical)
 S3method(By,default)
 S3method(By,data.frame)
-S3method(print,bucket)
-S3method(dim,default_bucket)
-S3method(as.matrix,default_bucket)
-S3method(as.data.frame,default_bucket)
-S3method(pour_out,default_bucket)
-S3method(put_into,textfile_bucket)
-S3method(pour_out,textfile_bucket)
-S3method(dim,textfile_bucket)
-S3method(as.data.frame,textfile_bucket)
-S3method(as.matrix,textfile_bucket)
-S3method("[",bucket)
 
 exportClasses(
   atomic,

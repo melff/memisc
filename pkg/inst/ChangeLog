@@ -1,3 +1,48 @@
+2015-04-29:
+  - Step up version number and date.
+  - Removed functions panel.errbars, Termplot, Simulate, and associated stuff (buckets etc.)
+
+2015-04-28:
+  - Documented 'format_html' method for codebooks
+  - Added HTML formatting of codebooks.
+  - Bugfix in 'codebook-methods.R': specify sensible defauls for 'toprule' and 'midrule' in format,codebookEntry-method.
+  - Added dumentation for 'format_html' methods for "ftable" and "mtable" objects.
+  - Added documentation for 'format_html' function
+  - Documented 'wild.codes' function
+  - Fixed as.data.set,list-method, added documentation for as.data.set,list-method
+
+2015-04-26:
+  - Changed vignette engine to 'rmarkdown' as this gives better output.
+  - Added html vignette 'ANES 1948'
+  - Fix html formatting of mtables
+  - Bugfix of format_html.ftable: Now digits after the dot are handled correctly.
+  - Some adjustments of HTML formatting of "mtables"
+  - Support for HTML formatting of "ftables"
+  - Added function 'wild.codes' to find, well, wild codes.
+
+2015-04-20: 
+  - Fix collect method of "data.set" objects, by providing "as.data.set" method for lists.
+
+2015-04-09: 
+  - Improvement of header formatting of mtables for LaTeX
+
+2015-04-07: 
+  - Shorter vignette for html output of mtable results.
+  - Update README.md
+  - Create README.md
+  - More modular code for HTML formatting
+  - Added knitr vignette for HTML output example 
+  - Corrected NEWS.Rd
+  - Minor correction of format of ANES48 vignette
+  
+2015-04-06: 
+  - Improved HTML output of 'mtable' results. Updated documentation of 'mtable' results.
+  - Improved html format for mtables - alignment on decimal signs and straight borders.
+  
+2015-04-05: 
+  - New coefficient style - confidence intervals right of estimates
+  - Some cleanup in mtable; special formatting functions for mtable objects (needs testing)
+
 2015-03-07:
   - Renamed 'getSummary.expCoef' into 'getSummary_expCoef' to avoid R CMD check fussiness.
 
