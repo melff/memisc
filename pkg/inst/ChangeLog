@@ -1,6 +1,7 @@
 2015-04-29:
   - Step up version number and date.
   - Removed functions panel.errbars, Termplot, Simulate, and associated stuff (buckets etc.)
+  - Updated NEWS.Rd 
 
 2015-04-28:
   - Documented 'format_html' method for codebooks

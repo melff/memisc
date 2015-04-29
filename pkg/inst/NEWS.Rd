@@ -4,20 +4,23 @@
 \section{Version 0.98}{
   \subsection{NEW FEATURES}{
   \itemize{
-    \item Support for exporting results of various functions into HTML format is now
-    supported by the function \code{format_html}. 
-    This should make it easier to import them into HTML or word-processing
-    documents (that support importing HTML). A preview of the HTML is made available
-    by the new (generic) function \code{show_html}.
-    
-    In particular, results of the functions \code{mtable} (i.e. tables of
-    model estimates), \code{ftable} (i.e. flattened contingency tables etc.),
-    and \code{codebooks}, can be exported int HTML using \code{format_html}
-    
-    \item The functions \code{Termplot}, \code{Simulate}, and \code{panel.errbars}
-    are defunct. Graphics similar to those built with \code{panel.errbars}
-    can be created with facilities provided by the package "mplot", which 
-    is currently available on GitHub.
+      \item Support for exporting results of various functions into HTML format is now
+      supported by the function \code{format_html}. 
+      This should make it easier to import them into HTML or word-processing
+      documents (that support importing HTML). A preview of the HTML is made available
+      by the new (generic) function \code{show_html}.
+      
+      In particular, results of the functions \code{mtable} (i.e. tables of
+      model estimates), \code{ftable} (i.e. flattened contingency tables etc.),
+      and \code{codebooks}, can be exported int HTML using \code{format_html}
+    }
+  }
+  \subsection{DEFUNCT}{
+    \itemize{
+      \item The functions \code{Termplot}, \code{Simulate}, and \code{panel.errbars}
+      are defunct. Graphics similar to those built with \code{panel.errbars}
+      can be created with facilities provided by the package "mplot", which 
+      is currently available on GitHub.
     }
   }
 }
