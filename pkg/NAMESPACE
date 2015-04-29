@@ -48,7 +48,6 @@ export(
       put_into,
       pour_out,
       interrupt,
-      trimws,
       genTable,
       Aggregate,
       #wtable,
