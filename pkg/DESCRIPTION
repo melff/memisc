@@ -3,8 +3,8 @@ Type: Package
 Title: Tools for Management of Survey Data and the Presentation of Analysis Results
 Version: 0.98.0
 Date: 2015-04-29
-Author: Martin Elff (with contributions by Christopher N. Lawrence, Dave Atkins, Jason W. Morgan, Deepayan Sarkar, Achim Zeileis)
-Maintainer: Martin Elff <elff@gmx.com>
+Author: Martin Elff (with contributions by Christopher N. Lawrence, Dave Atkins, Jason W. Morgan, Achim Zeileis)
+Maintainer: Martin Elff <memisc@elff.eu>
 Description: One of the aims of this package is to make life easier for
         useRs who deal with survey data sets. It provides an
         infrastructure for the management of survey data including
