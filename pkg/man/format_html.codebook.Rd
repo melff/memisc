@@ -12,7 +12,6 @@
     toprule = 2, midrule = 1, 
     padding = 3, 
     var_tag = "code", 
-    varstyle = c(`font-weight` = "bold", `font-size` = "110\%"), 
     varid_prefix = "", title_tag = "p",\dots)
 }
 \arguments{
@@ -25,7 +24,6 @@
   codebook entry contents}
   \item{var_tag}{character string; the HTML tag that contains the 
   name of the variable}
-  \item{varstyle}{CSS style properties for the variable name}
   \item{varid_prefix}{character string; a prefix added to 
   the anchor IDs of the code entry titles (to facilitate the 
   creation of tables of contents etc.)}

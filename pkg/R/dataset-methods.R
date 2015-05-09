@@ -404,7 +404,7 @@ print.data.set <- function(x,max.obs=Inf,width=Inf,...){
     ww <- nchar(res[1,])
     res <- rbind(res,sapply(ww,mkdots))
     res <- apply(res,1,paste,collapse=" ")
-    res <- c(res,paste("(",length(res)," of ",nrow.x," observations shown)",sep=""))
+    res <- c(res,paste("(",length(res)-2," of ",nrow.x," observations shown)",sep=""))
     }
   else
     res <- apply(res,1,paste,collapse=" ")
