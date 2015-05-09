@@ -9,7 +9,6 @@ format_html.codebookEntry <- function(x,name="",
                                       midrule=1,
                                       padding=3,
                                       var_tag="code",
-                                      varstyle=c("font-weight"="bold","font-size"="110%"),
                                       varid_prefix="",
                                       title_tag="p"
 ){
@@ -31,7 +30,7 @@ format_html.codebookEntry <- function(x,name="",
   wording <- annot["wording"]
   if(length(annot)) annot <- annot[names(annot) %nin% c("description","wording")]
   
-  title_html <- mk_elem(name[1],type=var_tag,class="cbe-name",style=proc_style(varstyle))
+  title_html <- mk_elem(name[1],type=var_tag,class="cbe-name")
   if(length(description) && !is.na(description))
     title_html <- paste(title_html," &mdash; ",mk_span(sQuote(description),class="cbe-description"))
   
