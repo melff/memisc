@@ -43,6 +43,7 @@ format_html.codebookEntry <- function(x,name="",
   
   spec_html <- cbind(mk_td(names(x@spec),style=proc_style(align.left)),
                      mk_td(x@spec,style=proc_style(align.left)))
+  spec_html[] <- gsub("--","&ndash;",spec_html)
   spec_html <- apply(spec_html,1,paste0,collapse="")
   spec_html <- mk_tr(spec_html)
   spec_html <- mk_p(mk_table(spec_html,class="cbe-spec"))
@@ -130,7 +131,6 @@ format_html.codebook <- function(x,toprule=2,
                                  midrule=1,
                                  padding=3,
                                  var_tag="code",
-                                 varstyle=c("font-weight"="bold","font-size"="110%"),
                                  varid_prefix="",
                                  title_tag="p",
                                  ...)
@@ -139,7 +139,7 @@ format_html.codebook <- function(x,toprule=2,
                 MoreArgs = list(
                     toprule=toprule,midrule=midrule,
                     padding=padding,var_tag=var_tag,
-                    varstyle=varstyle,varid_prefix=varid_prefix,
+                    varid_prefix=varid_prefix,
                     title_tag=title_tag
                   ))
   mk_div(unlist(out),class="codebook")
