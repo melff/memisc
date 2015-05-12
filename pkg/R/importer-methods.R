@@ -188,28 +188,32 @@ setMethod("codebook","importer",function(x){
 initcodebookEntry <- function(x){
   annotation <- annotation(x)
   filter <- x@value.filter
+  spec <- c(
+    "Storage mode:"=storage.mode(x),
+    "Measurement:"=measurement(x)
+  )
+  if(length(filter)) spec <- c(spec,
+                               switch(class(filter),
+                                      missing.values = c("Missing values:" = format(filter)),
+                                      valid.values   = c("Valid values:"   = format(filter)),
+                                      valid.range    = c("Valid range:"    = format(filter))
+                               ))
   new("codebookEntry",
-    spec = c(
-            storage.mode=storage.mode(x),
-            measurement=measurement(x),
-            switch(class(filter),
-              "Missing values" = c(missing.values=format(filter)),
-              "Valid values" = c(valid.values=format(filter)),
-              "Valid range" = c(valid.range=format(filter))
-              )
-            ),
-    stats = list(),
-    annotation = annotation
+      spec = spec,
+      stats = list(),
+      annotation = annotation
   )
 }
 
 updatecodebookEntry <- function(cbe,x){
-  if(cbe@spec["storage.mode"] == "character")
+  res <- if(cbe@spec["Storage mode:"] == "character")
     updatecodebookStatsChar(cbe,x)
-  else switch(cbe@spec["measurement"],
+  else switch(cbe@spec["Measurement:"],
     nominal=,ordinal=updatecodebookStatsCateg(cbe,x),
     interval=,ratio=updatecodebookStatsMetric(cbe,x)
   )
+  if(!length(res)) browser()
+  res
 }
 
 
@@ -305,9 +309,9 @@ updatecodebookStatsChar <- function(cbe,x){
 }
 
 fixupcodebookEntry <- function(cbe){
-  if(cbe@spec["storage.mode"] == "character")
+  if(cbe@spec["Storage mode:"] == "character")
     fixupcodebookEntryChar(cbe)
-  else switch(cbe@spec["measurement"],
+  else switch(cbe@spec["Measurement:"],
     nominal=,ordinal=fixupcodebookEntryCateg(cbe),
     interval=,ratio=fixupcodebookEntryMetric(cbe)
   )
