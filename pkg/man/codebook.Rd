@@ -3,6 +3,9 @@
 \alias{codebook,item-method}
 \alias{codebook,data.set-method}
 \alias{codebook,importer-method}
+\alias{codebook,atomic-method}
+\alias{codebook,data.frame-method}
+\alias{codebook,factor-method}
 \alias{codebook-class}
 \alias{format,codebookEntry-method}
 \alias{show,codebook-method}
@@ -16,11 +19,15 @@
 }
 \usage{
 codebook(x)
+\S4method{codebook}{item}(x)
+\S4method{codebook}{atomic}(x)
+\S4method{codebook}{factor}(x)
 \S4method{codebook}{data.set}(x)
+\S4method{codebook}{data.frame}(x)
 \S4method{codebook}{importer}(x)
 }
 \arguments{
-  \item{x}{an \code{\link{item}},  \code{\link{data.set}} or \code{\link{importer}} object for \code{codebook()}}
+  \item{x}{an \code{\link{item}}, numeric or character vector, factor, \code{\link{data.set}}, \code{\link{data.frame}} or \code{\link{importer}} object for \code{codebook()}}
 }
 \value{
   An object of class "codebook", for which a \code{\link{show}} method exists that
