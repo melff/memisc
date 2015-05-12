@@ -50,7 +50,7 @@ spss.system.file <- function(
       }
     if(length(codes.file) && check.file(codes.file,error=TRUE)){
       message("using ",codes.file)
-      vallabs <- spss.parse.labels(codes.file)
+      vallabs <- spss.parse.value.labels(codes.file)
       }
     if(length(missval.file) && check.file(missval.file,error=TRUE)){
       message("using ",missval.file)
