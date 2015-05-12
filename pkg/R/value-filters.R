@@ -211,23 +211,25 @@ setMethod("is.missing",signature(x="item.vector"),function(x){
 is.valid <- function(x) !is.missing(x) & !is.na(x)
 nvalid <- function(x) sum(is.valid(x))
 
-setMethod("format","valid.values",function(x,justify="none",trim=TRUE,...){
-  paste(format(x@filter,justify="none",trim=TRUE,...),collapse=", ")
+
+setMethod("format","valid.values",function(x,...){
+  paste(as.character(x@filter),collapse=", ")
 }) 
-setMethod("format","valid.range",function(x,justify="none",trim=TRUE,...){
-  paste(format(x@filter[1:2],justify="none",trim=TRUE,...),collapse="-")
+setMethod("format","valid.range",function(x,...){
+  paste(as.character(x@filter[1:2]),collapse="-")
 }) 
-setMethod("format","missing.values",function(x,justify="none",trim=TRUE,...){
+setMethod("format","missing.values",function(x,...){
   if(length(x@filter) && length(x@range))
       paste(
-          paste(format(x@filter,justify="none",trim=TRUE,...),collapse=", "),
-          paste(format(x@range[1:2],justify="none",trim=TRUE,...),collapse="-"),
+          paste(as.character(x@filter),collapse=", "),
+          paste(as.character(x@range[1:2]),collapse="-"),
           sep=", ")
   else if(length(x@filter))
-    paste(format(x@filter,justify="none",trim=TRUE,...),collapse=", ")
+    paste(as.character(x@filter),collapse=", ")
   else if(length(x@range))
-    paste(format(x@range[1:2],justify="none",trim=TRUE,...),collapse="-")
+    paste(as.character(x@range[1:2]),collapse="-")
 }) 
+
 
 setMethod("show","value.filter",function(object){
   writeLines(format(object))
