@@ -10,7 +10,8 @@ format_html.codebookEntry <- function(x,name="",
                                       padding=3,
                                       var_tag="code",
                                       varid_prefix="",
-                                      title_tag="p"
+                                      title_tag="p",
+                                      ...
 ){
   
   firstcol <- c("padding-left"="0.3em")
