@@ -2,6 +2,8 @@
   - Fixed a bug introduced by side-effects of manipulating the arguments of 'readfixed'. 
   - Make sure that codebook entries for items in external data sources are complete.
   - Add dots to 'format_html.codebookEntry' formal arguments.
+  - Improved `toLatex` formatting of `ftable`s
+  - Set version number to 0.98.1
 
 2015-05-11: Make memisc:::trimws work without changing locale
   - Complete rewrite of major parts of 'import-internal-spss-syntax.R': 

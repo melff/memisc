@@ -56,6 +56,7 @@ toLatex.ftable <- function(object,
     }
   }
   for(i in 1:n.col.vars){
+    
     cv <- col.vars[[i]]
     lcv <- length(cv)
     tmp.header <- character(ng[i])
@@ -86,13 +87,28 @@ toLatex.ftable <- function(object,
     else
       header[i] <- paste(header[i],collapse=" && ")
   }
-  if(show.titles && length(names(row.vars))){
-    hleaders <- paste("\\multicolumn{",n.row.vars,"}{l}{",names(col.vars),"}",sep="")
-    hleaders <- format(hleaders)
+  
+  if(show.titles){
+    if(length(names(col.vars))==1){
+      
+      hleaders <- matrix("",nrow=2,ncol=n.row.vars)
+      hleaders[2,] <- names(row.vars)
+      hleaders <- apply(hleaders,1,paste,collapse="&")
+      
+      header <- c(paste("\\multicolumn{",m,"}{c}{",names(col.vars),"}",sep=""),
+                  header)
+    }
+    else {
+      hleaders <- matrix("",nrow=n.col.vars,ncol=n.row.vars+1)
+      hleaders[,n.row.vars+1] <- paste0(names(col.vars),":")
+      hleaders[n.col.vars,1:n.row.vars] <- names(row.vars)
+      hleaders <- apply(hleaders,1,paste,collapse="&")
+    }
   } else {
     hleaders <- matrix("",nrow=n.col.vars,ncol=n.row.vars)
     hleaders <- apply(hleaders,1,paste,collapse="&")
   }
+  
   leaders <- matrix("",nrow=nrow(body),ncol=n.row.vars)
   lrv <- integer(n.row.vars)
   for(i in 1:n.row.vars){
@@ -105,25 +121,28 @@ toLatex.ftable <- function(object,
     tmp.leaders[1,] <- rv
     leaders[,i] <- c(tmp.leaders)
   }
-  if(show.titles && length(names(row.vars)))
-      leaders <- rbind(names(row.vars),leaders)
+
   leaders <- format(leaders)
   leaders <- apply(leaders,1,paste,collapse="&")
+  
   lcv <- length(col.vars[[n.col.vars]])
   dim(body) <- c(n,lcv,m/lcv)
   body <- format(body)
   body <- apply(body,c(1,3),paste,collapse=" & ")
   body <- apply(body,1,paste,collapse=" && ")
-  if(show.titles && length(names(row.vars)))
-      body <- c("",body)
-  #ans <- paste(c(hleaders,leaders),c(header,body),sep=" && ")
-  header <- paste(hleaders,header,sep=" && ")
+
+  if(show.titles && length(names(col.vars))>1)
+    header <- paste(hleaders,header,sep=" & ")
+  else
+    header <- paste(hleaders,header,sep=" && ")
+  
   header <- paste(header,"\\\\",sep="")
   if(length(cmidrule)){
     header <- c(rbind(header,clns))
     header <- header[-length(header)]
   }
   body <- paste(leaders,body,sep=" && ")
+  
   if(!length(extrarowsep))
     body <- paste(body,"\\\\",sep="")
   else {
@@ -136,11 +155,9 @@ toLatex.ftable <- function(object,
     rowsep <- paste(rowsep,.extrarowsep,sep="")
     body <- paste(body,rowsep,sep="")
   }
-  if(length(cmidrule) && show.titles && length(names(row.vars))){
-    rcln <- paste(cmidrule,"{",1,"-",n.row.vars,"}",sep="")
-    body <- c(body[1],rcln,body[-1])
-    }
+
   ans <- c(toprule,header,midrule,body,bottomrule)
+  
   leader.spec <- paste(rep("l",length(row.vars)+1),collapse="")
   body.spec <- character(m)
   body.spec[] <- colspec
@@ -149,6 +166,7 @@ toLatex.ftable <- function(object,
   body.spec <- sapply(body.spec,paste,collapse="")
   body.spec <- paste(body.spec,collapse="c")
   tabspec <- paste(leader.spec,body.spec,sep="")
+  
   tabbegin <- paste("\\begin{tabular}{",tabspec,"}",sep="")
   tabend <- "\\end{tabular}"
   ans <- c(tabbegin,ans,tabend)
