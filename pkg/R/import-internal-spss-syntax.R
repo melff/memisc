@@ -13,176 +13,353 @@ roreadline <- function(file)
 #   cat("Read-only file",dQuote(attr(x,"filename")),"\n")
 
 roftell <- function(f) .Call("roftell",f)
-rofseek <- function(f,pos,whence) .Call("rofseek",f,pos=0,whence=0)
-
-gget.pattern <- function(pattern,text){
-    if(length(text)>1) warning("using only first element")
-    start <- gregexpr(pattern,text[1])[[1]]
-    if(all(start < 1)) return(character(0))
-    stop <- start + attr(start,"match.length") - 1
-    mapply(substr,text,start,stop,USE.NAMES=FALSE)
-}
-
-
-gget.pattern.with.args <- function(pattern,text){
-    if(length(text)>1) warning("using only first element")
-    start <- gregexpr(pattern,text[1])[[1]]
-    if(all(start < 1)) return(character(0))
-    stop <- start + attr(start,"match.length") - 1
-    start1 <- start + attr(start,"match.length") 
-    stop1 <- c(start[-1]-1,nchar(text))
-    pats <- mapply(substr,text,start,stop,USE.NAMES=FALSE)
-    args <- mapply(substr,text,start1,stop1,USE.NAMES=FALSE)
-    list(matches=pats,args=args)
-}
-
-get.pattern <- function(pattern,text){
-    start <- regexpr(pattern,text)
-    start[start < 1] <- Inf
-    stop <- start + attr(start,"match.length") - 1
-    mapply(substr,text,start,stop,USE.NAMES=FALSE)
-}
-
-get.pattern.with.args <- function(pattern,text){
-    start <- regexpr(pattern,text)
-    sane <- start > 0
-    stop <- start[sane] + attr(start,"match.length")[sane] - 1
-    start1 <- ifelse(attr(start,"match.length")[sane]>=1,stop+1,Inf)
-    start <- start[sane]
-    text <- text[sane]
-    stop1 <- nchar(text)
-    pats <- mapply(substr,text,start,stop,USE.NAMES=FALSE)
-    args <- mapply(substr,text,start1,stop1,USE.NAMES=FALSE)
-    list(matches=pats,args=args)
-}
+rofseek <- function(f,pos=0,whence=0) .Call("rofseek",f,pos=pos,whence=whence)
+roeof <- function(f) .Call("roeof",f)
+roreset <- function(f) .Call("roreset",f)
 
 spss.parse.data.spec <- function(file){
-    text <- paste(readLines(file,n=-1,warn=FALSE),collapse="\n")
-    text <- strsplit(text,"[.]\\s*\n|[.]\\s*$")[[1]]
-    has.data.list <- grep("data\\s+list\\s+",text,ignore.case=TRUE)
-    if(!length(has.data.list)) stop("could not find 'data list' statement")
-    if(length(has.data.list)>1) stop("too many 'data list' statments")
-    text <- text[has.data.list]
-    text <- strsplit(text,"/",fixed=TRUE)[[1]]
-    header <- tolower(text[1])
-    text <- text[-1]
-    if(length(text)>1) stop("multiline format not yet implemented")
-    skip <- gget.pattern("skip\\s*=\\s*[0-9]",header)
-    if(length(skip)){
-        if(length(skip)>1) stop("to many 'skip' clauses")
-        skip <- strsplit(skip,"=",fixed=TRUE)[[1]][2]
-        skip <- as.numeric(trimws(skip))
-    } else skip <- 0
-    text <- gsub("\\(\\s+","(",text)
-    text <- gsub("\\s+\\)",")",text)
-    text <- gsub("\\s*-\\s*","-",text)
-    pa <- gget.pattern.with.args("\\s[A-Za-z][A-Za-z0-9_]*",text)
-    variables <- trimws(pa$matches)
-    specs <- trimws(pa$args)
-    specs <- strsplit(specs,"\\s+")
-    format.specs <- tolower(sapply(specs,function(x)x[2]))
-    specs <- sapply(specs,function(x)x[1])
-    format.specs[is.na(format.specs)] <- ""
-    is.string <- format.specs=="(a)"
-    specs <- strsplit(specs,"-",fixed=TRUE)
-    start <- sapply(specs,function(x)as.numeric(x[1]))
-    stop <- sapply(specs,function(x)as.numeric(ifelse(length(x)>1,x[2],x[1])))
-    types <- ifelse(is.string,2,1)
-    names(types) <- variables
-    list(
-      types=types,
-      start=start,
-      stop=stop,
-      skip=skip
-    )
+  
+  text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  
+  keyword <- .pattern("data\\s+list\\s+",text,ignore.case=TRUE)
+  if(!length(keyword)) return(NULL)
+  
+  header <- .pattern("/",text,before=TRUE,ignore.case=TRUE)
+  text <- .remainder(header)
+  
+  skip <- .pattern("skip\\s*=\\s*[0-9]+",header,ignore.case = TRUE)
+  if(!length(skip)) skip <- 0L
+  else {
+    
+    skip <- .pattern("[0-9]+",skip)
+    skip <- as.integer(skip)
+  }
+  
+  varnames <- character()
+  start <- integer()
+  end <- integer()
+  types <- integer()
+  
+  repeat {
+    
+    if(grepl("^[ \t\r\n]*[.]",text)){
+      #message("found closing dot")
+      break
+    }
+    vn <- .getvarnames(text)
+    if(!length(vn)) {
+      break
+    }
+    text <- .remainder(vn)
+    
+    start1 <- .pattern("^[0-9]+",text)
+    text <- .remainder(start1)
+    start1 <- as.integer(start1)
+    text <- .remainder(.pattern("^\\s*-\\s*",text))
+    end1 <- .pattern("^[0-9]+",text)
+    text <- .remainder(end1)
+    end1 <- as.integer(end1)
+    type1 <- .pattern("^[(][aA0-9]+[])]",text) 
+    if(!length(type1))
+      type1 <- 1
+    else {
+      text <- .remainder(type1)
+      type1 <- .pattern("[aA]",type1)
+      if(length(type1))
+        type1 <- 2
+      else
+        type1 <- 1
+    }
+    
+    varnames <- c(varnames,vn)
+    types <- c(types,type1)
+    start <- c(start,start1)
+    end <- c(end,end1)
+  }
+  names(types) <- varnames
+  list(
+    types=types,
+    start=start,
+    stop=end,
+    skip=skip
+  )
 }
 
 spss.parse.variable.labels <- function(file){
-    text <- paste(readLines(file,n=-1,warn=FALSE),collapse="\n")
-    text <- strsplit(text,"[.]\\s*\n|[.]\\s*$")[[1]]
-    has.var.lab <- grep("variable\\s+labels\\s+",text,ignore.case=TRUE)
-    if(!length(has.var.lab)) stop("could not find 'variable label' statement")
-    if(length(has.var.lab)>1) stop("too many 'variable label' statments")
-    text <- text[has.var.lab]
-    text <- gsub("/","",text,fixed=TRUE)
-    text <- gsub("variable\\s+labels\\s+","",text,ignore.case=TRUE)
-    text <- strsplit(text,"\"")[[1]]
-    ii <- seq_along(text)
-    variables <- text[ii%%2==1]
-    variables <- trimws(variables[-length(variables)])
-    labels <- text[ii%%2==0]
-    names(labels) <- variables
-    labels
+  text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  res <- character()
+  repeat{
+    
+    keyword <- .pattern("variable\\s+labels\\s+",text,ignore.case=TRUE)
+    if(!length(keyword)) break
+    text <- .remainder(keyword)
+    vl <- spss.parse1.variable.labels(text)
+    text <- .remainder(vl)
+    .remainder(vl) <- NULL
+    res <- c(res,vl)
+  }
+  res
+}  
+
+spss.parse1.variable.labels <- function(text){
+  
+  
+  names <- character()
+  labels <- character()
+  
+  
+  repeat {
+    
+    if(grepl("^[ \t\r\n]*[.]",text)){
+      #message("found closing dot")
+      break
+    }
+    varnames <- .getvarnames(text)
+    text <- .remainder(varnames)
+    lab <- .getquoted(text)
+    text <- .remainder(lab)
+    
+    names <- c(names,varnames)
+    labels <- c(labels,lab)
+    #res <- c(res,list(list(varnames=varnames,vallabs=vallabs)))
+    if(nchar(text)<1) break
+  }
+  
+  names(labels) <- names
+  structure(labels,
+            remainder=text)
 }
 
-spss.parse.labels <- function(file){
-    text <- paste(readLines(file,n=-1,warn=FALSE),collapse="\n")
-    text <- strsplit(text,"[.]\\s*\n|[.]\\s*$")[[1]]
-    has.val.lab <- grep("value\\s+labels\\s+",text,ignore.case=TRUE)
-    if(!length(has.val.lab)) stop("could not find 'value labels' statement")
-    if(length(has.val.lab)>1) stop("too many 'value labels' statments")
-    text <- text[has.val.lab]
-    text <- gsub("value\\s+labels\\s+","",text,ignore.case=TRUE)
-    text <- strsplit(text,"\"",fixed=TRUE)[[1]]
-    text <- trimws(text)
-    ii <- seq_along(text)
-    labels <- text[ii%%2==0]
-    text <- text[ii%%2==1]
-    text <- gsub("\\s+"," ",paste(text,collapse=" "))
-    text <- strsplit(text,"\\s*[/;]\\s*")[[1]]
+spss.parse.value.labels <- function(file){
+  text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  res <- list()
+  repeat{
     
-    pa <- get.pattern.with.args("^[A-Za-z][A-Za-z0-9_]*\\s+",text)
-    valid.matches <- !sapply(pa$matches,is.na)
-    variables <- pa$matches[valid.matches]
-    values <- strsplit(pa$args[valid.matches]," ")
-    values <- lapply(values,numericIfPossible)
-    variables <- trimws(variables)
-    names(values) <- variables
-    lv <- seq_along(variables)
-    rp <- sapply(values,length)
-    fc <- rep(lv,rp)
-    labels <- split(labels,fc)
-    mapply(function(x,y)structure(x,names=y),
-                values,labels
-                )
+    keyword <- .pattern("value\\s+labels\\s+",text,ignore.case=TRUE)
+    if(!length(keyword)) break
+    text <- .remainder(keyword)
+    vl <- spss.parse1.value.labels(text)
+    text <- .remainder(vl)
+    .remainder(vl) <- NULL
+    res <- c(res,vl)
+  }
+  res
+}  
+
+spss.parse1.value.labels <- function(text){
+  
+  res <- list()
+  repeat {
+    
+    if(grepl("^[ \t\r\n]*[.]",text)){
+      #message("found closing dot")
+      break
+    }
+    varnames <- .getvarnames(text)
+    text <- .remainder(varnames)
+    .remainder(varnames) <- NULL
+    vallabs <- .getvallabs(text)
+    text <- .remainder(vallabs)
+    labs <- vallabs$labels
+    vallabs <- vallabs$values
+    names(vallabs) <- labs
+    
+    vallabs <- rep(list(vallabs),length(varnames))
+    names(vallabs) <- varnames
+    res <- c(res,vallabs)
+    
+    if(nchar(text)<1) break
+  }
+  structure(res,
+            remainder=text)
 }
 
 
 spss.parse.missing.values <- function(file){
-    text <- paste(readLines(file,n=-1,warn=FALSE),collapse="\n")
-    text <- strsplit(text,"[.]\\s*\n|[.]\\s*$")[[1]]
-    has.miss.val <- grep("missing\\s+values\\s+",text,ignore.case=TRUE)
-    if(!length(has.miss.val)) stop("could not find 'missing values' statement")
-    if(length(has.miss.val)>1) stop("too many 'missing values' statments")
-    text <- text[has.miss.val]
-    text <- gsub("missing\\s+values\\s+","",text,ignore.case=TRUE)
-    text <- trimws(gsub("\\s+"," ",text))
-    text <- strsplit(text,"\\(|\\)")[[1]]
-    ii <- seq_along(text)
-    variables <- trimws(text[ii%%2==1])
-    variables <- gsub("/","",variables,fixed=TRUE)
-    miss.specs <- tolower(text[ii%%2==0])
-    uprange <- suppressWarnings(get.pattern("[0-9]+[.]?[0-9]*\\s+thru\\s+hi[ghest]*",miss.specs))
-    miss.specs <- gsub("[0-9]+[.]?[0-9]*\\s+thru\\s+hi[ghest]*","",miss.specs)
-    lorange <- suppressWarnings(get.pattern("lo[west]*\\s+thru\\s+[0-9]+[.]?[0-9]*\\s+",miss.specs))
-    miss.specs <- gsub("lo[west]*\\s+thru\\s+[0-9]+[.]?[0-9]*\\s+","",miss.specs)
-    miss.vals <- lapply(strsplit(miss.specs,",\\s*"),function(x){
-      x <- suppressWarnings(as.numeric(x))
-      x[!is.na(x)]
-      })
-    uprange <- as.numeric(gsub("\\s+thru\\s+hi[ghest]*","",uprange))
-    uprange <- lapply(uprange,function(x)if(is.na(x))NULL else c(x,Inf))
-    lorange <- as.numeric(gsub("lo[west]*\\s+thru\\s+","",lorange))
-    lorange <- lapply(lorange,function(x)if(is.na(x))NULL else c(-Inf,x))
-    range <- mapply(c,lorange,uprange)
-    ans <- mapply(function(x,y)
-                if(length(x)&&length(y))
-                  list(values=x,range=y)
-                else if(length(x)) list(values=x)
-                else if(length(y)) list(range=y)
-                else NULL,
-                miss.vals,range,SIMPLIFY=FALSE)
-    names(ans) <- variables
-    ans[sapply(ans,length)>0]
+  
+  text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  res <- list()
+  repeat{
+    
+    keyword <- .pattern("missing\\s+values\\s+",text,ignore.case=TRUE)
+    if(!length(keyword)) break
+    text <- .remainder(keyword)
+    mv <- spss.parse1.missing.values(text)
+    text <- .remainder(mv)
+    .remainder(mv) <- NULL
+    res <- c(res,mv)
+  }
+  res
 }
 
+spss.parse1.missing.values <- function(text){
+  
+  missvals <- list()
+  
+  repeat{
+    
+    if(grepl("^[ \t\r\n]*[.]",text)){
+      #message("found closing dot")
+      break
+    }
+    vn <- .getvarnames(text)
+    text <- .remainder(vn)
+    if(!length(vn)) break
+    
+    mvspec <- .pattern("^[(].*?[)]",text)
+    if(!length(mvspec)) break
+    text <- .remainder(mvspec)
+    
+    mvspec <- gsub("[()]","",mvspec)
+    .remainder(mvspec) <- NULL
+    
+    if(grepl("thru",mvspec,ignore.case=TRUE)){
+      lo <- .pattern("thru",mvspec,before=TRUE,ignore.case=TRUE)
+      hi <- .remainder(lo)
+      lo <- as.numeric(lo)
+      if(!is.finite(lo)) lo <- -Inf
+      
+      if(grepl(",",hi)){
+        hi <- .pattern(",",hi,before=TRUE)
+        vals <- .remainder(hi)
+        vals <- as.numeric(vals)
+      }
+      else vals <- NULL
+      hi <- as.numeric(hi)
+      if(!is.finite(hi)) hi <- Inf  
+    }
+    else if(!grepl("\"",mvspec)) {
+      range <- NULL
+      vals <- numeric()
+      for(ii in 1:3){
+        v <- .pattern(",",mvspec,before=TRUE)
+        mvspec <- .remainder(v)
+        vals <- c(vals, as.numeric(v))
+        if(!length(mvspec)) break
+      }
+    }
+    else {
+      range <- NULL
+      vals <- character()
+      for(ii in 1:3){
+        v <- .pattern(",",mvspec,before=TRUE)
+        mvspec <- .remainder(v)
+        vals <- c(vals, gsub("\"","",v))
+        if(!length(mvspec)) break
+      }
+    }
+    mv <- list(values=vals,range=c(lo,hi))
+    
+    mv <- rep(list(mv),length(vn))
+    names(mv) <- vn
+    
+    missvals <- c(missvals,mv)
+  }
+  return(structure(missvals,
+                   remainder=text))
+}
+
+
+.getvarnames <- function(text){
+  
+  varnames <- character(0)
+  text <- trimws(text,right=FALSE)
+  text <- sub("^/","",text)
+  
+  repeat {
+    vn.pos <- regexpr("^[A-Za-z][A-Za-z0-9]*",text)
+    if(vn.pos < 0) return(structure(varnames,remainder=text))
+    vn.length <- attr(vn.pos,"match.length")
+    vn <- substring(text,first=1,last=vn.length)
+    varnames <- c(varnames,vn)
+    text <- substring(text,first=vn.length+1,last=nchar(text))
+    text <- trimws(text,right=FALSE)
+  }
+}
+
+.getvallabs <- function(text){
+  text <- trimws(text,right=FALSE)
+  if(grepl("^\"",text)) .getvallabs1(text,strings=TRUE)
+  else .getvallabs1(text)
+}
+
+.getvallabs1 <- function(text,strings=FALSE){
+  
+  if(strings)
+    vals <- character(0)
+  else
+    vals <- numeric(0)
+  labs <- character(0)
+  repeat{
+    text <- trimws(text,right=FALSE)
+    if(grepl("^[/|.]",text)) return(structure(
+      list(values=vals,labels=labs),
+      remainder=text))
+    
+    if(strings){
+      val <- .getquoted(text)
+      text <- .remainder(val)
+    }
+    else{
+      val <- .getnotquoted(text)
+      text <- .remainder(val)
+      val <- as.numeric(val)
+    }
+    .remainder(val) <- NULL
+    lab <- .getquoted(text)
+    text <- .remainder(lab)
+    .remainder(lab) <- NULL
+    
+    vals <- c(vals,val)
+    labs <- c(labs,lab)
+  }
+}
+
+.getnotquoted <- function(text){
+  text <- trimws(text,right=FALSE)
+  if(!nzchar(text)) return(NULL)
+  tok.pos <- regexpr("[^ \t\r\n]+",text)
+  tok.len <- attr(tok.pos,"match.length")
+  tok <- substring(text,first=1,last=tok.len)
+  text <- substring(text,first=tok.len+1,last=nchar(text))
+  structure(tok,remainder=text)
+}
+
+.getquoted <- function(text){
+  text <- trimws(text,right=FALSE)
+  if(!nzchar(text)) stop("empty string")
+  if(!substring(text,first=1,last=1)=="\"") stop("missing quotation mark")
+  text <- substring(text,first=2)
+  qm.pos <- regexpr("\"",text)
+  tok <- substring(text,first=1,last=qm.pos-1)
+  text <- substring(text,first=qm.pos+1,last=nchar(text))
+  structure(tok,remainder=text)
+}
+
+.pattern <- function(pattern,text,before=FALSE,...){
+  attributes(text) <- NULL
+  pat.pos <- regexpr(pattern,text,...)
+  if(pat.pos < 1) {
+    if(before) return(text)
+    else return(NULL)
+  }
+  pat.len <- attr(pat.pos,"match.len")
+  if(before)
+    pat.found <- substring(text,first=1,last=pat.pos-1)
+  else
+    pat.found <- substring(text,first=pat.pos,last=pat.pos+pat.len-1)
+  text <- substring(text,first=pat.pos+pat.len,last=nchar(text))
+  structure(pat.found,remainder=text)
+}
+
+.remainder <- function(x){
+  y <- attr(x,"remainder")
+  attributes(y) <- NULL
+  if(length(y)) sub('^[ \t\r\n]+', '',y)
+  else y
+}
+
+".remainder<-" <- function(x,value){
+  attr(x,"remainder") <- value
+  x
+}

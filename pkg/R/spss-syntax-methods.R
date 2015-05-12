@@ -19,28 +19,31 @@ spss.fixed.file <- function(
 #     browser()
     varlabs <- if(length(varlab.file) && check.file(varlab.file,error=TRUE)) spss.parse.variable.labels(varlab.file)
                else NULL #vector(length(types),mode="list")
-    vallabs <- if(length(codes.file) && check.file(codes.file,error=TRUE)) spss.parse.labels(codes.file)
+    vallabs <- if(length(codes.file) && check.file(codes.file,error=TRUE)) spss.parse.value.labels(codes.file)
                else NULL #vector(length(types),mode="list")
     missings <- if(length(missval.file) && check.file(missval.file,error=TRUE)) spss.parse.missing.values(missval.file)
                else NULL #vector(length(types),mode="list")
     variables <- vector(length(types),mode="list")
 
     var.names <- names(types)
-    names(variables) <- tolower(var.names)
+    names(variables) <- var.names
     variables[types==1] <- list(new("double.item"))
     variables[types==2] <- list(new("character.item"))
 
     if(length(varlabs)){
-      n <- tolower(names(varlabs))
-      variables[n] <- mapply("description<-",variables[n],as.list(varlabs))
+      nn <- names(varlabs)
+      for(n in nn)
+        description(variables[[n]]) <- varlabs[n]
     }
     if(length(vallabs)){
-      n <- tolower(names(vallabs))
-      variables[n] <- mapply("labels<-",variables[n],vallabs)
+      nn <- names(varlabs)
+      for(n in nn)
+        labels(variables[[n]]) <- vallabs[[n]]
     } 
     if(length(missings)){
-      n <- tolower(names(missings))
-      variables[n] <- mapply("missing.values<-",variables[n],missings)
+      nn <- names(missings)
+      for(n in nn)
+        missing.values(variables[[n]]) <- missings[[n]]
     } 
 
     nlines <- if(count.cases) {
@@ -51,8 +54,8 @@ spss.fixed.file <- function(
      } else NA_integer_
      attr(fptr,"nlines") <- nlines
 
-    if(!to.lower){
-      names(variables) <- var.names
+    if(to.lower){
+      names(variables) <- tolower(names(variables))
     }
 
      new("spss.fixed.importer",
