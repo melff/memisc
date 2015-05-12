@@ -40,7 +40,6 @@ SEXP rofile (SEXP name){
     }
 }
 
-
 FILE *rofile_FILE(SEXP s_file){
   if(TYPEOF(s_file) != EXTPTRSXP || R_ExternalPtrTag(s_file) != install("rofile")) error("not an rofile");
   FILE *f = R_ExternalPtrAddr(s_file);
@@ -49,14 +48,15 @@ FILE *rofile_FILE(SEXP s_file){
       if(name == R_NilValue || name == NULL){
         error("need filename to reopen file");
         }
-      R_SetExternalPtrAddr(s_file,f);
       f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
       if(f == NULL){
         error("cannot reopen file -- does it still exist?");
       }
       Rprintf("File '%s' reopened\n\n",CHAR(STRING_ELT(name, 0)));
+      rewind(f);
+      R_SetExternalPtrAddr(s_file,f);
   }
-  return(f);
+  return f;
 }
 
 SEXP roftell (SEXP s_file){
@@ -84,12 +84,13 @@ SEXP rofseek (SEXP s_file, SEXP s_pos, SEXP s_whence){
 
 SEXP rofreadline(SEXP s_file){
   FILE *f = rofile_FILE(s_file);
-  int found = 0, nlines=1;
+  int found = 0, n=1;
   size_t i, sl, offset = 0;
   char *buf = S_alloc(bufsize,1);
   char *tmp;
   while(!found){
     tmp = buf + offset;
+    memset(tmp,0,bufsize);
     tmp = fgets(tmp,bufsize,f);
 #ifdef DEBUG
     Rprintf("Read buffer: %s",tmp);
@@ -102,9 +103,9 @@ SEXP rofreadline(SEXP s_file){
         } 
       }
     if(!found){
-      buf = S_realloc(buf,(nlines+1)*bufsize,nlines*bufsize,1);
+      buf = S_realloc(buf,(n+1)*bufsize,n*bufsize,1);
       offset += sl; /*overwrite \0 */
-      nlines++;
+      n++;
     }
   }
 #ifdef DEBUG

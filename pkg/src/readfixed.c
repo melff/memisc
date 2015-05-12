@@ -44,8 +44,6 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
   int maxlen = 0;
   SEXP x,y;
   for(j = 0; j < nvar; j++){
-    start[j]--;
-    stop[j]--;
     length[j] = stop[j] - start[j] + 1;
     if(maxlen < length[j]) maxlen = length[j];
     x = VECTOR_ELT(what,j);
@@ -77,7 +75,7 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
     currdata = buffer;
     for(j = 0; j < nvar; j++){
       x = VECTOR_ELT(data,j);
-      currdata = buffer + start[j];
+      currdata = buffer + start[j]-1;
       memset(item,0,maxlen+1);
       memcpy(item,currdata,length[j]);
       trim(item,length[j]);
@@ -107,6 +105,7 @@ SEXP countlines(SEXP s_file, SEXP s_maxlenline){
   int i, n;
 
   for(i = 0;; i++){
+    memset(buffer,0,max_lenline+3);
     ret = fgets(buffer,max_lenline+3,f);
 #ifdef DEBUG
     Rprintf("Line: %d\n",i);
@@ -151,8 +150,6 @@ SEXP readfixedsubset(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_s
   int maxlen = 0;
   k = 0;
   for(j = 0; j < nvar; j++){
-    start[j]--;
-    stop[j]--;
     length[j] = stop[j] - start[j] + 1;
     if(LOGICAL(s_vars)[j]){
       if(maxlen < length[j]) maxlen = length[j];
@@ -184,7 +181,7 @@ SEXP readfixedsubset(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_s
       currdata = buffer;
       k = 0;
       for(j = 0; j < nvar; j++){
-        currdata = buffer + start[j];
+        currdata = buffer + start[j]-1;
         if(LOGICAL(s_vars)[j]){
           x = VECTOR_ELT(data,k);
           memset(item,0,maxlen+1);
