@@ -1,7 +1,25 @@
+2015-05-12: 
+  - Fixed a bug introduced by side-effects of manipulating the arguments of 'readfixed'. 
+  - Make sure that codebook entries for items in external data sources are complete.
+  - Add dots to 'format_html.codebookEntry' formal arguments.
+
+2015-05-11: Make memisc:::trimws work without changing locale
+  - Complete rewrite of major parts of 'import-internal-spss-syntax.R': 
+  - Handling of SPSS syntax files for fixed format data files is changed from a presumptious vectorising approach to 
+    an old-school but more flexible and stable Turing approach. 
+    'spss.fixed.file()' should work for a wider range of situations.
+
+2015-05-10: 
+  - Use endash in HTML format of codebooks, correct removal extra styling of variable names
+
+2015-05-09: 
+  - Remove hardcoded styling of variable names in codebook entries.
+  - Codebook support for numeric vectors and factors
+  - Fix console output of data.set objects
+
 2015-04-29:
   - Step up version number and date.
   - Removed functions panel.errbars, Termplot, Simulate, and associated stuff (buckets etc.)
-  - Updated NEWS.Rd 
 
 2015-04-28:
   - Documented 'format_html' method for codebooks

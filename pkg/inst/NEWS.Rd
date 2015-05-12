@@ -15,6 +15,17 @@
       and \code{codebooks}, can be exported int HTML using \code{format_html}
     }
   }
+  \subsection{BUGFIXES}{
+  \itemize{
+      \item \code{spss.fixed.file} is now able to handle labelled strings and 
+       \code{value labels} and \code{missing values} statements. 
+      \item Internal C-code used by \code{spss.fixed.file} no longer assumed that
+      arguments are copied -- some strange behaviour of objects created by \code{spss.fixed.file}
+      is now corrected.
+      \item Description of items in external data sources is more complete now - the same
+      information as for items in internal \code{data.sets}.
+    }
+  }
   \subsection{DEFUNCT}{
     \itemize{
       \item The functions \code{Termplot}, \code{Simulate}, and \code{panel.errbars}
