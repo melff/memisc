@@ -1,3 +1,7 @@
+2015-05-14:
+  - Fixed bugs introduced by rewrite of 'import-internal-spss-syntax.R'.
+    Dependency 'MicroDatosEs' should work okay now.
+
 2015-05-12: 
   - Fixed a bug introduced by side-effects of manipulating the arguments of 'readfixed'. 
   - Make sure that codebook entries for items in external data sources are complete.
@@ -7,7 +11,7 @@
 
 2015-05-11: Make memisc:::trimws work without changing locale
   - Complete rewrite of major parts of 'import-internal-spss-syntax.R': 
-  - Handling of SPSS syntax files for fixed format data files is changed from a presumptious vectorising approach to 
+    Handling of SPSS syntax files for fixed format data files is changed from a presumptious vectorising approach to 
     an old-school but more flexible and stable Turing approach. 
     'spss.fixed.file()' should work for a wider range of situations.
 

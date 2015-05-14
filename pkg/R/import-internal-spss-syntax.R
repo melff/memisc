@@ -107,7 +107,8 @@ spss.parse1.variable.labels <- function(text){
   names <- character()
   labels <- character()
   
-  
+  # Remove leading slash stuff
+  text <- sub("^\\s*/\\s*","",text)
   repeat {
     
     if(grepl("^[ \t\r\n]*[.]",text)){
@@ -227,6 +228,7 @@ spss.parse1.missing.values <- function(text){
       else vals <- NULL
       hi <- as.numeric(hi)
       if(!is.finite(hi)) hi <- Inf  
+      range <- c(lo,hi)
     }
     else if(!grepl("\"",mvspec)) {
       range <- NULL
@@ -248,7 +250,7 @@ spss.parse1.missing.values <- function(text){
         if(!length(mvspec)) break
       }
     }
-    mv <- list(values=vals,range=c(lo,hi))
+    mv <- list(values=vals,range=range)
     
     mv <- rep(list(mv),length(vn))
     names(mv) <- vn
@@ -263,11 +265,11 @@ spss.parse1.missing.values <- function(text){
 .getvarnames <- function(text){
   
   varnames <- character(0)
-  text <- trimws(text,right=FALSE)
-  text <- sub("^/","",text)
+  text <- sub("^\\s*","",text)
+  text <- sub("^/\\s*","",text)
   
   repeat {
-    vn.pos <- regexpr("^[A-Za-z][A-Za-z0-9]*",text)
+    vn.pos <- regexpr("^[A-Za-z][A-Za-z0-9_]*",text)
     if(vn.pos < 0) return(structure(varnames,remainder=text))
     vn.length <- attr(vn.pos,"match.length")
     vn <- substring(text,first=1,last=vn.length)
@@ -279,7 +281,7 @@ spss.parse1.missing.values <- function(text){
 
 .getvallabs <- function(text){
   text <- trimws(text,right=FALSE)
-  if(grepl("^\"",text)) .getvallabs1(text,strings=TRUE)
+  if(grepl("^[\"']",text)) .getvallabs1(text,strings=TRUE)
   else .getvallabs1(text)
 }
 
@@ -328,9 +330,10 @@ spss.parse1.missing.values <- function(text){
 .getquoted <- function(text){
   text <- trimws(text,right=FALSE)
   if(!nzchar(text)) stop("empty string")
-  if(!substring(text,first=1,last=1)=="\"") stop("missing quotation mark")
+  if(!grepl("^[\"']",text)) stop("missing quotation mark")
+  qm <- substring(text,first=1,last=1)
   text <- substring(text,first=2)
-  qm.pos <- regexpr("\"",text)
+  qm.pos <- regexpr(qm,text)
   tok <- substring(text,first=1,last=qm.pos-1)
   text <- substring(text,first=qm.pos+1,last=nchar(text))
   structure(tok,remainder=text)
