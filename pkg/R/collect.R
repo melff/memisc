@@ -66,7 +66,7 @@ collect.matrix <- collect.array <- function(...,names=NULL,inclusive=TRUE){
   res
 }
 
-collect.table <- function(...,names=NULL,sourcename="arg",fill=0){
+collect.table <- function(...,names=NULL,sourcename=".origin",fill=0){
   if(!is.atomic(..1)) stop("cannot handle arguments of mode ",mode(..1))
   args <- list(...)
   subst <- substitute(list(...))
@@ -103,7 +103,7 @@ collect.table <- function(...,names=NULL,sourcename="arg",fill=0){
 
 collect.data.frame <- function(...,
   names=NULL,inclusive=TRUE,fussy=FALSE,warn=TRUE,
-  sourcename="arg"){
+  sourcename=".origin"){
   args <- list(...)
   subst <- substitute(list(...))
   if(length(names)) {
@@ -142,7 +142,7 @@ collect.data.frame <- function(...,
 
 collect.data.set <- function(...,
   names=NULL,inclusive=TRUE,fussy=FALSE,warn=TRUE,
-  sourcename="arg"){
+  sourcename=".origin"){
   args <- list(...)
   subst <- substitute(list(...))
   if(length(names)) {

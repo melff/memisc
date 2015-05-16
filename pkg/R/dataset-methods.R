@@ -67,18 +67,6 @@ setMethod("initialize","item.list",function(.Object,...){
 })
 
 
-# setMethod("initialize","data.set",function(.Object,...){
-#   args <- list(...)
-#   if(is.list(args[[1]])) args <- unclass(args[[1]])
-#   res <- new("item.list",args)
-#   browser()
-#   class(res) <- class(.Object)
-#   rn <- attr(args,"row.names")
-#   if(is.null(rn)) rn <- seq_len(length(args[[1]]))
-#   res@row_names <- rn
-#   if(validObject(res)) res
-# })
-
 setMethod("show","named.list",function(object)
   print.default(unclass(object))
 )
@@ -146,13 +134,6 @@ setReplaceMethod("row.names","data.set",function(x,value){
 })
 
 
-# setMethod("names","data.set",function(x)names(x@frame))
-# setReplaceMethod("names","data.set",
-#   function(x,value){
-#     names(x@frame) <- value
-#     x
-#   })
-
 setMethod("dimnames","data.set",function(x)
   list(x@row_names,x@names))
 
@@ -168,21 +149,6 @@ setReplaceMethod("dimnames","data.set",function(x,value) {
     names(x) <- value[[2L]]
     x
 })
-
-# "[.data.set" <- function(...){
-#   res <- `[.data.frame`(...)
-#   if(is.list(res))
-#     asS4(res)
-#   else res
-# }
-
-# setMethod("[",signature(x="data.set",i="ANY",j="ANY",drop="ANY"),
-#   function(x,i,j,...,drop=TRUE){
-#     new("data.set",
-#       frame=frame[i=i,j=j,drop=drop],
-#       document=x@document
-#       )
-# })
 
 
 setMethod("[",signature(x="data.set",i="atomic",j="atomic",drop="ANY"),
@@ -264,27 +230,6 @@ setReplaceMethod("[",signature(x="data.set",i="ANY",j="ANY",value="ANY"),
 })
 
 
-# setMethod("[[","data.set",
-#   function(x,...){
-#     new("data.set",
-#       frame=x@frame[[...]],
-#       document=x@document
-#       )
-# })
-#
-# setReplaceMethod("[[","data.set",
-#   function(x,i,j,value){
-#     frame <- x@frame
-#     frame[[i,j]] <- value
-#     new("data.set",
-#       frame=frame,
-#       document=x@document
-#       )
-# })
-
-# "[[.data.set" <- function(x,...){
-#   x@frame[[...]]
-# }
 
 "[[<-.data.set" <- function(x,...,value){
   frame <- structure(x@.Data,row.names=x@row_names,names=x@names,class="data.frame")
@@ -294,12 +239,6 @@ setReplaceMethod("[",signature(x="data.set",i="ANY",j="ANY",value="ANY"),
     document=x@document
     )
 }
-
-# setMethod("$","data.set",function(x,name)x@frame[[name,exact=TRUE]])
-
-# as.data.frame.data.set <- function(x, row.names = NULL, optional = FALSE, ...){
-#   as.data.frame.list(x,row.names=row.names,optional=optional)
-# }
 
 as.list.data.set <- function(x,...)structure(x@.Data,names=x@names)
 
@@ -311,13 +250,6 @@ as.data.frame.data.set <- function(x, row.names = NULL, optional = FALSE, ...){
 }
 
 
-# setMethod("as.data.frame","data.set",
-#   function(x, row.names = NULL, optional = FALSE, ...){
-#   as.data.frame(as.list(x),
-#           row.names=if(length(row.names)) rownames
-#                     else x@row_names,
-#           optional=optional)
-# })
 
 data.set <- function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE,
     stringsAsFactors = default.stringsAsFactors(),
@@ -361,9 +293,6 @@ setMethod("annotation","data.set",function(x){
   else NULL
 })
 
-# print.description.list <- function(x,...){
-#   writeLines(paste(names(x),": ",sQuote(x),sep=""))
-# }
 
 print.data.set <- function(x,max.obs=Inf,width=Inf,...){
   nrow.x <- nrow(x)
@@ -414,11 +343,6 @@ print.data.set <- function(x,max.obs=Inf,width=Inf,...){
 
 setMethod("show","data.set",function(object){
   cat("\nData set with",nrow(object),"observations and",ncol(object),"variables\n\n")
-#   d <- description(object)
-#   if(length(d)){
-#     print(d)
-#     cat("\n")
-#   }
   print.data.set(object,max.obs=getOption("show.max.obs"),width=getOption("width"))
 })
 
@@ -455,6 +379,13 @@ setMethod("subset","data.set",
 setMethod("within","data.set",function (data, expr, ...)
 {
     parent <- parent.frame()
+    
+    
+    assign(".nobs.",length(data@row_names),parent)
+    assign(".nvars.",length(data@names),parent)
+    assign(".id.",1:get(".nobs.",parent),parent)
+    
+    
     frame <- structure(data@.Data,row.names=data@row_names,names=data@names,class="data.frame")
     e <- evalq(environment(), frame, parent)
     nr <- nrow(frame)
@@ -538,6 +469,133 @@ setMethod("as.data.set","list",function(x,row.names=NULL,...){
   new("data.set",x)
 })
 
+
+
+setMethod("merge",signature(x="data.set","data.set"),function(x,y,...){
+  x <- new("data.frame",as.list(x),row.names=x@row_names)
+  y <- new("data.frame",as.list(y),row.names=y@row_names)
+  z <- merge(x,y,...)
+  new("data.set",z)
+})
+
+setMethod("merge",signature(x="data.set","data.frame"),function(x,y,...){
+  x <- new("data.frame",as.list(x),row.names=x@row_names)
+  z <- merge(x,y,...)
+  data.set(z)
+})
+
+setMethod("merge",signature(x="data.frame","data.set"),function(x,y,...){
+  y <- new("data.frame",as.list(y),row.names=y@row_names)
+  z <- merge(x,y,...)
+  data.set(z)
+})
+
+setMethod("rbind2",signature(x="data.set",y="data.set"),function(x,y){
+  x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
+  y <- asS4(new("data.frame",as.list(y),row.names=y@row_names),FALSE)
+  z <- rbind(x,y)
+  data.set(z)
+})
+
+setMethod("rbind2",signature(x="data.set",y="data.frame"),function(x,y){
+  x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
+  z <- cbind(x,y)
+  data.set(z)
+})
+
+setMethod("cbind2",signature(x="data.set",y="data.set"),function(x,y){
+  x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
+  y <- asS4(new("data.frame",as.list(y),row.names=y@row_names),FALSE)
+  z <- cbind(x,y)
+  data.set(z)
+})
+
+setMethod("cbind2",signature(x="data.frame",y="data.set"),function(x,y){
+  y <- asS4(new("data.frame",as.list(y),row.names=y@row_names),FALSE)
+  z <- cbind(x,y)
+  data.set(z)
+})
+
+setMethod("cbind2",signature(x="data.set",y="data.frame"),function(x,y){
+  x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
+  z <- cbind(x,y)
+  data.set(z)
+})
+
+rbind.data.set <- function(...,deparse.level=1){
+  args <- list(...)
+  to.data.frame <- function(x){
+    if(inherits(x,"data.set"))
+      structure(
+        x@.Data,
+        names=x@names,
+        row.names=x@row_names,
+        class="data.frame"
+      )
+    else as.data.frame(x)
+  }
+  args <- lapply(args,to.data.frame)
+  res <- do.call("rbind",c(args,list(deparse.level=deparse.level)))
+  new("data.set",res,row.names=row.names(res))
+}
+
+dsView <- function(x){
+  
+  title <- paste("Data set:", deparse(substitute(x))[1])
+
+  Data <- lapply(x@.Data,format,justify="left")
+  document <- x@document
+  row.names <- x@row_names
+  .names <- x@names
+  frame <- structure(Data,row.names=row.names,names=x@names,
+                          class="data.frame")
+  #View.call <- call("View",x=frame,title=title)
+  #eval(View.call,globalenv())
+  View(x=frame,title=title)
+}
+
+
+
+collect.data.set <- function(...,
+  names=NULL,inclusive=TRUE,fussy=FALSE,warn=TRUE,
+  sourcename="arg"){
+  args <- list(...)
+  subst <- substitute(list(...))
+  if(length(names)) {
+    if(length(names)!=length(args)) stop("names argument has wrong length")
+  }
+  else {
+    if(length(names(args))) names <- names(args)
+    else {
+      names <- sapply(lapply(subst[-1],deparse),paste,collapse=" ")
+    }
+  }
+  all.vars <- lapply(args,names)
+  common.vars <- reduce(all.vars,intersect)
+  all.vars <- reduce(all.vars,union)
+  other.vars <- setdiff(all.vars,common.vars)
+  source <- rep(seq_along(args),sapply(args,nrow))
+  nrow.items <- sapply(args,nrow)
+  nrow.total <- sum(nrow.items)
+  ix <- split(seq_len(nrow.total),source)
+  res <- lapply(common.vars,function(var){
+                vecs <- lapply(args,function(x)x[[var]])
+                collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
+                })
+  names(res) <- common.vars
+  if(inclusive){
+    res1 <- lapply(other.vars,function(var){
+                  vecs <- lapply(args,function(x)x[[var]])
+                  collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
+                  })
+    names(res1) <- other.vars
+    res <- c(res,res1)
+  }
+  res[[sourcename]] <- factor(source,labels=names)
+  as.data.set(res)
+}
+
+
 ## Copied and modified from base package
 ## Original copyright (C) 1995-2013 The R Core Team
 
@@ -587,4 +645,6 @@ setMethod("summary","data.set",
     z
 })
 
-  
+
+
+
