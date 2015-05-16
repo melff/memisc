@@ -48,6 +48,7 @@ setClassUnion("item.vector","numeric.item")
 setClass("integer.item",
   contains=c("item","numeric.item","item.vector","integer")
 )
+
 setClass("double.item",
   contains=c("item","numeric.item","item.vector","double","numeric")
 )
@@ -129,3 +130,9 @@ setClass("codebookEntry",
     annotation = "character or NULL"
   )
 )
+
+
+setClass("datetime.item",
+   representation(tzone="character or NULL",origin="character or NULL"),
+   contains=c("item","numeric.item","item.vector","double","numeric")
+ )
