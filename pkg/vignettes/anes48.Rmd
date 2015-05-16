@@ -135,6 +135,26 @@ vote.48 <- rename(vote.48,
                   v480050 = "religious.pref"
         )
 ```
+Since many data sets available from public repositories have
+such non-mnemonic variable names as in this example, it might
+be convenient to do the data loading and renaming in one step.
+Indeed it is possible:
+```{r,eval=FALSE}
+vote.48 <- subset(nes1948,
+                  select=c(
+                    vote           = v480018,
+                    occupation.hh  = v480029,
+                    unionized.hh   = v480030,
+                    gender         = v480045,
+                    race           = v480046,
+                    age            = v480047,
+                    education      = v480048,
+                    total.income   = v480049,
+                    religious.pref = v480050
+                  ))
+```
+
+
 Before we start with analyses, we take a closer look at
 the data.
 ```{r}
