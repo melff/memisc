@@ -210,6 +210,18 @@ str.double.item <- str.item.vector
 str.integer.item <- str.item.vector
 str.character.item <- str.item.vector
 
+## unique ###############################################################################
+
+unique.item.vector <- function(x, incomparables = FALSE, ...){
+  y <- new(class(x),unique(x@.Data))
+  attributes(y) <- attributes(x)
+  y
+}
+
+unique.double.item <- unique.item.vector
+unique.integer.item <- unique.item.vector
+unique.character.item <- unique.item.vector
+
 
 ## unique ###############################################################################
 
@@ -335,18 +347,6 @@ relabel.item <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
 
 setMethod("relabel4","item",function(x,...)relabel.item(x,...))
 
-# setMethod("str","item.vector",function(object,give.head=TRUE,...){
-#   if(give.head){
-#     cat("item",switch(measurement(object),
-#                   nominal="nmnl.",
-#                   ordinal="ordl.",
-#                   interval="itvl.",
-#                   ratio="rto."
-#                   ))
-#   }
-#   o <- as.vector(object)
-#   str(o,give.head=give.head,...)
-# })
 
 setMethod("summary","item.vector",function(object,...,maxsum=100,digits=3)
   switch(measurement(object),
@@ -472,66 +472,6 @@ setMethod("show","item.vector",function(object){
     "type: ",storage.mode(object),", ",
     "length = ",length(object),")",sep=""),
     "\n\n")
-#   vl <- labels(object)
-#   labtab <- if(length(vl))
-#       paste(
-#         format(sQuote(vl@.Data),justify="right"),
-#         #"=",
-#         format(vl@values,justify="right")
-#         ) else character(0)
-#   filter <- object@value.filter
-#   if(length(filter) && length(vl)){
-#     filter <- object@value.filter
-#     labtab <- paste(labtab,format(ifelse(is.missing2(vl@values,filter),"(M)",""),justify="left"))
-#   }
-#   if(length(filter)){
-#     filtertab <- format(filter)
-#   } else
-#     filtertab <- character(0)
-#   if(length(labtab)) labtab <- c("Labels and values:","",labtab)
-#   if(length(filtertab))
-#       filtertab <- c(
-#                       switch(class(filter),
-#                                   valid.values = "Valid values:",
-#                                   valid.range = "Valid range:",
-#                                   missing.values = "Missing values:"
-#                                   ),
-#                        "",
-#                        filtertab
-#                       )
-#   l <- max(length(labtab),length(filtertab))
-#   if(length(l)){
-#     length(labtab) <- l
-#     length(filtertab) <- l
-#     labtab[is.na(labtab)] <- ""
-#     filtertab[is.na(filtertab)] <- ""
-#     hdr <- paste(
-#       format(labtab,justify="centre"),
-#       "  ",
-#       format(filtertab,justify="centre")
-#       )
-#     writeLines(c(hdr,""))
-#   }
-#   annot <- annotation(object)
-#   annot <- annot[names(annot)!="description"]
-#   if(length(annot)){
-#     annot.out <- character()
-#     for(i in seq_len(length(annot))){
-#       annot.i <- annot[i]
-#       nm.i <- trimws(names(annot.i))
-#       annot.i <- strwrap(annot.i,width=getOption("width")-8)
-#       annot.i <- c(paste("    ",annot.i),"")
-#       if(nzchar(nm.i)){
-#         annot.i <- c(
-#           paste(nm.i,":",sep=""),
-#           "",
-#           annot.i
-#           )
-#       }
-#       annot.out <- c(annot.out,annot.i)
-#     }
-#     writeLines(annot.out)
-#   }
   print.item.vector(object,width=getOption("width"),compress=TRUE)
 })
 setMethod("print","item.vector",print.item.vector)
@@ -556,12 +496,6 @@ setMethod("Compare",signature(e1="character",e2="numeric.item"),
         )
      else callNextMethod()
 })
-# setMethod("Arith",signature(e1="numeric.item",e2="numeric.item"),
-#   function(e1,e2){
-#     e1 <- as.vector(e1)
-#     e2 <- as.vector(e2)
-#     callNextMethod()
-# })
 setMethod("Arith",signature(e1="numeric",e2="numeric.item"),
   function(e1,e2){
     e1 <- as.vector(e1)
@@ -605,10 +539,20 @@ setMethod("%in%",signature(x="numeric.item",table="character"),function(x,table)
    x %in% table
 })
 
-setMethod("rep",signature(x="item.vector"),function(x,...){
+## Methods for the auxiliary helper function for 'sort' and 'order'
 
-  ans <- x
-  ans@.Data <- rep(x@.Data,...)
-  ans
+xtfrm.integer.item <- function(x) x@.Data
+xtfrm.numeric.item <- function(x) x@.Data
+xtfrm.double.item <- function(x) x@.Data
+xtfrm.character.item <- function(x) as.integer(as.factor(x@.Data))
+
+## rep
+
+setMethod("rep","item.vector",function(x,...){
+
+  x@.Data <- rep(x@.Data,...)
+  x
 })
+
+
 
