@@ -80,9 +80,12 @@ setMethod("codebookEntry","factor",function(x){
   tab <- cbind(counts,100*counts/sum(counts))
   if(any(isna)) {
       labs <- sQuote(levels(x))
-      labs <- paste(format(c(1:nlevels(x),NA),justify="right"),
-                    format(c(labs,""),justify="left")
-                    )
+      if(nlevels(x))
+        labs <- paste(format(c(1:nlevels(x),NA),justify="right"),
+                      format(c(labs,""),justify="left")
+                      )
+      else
+        labs <- "NA"
       tab <- rbind(tab,c(NAs,NA))
       counts <- c(counts,NAs)
       tab <- cbind(tab,100*counts/sum(counts))
@@ -173,19 +176,29 @@ setMethod("format","codebookEntry",
   descr <- x@stats$descr
   
   if(length(tab)){
-    tab <- cbind(
-              formatC(tab[,1,drop=FALSE],format="d"),
-              formatC(tab[,2],format="f",digits=1),
-              formatC(tab[,3],format="f",digits=1)
-            )
+    if(ncol(tab)>2){
+      tab <- cbind(
+        formatC(tab[,1,drop=FALSE],format="d"),
+        formatC(tab[,2],format="f",digits=1),
+        formatC(tab[,3],format="f",digits=1)
+      )
+    }
+    else {
+      tab <- cbind(
+        formatC(tab[,1,drop=FALSE],format="d"),
+        formatC(tab[,2],format="f",digits=1),
+        ""
+      )
+    }
     tab[tab=="NA"] <- ""
     tab <- format(tab,justify="right")
     tab <- cbind(
-            format(c("Values and labels","",rownames(tab)),justify="right"),
-            format(c("N","",tab[,1]),justify="right"),
-            " ",
-            format(c("Percent","",apply(tab[,2:3,drop=FALSE],1,paste,collapse=" ")),justify="centre")
-            )
+      format(c("Values and labels","",rownames(tab)),justify="right"),
+      format(c("N","",tab[,1]),justify="right"),
+      " ",
+      format(c("Percent","",apply(tab[,2:3,drop=FALSE],1,paste,collapse=" ")),justify="centre")
+    )
+    
     tab <- paste("  ",apply(tab,1,paste,collapse=" "))
   }
   if(length(descr)){
