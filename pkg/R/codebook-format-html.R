@@ -55,15 +55,15 @@ format_html.codebookEntry <- function(x,name="",
   if(length(tab)){
     
     tab_html <- cbind(
-      formatC(tab[,1,drop=FALSE],format="d"),
+      formatC(tab[,1],format="d"),
       formatC(tab[,2],format="f",digits=1),
       formatC(tab[,3],format="f",digits=1)
     )
     tab_html[tab_html=="NA"] <- ""
-    tab_html <- cbind(tab_html[,1],t(apply(tab_html[,-1],1,spltDec)))
+    tab_html <- cbind(tab_html[,1],t(apply(tab_html[,-1,drop=FALSE],1,spltDec)))
     
     tab_html[,1] <- mk_td(tab_html[,1],style=proc_style(c(align.right,lrpad)))
-    tab_html[,-1] <- mk_td_spltDec(tab_html[,-1])
+    tab_html[,-1] <- mk_td_spltDec(tab_html[,-1,drop=FALSE])
     
     tab_lab <- trimws(rownames(tab))
     tab_lab <- strsplit(tab_lab," ")
@@ -73,10 +73,10 @@ format_html.codebookEntry <- function(x,name="",
     tab_has_m <- sapply(sapply(tab_lab,"[",2) == "M",isTRUE)
     
     tab_val <- ifelse(tab_has_lab,sapply(tab_lab,"[",1),"")
-    tab_lab <- ifelse(tab_has_lab,sapply(tab_lab,"[",-1),tab_lab)
+    tab_lab <- ifelse(tab_has_lab,sapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
     
     tab_m <- ifelse(tab_has_m,"M","")
-    tab_lab <- ifelse(tab_has_m,sapply(tab_lab,"[",-1),tab_lab)
+    tab_lab <- ifelse(tab_has_m,sapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
     
     tab_lab <- sapply(tab_lab,paste,collapse=" ")
     
@@ -105,10 +105,10 @@ format_html.codebookEntry <- function(x,name="",
       formatC(descr,format="f",digits=3)
     )
     
-    descr_html <- cbind(descr_html[,1],t(sapply(descr_html[,-1],spltDec)))
+    descr_html <- cbind(descr_html[,1],t(sapply(descr_html[,-1,drop=FALSE],spltDec)))
     
     descr_html[,1] <- mk_td(descr_html[,1],style=proc_style(c(align.right,lrpad)))
-    descr_html[,-1] <- mk_td_spltDec(descr_html[,-1])
+    descr_html[,-1] <- mk_td_spltDec(descr_html[,-1,drop=FALSE])
     descr_html <- mk_tr(apply(descr_html,1,paste0,collapse=""))
     descr_html <- mk_table(descr_html,class="cbe-table")
     descr_html <- mk_p(descr_html)
