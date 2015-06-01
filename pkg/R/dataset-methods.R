@@ -647,4 +647,9 @@ setMethod("summary","data.set",
 
 
 
-
+toLatex.data.set <- function(object,...){
+  frame <- structure(object@.Data,row.names=object@row_names,names=object@names,class="data.frame")
+  for(i in 1:ncol(frame))
+    frame[[i]] <- format(frame[[i]])
+  toLatex(frame)
+}

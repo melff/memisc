@@ -281,3 +281,5 @@ S3method(unique,integer.item)
 S3method(unique,double.item)
 S3method(unique,character.item)
 S3method(unique,datetime.item)
+
+S3method(toLatex,data.set)
