@@ -644,12 +644,3 @@ setMethod("summary","data.set",
     attr(z, "class") <- c("table")
     z
 })
-
-
-
-toLatex.data.set <- function(object,...){
-  frame <- structure(object@.Data,row.names=object@row_names,names=object@names,class="data.frame")
-  for(i in 1:ncol(frame))
-    frame[[i]] <- format(frame[[i]])
-  toLatex(frame)
-}
