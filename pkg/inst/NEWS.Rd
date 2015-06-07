@@ -13,6 +13,13 @@
       In particular, results of the functions \code{mtable} (i.e. tables of
       model estimates), \code{ftable} (i.e. flattened contingency tables etc.),
       and \code{codebooks}, can be exported int HTML using \code{format_html}
+      
+      \item \code{mtable} now handles multi-equation models better, in particular 
+      if the model objects supplied as arguments vary in the number and/or names
+      of the equations.
+      
+      \item There is now an object class for survey items containing dates, called
+      \code{"datetime.item"}
     }
   }
   \subsection{BUGFIXES}{
@@ -25,6 +32,11 @@
       \item Description of items in external data sources is more complete now - the same
       information as for items in internal \code{data.sets}.
     }
+  }
+  \subsection{USER-VISIBLE CHANGES}{
+   \itemize{
+     \item Argument \code{drop} no longer used by function \code{mtable}.
+   }
   }
   \subsection{DEFUNCT}{
     \itemize{

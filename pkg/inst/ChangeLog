@@ -1,3 +1,20 @@
+2015-06-02: 
+  - Moved 'toLatex' method for 'data.set' objects into different file. Added 'toLatex' method for data frames.
+
+2015-06-01:
+  - Completely refactored 'mtable' - more flexible handling of models with varying numbers of equations; some formatting is delayed and moved to the 'mtable_format' functions.
+
+2015-05-31:
+  - Added toLatex-method for data.set objects.
+
+2015-05-28:
+  - Added missing 'drop=FALSE' in format_html.codebookEntry
+  - 'codebookEntry' can now deal with factors that have no non-missing levels
+
+2015-05-16:
+  - 2015-05-16: Added support for date-time "item" objects (from former 'codebooks' package)
+  - cbind, rbind, collect, and merge methods for "data.set" objects copied from former 'codebooks' package to 'memisc'.
+
 2015-05-14:
   - Fixed bugs introduced by rewrite of 'import-internal-spss-syntax.R'.
     Dependency 'MicroDatosEs' should work okay now.

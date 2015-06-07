@@ -114,7 +114,8 @@ export(
       show_html,
       write_html,
       format_html,
-      dsView
+      dsView,
+      summaryTemplate
       )
 S3method(getSummary,aftreg)
 S3method(getSummary,betareg)
@@ -282,4 +283,5 @@ S3method(unique,double.item)
 S3method(unique,character.item)
 S3method(unique,datetime.item)
 
+S3method(toLatex,data.frame)
 S3method(toLatex,data.set)
