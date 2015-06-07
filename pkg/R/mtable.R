@@ -167,12 +167,20 @@ getSummary.glm <- function(obj,
   list(coef=coef,sumstat=sumstat,contrasts=obj$contrasts,xlevels=obj$xlevels,call=obj$call)
 }
 
+summaryTemplate <- function(x)
+  UseMethod("summaryTemplate")
+
 getSummaryTemplate <- function(x){
   SummaryTemplates <- get("SummaryTemplates", envir=.memiscEnv)
   if(missing(x)) return(SummaryTemplates)
   if(is.character(x)) cls <- x
   else cls <- class(x)
-  return(getFirstMatch(SummaryTemplates,cls))
+  stf <- getS3method("summaryTemplate",cls,optional=TRUE)
+  if(length(stf))
+    res <- stf(x)
+  else
+    res <- getFirstMatch(SummaryTemplates,cls)
+  return(res)
 }
 
 setSummaryTemplate <- function(...){
@@ -296,7 +304,7 @@ mtable <- function(...,
                     getSummary=eval.parent(quote(getSummary)),
                     float.style=getOption("float.style"),
                     digits=min(3,getOption("digits")),
-                    drop=TRUE
+                    sdigits=digits
                     ){
   args <- list(...)
   if(length(args)==1 && inherits(args[[1]],"by"))
@@ -352,61 +360,14 @@ mtable <- function(...,
       }
 
   coefs <- lapply(seq(n.args),getCoef)
-  isList <- sapply(coefs,is.list)
-  if(any(isList)){
-    all.names <- unique(unlist(lapply(coefs,names)))
-    coefs <- lapply(coefs,function(x){
-      if(is.list(x)) x else structure(list(x),names=all.names[1])
-    })
-    coefs.tmp <- vector(length=length(all.names),mode="list")
-    names(coefs.tmp) <- all.names
-    for(n in all.names){
-      tmp <- lapply(coefs,.subset2,n)
-      isNULL <- sapply(tmp,is.null)
-      if(any(isNULL)){
-        firstNonNULL <- tmp[[min(which(!isNULL))]]
-        dummy <- array(NA,dim=dim(firstNonNULL),dimnames=dimnames(firstNonNULL))
-        tmp[isNULL] <- list(dummy)
-      }
-      tmp <- clct.arrays(tmp)
-      n.dims <- length(dim(tmp))
-      dimnames(tmp)[[n.dims]] <- argnames
-      tmp[is.na(tmp)] <- ""
-      coefs.tmp[[n]] <- tmp
-    }
-    coefs <- bind_arrays(coefs.tmp,3)
-  }
-  else{
-    coefs <- clct.arrays(coefs)
-    n.dims <- length(dim(coefs))
-    dimnames(coefs)[[n.dims]] <- argnames
-    coefs[is.na(coefs)] <- ""
-  }
-  groups <- attr(coefs,"groups")
-
-  n.dims <- length(dim(coefs))
-
-  dimnames(coefs)[[n.dims]] <- argnames
-
-  if(drop && length(dim(coefs))>3 ){
-    cdims <- dim(coefs)
-    ckeep <- cdims > 1 | 1:length(dim(coefs)) <= 3
-    dn <- dimnames(coefs)
-    dim(coefs) <- dim(coefs)[ckeep]
-    dimnames(coefs) <- dn[ckeep]
-    dims <- sum(ckeep)
-  }
-  as.row <- c(1,3)
-  as.col <- which(!(seq(length(dim(coefs))) %in% as.row))
-  kill.col <- 2
-  kill.header <- length(as.col)
-  coef.dim <- 3
-
+  names(coefs) <- argnames
+  
   if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
     stemplates <- lapply(args,getSummaryTemplate)
     sumstats <- lapply(seq(n.args),function(i){
-          drop(applyTemplate(summaries[[i]]$sumstat,
-              template=stemplates[[i]],digits=digits))
+          sumstat <- summaries[[i]]$sumstat
+          stemplate <- stemplates[[i]]
+          drop(applyTemplate(sumstat,template=stemplate,digits=sdigits))
         })
     sumstats <- clct.vectors(sumstats)
     colnames(sumstats) <- argnames
@@ -420,20 +381,13 @@ mtable <- function(...,
     }
     sumstats <- sumstats[summary.stats,,drop=FALSE]
     sumstats[is.na(sumstats)] <- ""
-    substats <- as.table(sumstats)
   }
   else sumstats <- NULL
 
   structure(list(
-    coefficients=as.table(coefs),
-    groups=groups,
+    coefficients=coefs,
     summaries=sumstats,
-    calls=calls,
-    as.row=as.row,
-    as.col=as.col,
-    kill.col=kill.col,
-    kill.header=kill.header,
-    coef.dim=coef.dim),
+    calls=calls),
     class="mtable")
 }
 
@@ -518,7 +472,10 @@ relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
     }
   tab
  }
- x$coefficients <- relabelTab(x$coefficients)
+ cnames <- names(x$coefficients)
+ x$coefficients <- lapply(x$coefficients,relabelTab)
+ names(x$coefficients) <- cnames
+ x$coefficients <- rename(x$coefficients,...,gsub=gsub,fixed=fixed,warn=warn)
  x$summaries <- relabelTab(x$summaries)
  return(x)
 }

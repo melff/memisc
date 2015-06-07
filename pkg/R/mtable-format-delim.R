@@ -1,64 +1,63 @@
 mtable_format_delim <- function(x,
-          colsep="\t",
-          rowsep="\n",
-          interaction.sep = " x ",
-          ...
-          ){
-
-  coldims <- dim(x$coefficients)[x$as.col]
-  nhrows <- length(coldims)
-
-  coefnames <- dimnames(x$coefficients)[[x$coef.dim]]
-  if(interaction.sep !=" x ")
-    coefnames <- gsub(" x ",interaction.sep,coefnames,fixed=TRUE)
-  dimnames(x$coefficients)[[x$coef.dim]] <- coefnames
-  coefs <- ftable(as.table(x$coefficients),row.vars=rev(x$as.row),
-    col.vars=rev(x$as.col)
-    )
-  infos <- attributes(coefs)
+                                colsep="\t",
+                                rowsep="\n",
+                                interaction.sep = " x ",
+                                ...
+){
+  
+  coefs <- x$coefficients
   summaries <- x$summaries
   
-  ans <- trimws(coefs)
-  col.vars <- rev(infos$col.vars)
+  coef.dims <- lapply(coefs,dim)
+  coef.ldim <- sapply(coef.dims,length)
   
-  for(i in 1:length(col.vars)){
-    header <- character(NCOL(ans))
-    cv <- col.vars[[i]]
-    lcv <- length(cv)
-    header[] <- cv
-    ans <- rbind(header,ans)
-    if(length(summaries)){
-      if(i == length(col.vars)){
-        if(ncol(ans)>ncol(summaries)){
-          tmp <- summaries
-          summaries <- matrix("",nrow=nrow(tmp),ncol=ncol(ans))
-          summaries[,1] <- tmp
-          rownames(summaries) <- rownames(tmp)
-        }
-        ans <- rbind(ans,summaries)
-      }
+  coef.dims1 <- unique(sapply(coef.dims,"[[",1))
+  stopifnot(length(coef.dims1)==1)
+  
+  coef.names <- lapply(coefs,dimnames)
+  coef.names <- lapply(coef.names,"[[",3)
+  coef.names <- unique(unlist(coef.names))
+  
+  coefs <- Sapply(coefs,coefxpand,coef.names,simplify=FALSE)
+  if(interaction.sep !=" x ")
+    coef.names <- gsub(" x ",interaction.sep,coef.names,fixed=TRUE)
+  
+  mtab <- character()
+  
+  frmt1 <- function(name,coefs,summaries){
+    coef.tab <- ftable(coefs,row.vars=c(3,1))
+    
+    if(length(dim(coefs))>3){
+      hdr <- character(ncol(coef.tab))
+      eq.names <- dimnames(coefs)[[4]]
+      ii <- seq(from=1,length=length(eq.names),by=ncol(coef.tab)%%length(eq.names))
+      hdr[ii] <- eq.names
+      coef.tab <- rbind(hdr,coef.tab)
     }
-    dim(ans) <- c(nrow(ans),lcv,ncol(ans)/lcv)
-    ans <- as.matrix(apply(ans,c(1,3),function(x)paste(x,collapse=colsep)))
+    hdr <- character(ncol(coef.tab))
+    hdr[1] <- name
+    coef.tab <- rbind(hdr,coef.tab)
+    if(length(summaries)){
+      sum.tab <- matrix("",nrow=length(summaries),ncol=ncol(coef.tab))
+      sum.tab[,1] <- summaries
+      coef.tab <- rbind(coef.tab,sum.tab)
+    }
+    coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
   }
-  row.vars <- infos$row.vars[-x$kill.col]
-  leaders <- character(NROW(ans))
-  for(i in 1:length(row.vars)){
-    tmp <- matrix("",nrow=length(row.vars[[i]]),
-                  ncol=nrow(coefs)/length(row.vars[[i]]))
-    tmp[,1] <- row.vars[[i]]
-    tmp <- c(rep("",length(col.vars)),t(tmp))
-    if(i == 1) tmp <- c(tmp,rownames(summaries))
-    else tmp <- c(tmp,rep("",nrow(summaries)))
-    if(i == length(row.vars))
-      leaders <- as.matrix(paste(leaders,tmp,sep=""))
-    else
-      leaders <- as.matrix(paste(leaders,tmp,colsep,sep=""))
+  for(n in names(coefs)){
+    mtab <- cbind(mtab,frmt1(n,coefs[[n]],summaries[,n]))
   }
-  ans <- paste(leaders,ans,sep=colsep)
-  ans <- ans[-x$kill.header]
-  ans <- paste(ans,rowsep,sep="")
-  return(paste(ans,collapse=""))
+  
+  hdrlines <- seq.int(max(coef.ldim)-2)
+  smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
+  
+  ldr <- character(length(coef.names)*coef.dims1)
+  ii <- seq(from=1,length=length(coef.names),by=coef.dims1)
+  ldr[ii] <- coef.names
+  ldr <- c(character(length(hdrlines)),ldr,rownames(summaries))
+  mtab <- cbind(ldr,mtab)
+  mtab <- apply(mtab,1,paste,collapse=paste0(colsep))
+  paste0(mtab,collapse=rowsep)
 }
 
 

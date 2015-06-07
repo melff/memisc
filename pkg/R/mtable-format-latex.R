@@ -9,171 +9,129 @@ mtable_format_latex <- function(x,
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
           bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
           interaction.sep = " $\\times$ ",
-          center.summaries=FALSE,
-          center.at=getOption("OutDec"),
-          align.integers=c("dot","right","left"),
+          sdigits=-1,
+          drop=TRUE,
           ...
           ){
 
+  colsep <- "&"
   rowsep <- "\n"
-
-  coldims <- dim(x$coefficients)[x$as.col]
-  nhrows <- length(coldims)
   
-  coefnames <- dimnames(x$coefficients)[[x$coef.dim]]
-  if(interaction.sep !=" x ")
-    coefnames <- gsub(" x ",interaction.sep,coefnames,fixed=TRUE)
-  dimnames(x$coefficients)[[x$coef.dim]] <- coefnames
-  coefs <- ftable(as.table(x$coefficients),row.vars=rev(x$as.row),
-                  col.vars=rev(x$as.col)
-  )
-  infos <- attributes(coefs)
+  coefs <- x$coefficients
   summaries <- x$summaries
   
-  align.integers <- match.arg(align.integers)
-  col.vars <- rev(infos$col.vars)
-  row.vars <- infos$row.vars[-x$kill.col]
-  coefs <- apply(coefs,2,centerAt,
-                 at=center.at,
-                 integers=align.integers)
-  coefs <- sub("(\\*+)","^{\\1}",coefs)
-  coefs <- sub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",coefs)
-  if(!useDcolumn){
-    tmpatt <- attributes(coefs)
-    coefs <- paste("$",coefs,"$",sep="")
-    attributes(coefs) <-tmpatt
+  coef.dims <- lapply(coefs,dim)
+  coef.ldim <- sapply(coef.dims,length)
+  model.names <- names(coefs)
+  
+  coef.dims1 <- unique(sapply(coef.dims,"[[",1))
+  stopifnot(length(coef.dims1)==1)
+  
+  coef.names <- lapply(coefs,dimnames)
+  coef.names <- lapply(coef.names,"[[",3)
+  coef.names <- unique(unlist(coef.names))
+  
+  coefs <- Sapply(coefs,coefxpand,coef.names,simplify=FALSE)
+  if(interaction.sep !=" x ")
+    coef.names <- gsub(" x ",interaction.sep,coef.names,fixed=TRUE)
+  
+  modcols <- sapply(coefs,function(x){
+    if(length(dim(x))<4) 1
+    else dim(x)[4]
+  })
+  if(drop){
+    umc <- unique(modcols)
+    if(length(umc)>1) drop <- FALSE
+    else
+      drop <- drop && umc == 1
   }
   
-  if(length(summaries)){
-    if(nrow(summaries)>1)
-      summaries <- apply(summaries,2,centerAt,
-                         at=center.at,
-                         integers=align.integers)
-    if(!useDcolumn){
-      tmpatt <- attributes(summaries)
-      summaries <- paste("$",summaries,"$",sep="")
-      attributes(summaries) <-tmpatt
-    }
-    tmp.sumry <- array("",dim=c(nrow(summaries),ncol(coefs)/ncol(summaries),ncol(summaries)))
-    if(center.summaries)
-      sumpos <- (dim(tmp.sumry)[2]+1)%/%2
-    else
-      sumpos <- 1
-    tmp.sumry[,sumpos,] <- summaries
-    dim(tmp.sumry) <- c(nrow(summaries),ncol(coefs))
-    ans <- rbind(coefs,tmp.sumry)
-  }
-  else ans <- coefs
+  totcols <- lapply(coef.dims,"[",-c(3,1))
+  totcols <- sapply(totcols,prod)
+  totcols <- sum(totcols)
+  coef.spec <- character(totcols)
+  coef.spec[] <- colspec
   
-  header <- character(length(col.vars))
+  tmp <- sdigits
+  sdigits <- structure(integer(length(coefs)),names=model.names)
+  sdigits[] <- tmp
   
-  for(i in 1:length(col.vars)){
-    tmp.header <- character(NCOL(ans))
-    cv <- col.vars[[i]]
-    lcv <- length(cv)
-    tmp.header[] <- cv
-    mcols <- ncol(coefs)/length(tmp.header)
-    tmp.header <- paste("\\multicolumn{",mcols,"}{c}{",trimws(tmp.header),"}",sep="")
-    if(i == length(col.vars) && length(col.vars) > 1)
-      tmp.header <- paste(tmp.header,collapse=" && ")
-    else
-      tmp.header <- paste(tmp.header,collapse=" & ")
-    if(length(col.vars)>1)
-      tmp.header <- c(rep("",length(row.vars)+1),t(tmp.header))
-    else
-      tmp.header <- c(rep("",length(row.vars)),t(tmp.header))
-    tmp.header <- paste(tmp.header,collapse="&")
-    header[i] <- tmp.header
+  mtab <- character()
+  
+  frmt1 <- function(name,coefs,summaries,sdigits){
     
-    ans <- format(ans,justify="centre")
-    dim(ans) <- c(nrow(ans),lcv,ncol(ans)/lcv)
-    if(i == length(col.vars) && length(col.vars) > 1)
-      ans <- as.matrix(apply(ans,c(1,3),function(x)paste(x,collapse=" && ")))
-    else
-      ans <- as.matrix(apply(ans,c(1,3),function(x)paste(x,collapse=" & ")))
-  }
-  leaders <- character(NROW(coefs)+if(length(summaries)) nrow(summaries) else 0)
-  for(i in 1:length(row.vars)){
-    tmp <- matrix("",nrow=length(row.vars[[i]]),
-                  ncol=nrow(coefs)/length(row.vars[[i]]))
-    tmp[,1] <- row.vars[[i]]
-    tmp <- c(t(tmp))
-    if(length(summaries)){
-      if(i == 1) tmp <- c(tmp,rownames(summaries))
-      else tmp <- c(tmp,rep("",nrow(summaries)))
+    coef.tab <- ftable(coefs,row.vars=c(3,1))
+    coef.tab[] <- sub("(\\*+)","^{\\1}",coef.tab)
+    coef.tab[] <- sub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",coef.tab)
+    if(!useDcolumn)
+      coef.tab[] <- paste0("$",coef.tab,"$")
+    name <- paste0("\\multicolumn{",ncol(coef.tab),"}{c}{",name,"}")
+    
+    if(!drop){
+      if(length(dim(coefs))>3 && dim(coefs)[4]>1){
+        eq.names <- dimnames(coefs)[[4]]
+        mcol <- ncol(coef.tab)/length(eq.names)
+        eq.names <- paste0("\\multicolumn{",mcol,"}{c}{",eq.names,"}")
+        eq.names <- paste0(eq.names,collapse=colsep)
+      }
+      else
+        eq.names <- ""
     }
-    tmp <- format(tmp,justify="left")
-    if(i < length(row.vars) || length(col.vars) > 1)
-      leaders <- as.matrix(paste(leaders,tmp," & " ,sep=""))
-    else
-      leaders <- as.matrix(paste(leaders,tmp,sep=""))
+    else eq.names <- NULL
+    
+    if(useDcolumn){
+      has.dot <- grep(".",summaries,fixed=TRUE)
+      sumry.spec <- if(useDcolumn && has.dot) paste("D{.}{",LaTeXdec,"}{",sdigits,"}",sep="") else "r"
+      summaries <- paste0("\\multicolumn{",ncol(coef.tab),"}{",sumry.spec,"}{",summaries,"}")
+    }
+    else 
+      summaries <- paste0("$",summaries,"$")
+    coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
+    as.matrix(c(name,eq.names,coef.tab,summaries))
   }
-  ans <- paste(leaders,ans,sep=" & ")
-  header <- paste(header,"\\\\",sep="")
+
+  tab.spec <- character()
+  for(n in names(coefs)){
+    nc <- prod(dim(coefs[[n]])[-c(3,1)])
+    tmp.spec <- coef.spec[1:nc]
+    tmp.spec <- paste0(tmp.spec,collapse="")
+    tab.spec <- c(tab.spec,tmp.spec)
+    coef.spec <- coef.spec[-(1:nc)]
+    mtab <- cbind(mtab,frmt1(n,coefs[[n]],summaries[,n],sdigits[n]))
+  }
   
-  if(length(cmidrule) && length(col.vars)>1){
-    ccol.vars <- rev(col.vars[-1])
-    n.grps <- length(ccol.vars[[1]])
-    len.grps <- ncol(coefs)/n.grps + 1
-    strt.grps <- length(row.vars)+1 + (seq(n.grps)-1)*len.grps+1
-    cmidrules <- character(length(header))
-    for(i in 1:length(ccol.vars)){
-      n.cmrl <- length(ccol.vars[[i]])
-      len.cmrl <- ncol(coefs)/n.cmrl
-      per.grp <- n.cmrl/n.grps
-      strt.igrp <- (seq(per.grp)-1)*len.cmrl
-      end.igrp <- seq(per.grp)*len.cmrl - 1
-      strt.cmrl <- c(outer(strt.igrp,strt.grps,"+"))
-      end.cmrl <- c(outer(end.igrp,strt.grps,"+"))
-      ccmidrule <- paste(cmidrule,"{",strt.cmrl,"-",end.cmrl,"}",sep="")
-      cmidrules[i] <- paste(ccmidrule,collapse="")
-    }
-    header <- cbind(rev(header),rev(cmidrules))
-    if(x$kill.header)
-      header <- header[-x$kill.header,,drop=FALSE]
-    header <- c(t(header))
-    header <- header[-length(header)]
+  hdrlines <- if(drop) 1 else 1:2
+  smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
+  
+  ldr <- character(length(coef.names)*coef.dims1)
+  ii <- seq(from=1,length=length(coef.names),by=coef.dims1)
+  ldr[ii] <- coef.names
+  ldr <- c(character(length(hdrlines)),ldr,rownames(summaries))
+
+  if(!drop){
+    mtab <- apply(mtab,1,paste,collapse=paste0(colsep,colsep))
+    tab.spec <- paste0(tab.spec,collapse="c")
   }
   else{
-    header <- rev(header)
-    if(x$kill.header)
-      header <- header[-x$kill.header]
+    mtab <- apply(mtab,1,paste,collapse=colsep)
+    tab.spec <- paste0(tab.spec,collapse="")
   }
-  ans <- paste(ans,"\\\\",sep="")
-  coeflines <- seq(nrow(coefs))
-  if(length(summaries))
-    sumrylines <- max(coeflines) + seq(nrow(summaries))
+  
+  mtab <- paste(ldr,mtab,sep=colsep)
+  tab.spec <- paste0("l",tab.spec)
+  mtab <- paste0(mtab,"\\\\")
+  
   ans <- c(
     toprule,
-    if(length(header))header,
-    if(length(header))midrule,
-    ans[coeflines],
+    if(length(hdrlines)) mtab[hdrlines],
+    if(length(hdrlines)) midrule,
+    mtab[-c(hdrlines,smrylines)],
     if(length(summaries)) midrule,
-    if(length(summaries)) ans[sumrylines],
+    if(length(summaries)) mtab[smrylines],
     bottomrule
   )
   
-  leader.spec <- paste(rep("l",length(row.vars)),collapse="")
-  
-  if(length(col.vars) > 1){
-    
-    sz.eq <- ncol(coefs)/length(rev(col.vars)[[1]])
-    n.eq <- length(rev(col.vars)[[1]])
-    coef.spec <- matrix("",nrow=n.eq,ncol=sz.eq)
-    coef.spec[] <- colspec
-    coef.spec <- apply(coef.spec,1,paste,collapse="")
-  }
-  else {
-    coef.spec <- character(ncol(coefs))
-    coef.spec[] <- colspec
-  }
-  
-  tabspec <- c(leader.spec,coef.spec)
-  if(length(col.vars) > 1)
-    tabspec <- paste(tabspec,collapse="c")
-  else
-    tabspec <- paste(tabspec,collapse="")
-  tabbegin <- paste("\\begin{tabular}{",tabspec,"}",sep="")
+  tabbegin <- paste("\\begin{tabular}{",tab.spec,"}",sep="")
   tabend <- "\\end{tabular}"
   
   splash <- c("%")

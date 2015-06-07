@@ -52,3 +52,17 @@ centerAt <- function(x,at=getOption("OutDec"),integers=c("dot","right","left"),s
   
   return(x)
 }
+
+coefxpand <- function(x,names){
+  d <- dx <- dim(x)
+  dd <- ddx <- dimnames(x)
+  d[3] <- length(names)
+  dd[[3]] <- names
+  
+  res <- array("",dim=d,dimnames=dd)
+  call.arg <- list(res)
+  call.arg <- c(call.arg,ddx)
+  call.arg <- c(call.arg,list(value=as.vector(x)))
+  do.call("[<-",call.arg)
+}
+

@@ -133,10 +133,7 @@ berk1 <- glm(cbind(Admitted,Rejected)~Gender,data=berkeley,family="binomial")
 berk2 <- glm(cbind(Admitted,Rejected)~Gender+Dept,data=berkeley,family="binomial")
 
 mtable(berk0,summary.stats=c("Deviance","N"))
-mtable(berk0,drop=FALSE,summary.stats=c("Deviance","N"))
 mtable(berk1,summary.stats=c("Deviance","N"))
-mtable(berk1,drop=FALSE,summary.stats=c("Deviance","N"))
-
 
 mtable(berk0,berk1,berk2,summary.stats=c("Deviance","N"))
 
