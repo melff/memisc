@@ -31,6 +31,7 @@
       is now corrected.
       \item Description of items in external data sources is more complete now - the same
       information as for items in internal \code{data.sets}.
+      \item \code{applyTemplate} now returns empty strings for undefined quantities.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

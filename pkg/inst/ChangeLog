@@ -1,3 +1,9 @@
+2015-05-08:
+  - 'mtable_format_html' works again
+  - Slight reorganisation of 'mtable' and associated formatting functions.
+  - Nicer grouping of coefficients of multiple-equation models
+  - 'applyTemplate' now returns empty strings for undefined quantities.
+
 2015-06-02: 
   - Moved 'toLatex' method for 'data.set' objects into different file. Added 'toLatex' method for data frames.
 
