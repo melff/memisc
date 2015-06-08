@@ -151,6 +151,8 @@ applyTemplate <- function(x,template,float.style=getOption("float.style"),
           }
       }
    }
+   unchanged <- res == template
+   res[unchanged] <- ""
    res
 }
 
