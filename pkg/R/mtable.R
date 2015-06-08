@@ -304,7 +304,7 @@ mtable <- function(...,
                     getSummary=eval.parent(quote(getSummary)),
                     float.style=getOption("float.style"),
                     digits=min(3,getOption("digits")),
-                    sdigits=digits
+                    sdigits=min(1,digits)
                     ){
   args <- list(...)
   if(length(args)==1 && inherits(args[[1]],"by"))
@@ -360,6 +360,12 @@ mtable <- function(...,
       }
 
   coefs <- lapply(seq(n.args),getCoef)
+  
+  coef.names <- lapply(coefs,dimnames)
+  coef.names <- lapply(coef.names,"[[",3)
+  coef.names <- unique(unlist(coef.names))
+  coefs <- Sapply(coefs,coefxpand,coef.names,simplify=FALSE)
+  
   names(coefs) <- argnames
   
   if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
@@ -367,7 +373,8 @@ mtable <- function(...,
     sumstats <- lapply(seq(n.args),function(i){
           sumstat <- summaries[[i]]$sumstat
           stemplate <- stemplates[[i]]
-          drop(applyTemplate(sumstat,template=stemplate,digits=sdigits))
+          sumstat <- drop(applyTemplate(sumstat,template=stemplate,digits=sdigits))
+          sumstat[nzchar(sumstat)]
         })
     sumstats <- clct.vectors(sumstats)
     colnames(sumstats) <- argnames

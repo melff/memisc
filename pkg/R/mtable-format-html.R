@@ -1,5 +1,5 @@
 mtable_format_stdstyle <- c(
-  "padding-top"="0px",
+  "padding-top"="3px",
   "padding-bottom"="0px",
   "margin-top"="0px",
   "margin-bottom"="0px"
@@ -23,137 +23,164 @@ mtable_format_html <- function(x,
   align.center <- c("text-align"="center")
   lrpad <- c("padding-left"="0.3em","padding-right"="0.3em")
   
-  coldims <- dim(x$coefficients)[x$as.col]
-  nhrows <- length(coldims)
+  colsep <- ""
+  rowsep <- "\n"
+
+  coefs <- x$coefficients
+  summaries <- x$summaries
   
-  coefnames <- dimnames(x$coefficients)[[x$coef.dim]]
+  coef.dims <- lapply(coefs,dim)
+  coef.ldim <- sapply(coef.dims,length)
+  max.coef.ldim <- max(coef.ldim)
+  
+  coef.dims1 <- unique(sapply(coef.dims,"[[",1))
+  stopifnot(length(coef.dims1)==1)
+
+  coef.names <- dimnames(coefs[[1]])[[3]]  
   if(interaction.sep !=" x ")
-    coefnames <- gsub(" x ",interaction.sep,coefnames,fixed=TRUE)
-  dimnames(x$coefficients)[[x$coef.dim]] <- coefnames
-  coefs <- ftable(as.table(x$coefficients),row.vars=rev(x$as.row),
-                  col.vars=rev(x$as.col)
-  )
-  infos <- attributes(coefs)
-
-  coefs <- trimws(coefs)
-  coefs[] <- gsub("-","&minus;",coefs[],fixed=TRUE)
-  if(split.dec){
-    coefs <- t(apply(coefs,1,spltDec))
+    coef.names <- gsub(" x ",interaction.sep,coef.names,fixed=TRUE)
+  
+  mtab <- character()
+  
+  frmt1 <- function(name,coefs,summaries,is.last){
+    
+    coef.tab <- ftable(coefs,row.vars=c(3,1))
+    coef.tab[] <- gsub("-","&minus;",coef.tab[],fixed=TRUE)
+    #coef.tab[] <- gsub("([*]+)","<sup>\\1</sup>",coef.tab[]) # looks ugly ...
+    if(split.dec){
+      
+      coef.tab <- t(apply(coef.tab,1,spltDec))
+      colspan <- ncol(coef.tab)
+      
+      coef.tab[] <- mk_td_spltDec(coef.tab[], style=proc_style(style))
+      neq <- ncol(coef.tab)/3
+      dim(coef.tab) <- c(nrow(coef.tab),3,neq)
+      coef.tab <- apply(coef.tab,c(1,3),paste0,collapse="")
+      coef.tab[] <- gsub("([*]+?)","<span class=\"signif.symbol\">\\1</span>",coef.tab[])
+      
+      
+      if(max.coef.ldim>3){
+        if(length(dim(coefs))>3 && dim(coefs)[4]>1)
+          eq.names <- dimnames(coefs)[[4]]
+        else
+          eq.names <- ""
+        attribs <- list(colspan=3*ncol(coef.tab)/length(eq.names))
+        hstyle <- upd_vect(style,align.center,midrule)
+        eq.names <- mk_td(eq.names,style=proc_style(hstyle),attribs=attribs)
+        coef.tab <- rbind(eq.names,coef.tab)
+      }
+      
+      tmp.smry <- summaries
+      n <- length(tmp.smry)
+      
+      summaries <- matrix("",nrow=length(summaries),ncol=neq)
+      summaries[,1] <- tmp.smry
+      summaries <- t(apply(summaries,1,spltDec))
+      
+      summaries[1,] <- mk_td_spltDec(summaries[1,],
+                                    style=proc_style(upd_vect(style,midrule_above)))
+      summaries[-c(1,n),] <- mk_td_spltDec(summaries[-c(1,n),],
+                                          style=proc_style(style))
+      summaries[n,] <- mk_td_spltDec(summaries[n,],
+                                    style=proc_style(upd_vect(style,bottomrule)))
+      dim(summaries) <- c(nrow(summaries),3,neq) 
+      summaries <- apply(summaries,c(1,3),paste0,collapse="")
+    }
+    else{
+      
+      colspan <- ncol(coef.tab)    
+      coef.tab[] <- mk_td(coef.table,style=proc_style(upd_vect(style,lrpad)))
+      coef.tab[] <- gsub("([*]+?)","<span class=\"signif.symbol\">\\1</span>",coef.tab[])
+      
+      neq <- ncol(coef.tab)
+      
+      if(max.coef.ldim>3){
+        if(length(dim(coefs))>3 && dim(coefs)[4]>1)
+          eq.names <- dimnames(coefs)[[4]]
+        else
+          eq.names <- ""
+        hstyle <- upd_vect(style,align.center,midrule)
+        eq.names <- mk_td(eq.names,style=proc_style(hstyle))
+        coef.tab <- rbind(eq.names,coef.tab)
+      }
+      
+      tmp.smry <- summaries
+      summaries <- matrix("",nrow=length(summaries),ncol=neq)
+      summaries[,1] <- tmp.smry
+      n <- length(tmp.smry)
+      
+      summaries[1,] <- mk_td(summaries[1,],
+                            style=proc_style(upd_vect(style,midrule_above)))
+      summaries[-c(1,n),] <- mk_td(summaries[-c(1,n),],
+                                  style=proc_style(style))
+      summaries[n,] <- mk_td(summaries[n,],
+                            style=proc_style(upd_vect(style,bottomrule)))
+      
+    }
+    coef.tab <- apply(coef.tab,1,paste0,collapse="")
+    summaries <- apply(summaries,1,paste0,collapse="")
+    hstyle <- upd_vect(style,align.center,toprule)
+    if(length(dim(coefs))>3 && dim(coefs)[4]>1 || max.coef.ldim==3){
+      hstyle <- upd_vect(hstyle,midrule)
+    }
+    header <- mk_td(name,style=proc_style(hstyle),attribs=list(colspan=colspan))
+    c(header,coef.tab,summaries)
+  }
+  for(n in names(coefs)){
+    mtab <- cbind(mtab,frmt1(n,coefs[[n]],summaries[,n]))
   }
   
-  row.vars <- infos$row.vars[-x$kill.col]
-  col.vars <- infos$col.vars[-x$kill.header]
   
-  coeftitles <- matrix("",nrow=nrow(coefs),ncol=length(row.vars))
-  for(i in 1:length(row.vars)){
-    rv <- row.vars[[i]]
-    m <- length(rv)
-    n <- nrow(coefs)%/%m
-    j <- 0:(m-1)*n+1
-    coeftitles[j,i] <- rv
+  ldr <- character(nrow(mtab))
+  
+  ii.coef <- seq(from=1,by=coef.dims1,length=length(coef.names))
+  ii.smry <- seq(from=1+length(coef.names)*coef.dims1,length=nrow(summaries))
+  
+  if(max.coef.ldim==4) {
+    ii.coef <- ii.coef + 2 
+    ii.smry <- ii.smry + 2 
+  }
+  else {
+    ii.coef <- ii.coef +1
+    ii.smry <- ii.smry +1
   }
 
-  coeftitles[] <- mk_td(coeftitles, style=proc_style(upd_vect(style,firstcol)))
+  ldr[ii.coef] <- coef.names
+  ldr[ii.smry] <- rownames(summaries)
+  lstyle <- upd_vect(style,align.left,firstcol)
+  if(ii.coef[1]-1==1){
+    lstyle.tmp <- upd_vect(lstyle,toprule,midrule)
+    ldr[1] <- mk_td(ldr[1],style=proc_style(lstyle.tmp))
+  }
+  else {
+    lstyle.tmp <- upd_vect(lstyle,toprule)
+    ldr[1] <- mk_td(ldr[1],style=proc_style(lstyle.tmp))
+    lstyle.tmp <- upd_vect(lstyle,midrule)
+    ldr[ii.coef[1]-1] <- mk_td(ldr[ii.coef[1]-1],style=proc_style(lstyle.tmp))
+  }
+  lstyle.tmp <- upd_vect(lstyle,midrule)
+  ldr[ii.smry[1]-1] <- mk_td(ldr[ii.smry[1]-1],style=proc_style(lstyle.tmp))
+  lstyle.tmp <- upd_vect(lstyle,bottomrule)
+  ldr[length(ldr)] <- mk_td(ldr[length(ldr)],style=proc_style(lstyle.tmp))
+  if(ii.coef[1]-1==1)
+    ii <- c(1,ii.smry[1]-1,length(ldr))
+  else
+    ii <- c(1,ii.coef[1]-1,ii.smry[1]-1,length(ldr))
+  ldr[-ii] <- mk_td(ldr[-ii],style=proc_style(lstyle))
   
-  if(split.dec)
-    coefs[] <- mk_td_spltDec(coefs, style=proc_style(style))
-  else 
-    coefs[] <- mk_td(coefs, style=proc_style(upd_vect(style,lrpad)))
-  
-  body <- cbind(coeftitles,coefs)
+  body <- cbind(ldr,mtab)
   body <- apply(body,1,paste0,collapse="")
   body <- mk_tr(body)
   
-  summaries <- x$summaries
-  if(length(summaries)){
-    
-    nms.smrs <- rownames(summaries)
-    tmp.smrs <- summaries
-    
-    ncc <- ncol(coefs)
-    if(split.dec) ncc <- ncc%/%3
-    
-    summaries <- matrix("",
-                        nrow=nrow(tmp.smrs),
-                        ncol=ncc)
-    m <- ncol(tmp.smrs)
-    n <- ncc%/%m
-    i <- 0:(m-1)*n+1
-    summaries[,i] <- tmp.smrs
-    if(split.dec){
-      summaries <- t(apply(summaries,1,spltDec))
-    }
-    
-  
-    smsr.titles <- matrix("",nrow=nrow(summaries),
-                             ncol=ncol(coeftitles))
-    smsr.titles[,1] <- nms.smrs
-    n <- nrow(summaries)
-    
-    smsr.titles[1,] <- mk_td(smsr.titles[1,],style=proc_style(upd_vect(style,firstcol,midrule_above)))
-    smsr.titles[-c(1,n),] <- mk_td(smsr.titles[-c(1,n),],style=proc_style(upd_vect(style,firstcol)))
-    smsr.titles[n,] <- mk_td(smsr.titles[n,],style=proc_style(upd_vect(style,firstcol,bottomrule)))
-
-    if(split.dec){
-      
-      summaries[1,] <- mk_td_spltDec(summaries[1,],style=proc_style(upd_vect(style,midrule_above)))
-      summaries[-c(1,n),] <- mk_td_spltDec(summaries[-c(1,n),],style=proc_style(style))
-      summaries[n,] <- mk_td_spltDec(summaries[n,],style=proc_style(upd_vect(style,bottomrule)))
-    } else {
-      summaries[1,] <- mk_td(summaries[1,],style=proc_style(upd_vect(style,midrule_above)))
-      summaries[-c(1,n),] <- mk_td(summaries[-c(1,n),],style=proc_style(style))
-      summaries[n,] <- mk_td(summaries[n,],style=proc_style(upd_vect(style,bottomrule)))
-    }
-    sbody <- cbind(smsr.titles,summaries)
-    sbody <- apply(sbody,1,paste0,collapse="")
-    sbody <- mk_tr(sbody)
-  } else sbody <- NULL
-  
-  header <- list()
-  mm <- 1
-  ncc <- ncol(coefs)
-  
-  for(i in 1:length(col.vars)){
-    
-    cv <- col.vars[[i]]
-    ncv <- length(cv)
-    
-    cv <- rep(cv,mm)
-    mm <- mm*ncv
-    
-    colspan <- ncc%/%mm
-    
-    attribs <- list(colspan=colspan)
-    
-    hstyle <- upd_vect(style,align.center,lrpad)
-    if(i == 1)
-      hstyle <- upd_vect(hstyle,toprule)
-    
-    hstyle1 <- upd_vect(hstyle,midrule)
-    
-    if(i == length(col.vars))
-      hstyle <- upd_vect(hstyle,midrule)
-    
-    attribs$style <- proc_style(hstyle1)
-    
-    htmp1 <- mk_td(rep("",ncol(coeftitles)),style=proc_style(hstyle))
-    htmp2 <- mk_td(cv,attribs=attribs)
-    
-    header <- c(header,list(c(htmp1,htmp2)))
-  }
-  
-  header <- sapply(header,paste0,collapse="")
-  header <- mk_tr(header)
-  
   ans <- c("<table class=\"mtable\" style=\"border-collapse: collapse;\">",
-           header,
            body,
-           sbody,
            "</table>")
   
   ans <- paste0(ans,collapse="\n")
   return(ans)
 }
+
+
 
 format_html.mtable <- function(x,
                                interaction.sep = " &times; ",

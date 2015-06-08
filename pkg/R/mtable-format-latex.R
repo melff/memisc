@@ -9,7 +9,7 @@ mtable_format_latex <- function(x,
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
           bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
           interaction.sep = " $\\times$ ",
-          sdigits=-1,
+          sdigits=1,
           drop=TRUE,
           ...
           ){
@@ -27,11 +27,7 @@ mtable_format_latex <- function(x,
   coef.dims1 <- unique(sapply(coef.dims,"[[",1))
   stopifnot(length(coef.dims1)==1)
   
-  coef.names <- lapply(coefs,dimnames)
-  coef.names <- lapply(coef.names,"[[",3)
-  coef.names <- unique(unlist(coef.names))
-  
-  coefs <- Sapply(coefs,coefxpand,coef.names,simplify=FALSE)
+  coef.names <- dimnames(coefs[[1]])[[3]]
   if(interaction.sep !=" x ")
     coef.names <- gsub(" x ",interaction.sep,coef.names,fixed=TRUE)
   
@@ -82,15 +78,25 @@ mtable_format_latex <- function(x,
     if(useDcolumn){
       has.dot <- grep(".",summaries,fixed=TRUE)
       sumry.spec <- if(useDcolumn && has.dot) paste("D{.}{",LaTeXdec,"}{",sdigits,"}",sep="") else "r"
-      summaries <- paste0("\\multicolumn{",ncol(coef.tab),"}{",sumry.spec,"}{",summaries,"}")
+      summaries <- paste0("\\multicolumn{1}{",sumry.spec,"}{",summaries,"}")
     }
     else 
       summaries <- paste0("$",summaries,"$")
+
+    tmp.smry <- summaries
+    summaries <- matrix("",nrow=length(tmp.smry),ncol=ncol(coef.tab))
+    summaries[,1] <- tmp.smry
+    
     coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
+    summaries <- apply(summaries,1,paste,collapse=colsep)
+    
     as.matrix(c(name,eq.names,coef.tab,summaries))
   }
 
   tab.spec <- character()
+  cmidrule.start <- 0
+  cmidrule.end <- 0
+  
   for(n in names(coefs)){
     nc <- prod(dim(coefs[[n]])[-c(3,1)])
     tmp.spec <- coef.spec[1:nc]
@@ -98,6 +104,11 @@ mtable_format_latex <- function(x,
     tab.spec <- c(tab.spec,tmp.spec)
     coef.spec <- coef.spec[-(1:nc)]
     mtab <- cbind(mtab,frmt1(n,coefs[[n]],summaries[,n],sdigits[n]))
+    ci <- length(cmidrule.start)
+    if(!drop){
+      cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+2)
+      cmidrule.end <- c(cmidrule.end,cmidrule.end[ci]+1+nc)
+    }
   }
   
   hdrlines <- if(drop) 1 else 1:2
@@ -120,6 +131,16 @@ mtable_format_latex <- function(x,
   mtab <- paste(ldr,mtab,sep=colsep)
   tab.spec <- paste0("l",tab.spec)
   mtab <- paste0(mtab,"\\\\")
+  if(!drop){
+    use.cmidrule <- cmidrule.start < cmidrule.end
+    if(any(use.cmidrule)){
+      cmidrule.start <- cmidrule.start[use.cmidrule]
+      cmidrule.end <- cmidrule.end[use.cmidrule]
+      cmidrules <- paste0(cmidrule,"{",cmidrule.start,"-",cmidrule.end,"}")
+      cmidrules <- paste(cmidrules,collapse="")
+      mtab[1] <- paste0(mtab[1],rowsep,cmidrules)
+    }
+  }
   
   ans <- c(
     toprule,

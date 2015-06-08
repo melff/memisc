@@ -10,15 +10,12 @@ mtable_format_delim <- function(x,
   
   coef.dims <- lapply(coefs,dim)
   coef.ldim <- sapply(coef.dims,length)
+  max.coef.ldim <- max(coef.ldim)
   
   coef.dims1 <- unique(sapply(coef.dims,"[[",1))
   stopifnot(length(coef.dims1)==1)
   
-  coef.names <- lapply(coefs,dimnames)
-  coef.names <- lapply(coef.names,"[[",3)
-  coef.names <- unique(unlist(coef.names))
-  
-  coefs <- Sapply(coefs,coefxpand,coef.names,simplify=FALSE)
+  coef.names <- dimnames(coefs[[1]])[[3]]
   if(interaction.sep !=" x ")
     coef.names <- gsub(" x ",interaction.sep,coef.names,fixed=TRUE)
   
@@ -27,11 +24,13 @@ mtable_format_delim <- function(x,
   frmt1 <- function(name,coefs,summaries){
     coef.tab <- ftable(coefs,row.vars=c(3,1))
     
-    if(length(dim(coefs))>3){
+    if(max.coef.ldim>3){
       hdr <- character(ncol(coef.tab))
-      eq.names <- dimnames(coefs)[[4]]
-      ii <- seq(from=1,length=length(eq.names),by=ncol(coef.tab)%%length(eq.names))
-      hdr[ii] <- eq.names
+      if(length(dim(coefs))>3){
+        eq.names <- dimnames(coefs)[[4]]
+        ii <- seq(from=1,length=length(eq.names),by=ncol(coef.tab)%%length(eq.names))
+        hdr[ii] <- eq.names
+        }
       coef.tab <- rbind(hdr,coef.tab)
     }
     hdr <- character(ncol(coef.tab))

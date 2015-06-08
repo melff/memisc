@@ -17,15 +17,18 @@ mtable_format_print <- function(x,
   
   coef.dims <- lapply(coefs,dim)
   coef.ldim <- sapply(coef.dims,length)
+  max.coef.ldim <- max(coef.ldim)
   
-  coef.dims1 <- unique(sapply(coef.dims,"[[",1))
+  coef.dims1 <- unique(sapply(coef.dims,"[",1))
   stopifnot(length(coef.dims1)==1)
   
-  coef.names <- lapply(coefs,dimnames)
-  coef.names <- lapply(coef.names,"[[",3)
-  coef.names <- unique(unlist(coef.names))
+  grp.coefs <- max.coef.ldim > 3 
+  if(grp.coefs){
+    coef.dims4 <- sapply(coef.dims[coef.ldim>3],"[",4)
+    grp.coefs <- grp.coefs && any(coef.dims4>1)
+  }
   
-  coefs <- Sapply(coefs,coefxpand,coef.names,simplify=FALSE)
+  coef.names <- dimnames(coefs[[1]])[[3]]
   if(interaction.sep !=" x ")
     coef.names <- gsub(" x ",interaction.sep,coef.names,fixed=TRUE)
   
@@ -36,11 +39,22 @@ mtable_format_print <- function(x,
     coef.tab <- apply(coef.tab,2,centerAt,
                       at=center.at,
                       integers=align.integers)
-    if(length(dim(coefs))>3){
-      coef.tab <- rbind(dimnames(coefs)[[4]],coef.tab)
+    if(grp.coefs){
+      if(length(dim(coefs))>3 && dim(coefs)[4]>1)
+        coef.tab <- rbind(dimnames(coefs)[[4]],coef.tab)
+      else
+        coef.tab <- rbind(character(ncol(coef.tab)),coef.tab)
       coef.tab <- apply(coef.tab,2,format,justify="centre")
-      }
+    }
     coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
+    if(grp.coefs){
+      if(length(dim(coefs))>3 && dim(coefs)[4]>1)
+        grp.line <- paste(rep(sectionsep,nchar(coef.tab[1])),collapse="")
+      else
+        grp.line <- paste(rep(" ",nchar(coef.tab[1])),collapse="")
+      coef.tab <- c(grp.line,coef.tab)
+    }
+    
     summaries <- centerAt(summaries,
                           at=center.at,
                           integers=align.integers)
@@ -55,7 +69,7 @@ mtable_format_print <- function(x,
   mtab <- rbind(names(coefs),mtab)
   mtab <- apply(mtab,2,format,justify="centre")
 
-  hdrlines <- seq.int(max(coef.ldim)-2)
+  hdrlines <- if(grp.coefs) 1:3 else 1
   smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
   
   ldr <- character(length(coef.names)*coef.dims1)
