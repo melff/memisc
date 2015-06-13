@@ -393,6 +393,14 @@ setMethod("within","data.set",function (data, expr, ...)
     ret <- eval(substitute(expr), e)
     l <- rev(as.list(e))
 
+    length1 <- sapply(l,length) == 1
+    if(any(length1)){
+      ii <- which(length1)
+      for(i in ii){
+        l[[i]] <- rep(l[[i]],nr)
+      }
+    }
+    
     wrong.length <- sapply(l,length) != nr
     if(any(wrong.length)){
       warning("Variables ",paste(sQuote(names(l)[wrong.length]),collapse=","),
