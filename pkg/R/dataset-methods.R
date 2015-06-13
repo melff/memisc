@@ -566,7 +566,7 @@ dsView <- function(x){
 
 collect.data.set <- function(...,
   names=NULL,inclusive=TRUE,fussy=FALSE,warn=TRUE,
-  sourcename="arg"){
+  sourcename=".origin"){
   args <- list(...)
   subst <- substitute(list(...))
   if(length(names)) {
