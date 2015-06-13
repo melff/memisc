@@ -1,4 +1,9 @@
-2015-05-08:
+2015-06-13:
+  - Scalars created by 'within' expression are now retained constant items in data.sets
+  - 'sourcename' argument of collect methods for data frames and data.sets now has a 
+    coherent default.
+
+2015-06-08:
   - 'mtable_format_html' works again
   - Slight reorganisation of 'mtable' and associated formatting functions.
   - Nicer grouping of coefficients of multiple-equation models
