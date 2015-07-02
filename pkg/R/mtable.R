@@ -214,6 +214,7 @@ prettyNames1 <- function(str,
                         contrasts,
                         xlevels,
                         factor.style=getOption("factor.style"),
+                        show.baselevel=getOption("show.baselevel"),
                         baselevel.sep=getOption("baselevel.sep")
                         ){
    str <- gsub(":"," x ",str,fixed=TRUE)
@@ -243,7 +244,10 @@ prettyNames1 <- function(str,
               "contr.SAS"
               )){
          baselevel <- setdiff(rownames(contrast.matrix),colnames(contrast.matrix))
-         newlabels <- paste(colnames(contrast.matrix),baselevel,sep=baselevel.sep)
+         if(show.baselevel)
+           newlabels <- paste(colnames(contrast.matrix),baselevel,sep=baselevel.sep)
+         else
+           newlabels <- colnames(contrast.matrix)
          oldlabels <- colnames(contrast.matrix)
       }
       else if(is.character(contrast.f) &&
@@ -259,7 +263,10 @@ prettyNames1 <- function(str,
         all(colnames(contrast.matrix) %in% rownames(contrast.matrix))
         ){
          baselevel <- setdiff(rownames(contrast.matrix),colnames(contrast.matrix))
-         newlabels <- paste(colnames(contrast.matrix),baselevel,sep=baselevel.sep)
+         if(show.baselevel)
+           newlabels <- paste(colnames(contrast.matrix),baselevel,sep=baselevel.sep)
+         else
+           newlabels <- colnames(contrast.matrix)
          oldlabels <- colnames(contrast.matrix)
       }
       else {

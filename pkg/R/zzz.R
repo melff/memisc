@@ -15,6 +15,7 @@ memisc_env <- environment()
   }
 
   options(coef.style="default")
+  options(show.baselevel=TRUE)
   options(baselevel.sep="/")
   options(factor.style="($f): ($l)")
   options(float.style="f")
