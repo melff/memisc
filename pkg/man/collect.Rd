@@ -16,11 +16,11 @@ collect(\dots,names=NULL,inclusive=TRUE)
 \method{collect}{default}(\dots,names=NULL,inclusive=TRUE)
 \method{collect}{array}(\dots,names=NULL,inclusive=TRUE)
 \method{collect}{matrix}(\dots,names=NULL,inclusive=TRUE)
-\method{collect}{table}(\dots,names=NULL,sourcename="arg",fill=0)
+\method{collect}{table}(\dots,names=NULL,sourcename=".origin",fill=0)
 \method{collect}{data.frame}(\dots,names=NULL,inclusive=TRUE,
-                                  fussy=FALSE,warn=TRUE,sourcename="arg")
+                                  fussy=FALSE,warn=TRUE,sourcename=".origin")
 \method{collect}{data.set}(\dots,names=NULL,inclusive=TRUE,
-                                  fussy=FALSE,warn=TRUE,sourcename="arg")
+                                  fussy=FALSE,warn=TRUE,sourcename=".origin")
 }
 \arguments{
   \item{\dots}{more atomic vectors, arrays, matrices, tables, data.frames or data.sets}
