@@ -7,15 +7,18 @@
 \alias{double.item-class}
 \alias{numeric.item-class}
 \alias{character.item-class}
+\alias{datetime.item-class}
 \alias{as.item}
 \alias{as.item,numeric-method}
 \alias{as.item,logical-method}
 \alias{as.item,character-method}
 \alias{as.item,factor-method}
 \alias{as.item,ordered-method}
+\alias{as.item,POSIXct-method}
 \alias{as.item,double.item-method}
 \alias{as.item,integer.item-method}
 \alias{as.item,character.item-method}
+\alias{as.item,datetime.item-method}
 \alias{[,item.vector,numeric,missing,missing-method}
 \alias{[,item.vector,logical,missing,missing-method}
 \alias{str.double.item}
@@ -31,11 +34,15 @@
 \alias{as.factor,item.vector-method}
 \alias{as.ordered,item.vector-method}
 \alias{as.character,item.vector-method}
+\alias{as.character,datetime.item-method}
 \alias{summary,item.vector-method}
+\alias{summary,datetime.item-method}
 \alias{format,item.vector-method}
 \alias{show,item.vector-method}
+\alias{format,datetime.item-method}
+\alias{show,datetime.item-method}
 \alias{print,item.vector-method}
-\alias{rep,item.vector-method}
+\alias{print,datetime.item-method}
 \alias{Compare,numeric.item,character-method}
 \alias{Compare,character,numeric.item-method}
 \alias{Arith,numeric.item,numeric.item-method}
@@ -45,6 +52,9 @@
 \alias{Math2,numeric.item-method}
 \alias{Summary,numeric.item-method}
 \alias{\%in\%,numeric.item,character-method}
+\alias{rep,item.vector-method}
+\alias{Table,item.vector-method}
+\alias{weighted.mean,item.vector-method}
 
 \title{Survey Items}
 \description{
@@ -75,6 +85,7 @@
 
 \S4method{as.item}{factor}(x,\dots)
 \S4method{as.item}{ordered}(x,\dots)
+\S4method{as.item}{POSIXct}(x,\dots)
 
 \S4method{as.item}{double.item}(x,
   labels=NULL,  missing.values=NULL,
@@ -91,6 +102,13 @@
   )
 
 \S4method{as.item}{character.item}(x,
+  labels=NULL,  missing.values=NULL,
+  valid.values=NULL,  valid.range=NULL,
+  value.filter=NULL,  measurement=NULL,
+  annotation=attr(x,"annotation"), \dots
+  )
+
+\S4method{as.item}{datetime.item}(x,
   labels=NULL,  missing.values=NULL,
   valid.values=NULL,  valid.range=NULL,
   value.filter=NULL,  measurement=NULL,
