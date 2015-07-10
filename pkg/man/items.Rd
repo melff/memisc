@@ -53,7 +53,6 @@
 \alias{Summary,numeric.item-method}
 \alias{\%in\%,numeric.item,character-method}
 \alias{rep,item.vector-method}
-\alias{Table,item.vector-method}
 \alias{weighted.mean,item.vector-method}
 
 \title{Survey Items}

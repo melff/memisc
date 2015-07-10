@@ -20,8 +20,6 @@
 \alias{dimnames,data.set-method}
 \alias{dimnames<-,data.set-method}
 \alias{row.names,data.set-method}
-\alias{subset,data.set-method}
-\alias{unique,data.set-method}
 \title{Data Set Objects}
 \description{
   \code{"data.set"} objects are collections of \code{"item"} objects,
