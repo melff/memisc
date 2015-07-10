@@ -267,6 +267,7 @@ S3method(format_html,mtable)
 S3method(format_html,ftable)
 S3method(format_html,codebook)
 S3method(format_html,codebookEntry)
+S3method(format_html,data.frame)
 
 S3method(sort,data.set)
 S3method(rbind,data.set)
