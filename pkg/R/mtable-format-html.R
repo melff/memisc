@@ -89,7 +89,7 @@ mtable_format_html <- function(x,
     else{
       
       colspan <- ncol(coef.tab)    
-      coef.tab[] <- mk_td(coef.table,style=proc_style(upd_vect(style,lrpad)))
+      coef.tab[] <- mk_td(coef.tab,style=proc_style(upd_vect(style,lrpad)))
       coef.tab[] <- gsub("([*]+?)","<span class=\"signif.symbol\">\\1</span>",coef.tab[])
       
       neq <- ncol(coef.tab)
