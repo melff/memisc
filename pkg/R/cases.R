@@ -1,5 +1,14 @@
-cases <- function(...,check.xor=FALSE){
+cases <- function(...,check.xor=c("warn","stop","ignore")){
   subst <- match.call(expand.dots=FALSE)$...
+  
+  if(!missing(check.xor))  
+    if(is.logical(check.xor))
+      check.xor <- ifelse(check.xor,"stop","ignore")  
+    else 
+      check.xor <- as.character(check.xor)
+  
+  check.xor <- match.arg(check.xor)
+    
   deflabels <- sapply(subst,deparse)
   if(length(subst)<2) stop("need at least two conditions")
 
@@ -13,12 +22,19 @@ cases <- function(...,check.xor=FALSE){
     conditions <- lapply(subst,"[[",3)
     values <- lapply(subst,"[[",2)
     conditions <- do.call(cbind,lapply(conditions,eval,envir=parent))
+    
+    if(ncol(conditions)!=length(subst)) stop("at least one condition results in NULL")
     if(!is.logical(conditions)) stop("all conditions have to be logical")
     #if(any(is.na(conditions))) stop("NA in logical condition")
     na.cond <- rowSums(is.na(conditions)) > 0
 
     done <- rowSums(conditions)
-    if(check.xor && any(done!=1)) stop("conditions are neither exclusive nor exhaustive")
+    if(any(done!=1) && check.xor!="ignore") {
+      msg <- switch(check.xor,warn=warning,stop=stop)
+      if(any(done==0) && any(done>1)) msg("conditions are neither exhaustive nor mutually exclusive")
+      else if(any(done==0)) msg("conditions are not exhaustive")
+      else if(any(done>0)) msg("conditions are not mutually exclusive")
+    }
     never <- colSums(conditions[!na.cond,,drop=FALSE]) == 0
     if(any(never)){
       neverlab <- deflabels[never]
@@ -56,6 +72,8 @@ cases <- function(...,check.xor=FALSE){
   else if(!any(have.arrows))
   {
     conditions <- cbind(...)
+    
+    if(ncol(conditions)!=length(subst)) stop("at least one condition results in NULL")
     if(!is.logical(conditions)) stop("all conditions have to be logical")
     #if(any(is.na(conditions))) stop("NA in logical condition")
     na.cond <- rowSums(is.na(conditions)) > 0
@@ -67,7 +85,12 @@ cases <- function(...,check.xor=FALSE){
     else labels <- deflabels
 
     done <- rowSums(conditions)
-    if(check.xor && any(done!=1)) stop("conditions are neither exclusive nor exhaustive")
+    if(any(done!=1) && check.xor!="ignore") {
+      msg <- switch(check.xor,warn=warning,stop=stop)
+      if(any(done==0) && any(done>1)) msg("conditions are neither exhaustive nor mutually exclusive")
+      else if(any(done==0)) msg("conditions are not exhaustive")
+      else if(any(done>0)) msg("conditions are not mutually exclusive")
+    }
     never <- colSums(conditions[!na.cond,,drop=FALSE]) == 0
     if(any(never)){
       neverlab <- deflabels[never]

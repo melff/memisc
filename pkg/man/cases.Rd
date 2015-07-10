@@ -7,14 +7,18 @@
   a factor or as a multi-condition generalization of \code{\link{ifelse}}
   }
 \usage{
-cases(\dots,check.xor=FALSE)
+cases(\dots,check.xor)
 }
 \arguments{
   \item{\dots}{A sequence of logical expressions or assignment expressions containing
     logical expressions as "right hand side".}
-  \item{check.xor}{logical; if true, \code{cases} checks, whether the case
+  \item{check.xor}{character (either \code{"warn"}, \code{"stop"}, or  \code{"ignore"})
+  or logical; if \code{TRUE} or equal to \code{"stop"} or 
+  \code{"warn"}, 
+  \code{cases} checks, whether the case
     conditions are mutually exclusive and exhaustive. If this is not
-    satisfied and \code{check.xor} an error exception is raised. }
+    satisfied and \code{check.xor} equals \code{"warn"} a warning is shown,
+    otherwise an error exception is raised. }
 }
 \details{
   There are two distinct ways to use this function. Either the
