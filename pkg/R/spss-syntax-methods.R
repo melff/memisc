@@ -32,16 +32,19 @@ spss.fixed.file <- function(
 
     if(length(varlabs)){
       nn <- names(varlabs)
+      if(!all(nn %in% var.names)) stop("undefined variables in 'varlab.file'")
       for(n in nn)
         description(variables[[n]]) <- varlabs[n]
     }
     if(length(vallabs)){
-      nn <- names(varlabs)
+      nn <- names(vallabs)
+      if(!all(nn %in% var.names)) stop("undefined variables in 'codes.file'")
       for(n in nn)
         labels(variables[[n]]) <- vallabs[[n]]
     } 
     if(length(missings)){
       nn <- names(missings)
+      if(!all(nn %in% var.names)) stop("undefined variables in 'missval.file'")
       for(n in nn)
         missing.values(variables[[n]]) <- missings[[n]]
     } 
