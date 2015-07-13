@@ -13,6 +13,7 @@ mtable_format_print(x,
   interaction.sep = " x ",
   center.at=getOption("OutDec"),
   align.integers=c("dot","right","left"),
+  padding = "  ",
   \dots
   )
 }
@@ -28,6 +29,8 @@ mtable_format_print(x,
         Typically equal to ".". This is the default when \code{forLaTeX==TRUE}.
         If \code{NULL}, reported values are not centered.}
     \item{align.integers}{how to align integer values.}
+    \item{padding}{a character string, usually whitespace, used to insert left- and right-padding of 
+        table contents.}
     \item{\dots}{further arguments, ignored. }
 }
 \value{

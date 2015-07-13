@@ -17,7 +17,7 @@ mtable(\dots,coef.style=getOption("coef.style"),
     getSummary=eval.parent(quote(getSummary)),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
-    drop=TRUE
+    sdigits=min(1,digits)
   )
 \method{relabel}{mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
 
@@ -60,8 +60,7 @@ write.mtable(object,file="",\dots)
         the template returned from \code{\link{getCoefTemplate}}
         \code{\link{getSummaryTemplate}}
         }
-     \item{drop}{logical value; should redundant column headings
-        dropped if only one model is given as argument?}
+     \item{sdigits}{integer; number of digits after decimal dot for summary statistics.}
      \item{x, object}{an object of class \code{mtable}}
      \item{gsub, warn, fixed}{logical values, see \code{\link{relabel}}}
      \item{target}{a character string which indicates the target format.

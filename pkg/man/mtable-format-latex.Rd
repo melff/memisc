@@ -19,9 +19,8 @@
             cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
             bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
             interaction.sep = " $\\\\times$ ",
-            center.summaries=FALSE,
-            center.at=getOption("OutDec"),
-            align.integers=c("dot","right","left"),
+            sdigits=1,
+            drop=TRUE,
             \dots
   )
 }
@@ -43,13 +42,9 @@
      \item{bottomrule}{appearance of the bottom border of the LaTeX \code{tabular} environment.}
      \item{interaction.sep}{a character string that separates factors that are involved
         in an interaction effect}
-     \item{center.summaries}{logical value; if TRUE, summaries for
-      each model are centered below the columns that correspond to
-      the respective model coefficients. }
-     \item{center.at}{a character string on which resulting values are centered.
-        Typically equal to ".". This is the default when \code{forLaTeX==TRUE}.
-        If \code{NULL}, reported values are not centered.}
-     \item{align.integers}{how to align integer values.}
+     \item{sdigits}{integer; number of digits after decimal dot for summary statistics.}
+     \item{drop}{logical value; should redundant column headings
+        dropped if only one model is given as argument?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{
