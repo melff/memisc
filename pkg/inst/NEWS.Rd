@@ -12,14 +12,31 @@
       
       In particular, results of the functions \code{mtable} (i.e. tables of
       model estimates), \code{ftable} (i.e. flattened contingency tables etc.),
-      and \code{codebooks}, can be exported int HTML using \code{format_html}
+      and \code{codebooks}, can be exported int. HTML using \code{format_html}.
+      Also data frames can be exported into HTML.
+      
+      \item A function \code{dsView} is added, which allows a display of \code{data.set}
+      objects similar as \code{View} displays data frames.
       
       \item \code{mtable} now handles multi-equation models better, in particular 
       if the model objects supplied as arguments vary in the number and/or names
-      of the equations.
+      of the equations. There is also a new option to place confidence intervals to the right of coefficient
+      estimates. Further \code{mtable} gains a \code{show.baselevel} options, which
+      allows to suppress the display of baseline categories of dummy variables,
+      when dummy variable coefficients are displayed. One can now use a \code{summaryTemplate}
+      generic function for formatting model summaries, in addition to set the template
+      by \code{setSummaryTemplate}.
+      Ther is also a bew argument \code{sdigits} for \code{mtable} formatting method functions.
       
       \item There is now an object class for survey items containing dates, called
       \code{"datetime.item"}
+      
+      \item There is a new function \code{wild.codes} to check wild codes (i.e. 
+      unlabelled codes of an otherwise labelled item.)
+      
+      \item \code{codebook} now supports data frames, factors, and numeric vectors.
+      
+      \item A \code{toLatex} method exists now for \code{data.set} objects.
     }
   }
   \subsection{BUGFIXES}{
@@ -32,6 +49,8 @@
       \item Description of items in external data sources is more complete now - the same
       information as for items in internal \code{data.sets}.
       \item \code{applyTemplate} now returns empty strings for undefined quantities.
+      \item \code{collect} method for \code{data.sets} now works as expected.
+      \item \code{spss.fixed.file} now checks whether there are undefined variables in \code{varlab.file} etc.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

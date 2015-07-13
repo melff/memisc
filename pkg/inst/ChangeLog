@@ -1,3 +1,24 @@
+2015-07-13: 
+  - Add basic documentation for 'summaryTemplate' generic function.
+  - Add documentation for 'dsView'.
+  - Fix codoc mismatches pointed out by R CMD check.
+  - 'spss.fixed.file' now checks whether there are undefined variables in 'varlab.file' etc.
+
+2015-07-10: 
+  - Correct `sourcename` default argument of `collect` methods.
+  - Get rid of duplicate aliases in documentation.
+  - FIX: `coef.tab` not `coef.table`
+  - Add documentation for `datetime.item` objects (merged from an earlier development branch)
+  - Add documentation for data set manipulation (`merge` etc.)
+  - Make `cases` more fussy about logical conditions.
+
+2015-07-02: 
+  - Provide HTML formatting of data frames.
+
+2015-06-15: 
+  - New option 'show.baselevel' for function 'mtable' that allows to decised whether the baseline category of 
+    dummy variable shows up in the table.
+
 2015-06-13:
   - Scalars created by 'within' expression are now retained constant items in data.sets
   - 'sourcename' argument of collect methods for data frames and data.sets now has a 
@@ -13,7 +34,8 @@
   - Moved 'toLatex' method for 'data.set' objects into different file. Added 'toLatex' method for data frames.
 
 2015-06-01:
-  - Completely refactored 'mtable' - more flexible handling of models with varying numbers of equations; some formatting is delayed and moved to the 'mtable_format' functions.
+  - Completely refactored 'mtable' - more flexible handling of models with varying numbers of equations; 
+    some formatting is delayed and moved to the 'mtable_format' functions.
 
 2015-05-31:
   - Added toLatex-method for data.set objects.
@@ -24,7 +46,8 @@
 
 2015-05-16:
   - 2015-05-16: Added support for date-time "item" objects (from former 'codebooks' package)
-  - cbind, rbind, collect, and merge methods for "data.set" objects copied from former 'codebooks' package to 'memisc'.
+  - dsView, cbind, rbind, collect, and merge methods for "data.set" objects copied from former 
+    'codebooks' package to 'memisc'.
 
 2015-05-14:
   - Fixed bugs introduced by rewrite of 'import-internal-spss-syntax.R'.
@@ -39,9 +62,9 @@
 
 2015-05-11: Make memisc:::trimws work without changing locale
   - Complete rewrite of major parts of 'import-internal-spss-syntax.R': 
-    Handling of SPSS syntax files for fixed format data files is changed from a presumptious vectorising approach to 
-    an old-school but more flexible and stable Turing approach. 
-    'spss.fixed.file()' should work for a wider range of situations.
+    Handling of SPSS syntax files for fixed format data files is changed from a presumptious vectorising approach
+    to an old-school but more flexible and stable Turing approach. 
+  - 'spss.fixed.file()' should work for a wider range of situations.
 
 2015-05-10: 
   - Use endash in HTML format of codebooks, correct removal extra styling of variable names
