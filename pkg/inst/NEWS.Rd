@@ -24,9 +24,9 @@
       estimates. Further \code{mtable} gains a \code{show.baselevel} options, which
       allows to suppress the display of baseline categories of dummy variables,
       when dummy variable coefficients are displayed. One can now use a \code{summaryTemplate}
-      generic function for formatting model summaries, in addition to set the template
-      by \code{setSummaryTemplate}.
-      Ther is also a bew argument \code{sdigits} for \code{mtable} formatting method functions.
+      generic function for formatting model summaries, in addition to set the template by 
+      \code{setSummaryTemplate}. There is also a new argument \code{sdigits} for \code{mtable}
+      formatting method functions.
       
       \item There is now an object class for survey items containing dates, called
       \code{"datetime.item"}
