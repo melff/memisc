@@ -5,7 +5,8 @@
 \alias{getCoefTemplate}
 \alias{getSummaryTemplate}
 \alias{setSummaryTemplate}
-\title{Formatting Styles for Coefficients and Factor Contrasts}
+\alias{summaryTemplate}
+\title{Formatting Styles for Coefficients, Factor Contrasts, and Summary Statistics}
 \description{
   Methods for setting and getting templates for formatting
   model coefficients and summaries for use in \code{\link{mtable}}.
@@ -15,6 +16,7 @@ setCoefTemplate(...)
 getCoefTemplate(style)
 getSummaryTemplate(x)
 setSummaryTemplate(...)
+summaryTemplate(x)
   }
 \arguments{
   \item{...}{sevaral tagged arguments; in case of \code{setCoefTemplate} the
@@ -41,8 +43,10 @@ setSummaryTemplate(...)
   The "factory-fresh" setting is \code{options(baselevel.sep="-")},
 
   Users may specify additional coefficient styles by a call to \code{setCoefTemplate}.
-  In order to adapt \code{\link{mtable}} to other model classes, users need to
-  set a template for model summaries via a call to \code{setSummaryTemplate}.
+  
+  In order to adapt the display of summary statistics of other model classes, users need to
+  set a template for model summaries via a call to \code{setSummaryTemplate}
+  or to define a method of the generic function \code{summaryTemplate}.
 }
 
 \keyword{misc}
