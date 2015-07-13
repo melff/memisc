@@ -20,6 +20,7 @@
 \alias{dimnames,data.set-method}
 \alias{dimnames<-,data.set-method}
 \alias{row.names,data.set-method}
+\alias{dsView}
 \title{Data Set Objects}
 \description{
   \code{"data.set"} objects are collections of \code{"item"} objects,
@@ -35,6 +36,10 @@
   While (mostly automatic) conversion of data sets into data
   frames makes the data amenable for the use of R's statistical
   functions.
+  
+  \code{dsView} is a function that displays data sets in a similar
+  manner as \code{View} displays data frames. (\code{View} works
+  with data sets as well, but changes them first into data frames.)
 }
 \usage{
 data.set(\dots,row.names = NULL, check.rows = FALSE, check.names = TRUE,
@@ -45,6 +50,8 @@ as.data.set(x, row.names=NULL, \dots)
 is.data.set(x)
 \method{as.data.frame}{data.set}(x, row.names = NULL, optional = FALSE, \dots)
 \S4method{within}{data.set}(data, expr, \dots)
+
+dsView(x)
 }
 \arguments{
   \item{\dots}{
@@ -58,7 +65,7 @@ is.data.set(x)
   \item{document}{NULL or an optional character vector that contains
     documenation of the data.}
   \item{x}{for \code{is.data.set(x)}, any object; for
-    \code{as.data.frame(x,...)} a "data.set" object.}
+    \code{as.data.frame(x,...)} and \code{dsView(x)} a "data.set" object.}
   \item{data}{a data set, that is, an object of class "data.set". }
   \item{expr}{an expression, or several expressions enclosed in curly braces.}
 }
@@ -131,12 +138,23 @@ Data <- within(Data,{
 # Since data sets may be huge, only a
 # part of them are 'show'n
 Data
-# If we insist on seeing all, we can use 'print' instead
+
 \dontrun{
-  print(Data)
+
+# If we insist on seeing all, we can use 'print' instead
+print(Data)
 }
+
 str(Data)
 summary(Data)
+
+\dontrun{
+
+# If we want to 'View' a data set we can use 'dsView'
+dsView(Data)
+# Works also, but changes the data set into a data frame first:
+View(Data)
+}
 
 Data[[1]]
 Data[1,]
