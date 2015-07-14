@@ -1,0 +1,550 @@
+% \VignetteIndexEntry{Handling Questionnaire Items with "memisc"}
+% \VignetteEngine{knitr::rmarkdown}
+% \VignetteEncoding{UTF-8}
+
+# Motivation
+
+R is a great tool to do data analysis and for data management tasks that arise in the context of big data analytics. Nevertheless there is still room for improvement in terms of the support for data management tasks that arise in the social sciences, especially when it comes to handling data that come from social surveys and opinion surveys. The main reason for this is that the way that questionnaire item responses as they are usually coded in machine-readable survey data sets do not directly and easily translate into R's data types for numeric and categorical data, that is, numerical vectors and factors. As a consequence, many social scientists exercise their everyday data management tasks with commercial software packages such as SPSS or Stata, but there may be social scientists who either cannot afford such commercial software or prefer to use, out of principle, open-source software for all steps of data management and analysis.
+
+It is one of the aim of the "memisc" package to provide a bridge between social science data sets of variables that contain coded responses to questionnaire items, with their typical structures involving labelled numeric response codes and numeric codes declared as "missing values". As an illustrative example, suppose in a pre-election survey, respondents are asked about which party they are going to vote for in their constituency in the framework of a first-past-the-post electoral system. Suppose the response categories offered to the respondents are "Conservative", "Labour", "Liberal Democrat", "Other party".[^1] A survey agency that actually conducts the interviews with a sample of voters may, according to common practice, use the following codes to collect the responses to the question about the vote intention:
+
+<div class="booktable">
+
+Response category     Code        
+-------------------- ----- ----- 
+Conservative            1      
+Labour                  2      
+Liberal Democrat        3      
+Other Party             4      
+Will not vote           9      
+Don't know             97   (M)
+Answer refused         98   (M)
+Not applicable         99   (M)
+
+</div>
+
+In data sets that contain the results of such coding are essentially numeric data -- with some additional information about the "value labels" (the labels attached to the numeric
+values) and about the "missing values" (those numeric values that indicate responses that one usually does not want to include into statistical analysis). While this coding frame for responses to survey questionnaires is far from uncommon in the social sciences, it is not straightforward to retain this information in *R* objects. Here there are two main alternatives, (1) one could store the responses as a numeric vector, thereby losing the information about the labelled values, or (2) one could store the responses as a factor, thereby losing the information contained in the codes. Either way, one will lose the information about the "missing values". Of course, one can filter out these missing values before 
+data analysis by replacing them with `NA`, but it would convenient to have facilities that do that automatically.
+
+[^1]: Those familiar with British politics will realise that this is a simplification of the menu of available choices that voters in England typically face in an election of the House of Commons.
+
+# Standard attributes of survey items
+
+The "memisc" package introduces a new data type (more correctly an `S4` class) that allows to handle such data, that allows to adjust labels or missing values definitions and to translate such data as needed either into numeric vectors 
+of factors, thereby automatically filtering out the missing values. This data time (or `S4` class) is, for lack of a better term, called `"item"`. In general, users do not bother with the construction of such item vectors. Usually they are  generated when data sets are imported from data files in SPSS or Stata format. This page is mainly concerned with describing the structure of such item vectors and how they can be manipulated in the data management step that usually precedes data analysis. It is thus possible to do all the data management in *R* from importing the pristine data obtained from data archives or other data providers, such as the survey institutes to which a principal investigator has delegated data collection. Of course, the facilities introduced by the `"item"` data type also allow to create appropriate representations of survey item responses if a principal investigator obtains only raw numeric codes. In the following, the construction of `"item"` vectors from raw numeric data is mainly used to highlight their structure.
+
+## Value labels {#value_labels}
+
+```{r,echo=FALSE}
+set.seed(20)
+vote.probs <- c(.361,.29,.23,1-.361-.29-.23)
+decis.probs <- c(vote.probs*.651,1-.651)
+all.probs <- c(.9*decis.probs,.1*rep(1/3,3))
+voteint <- sample(c(1:4,9,97,98,99),
+                  prob=all.probs,
+                  replace=TRUE,
+                  size=200)                
+library(memisc)
+```
+Suppose a numeric vector of responses to the question about their vote intention coded using
+the coding frame shown above looks as follows
+```{r}
+voteint
+```
+
+This numeric vector is transformed into an `"item"` vector by attaching labels to the codes. The *R* code to attach labels that reflect the coding frame shown above may look like follows (if formatted nicely):
+```{r}
+# This is to be run *after* memisc has been loaded.
+labels(voteint) <- c(Conservative       =  1,
+                     Labour             =  2,
+                     "Liberal Democrat" =  3, # We have whitespace in the label, 
+                     "Other Party"      =  4, # so we need quotation marks
+                     "Will not vote"    =  9,
+                     "Don't know"       = 97,
+                     "Answer refused"   = 98,
+                     "Not applicable"   = 99)
+```
+`voteint` is now an item vector, for which a particular `"show"` method is defined:
+```{r}
+class(voteint)
+str(voteint)
+voteint
+```
+Like with factors, if *R* shows the contents of the vector, the labels are shown (instead of the codes). Since item vectors typically are quite long, because they come from interviewing a survey sample and usual survey sample sizes are about 2000, we usually do not want to see all the values in the vector. `"memisc"` anticipates this and shows at most a single line of output. (In the output, also the "level of measurement" is shown, which at this point does not have a consquence. It will become clear later what the implications of the "level of measurement" are.)
+
+In line with the usual semantics `labels(voteint)` will now show us a description of the labels and to which values they are assigned:
+```{r}
+labels(voteint)
+```
+Now if we rather want shorter labels, we can change them either by something like `labels(voteint) <- ...` or by changing the labels using `relabel()`:
+```{r}
+voteint <- relabel(voteint,
+                   "Conservative"     = "Cons",
+                   "Labour"           = "Lab",
+                   "Liberal Democrat" = "LibDem",
+                   "Other Party"      = "Other",
+                   "Will not vote"    = "NoVote",
+                   "Don't know"       = "DK",
+                   "Answer refused"   = "Refused",
+                   "Not applicable"   = "N.a.")
+```
+Let us take a look at the result:
+```{r}
+labels(voteint)
+voteint
+str(voteint)
+```
+
+## Missing values {#missing_values}
+
+In the coding plan shown above, the values 97, 98, and 99 are marked as "missing values", that is, while they represent coded responses, they are not to be considered as valid in the sense of providing information about the respondent's vote intention. For the statistical analysis of vote intention it is natural to replace them by `NA`. Yet replacing codes 97, 98, and 99 already at the stage of importing data into *R* memory would mean a loss of potentially precious information since it precludes, e.g. the motivation to refuse responding to the vote intention question or the antencedents of undecidedness. Hence it is better to mark those values and to delay their replacement by `NA` to a later stage in the analysis of vote intentions and to be able to undo or change the "missingness" of these values. For example, not only may one be interested in the antecedents of response refusals but also be interested to analyse vote intention with non-voting excluded or included. The memisc package provides, like SPSS and PSPP, facilities to mark particular values of an item vector as "missing" and change such designations throughout the data preperation stage.
+
+There are several ways with `"memisc"` to make distinctions between valid and missing values. The first way that mirrors the way it is done in SPSS. To illustrate this we return to the fictitious vote intention example. The values 97,98,99 of `voteint` are designated as "missing" by
+```{r}
+missing.values(voteint) <- c(97,98,99)
+```
+The missing values are reflected in the output of `voteint`, (labels of) missing values are marked with `*` in the output:
+```{r}
+voteint
+```
+It is also possible to extend the set of missing values: We add another value to the set of missing values.
+```{r}
+missing.values(voteint) <- missing.values(voteint) + 9
+```
+The missing values can be recalled as usual:
+```{r}
+missing.values(voteint)
+```
+The missing values are turned into `NA` if `voteint` is coerced into a numeric vector or a factor, which is what usually happens before the eventual statistical analysis:
+```{r}
+as.numeric(voteint)[1:30]
+as.factor(voteint)[1:30]
+```
+It is also possible to drop all missing value designations:
+```{r}
+missing.values(voteint) <- NULL
+missing.values(voteint)
+as.numeric(voteint)[1:30]
+```
+In contrast to SPSS it is possible with `"memisc"` to designate the valid, i.e. non-missing values:
+```{r}
+valid.values(voteint) <- 1:4
+valid.values(voteint)
+missing.values(voteint)
+```
+Instead of individual valid or missing values it is also possible to define a *range* of values as valid:
+```{r}
+valid.range(voteint) <- c(1,9)
+missing.values(voteint)
+```
+
+## Other attributes of survey items {#annotations}
+Other software packages targeted at social scientists also allow to add annotations to the variables in a data set, which are not subject to the syntactic constraints of variable names. These annotations are usually called "variable labels" in these software packages. In `"memisc"` the corresponding term is "description". In continuation of the running example, we add a description to the vote intention variable:
+```{r}
+description(voteint) <- "Vote intention"
+description(voteint)
+```
+In contrast to other software, `"memisc"` allows to attach arbitrarily annotation to survey items, such as the wording of a survey question:
+```{r}
+wording(voteint) <- "Which party are you going to vote for in the general election next Tuesday?"
+wording(voteint)
+annotation(voteint)
+annotation(voteint)["wording"]
+```
+
+## Codebooks of survey items
+
+It is common in survey research to describe a data set in the form of a *codebook*. A codebook summarises each variable in the data set in terms of its relevant attributes, that is, the label attached to the variable (in the context of the `memisc` package this is called its "description"), the labels attached to the values of the variable, which values of the variable are supposed to be *missing* or *valid*, as well as univariate summary statistics of each variable, usually without and with missing variables included. Such functionality is provided in this package by the function `codebook()`. `codebook()` when applied to an `"item"` object returns a `"codebook"` object, which when printed to the console gives an overview of the variable usually required for the codebook of a data set (the production of codebooks for whole data sets is described further below). To illustrate the `codebook()` function we now produce a codebook of the `voteint` item variable created above:
+```{r}
+codebook(voteint)
+```
+As can be seen in the output, the `codebook()` function reports the name of the variable, the description (if defined for the variable), and the question wording (again if defined). Further it reports the storage mode (which is use by *R*), the level of measurement ("nominal", "ordinal", "interval", or "ratio") and the range of valid values (or alternatively, individually defined valid values, individually defined missing values, or ranges of missing values). For item variables with value labels, it shows a table of frequencies of the labelled values, and the percentages of valid values and all values with missings included. 
+
+Codebooks are particularly useful to find "wild codes", that is codes that are not labelled, and usually produced by coding errors. Such coding errors may be less common in data sets produced by CAPI or CATI or online surveys, but they may occur in older data sets from before the age of computer-assisted interviewing and also during the course of data management. This use of codebooks is demonstrated in the following by deliberatly adding some coding errors into a copy of our `voteint` variable:
+```{r}
+voteint1 <- voteint
+voteint1[sample(length(voteint),size=20)] <- c(rep(5,13),rep(7,7))
+```
+The presence of these "wild codes" can now be spotted using `codebook()`:
+```{r}
+codebook(voteint1)
+```
+The output shows that 20 observations contain wild codes in this variable. Why don't we get a list of wild codes as part of the codebook? The reason is that codebook is supposed also to work with continuous variables that have thousands of unique, unlabelled values. Users certainly will not like to see them all as part of a codebook. 
+
+In order to get a list of wild codes the development version of "memisc" contains the function `wild.codes()`, which we apply to the variable `voteint1`
+```{r}
+wild.codes(voteint1)
+```
+We see that 6.5 and 3.5 percent of the observations have the wild codes 5 and 7.
+
+
+To see how `codebook()` works with variables without value labels, we create an unlabelled copy of our `voteint` variable:
+```{r}
+voteint2 <- voteint
+labels(voteint2) <- NULL # This deletes all value labels
+codebook(voteint2)
+```
+Usually, variables without labelled values represent measures on an interval or ratio scale. In that case, we do not want to see how many unlabelled values there are, but we want to get some other statistics, such as mean, variance, etc. To this purpose, we decleare the variable `voteint2` to have an interval-scale level of measurement.[^2]
+```{r}
+measurement(voteint2) <- "interval"
+codebook(voteint2)
+```
+[^2]: Of course, substantially it does not make sense at all to form averages etc. of voting choices, so "do not try this at home". This example is merely to demonstrate codebooks and the setting of scale-levels.
+
+For convenience of including them into word-processor documents, there is also the possibility to export codebooks
+into HTML:
+```{r,results='asis'}
+show_html(codebook(voteint))
+```
+
+# Data sets: Containers of survey items
+
+Usually one expects to be able handle data on responses to survey items not in isolation, but as part of a data set,
+which contains a multitude of observations on many variables. The usual data structure in *R* to contain observation-on-variables
+data is the *data frame*. In principle it is possible to put survey item vectors as described above into a data frame, nevertheless
+the `"memisc"` package provides a special data structure to contain survey item data called data sets or data set-objects, that is, objects of class `"data.set"`. This opens up the possibility to automatically translate survey items into regular vectors
+and factors, as expected by typical data analysis functions, such as `lm()` or `glm()`.
+
+## The structure of `"data.set"` objects
+
+Data set objects have essentially the same row-by-column structure as data frames: 
+They are a set of vectors (however of class `"item"`)
+all with the same length, so that in each row of the data set there are values in these vectors.
+Observations can be addressed as rows of a `"data.set"` and variabels can be addressed as columns,
+just as one may used to with regards to data frames. Most data management operations that you
+can do with data frames can also be done with data sets (such as merging them or using the 
+functions `with()` or `within()`). Yet in contrast to data frames, data sets are always expected
+to contain objects of class `"item"`, and any vectors or factors from which a `"data.set"` object
+is constructed are changed into `"item"` objects. 
+
+Another difference is the way that `"data.set"` objects are shown on the console. As `S4` objects,
+if a user types in the name of a `"data.set"` objects, the function `show()` (and not `print()`) is
+applied to it. The `show()`-method for data set objects is defined in such a way that only the first few
+observations of the first few variables are shown on the console -- in contrast to `print()` as applied
+to a data frame, which shows *all* observations on *all* variables. While it may be intuitive and convenient
+to be shown all observations in a small data frame, this is not what you will want if your data set contains
+more than 2000 observations on several hundred variables, the dimensions that typical social science data
+sets have that you can download from data archives such as that of ICPSR or GESIS.
+
+The main facilitites of `"data.set"` objects are demonstrated in what follows.
+First, we create a data set with fictional survey responses
+```{r}
+Data <- data.set(
+          vote = sample(c(1,2,3,4,8,9,97,99),
+                        size=300,replace=TRUE),
+          region = sample(c(rep(1,3),rep(2,2),3,99),
+                          size=300,replace=TRUE),
+          income = exp(rnorm(300,sd=.7))*2000
+          )
+```
+Then, we take a look at this already sizeable `"data.set"`" object:
+```{r}
+Data
+```
+In this case, our data set has only three variables, all of which are shown, but of the observations we
+see only the first 25. Actually the number of observations shown can be determined by the option `"show.max.obs"` which defaults to 25, but can be changed as convenient:
+```{r}
+options(show.max.obs=5)
+Data
+# Back to the default
+options(show.max.obs=25)
+```
+If you *really* want to see the complete data on your console, then you can use `print()` instead:
+```{r,eval=FALSE}
+print(Data)
+```
+but you should not do this with large data sets, such as the Eurobarometer trend file ...
+
+## Manipulating data in data sets
+
+Typical data management tasks that you would otherwise have done in commercial packages like SPSS or
+Stata can be conducted within data set objects. Actually to provide this possibility (to the author
+of the package) was the main reason that the `"memisc"` package was created.
+To demonstrate this, we continue with our fictional data which we prepare for further analysis:
+```{r}
+Data <- within(Data,{
+  description(vote) <- "Vote intention"
+  description(region) <- "Region of residence"
+  description(income) <- "Household income"
+  wording(vote) <- "If a general election would take place next Tuesday,
+                    the candidate of which party would you vote for?"
+  wording(income) <- "All things taken into account, how much do all
+                    household members earn in sum?"
+  foreach(x=c(vote,region),{
+    measurement(x) <- "nominal"
+    })
+  measurement(income) <- "ratio"
+  labels(vote) <- c(
+                    Conservatives         =  1,
+                    Labour                =  2,
+                    "Liberal Democrats"   =  3,
+                    "Other"               =  4,
+                    "Don't know"          =  8,
+                    "Answer refused"      =  9,
+                    "Not applicable"      = 97,
+                    "Not asked in survey" = 99)
+  labels(region) <- c(
+                    England               =  1,
+                    Scotland              =  2,
+                    Wales                 =  3,
+                    "Not applicable"      = 97,
+                    "Not asked in survey" = 99)
+  foreach(x=c(vote,region,income),{
+    annotation(x)["Remark"] <- "This is not a real survey item, of course ..."
+    })
+  missing.values(vote) <- c(8,9,97,99)
+  missing.values(region) <- c(97,99)
+
+  # These to variables do not appear in the
+  # the resulting data set, since they have the wrong length.
+  junk1 <- 1:5
+  junk2 <- matrix(5,4,4)
+  
+})
+```
+Now that we have added information to the data set that reflects the code plan of 
+the variables, we take a look how the it looks like:
+```{r}
+Data
+```
+As you can see, labelled item look a bit like factors, but with a difference: User-defined missing values
+are marked with an asterisk.
+
+Subsetting a data set object works as expected:
+```{r}
+EnglandData <- subset(Data,region == "England")
+EnglandData
+```
+
+
+## Codebooks of data sets {#codebooks}
+
+Previouly, we created a code book for individual survey items. But it is also possible to create a codebook for a whole
+data set (what one usually wants to have a codebook of). Obtaining a codebook is simple, by applying the function `codebook()`
+to the data frame:
+```{r}
+codebook(Data)
+```
+On a website, it looks better in HTML:
+```{r,results='asis'}
+show_html(codebook(Data))
+```
+
+## Translating data sets into data frames
+
+The punchline of the existence of `"data.set"` objects however
+is that they can be coerced into regular data frames, using `as.data.frame()`, which causes
+survey items to be translated into regular numeric vectors or factors
+using `as.numeric()`, `as.factor()` or `as.ordered()` as above, and pre-determined missing values
+changed into `NA`. Whether a survey item is changed into a numerical vector, an unordered or an 
+ordered factor depends on the declared measurement level (which can be manipulated by
+`measurement()` as shown above).
+
+In the example developed so far, the variables `vote` and `region` are declared to have a nominal level
+of measurement, while `income` is declared to have a ratio scale. That is, in statistical analyses,
+we want the first two variables to be handled as (unordered) factors, and the income variable as a numerical
+vector. In addition, we want all the user-declared missing values to be changed into `NA` so that observations
+where respondents stated to "don't know" what they are goint go vote for are excluded from the analysis. So let's see 
+whether this works - we coerce our data set into a data frame:
+```{r}
+DataFr <- as.data.frame(Data)
+## Looking a the data frame structure
+str(DataFr)
+## Looking at the first 25 observations
+DataFr[1:25,]
+```
+Indeed the translation works as expected, so we can use it for statistical analysis, here a simple
+cross tab:
+```{r}
+xtabs(~vote+region,data=DataFr)
+```
+In fact, since many functions such as `xtabs()`, `lm()`, `glm()`, etc. coerce theire `data=` argument into
+a data frame, an explicit coercion with `as.data.frame()` is not always needed:
+```{r}
+xtabs(~vote+region,data=Data)
+```
+Sometimes we do want missing values to be included, and this is possible too:
+```{r}
+xtabs(~vote+region,data=within(Data, 
+                               vote <- include.missings(vote)))
+```
+
+For convenience, there is also a codebook method for data frames:
+```{r,results='asis'}
+show_html(codebook(DataFr))
+```
+
+# More tools for data preparation
+
+When social scientists work with survey data, these are not always organised and coded in a way that 
+suits the intended data analysis. For this reasons, the `"memisc"` package provides the two functions
+`recode()` and `cases()`. The former is -- as the name suggests -- for recoding, while the second allows
+for complex distinctions of cases and can be seen as a more general version of `ifelse()`. These two
+functions are demonstrated with a "real-life" example.
+
+## Recoding {#recode}
+
+The function `recode()` is similar in semantics to the function of the same name in 
+package [`"car"`][CAR] and designed in such a way that it does not conflict with this function.
+In fact, if `recode()` is called in the way as expected in package `"car"`, it will dispatch processing
+to this function. In other words, users of this other package may use `recode()` as they are used to.
+The version of the `recode()` function provided by `"memisc"` differs from the `"car"` version in so far
+as its syntax is more R-ish (or so I believe).
+
+[CAR]: http://cran.r-project.org/web/packages/car/index.html
+
+Here we load an example data set -- a subset of the German Longitudinal Election Study for 2013[^3] -- into
+R's memory.
+```{r}
+load("gles2013work.RData")
+```
+As a simple example for the use of `recode()` we use this function to recode German Bundesländer into
+an item with two values or East and West Germany. But first we create a codebook for the variable that
+contains the Bundesländer codes:
+```{r,results='asis'}
+with(gles2013work,
+     show_html(codebook(bula)))
+```
+We now recode the Bundesländer codes into a new variable:
+```{r}
+gles2013work <- within(gles2013work,
+                       east.west <- recode(bula,
+                                          East = 1 <- c(3,4,8,13,14,16),
+                                          West = 2 <- c(1,2,5:7,9:12,15)
+                                          ))
+```
+and check whether this was successful:
+```{r}
+xtabs(~bula+east.west,data=gles2013work)
+```
+as can be seen, `recode()` was called in such a way that not only old
+codes are transferred into new ones, but also the new codes are labelled.
+
+
+[^3]: The [German Longitudinal Election Study](http://gles.eu) is funded by the German National Science Foundation (DFG)
+and carried out outin close cooperation with the [DGfW](http://www.dgfw.info/), German Society for Electoral Studies.
+Principal investigators are Hans Rattinger (University of Mannheim, till 2014), Sigrid Roßteutscher (University of Frankfurt), Rüdiger Schmitt-Beck (University of Mannheim), Harald Schoen (Mannheim Centre for European Social Research, since 2015), Bernhard Weßels (Social Science Research Center Berlin), and Christof Wolf (GESIS – Leibniz Institute for the Social Sciences, since 2012). Neither the funding organisation nor the principal investigators bear any responsibility for the example code 
+shown here
+
+## Distinctions of cases
+
+Recoding can be used to combine the codes of an item into a smaller set, but sometimes one needs to do more
+complex data preparations, in which the values of some variable are set conditional on values of another one, etc.
+For such tasks, the `"memisc"` package provides the function `cases()`. This function takes several expressions
+that evaluate to logical vectors as arguments and returns a numeric vector or a factor, the values or level of which indicate for each observation which of the expressions evaluates to `TRUE` the respective observation. The factor levels are named after the logical expressions. A simple example looks thus:
+```{r}
+x <- 1:10
+xc <- cases(x <= 3, 
+            x > 3 & x <= 7, 
+            x > 7)
+data.frame(x,xc)
+```
+In this example `cases()` returns a factor. It can also be made to return a numeric value:
+```{r}
+xn <- cases(1 <- x <= 3, 
+            2 <- x > 3 & x <= 7, 
+            3 <- x > 7)
+data.frame(x,xn)
+```
+This example shows the way `cases()` works in the abstract. How this can be made used of in practical example is best
+demonstrated by a real-world example, again using data from the German Longitudinal Election Study.
+
+In the 2013 election module, the intention to vote during the pre-election of respondents interviewed in the pre-election
+wave (`wave==1`) and the participation in the election of respondents interviewed in the post-election wave
+(`wave==2`) are recorded in
+different data set variables, named here `intent.turnout` and `turnout`. 
+The variable `intent.voteint` has codes for whether the respondents were sure to participate (1),
+were likely to participate (2), were undecided (3), likely not to (4), sure not to participate (5), 
+or whether they have cast a postal vote (6). Variable `turnout` has codes for those who participated
+in the election (1) or did not (2).
+
+The intention for the candidate vote is recorded in variable `voteint.candidate` and the 
+intention for the list vote is recoded in variable `voteint.list` for the pre-election wave.
+A postal vote for party candidate is recorded in variable `postal.vote.candidate`
+and for a party list is in variable `postal.vote.list`. Recalled votes in the post-election
+wave are recorded in variables `vote.candidate` and `vote.list`. 
+
+These various variables
+are combined into two variables that has valid values for both waves, `candidate.vote` and
+`list.vote`. For this, several conditions have to be handled: whether a respondent is in 
+the pre-election or the post-election wave, whether s/he is not likely or sure not to vote, or
+whether she has cast a postal vote. Thus the variable `cases()` is helpful here:
+```{r}
+gles2013work <- within(gles2013work,{
+
+  candidate.vote <- cases(
+              wave == 1 & intent.turnout == 6 -> postal.vote.candidate,
+              wave == 1 & intent.turnout %in% 4:5 -> 900,
+              wave == 1 & intent.turnout %in% 1:3 -> voteint.candidate,
+              wave == 2 & turnout == 1 -> vote.candidate,
+              wave == 2 & turnout == 2 -> 900
+            )
+
+  list.vote <- cases(
+              wave == 1 & intent.turnout == 6 -> postal.vote.list,
+              wave == 1 & intent.turnout %in% 4:5 -> 900,
+              wave == 1 & intent.turnout %in% 1:3 -> voteint.list,
+              wave == 2 & turnout ==1 -> vote.list,
+              wave == 2 & turnout ==2 -> 900
+            )
+})
+```
+The code shown above does the following: In the pre-election wave (`wave == 1`),
+the `candidate.vote` variable receives the value of the postal vote variable `postal.vote.candidate`
+if a postal vote was cast (`intent.turnout == 6`),
+it receives the value `900` for those respondents who where likely or sure not to vote 
+(`intent.turnout %in% 4:5`),
+and the value of the variable `voteint.candidate` for all others (`intent.turnout %in% 1:3`).
+In the post-election wave (`wave == 2`) variable `candidate.vote` receives the value of
+variable `vote.candidate` if the respondent has voted (`turnout == 1`) or the value `900`
+if s/he has not voted (`turnout == 2`).
+The variable `list.vote` is constructed in an analogous manner from the variables
+`wave`, `intent.turnout`, `turnout`, `postal.vote.list`, `voteint.list` and `vote.list`.
+After the constructin, the resulting variables `candidate.vote` and `list.vote` are labelled
+and missing values are declared:
+```{r}
+gles2013work <- within(gles2013work,{
+  candidate.vote <- recode(as.item(candidate.vote),
+                      "CDU/CSU"   =  1 <- 1,
+                      "SPD"       =  2 <- 4,
+                      "FDP"       =  3 <- 5,
+                      "Grüne"     =  4 <- 6,
+                      "Linke"     =  5 <- 7,
+                      "NPD"       =  6 <- 206,
+                      "Piraten"   =  7 <- 215,
+                      "AfD"       =  8 <- 322,
+                      "Other"     = 10 <- 801,
+                      "No Vote"   = 90 <- 900,
+                      "WN"        = 98 <- -98,
+                      "KA"        = 99 <- -99
+                  )
+  list.vote <- recode(as.item(list.vote),
+                      "CDU/CSU"   =  1 <- 1,
+                      "SPD"       =  2 <- 4,
+                      "FDP"       =  3 <- 5,
+                      "Grüne"     =  4 <- 6,
+                      "Linke"     =  5 <- 7,
+                      "NPD"       =  6 <- 206,
+                      "Piraten"   =  7 <- 215,
+                      "AfD"       =  8 <- 322,
+                      "Other"     = 10 <- 801,
+                      "No Vote"   = 90 <- 900,
+                      "WN"        = 98 <- -98,
+                      "KA"        = 99 <- -99
+                  )
+  
+   missing.values(candidate.vote) <- 98:99
+   missing.values(list.vote) <- 98:99
+   measurement(candidate.vote) <- "nominal"
+   measurement(list.vote) <- "nominal"
+})
+```
+
+Finally, we can get a cross-tabulation of list votes and the East-West factor and
+a cross tabulation of candidate votes against list votes:
+```{r,width=120}
+xtabs(~list.vote+east.west,data=gles2013work)
+xtabs(~list.vote+candidate.vote,data=gles2013work)
+```
+
