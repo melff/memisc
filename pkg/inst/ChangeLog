@@ -1,3 +1,10 @@
+2015-07-15:
+  - New `options=` argument to `mtable`, that allows to pass optional
+    arguments to getSummary.
+
+2015-07-14:
+  - Added vignette about survey items (objects of class "item")
+
 2015-07-13: 
   - Add basic documentation for 'summaryTemplate' generic function.
   - Add documentation for 'dsView'.

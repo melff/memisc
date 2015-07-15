@@ -17,7 +17,8 @@ mtable(\dots,coef.style=getOption("coef.style"),
     getSummary=eval.parent(quote(getSummary)),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
-    sdigits=min(1,digits)
+    sdigits=min(1,digits),
+    options=NULL
   )
 \method{relabel}{mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
 
@@ -61,6 +62,8 @@ write.mtable(object,file="",\dots)
         \code{\link{getSummaryTemplate}}
         }
      \item{sdigits}{integer; number of digits after decimal dot for summary statistics.}
+     \item{options}{an optional list of arguments passed on to
+           \code{getSummary}}
      \item{x, object}{an object of class \code{mtable}}
      \item{gsub, warn, fixed}{logical values, see \code{\link{relabel}}}
      \item{target}{a character string which indicates the target format.

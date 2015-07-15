@@ -311,7 +311,8 @@ mtable <- function(...,
                     getSummary=eval.parent(quote(getSummary)),
                     float.style=getOption("float.style"),
                     digits=min(3,getOption("digits")),
-                    sdigits=min(1,digits)
+                    sdigits=min(1,digits),
+                    options=NULL
                     ){
   args <- list(...)
   if(length(args)==1 && inherits(args[[1]],"by"))
@@ -325,7 +326,19 @@ mtable <- function(...,
 
   arg.classes <- lapply(args,class)
   if(any(sapply(arg.classes,length))==0) stop("don\'t know how to handle these arguments")
-  summaries <- lapply(args,getSummary)
+  
+  if(length(options)){
+    summaries.call <- as.call(
+      c(list(as.name("lapply"),
+             as.name("args"),
+             FUN=as.name("getSummary")),
+        options
+      ))
+    summaries <- eval(summaries.call)
+  }
+  else
+    summaries <- lapply(args,getSummary)
+  
   calls <- lapply(summaries,function(x)x$call)
   names(calls) <- argnames
 
