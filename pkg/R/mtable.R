@@ -482,21 +482,6 @@ write.mtable <- function(object,file="",...){
 }
 
 
-
-drop.mtable <- function(x,...){
-  cdims <- dim(x$coefficients)
-  ckeep <- cdims > 1
-  x$coefficients <- drop(x$coefficients)
-
-  newdims <- rep(NA,length(cdims))
-  newdims[ckeep] <- seq(length(which(ckeep)))
-  as.col <- newdims[x$as.col]
-  as.row <- newdims[x$as.row]
-  x$as.col <- as.col[is.finite(as.col)]
-  x$as.row <- as.row[is.finite(as.row)]
-  x
-}
-
 relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
  relabelTab <- function(tab){
   n.dims <- length(dim(tab))

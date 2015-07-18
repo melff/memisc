@@ -1,6 +1,8 @@
 2015-07-18:
   - New `signif.symbols` argument to `mtable`, that allows to change
     the "level of significance symbols"
+  - Implemented `[` operator for `mtable` results as well as
+    the `c` (concatenation) operator.
 
 2015-07-15:
   - New `gs.options=` argument to `mtable`, that allows to pass optional

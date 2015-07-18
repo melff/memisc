@@ -5,6 +5,10 @@
 \alias{print.mtable}
 \alias{write.mtable}
 \alias{toLatex.mtable}
+\alias{dim.mtable}
+\alias{dimnames.mtable}
+\alias{[.mtable}
+\alias{c.mtable}
 
 \title{Comparative Table of Model Estimates}
 \description{
@@ -102,6 +106,8 @@ write.mtable(object,file="",\dots)
 
 }
 \examples{
+#### Basic workflow
+
 lm0 <- lm(sr ~ pop15 + pop75,              data = LifeCycleSavings)
 lm1 <- lm(sr ~                 dpi + ddpi, data = LifeCycleSavings)
 lm2 <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
@@ -132,6 +138,8 @@ file.show(file123)
 \dontrun{texfile123 <- "mtable123.tex"
 write.mtable(mtable123,forLaTeX=TRUE,file=texfile123)
 file.show(texfile123)}
+
+#### Examples with UC Berkeley data
 
 berkeley <- Aggregate(Table(Admit,Freq)~.,data=UCBAdmissions)
 
@@ -188,5 +196,19 @@ berkfull <- glm(cbind(Admitted,Rejected)~Dept/Gender - 1,
                       data=berkeley,family="binomial")
 relabel(mtable(berkfull),Dept="Department",gsub=TRUE)
 
+#### Array-like semantics
+
+mtable123 <- mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2,
+    summary.stats=c("sigma","R-squared","F","p","N"))
+
+dim(mtable123)
+dimnames(mtable123)
+mtable123[c("dpi","ddpi"),
+          c("Model 2","Model 3")]
+
+#### Concatention
+mt01 <- mtable(lm0,lm1,summary.stats=c("R-squared","N"))
+mt12 <- mtable(lm1,lm2,summary.stats=c("R-squared","F","N"))
+c(mt01,mt12) # not that this makes sense, but ...
 }
 \keyword{misc}

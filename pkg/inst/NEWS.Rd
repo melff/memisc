@@ -34,6 +34,8 @@
       One can now use a \code{summaryTemplate}
       generic function for formatting model summaries, in addition to set the template by
       \code{setSummaryTemplate}.  
+      Finally, parts of "mtables" can be extracted using the \code{[} operator as
+      with matrices, and "mtables" can now also be concatenated.
       
       \item There is now an object class for survey items containing dates, called
       \code{"datetime.item"}

@@ -66,3 +66,15 @@ coefxpand <- function(x,names){
   do.call("[<-",call.arg)
 }
 
+smryxpand <- function(x,names){
+  d <- dx <- dim(x)
+  dd <- ddx <- dimnames(x)
+  d[1] <- length(names)
+  dd[[1]] <- names
+  
+  res <- array("",dim=d,dimnames=dd)
+  call.arg <- list(res)
+  call.arg <- c(call.arg,ddx)
+  call.arg <- c(call.arg,list(value=as.vector(x)))
+  do.call("[<-",call.arg)
+}
