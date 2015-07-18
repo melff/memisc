@@ -307,12 +307,13 @@ bind_arrays <- function(args,along=1){
 mtable <- function(...,
                     coef.style=getOption("coef.style"),
                     summary.stats=TRUE,
+                    signif.symbols=getOption("signif.symbols"),
                     factor.style=getOption("factor.style"),
                     getSummary=eval.parent(quote(getSummary)),
                     float.style=getOption("float.style"),
                     digits=min(3,getOption("digits")),
                     sdigits=min(1,digits),
-                    options=NULL
+                    gs.options=NULL
                     ){
   args <- list(...)
   if(length(args)==1 && inherits(args[[1]],"by"))
@@ -332,7 +333,7 @@ mtable <- function(...,
       c(list(as.name("lapply"),
              as.name("args"),
              FUN=as.name("getSummary")),
-        options
+        gs.options
       ))
     summaries <- eval(summaries.call)
   }
@@ -354,8 +355,11 @@ mtable <- function(...,
                         xlevels=xlevels,
                         factor.style=factor.style)
         adims <- if(length(dim(coef))==2) 1 else c(1,3)
-        ans <- apply(coef,adims,function(x)applyTemplate(x,
-            template=ctemplate,float.style=float.style,digits=digits))
+        ans <- apply(coef,adims,applyTemplate,
+                                template=ctemplate,
+                                float.style=float.style,
+                                digits=digits,
+                                signif.symbols=signif.symbols)
         if(length(dim(ctemplate))){
           newdims <- c(dim(ctemplate),dim(ans)[-1])
           newdimnames <- c(dimnames(ctemplate),dimnames(ans)[-1])
@@ -393,7 +397,9 @@ mtable <- function(...,
     sumstats <- lapply(seq(n.args),function(i){
           sumstat <- summaries[[i]]$sumstat
           stemplate <- stemplates[[i]]
-          sumstat <- drop(applyTemplate(sumstat,template=stemplate,digits=sdigits))
+          sumstat <- drop(applyTemplate(sumstat,
+                                        template=stemplate,
+                                        digits=sdigits))
           sumstat[nzchar(sumstat)]
         })
     sumstats <- clct.vectors(sumstats)

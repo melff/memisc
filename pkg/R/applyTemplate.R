@@ -88,10 +88,18 @@ formatOne <- function(x,spec,format="f",
   return(formatC(x,digits=digits,format=format,width=-1))
 }
 
-formatVec <- function(x,formats,default="f",digits=min(3,getOption("digits"))){
+formatVec <- function(x,formats,
+                      default="f",
+                      digits=min(3,getOption("digits")),
+                      signif.symbols=getOption("signif.symbols")){
   i <- 1:length(formats)
+  
   res <- sapply(i,function(i) if(length(formats[[i]]))
-      sapply(formats[[i]],function(format)formatOne(x,spec=format,format=default,digits=digits))
+    sapply(formats[[i]],formatOne,
+           x=x,
+           format=default,
+           digits=digits,
+           signif.symbols = signif.symbols)
       else NULL
       )
 }
@@ -125,7 +133,10 @@ applyTemplate <- function(x,template,float.style=getOption("float.style"),
       targets <- get.substr(patterns[i],template)
       positions <- attr(targets,"positions")
       formats <- lapply(targets,get.format)
-      formatted <- formatVec(x[i],formats,default=float.style,digits=digits)
+      formatted <- formatVec(x[i],formats,
+                             default=float.style,
+                             digits=digits,
+                             signif.symbols=signif.symbols)
       for(j in 1:length(template)){
         if(length(targets[[j]])){
           targets.j <- targets[[j]]
@@ -140,7 +151,11 @@ applyTemplate <- function(x,template,float.style=getOption("float.style"),
           targets <- get.substr(npatterns[n],template)
           positions <- attr(targets,"positions")
           formats <- lapply(targets,get.format)
-          formatted <- formatVec(x[n],formats,default=float.style,digits=digits)
+          formatted <- formatVec(x[n],
+                                 formats,
+                                 default=float.style,
+                                 digits=digits,
+                                 signif.symbols=signif.symbols)
           for(j in 1:length(template)){
             if(length(targets[[j]])){
               targets.j <- targets[[j]]

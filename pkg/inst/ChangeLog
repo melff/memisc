@@ -1,5 +1,9 @@
+2015-07-18:
+  - New `signif.symbols` argument to `mtable`, that allows to change
+    the "level of significance symbols"
+
 2015-07-15:
-  - New `options=` argument to `mtable`, that allows to pass optional
+  - New `gs.options=` argument to `mtable`, that allows to pass optional
     arguments to getSummary.
 
 2015-07-14:

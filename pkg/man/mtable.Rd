@@ -13,12 +13,13 @@
 \usage{
 mtable(\dots,coef.style=getOption("coef.style"),
     summary.stats=TRUE,
+    signif.symbols=getOption("signif.symbols"),
     factor.style=getOption("factor.style"),
     getSummary=eval.parent(quote(getSummary)),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
     sdigits=min(1,digits),
-    options=NULL
+    gs.options=NULL
   )
 \method{relabel}{mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
 
@@ -50,6 +51,10 @@ write.mtable(object,file="",\dots)
         produced by \code{getSummary} are reported.
         This argument may also contain a character vector with
         the names of the summary statistics to report}
+     \item{signif.symbols}{a named numeric vector to specify
+          the "significance levels" and corresponding symbols. 
+          The numeric elements define the significance levels,
+          the attached names define the associated symbols.}
      \item{factor.style}{a character string that specifies the style in
         which factor contrasts are labled. See \code{\link{factor.style}}.}
      \item{getSummary}{a function that computes model-related statistics that
@@ -62,7 +67,7 @@ write.mtable(object,file="",\dots)
         \code{\link{getSummaryTemplate}}
         }
      \item{sdigits}{integer; number of digits after decimal dot for summary statistics.}
-     \item{options}{an optional list of arguments passed on to
+     \item{gs.options}{an optional list of arguments passed on to
            \code{getSummary}}
      \item{x, object}{an object of class \code{mtable}}
      \item{gsub, warn, fixed}{logical values, see \code{\link{relabel}}}
