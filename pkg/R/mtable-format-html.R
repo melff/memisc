@@ -56,7 +56,7 @@ mtable_format_html <- function(x,
       neq <- ncol(coef.tab)/3
       dim(coef.tab) <- c(nrow(coef.tab),3,neq)
       coef.tab <- apply(coef.tab,c(1,3),paste0,collapse="")
-      coef.tab[] <- gsub("([*]+?)","<span class=\"signif.symbol\">\\1</span>",coef.tab[])
+      coef.tab[] <- gsub("([*]+)","<span class=\"signif.symbol\">\\1</span>",coef.tab[])
       
       
       if(max.coef.ldim>3){

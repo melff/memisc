@@ -1,3 +1,7 @@
+2015-07-20:
+  - Eliminate buglino that causes knitr to gobble up stars (not those in the sky, 
+    but those used to indicate levels of statistical significance)
+
 2015-07-18:
   - New `signif.symbols` argument to `mtable`, that allows to change
     the "level of significance symbols"
