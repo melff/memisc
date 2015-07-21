@@ -65,6 +65,9 @@
   \subsection{USER-VISIBLE CHANGES}{
    \itemize{
      \item Argument \code{drop} no longer used by function \code{mtable}.
+     \item Format of file produced by \code{write.mtable} can now be
+     specified using a \code{format=} argument. But \code{forLaTeX=TRUE}
+     still can be used to get LaTeX files.
    }
   }
   \subsection{DEFUNCT}{

@@ -473,10 +473,17 @@ toLatex.mtable <- function(object,...){
 }
 
 
-write.mtable <- function(object,file="",...){
+write.mtable <- function(object,file="",
+                         format=c("delim","LaTeX","HTML"),
+                         ...){
   l <- list(...)
-  f <- format.mtable(object,target="delim",...)
-  if(isTRUE(l[["forLaTeX"]]))
+  if(isTRUE(l[["forLaTeX"]])) # Avoid breaking old code
+    target <- "LaTeX"
+  else
+    target <- match.arg(format)
+    
+  f <- format.mtable(object,target=target,...)
+  if(format %in% c("LaTeX","HTML"))
     f <- paste(f,"\n",sep="")
   cat(f,file=file,sep="")
 }

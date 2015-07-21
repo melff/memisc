@@ -1,3 +1,6 @@
+2015-07-21:
+  - Make `write.mtable` more coherent.
+
 2015-07-20:
   - Eliminate buglino that causes knitr to gobble up stars (not those in the sky, 
     but those used to indicate levels of statistical significance)

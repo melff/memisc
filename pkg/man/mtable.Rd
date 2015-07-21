@@ -35,7 +35,8 @@ mtable(\dots,coef.style=getOption("coef.style"),
     center.at=getOption("OutDec"),
     topsep="=",bottomsep="=",sectionsep="-",\dots)
 
-write.mtable(object,file="",\dots)
+write.mtable(object,file="",
+             format=c("delim","LaTeX","HTML"),\dots)
 
 \method{toLatex}{mtable}(object,...)
 }
@@ -91,7 +92,8 @@ write.mtable(object,file="",\dots)
      \item{bottomsep}{a character string that is recycled to a bottom rule.}
      \item{sectionsep}{a character string that is recycled to seperate coefficients
         from summary statistics.}
-     \item{file}{a file where to write to; defaults to console output.}
+     \item{file}{name of the file where to write to; defaults to console output.}
+     \item{format}{character string that specifies the desired format.}
 }
 \details{
   \code{mtable} constructs a table of estimates for regression-type models.
@@ -99,11 +101,13 @@ write.mtable(object,file="",\dots)
   such as \code{print.mtable}, \code{toLatex.mtable}, or \code{write.mtable}.
 }
 \value{
-    A call to \code{mtable} results in an object that inherits from \code{mtable}
+    A call to \code{mtable} results in an object of class \code{"mtable"}
     with the following components:
 
-    \item{coefficients}{an array that contains the model coefficients.}
-    \item{summaries}{a matrix that contains the model summaries.}
+    \item{coefficients}{a list that contains the model coefficients,}
+    \item{summaries}{a matrix that contains the model summaries,}
+    \item{calls}{a list of calls that created the model estimates
+          being summarised.}
 
 }
 \examples{
@@ -137,7 +141,7 @@ file.show(file123)
 }
 \dontshow{toLatex(mtable123)}
 \dontrun{texfile123 <- "mtable123.tex"
-write.mtable(mtable123,forLaTeX=TRUE,file=texfile123)
+write.mtable(mtable123,format="LaTeX",file=texfile123)
 file.show(texfile123)}
 
 #### Examples with UC Berkeley data
