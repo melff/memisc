@@ -66,8 +66,7 @@ write.mtable(object,file="",
      \item{getSummary}{a function that computes model-related statistics that
         appear in the table. See \code{\link{getSummary}}.}
      \item{float.style}{default format for floating point numbers if
-        no format is specified by \code{coef.style}; see \code{{float.style}}.
-        }
+        no format is specified by \code{coef.style}}.
      \item{digits}{number of significant digits if not specified by
         the template returned from \code{\link{getCoefTemplate}}
         \code{\link{getSummaryTemplate}}
