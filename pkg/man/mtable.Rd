@@ -36,6 +36,7 @@ mtable(\dots,coef.style=getOption("coef.style"),
     topsep="=",bottomsep="=",sectionsep="-",\dots)
 
 write.mtable(object,file="",\dots)
+
 \method{toLatex}{mtable}(object,...)
 }
 \arguments{
