@@ -424,12 +424,6 @@ mtable <- function(...,
     class="mtable")
 }
 
-
-
-
-
-
-
 format.mtable <- function(x,
                           target=c("print","LaTeX","HTML","delim"),
                           ...){
@@ -441,14 +435,6 @@ format.mtable <- function(x,
          delim=mtable_format_delim(x,...)
          )
 }
-
-
-
-
-
-
-
-
 
 print.mtable <- function(x,center.at=getOption("OutDec"),
       topsep="=",bottomsep="=",sectionsep="-",...){
@@ -472,7 +458,6 @@ toLatex.mtable <- function(object,...){
   class="Latex")
 }
 
-
 write.mtable <- function(object,file="",
                          format=c("delim","LaTeX","HTML"),
                          ...){
@@ -483,7 +468,7 @@ write.mtable <- function(object,file="",
     target <- match.arg(format)
     
   f <- format.mtable(object,target=target,...)
-  if(format %in% c("LaTeX","HTML"))
+  if(target %in% c("LaTeX","HTML"))
     f <- paste(f,"\n",sep="")
   cat(f,file=file,sep="")
 }
