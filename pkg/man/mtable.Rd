@@ -19,6 +19,8 @@ mtable(\dots,coef.style=getOption("coef.style"),
     summary.stats=TRUE,
     signif.symbols=getOption("signif.symbols"),
     factor.style=getOption("factor.style"),
+    show.baselevel=getOption("show.baselevel"),
+    baselevel.sep=getOption("baselevel.sep"),
     getSummary=eval.parent(quote(getSummary)),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
@@ -63,6 +65,10 @@ write.mtable(object,file="",
           the attached names define the associated symbols.}
      \item{factor.style}{a character string that specifies the style in
         which factor contrasts are labled. See \code{\link{factor.style}}.}
+     \item{show.baselevel}{logical; determines whether base levels of factors are indicated
+      for dummy coefficients}
+     \item{baselevel.sep}{character that is used to separate the base level from the 
+           level that a dummy variable represents}
      \item{getSummary}{a function that computes model-related statistics that
         appear in the table. See \code{\link{getSummary}}.}
      \item{float.style}{default format for floating point numbers if

@@ -1,3 +1,6 @@
+2015-08-03:
+  - Allow specification of `show.baselevel=`, and `baselevel.sep=` as arguments of `mtable()`
+
 2015-07-21:
   - Make `write.mtable` more coherent.
 
