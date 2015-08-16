@@ -266,7 +266,7 @@ spss.parse1.missing.values <- function(text){
   
   varnames <- character(0)
   text <- sub("^\\s*","",text)
-  text <- sub("^/\\s*","",text)
+  text <- sub("^[/;,]\\s*","",text)
   
   repeat {
     vn.pos <- regexpr("^[A-Za-z][A-Za-z0-9_]*",text)
@@ -276,6 +276,7 @@ spss.parse1.missing.values <- function(text){
     varnames <- c(varnames,vn)
     text <- substring(text,first=vn.length+1,last=nchar(text))
     text <- trimws(text,right=FALSE)
+    text <- gsub("^[;,][ \t\n\r]*","",text)
   }
 }
 
@@ -294,7 +295,7 @@ spss.parse1.missing.values <- function(text){
   labs <- character(0)
   repeat{
     text <- trimws(text,right=FALSE)
-    if(grepl("^[/|.]",text)) return(structure(
+    if(grepl("^[/|.|;]",text)) return(structure(
       list(values=vals,labels=labs),
       remainder=text))
     
