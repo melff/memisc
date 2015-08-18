@@ -88,10 +88,10 @@ get.dictionary.dta <- function(bf){
     ext.short <- FALSE
     conv.types <- FALSE
   }
-  else if(version==114){ ## Newer
-    version.string <- "Stata 9 or newer"
+  else if(version %in% c(114,115)){ ## Newer
+    version.string <- if(version==114) "Stata 9" else "Stata 10"
     len.varn <- 32
-    len.fmt <- 45
+    len.fmt <- 48
     len.lbl <- 32
     len.varlab <- 80
     ext.short <- FALSE
