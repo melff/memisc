@@ -1,3 +1,9 @@
+2015-08-18:
+  - Fix bug that presented Stata 9-10 files to be successfully imported.
+
+2015-08-16: 
+  - Fix that allows to import ANES 2008 data with the provided buggy SPSS script files.
+
 2015-08-03:
   - Allow specification of `show.baselevel=`, and `baselevel.sep=` as arguments of `mtable()`
 

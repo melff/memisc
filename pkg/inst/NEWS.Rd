@@ -60,6 +60,8 @@
       \item \code{applyTemplate} now returns empty strings for undefined quantities.
       \item \code{collect} method for \code{data.sets} now works as expected.
       \item \code{spss.fixed.file} now checks whether there are undefined variables in \code{varlab.file} etc.
+      
+      \item \code{Stata.file} now can import Stata 9 and Stata 10 files.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{
