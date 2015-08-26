@@ -1,3 +1,6 @@
+2015-08-26:
+  - Added `percentages` function to easily create tables of percentages.
+
 2015-08-18:
   - Fix bug that presented Stata 9-10 files to be successfully imported.
 

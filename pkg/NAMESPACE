@@ -115,7 +115,8 @@ export(
       write_html,
       format_html,
       dsView,
-      summaryTemplate
+      summaryTemplate,
+      percentages
       )
 S3method(getSummary,aftreg)
 S3method(getSummary,betareg)
@@ -290,3 +291,8 @@ S3method(unique,datetime.item)
 
 S3method(toLatex,data.frame)
 S3method(toLatex,data.set)
+
+S3method(percentages,table)
+S3method(percentages,formula)
+S3method(as.data.frame,percentage.table)
+S3method(as.data.frame,xpercentage.table)

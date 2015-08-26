@@ -3,7 +3,7 @@
   - html with centering on decimal commas/dots (DONE)
   - markdown
   
-- Copy 'percentages.R' from research project to R package and document it
+- Copy 'percentages.R' from research project to R package and document it (DONE)
 - Copy ftable-matrix stuff from old devel branch 'mtables'
 - Make Iconv being called from importer functions automatically
 - Copy graphics stuff from recent research projects (confidence bands etc.)

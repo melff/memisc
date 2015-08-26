@@ -46,6 +46,8 @@
       \item \code{codebook} now supports data frames, factors, and numeric vectors.
       
       \item A \code{toLatex} method exists now for \code{data.set} objects.
+      
+      \item A new \code{percentages} function is added to allow easy creation of tables of percentages.
     }
   }
   \subsection{BUGFIXES}{
