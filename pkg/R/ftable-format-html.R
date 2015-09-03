@@ -155,7 +155,7 @@ format_html.ftable <- function(x,
   header <- sapply(header,paste0,collapse="")
   header <- mk_tr(header)
 
-  ans <- c("<table class=\"mtable\" style=\"border-collapse: collapse;\">",
+  ans <- c("<table class=\"ftable\" style=\"border-collapse: collapse;\">",
            header,
            body,
            "</table>")
