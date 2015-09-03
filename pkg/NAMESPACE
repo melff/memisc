@@ -296,3 +296,12 @@ S3method(percentages,table)
 S3method(percentages,formula)
 S3method(as.data.frame,percentage.table)
 S3method(as.data.frame,xpercentage.table)
+
+S3method(cbind,ftable)
+S3method(rbind,ftable)
+S3method(cbind,ftable_matrix)
+S3method(rbind,ftable_matrix)
+S3method(format,ftable_matrix)
+S3method(print,ftable_matrix)
+S3method(toLatex,ftable_matrix)
+
