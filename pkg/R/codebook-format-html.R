@@ -65,18 +65,20 @@ format_html.codebookEntry <- function(x,name="",
     tab_html[,1] <- mk_td(tab_html[,1],style=proc_style(c(align.right,lrpad)))
     tab_html[,-1] <- mk_td_spltDec(tab_html[,-1,drop=FALSE])
     
-    tab_lab <- trimws(rownames(tab))
-    tab_lab <- strsplit(tab_lab," ")
+    tab_rown <- trimws(rownames(tab))
+    
+    tab_lab <- strsplit(tab_rown," ")
+
     tab_lab <- lapply(tab_lab,trimws_drpz)
     
     tab_has_lab <- sapply(tab_lab,length) > 1
     tab_has_m <- sapply(sapply(tab_lab,"[",2) == "M",isTRUE)
     
     tab_val <- ifelse(tab_has_lab,sapply(tab_lab,"[",1),"")
-    tab_lab <- ifelse(tab_has_lab,sapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
+    tab_lab <- ifelse(tab_has_lab,lapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
     
     tab_m <- ifelse(tab_has_m,"M","")
-    tab_lab <- ifelse(tab_has_m,sapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
+    tab_lab <- ifelse(tab_has_m,lapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
     
     tab_lab <- sapply(tab_lab,paste,collapse=" ")
     

@@ -1,3 +1,6 @@
+2015-09-06:
+  - Fixed treatment of value labels in HTML formatting of codebooks.
+
 2015-08-26:
   - Added `percentages` function to easily create tables of percentages.
 
