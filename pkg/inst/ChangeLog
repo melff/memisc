@@ -147,8 +147,8 @@
   - Minor correction of format of ANES48 vignette
   
 2015-04-06: 
-  - Improved HTML output of 'mtable' results. Updated documentation of 'mtable' results.
-  - Improved html format for mtables - alignment on decimal signs and straight borders.
+  - Improved HTML output of 'mtable' results  - alignment on decimal signs and straight borders. 
+  - Updated documentation of 'mtable' results.
   
 2015-04-05: 
   - New coefficient style - confidence intervals right of estimates
