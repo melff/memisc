@@ -21,62 +21,6 @@ rename <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
   return(x)
 }
 
-relabel <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
-  if(isS4(x)) relabel4(x,...,gsub=gsub,fixed=fixed,warn=warn)
-  else UseMethod("relabel")
-}
-
-relabel.default <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
-  if(!is.null(attr(x,"labels"))) labels <- attr(x,"labels")
-  else labels <- names(x)
-  subst <- c(...)
-  if(gsub){
-    for(i in 1:length(subst)){
-      labels <- gsub(names(subst[i]),subst[i],labels,fixed=fixed)
-    }
-  }
-  else {
-    i <- match(names(subst),labels)
-    if(any(is.na(i))) {
-      if(warn) warning("undefined label(s) selected")
-      if(any(!is.na(i)))
-        subst <- subst[!is.na(i)]
-      i <- i[!is.na(i)]
-    }
-    if(length(i))
-      labels[i] <- subst
-  }
-  if(!is.null(attr(x,"labels"))) attr(x,"labels") <- labels
-  else names(x) <- labels
-  return(x)
-}
-
-relabel.factor <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
-  subst <- c(...)  
-#   for(i in 1:length(subst)){
-#     levels(x)[levels(x)==names(subst[i])] <- subst[i]
-#   }
-  labels <- levels(x)
-  if(gsub){
-    for(i in 1:length(subst)){
-      labels <- gsub(names(subst[i]),subst[i],labels,fixed=fixed)
-    }
-  }
-  else {
-    i <- match(names(subst),labels)
-    if(any(is.na(i))) {
-      if(warn) warning("undefined label(s) selected")
-      if(any(!is.na(i)))
-        subst <- subst[!is.na(i)]
-      i <- i[!is.na(i)]
-    }
-    if(length(i))
-      labels[i] <- subst
-  }
-  levels(x) <- labels
-  return(x)
-}
-
 dimrename <- function(x,dim=1,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
   subst <- c(...)
   if(0 %in% dim){
