@@ -56,7 +56,7 @@ mtable_format_latex <- function(x,
   
   frmt1 <- function(name,coefs,summaries,sdigits){
     
-    coef.tab <- ftable(coefs,row.vars=c(3,1))
+    coef.tab <- unclass(ftable(coefs,row.vars=c(3,1)))
     coef.tab[] <- sub("(\\*+)","^{\\1}",coef.tab)
     coef.tab[] <- sub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",coef.tab)
     if(!useDcolumn)

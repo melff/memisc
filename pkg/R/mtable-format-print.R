@@ -35,7 +35,7 @@ mtable_format_print <- function(x,
   mtab <- character()
   align.integers <- match.arg(align.integers)
   frmt1 <- function(coefs,summaries){
-    coef.tab <- ftable(coefs,row.vars=c(3,1))
+    coef.tab <- unclass(ftable(coefs,row.vars=c(3,1)))
     coef.tab <- apply(coef.tab,2,centerAt,
                       at=center.at,
                       integers=align.integers)

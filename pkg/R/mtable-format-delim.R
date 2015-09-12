@@ -22,7 +22,7 @@ mtable_format_delim <- function(x,
   mtab <- character()
   
   frmt1 <- function(name,coefs,summaries){
-    coef.tab <- ftable(coefs,row.vars=c(3,1))
+    coef.tab <- unclass(ftable(coefs,row.vars=c(3,1)))
     
     if(max.coef.ldim>3){
       hdr <- character(ncol(coef.tab))

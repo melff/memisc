@@ -44,7 +44,7 @@ mtable_format_html <- function(x,
   
   frmt1 <- function(name,coefs,summaries,is.last){
     
-    coef.tab <- ftable(coefs,row.vars=c(3,1))
+    coef.tab <- unclass(ftable(coefs,row.vars=c(3,1)))
     coef.tab[] <- gsub("-","&minus;",coef.tab[],fixed=TRUE)
     #coef.tab[] <- gsub("([*]+)","<sup>\\1</sup>",coef.tab[]) # looks ugly ...
     if(split.dec){
