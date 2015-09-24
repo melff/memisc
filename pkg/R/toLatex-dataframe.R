@@ -42,6 +42,7 @@ toLatex.data.frame <- function(object,
   
   header <- sapply(colnames(object),function(x)paste("\\multicolumn{1}{c}{",x,"}",sep=""))
   header <- paste(header,collapse=" & ")
+  if(row.names) header <- paste("&",header)
   header <- paste(header,"\\\\")
 
 
