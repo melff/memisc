@@ -1,5 +1,20 @@
+2015-09-24:
+  - Fixed Latex output of data frames.
+
+2015-09-13: 
+  - Fix regressions caused by `rbind()` and `cbind()` methods for "ftable" objects.
+
+2015-09-12: 
+  - Added some new `relabel()` methods.
+
 2015-09-06:
   - Fixed treatment of value labels in HTML formatting of codebooks.
+
+2015-09-03: Added basic HTML formatting of `ftable_matrix` objects. (LaTeX formatting was already implemented.)
+
+2015-08-29: 
+   - Fix CSS class of ftable formatted in HTML
+   - Implement `ftable_matrix` objects - objects composed from several `ftable`s.
 
 2015-08-26:
   - Added `percentages` function to easily create tables of percentages.
