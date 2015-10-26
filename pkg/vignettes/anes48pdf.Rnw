@@ -17,7 +17,7 @@
 % \VignetteIndexEntry{Analysing the American National Election Study of 1948 (pdf)}
 \title{Analysing the American National Election Study
   of 1948 using the \code{memisc} package}
-\author{Martin Elff\\University of Essex}
+\author{Martin Elff}
 
 \maketitle
 \section{Introduction}
