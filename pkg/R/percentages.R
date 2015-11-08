@@ -61,8 +61,8 @@ percentages.table <- function(obj,by=NULL,which=NULL,se=FALSE,ci=FALSE,ci.level=
     if(ci){
       alpha <- (1-ci.level)/2
       lower <- upper <- array(NA,dim=dim(ptab))
-      isnull <- ptab == 0
-      isfull <- ptab == 1
+      isnull <- ptab == 0 | is.na(ptab)
+      isfull <- ptab == 1 | is.na(ptab)
       lower[!isnull] <- qbeta(alpha,tab[!isnull],mtab[!isnull]-tab[!isnull]+1)
       lower[isnull] <- 0
       upper[!isfull] <- qbeta(1-alpha,tab[!isfull]+1,mtab[!isfull]-tab[!isfull])
