@@ -1,6 +1,6 @@
 useDynLib(memisc)
 import(stats,grid,lattice,methods,MASS)
-importFrom(utils,toLatex,head,tail,capture.output,getFromNamespace)
+importFrom(utils,ls.str,str,toLatex,head,tail,capture.output,getFromNamespace)
 export(
       contr,
       contr.treatment,
