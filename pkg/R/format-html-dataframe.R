@@ -18,7 +18,6 @@ format_html.data.frame <- function(x,
                                ...){
 
   
-  style <- df_format_stdstyle
   firstcol <- c("padding-left"="0.3em")
   lastcol <- c("padding-right"="0.3em")
   toprule <- c("border-top"=paste0(midrule,"px solid"))
@@ -49,65 +48,61 @@ format_html.data.frame <- function(x,
   colspan <- integer(0)
   body <- matrix(nrow=nrow(x),ncol=0)
   for(i in 1:m) {
-    cellstyle <- style
-    if(i==1&&!row.names)
-      cellstyle <- upd_vect(cellstyle,firstcol)
-    if(i==m)
-      cellstyle <- upd_vect(cellstyle,lastcol)
     if(is.int[i]){
       tmp <- formatC(x[,i],format="d")
-      col <- c(mk_td(tmp[-n],style=proc_style(cellstyle)),
-               mk_td(tmp[n],style=proc_style(upd_vect(cellstyle,bottomrule))))
+      col <- html_td(tmp,vectorize=TRUE)
       colspan <- c(colspan,1L)
       }
     else if(is.num[i]){
       tmp <- formatC(x[,i],digits=fdigits[i],format=format[i])
       if(split.dec){
-        tmp <- t(matrix(spltDec(tmp),nrow=3))
-        col <- rbind(mk_td_spltDec(tmp[-n,,drop=FALSE],style=proc_style(cellstyle)),
-                     mk_td_spltDec(tmp[n,,drop=FALSE],style=proc_style(upd_vect(cellstyle,bottomrule))))
+        tmp <- spltDec(tmp)
+        col <- html_td_spltDec(tmp)
+        col <- matrix(col,ncol=3,byrow=TRUE)
         colspan <- c(colspan,3L)
       }
       else{
-        col <- c(mk_td(tmp[-n],style=proc_style(cellstyle)),
-                 mk_td(tmp[n],style=proc_style(upd_vect(cellstyle,bottomrule))))
+        col <- html_td(tmp,vectorize=TRUE)
         colspan <- c(colspan,1L)
       }
     }
     else {
       tmp <- as.character(x[,i])
-      col <- c(mk_td(tmp[-n],style=proc_style(cellstyle)),
-               mk_td(tmp[n],style=proc_style(upd_vect(cellstyle,bottomrule))))
+      col <- html_td(tmp,vectorize=TRUE)
       colspan <- c(colspan,1L)
     }
     body <- cbind(body,col)
   }
 
+  body[,1] <- lapply(body[,1],setStyle,firstcol)
+  body[,m] <- lapply(body[,m],setStyle,lastcol)
   if(row.names){
     tmp <- rownames(x)
-    rnstyle <- upd_vect(style,firstcol)
-    ldr <- c(mk_td(tmp[-n],style=proc_style(rnstyle)),
-             mk_td(tmp[n],style=proc_style(upd_vect(rnstyle,bottomrule))))
+    ldr <- html_td(tmp,vectorize=TRUE,style=html_style(c(firstcol,align.right)))
     body <- cbind(ldr,body)
   }
-    
-  body <- apply(body,1,paste0,collapse="")
-  body <- mk_tr(body)
+   
+  body[1,] <- lapply(body[1,],setStyle,toprule)
+  body[n,] <- lapply(body[n,],setStyle,bottomrule)
   
-  hstyle <- upd_vect(style,align.center,toprule,midrule)
+  body <- apply(body,1,html_tr)
+  
   hdr <- colnames(x)
   if(row.names) {
     hdr <- c("",hdr)
     colspan <- c(1L,colspan)
   }
-  hdr <- mk_td(hdr,style=proc_style(hstyle),attribs=list(colspan=colspan))
-  hdr <- mk_tr(paste0(hdr,collapse=""))
-  ans <- c("<table class=\"mtable\" style=\"border-collapse: collapse;\">",
-           hdr,
-           body,
-           "</table>")
   
-  ans <- paste0(ans,collapse="\n")
+  hdr <- html_td(hdr,vectorize=TRUE)
+  hdr[] <- mapply(setAttribs,hdr,colspan=colspan,SIMPLIFY=FALSE)
+  hdr <- lapply(hdr,setStyle,align.center)
+  hdr <- lapply(hdr,setStyle,toprule)
+  hdr[[length(hdr)]] <- setStyle(hdr[[length(hdr)]],lastcol)
+  hdr <- html_tr(hdr)
+  
+  ans <- html_table(c(list(hdr),body))
+  ans <- setStyle(ans,"border-collapse"="collapse")
+  ans <- as.character(ans)
   return(ans)
 }
 
