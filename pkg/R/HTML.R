@@ -56,7 +56,9 @@ attrib <- function(x)
   structure(x,class="html_attributes")
 }
 
-setAttribs <- function(x,...){
+setAttribs <- function(x,...)UseMethod("setAttribs")
+setAttribs.character <- function(x,...)return(x)
+setAttribs.html_elem <- function(x,...){
   value <- c(...)
   n <- names(value)
   x$attributes[n] <- value
@@ -93,8 +95,10 @@ style <- function(x){
   x
 }
 
-
-setStyle <- function(x,...){
+setStyle <- function(x,...)UseMethod("setStyle")
+setStyle.character <- function(x,...)return(x)
+# setStyle.list <- function(x,...)lapply(x,setStyle,...)
+setStyle.html_elem <- function(x,...){
   value <- c(...)
   s <- x$attributes$style
   if(length(s)){
@@ -108,33 +112,59 @@ setStyle <- function(x,...){
   x
 }
 
-setRangeStyle <- function(x,i,...){
-  x[i] <- mapply(setStyle,x[i],...,SIMPLIFY=FALSE)
-  x
-}
 
 .html <- function(x,tag,...) html(tag=tag,...,.content=x)
-.html_code <- function(x,tag,...,vectorize=FALSE){
+.html_group <- function(x,tag,...,vectorize=FALSE){
   if(vectorize)
-    structure(lapply(x,.html,tag=tag,...),class="html_code")
+    structure(lapply(x,.html,tag=tag,...),class="html_group")
   else
     html(tag=tag,...,.content=x)
 }
 
-as.html_code <- function(x) structure(list(x),class="html_code")
+as.html_group <- function(x) structure(check_html_classes(x),class="html_group")
+html_group <- function(x) as.html_group(list(x))
+check_html_classes <- function(x){
+  if(inherits(x,"html_elem")) return(x)
+  if(inherits(x,"html_group")) return(x)
+  if(is.character(x)) return(x)
+  if(!is.list(x)) stop("check failed")
+  if(all(sapply(x,inherits,"html_elem") | sapply(x,inherits,"html_group"))) return(x)
+  stop("check failed")
+}
 
-as.character.html_code <- function(x)paste(unlist(lapply(x,as.character)),collapse="")
-print.html_code <- function(x,...) 
+as.character.html_group <- function(x)paste(unlist(lapply(x,as.character)),collapse="")
+print.html_group <- function(x,...) 
   cat(as.character(x),...)
 
-html_td <- function(x,...).html_code(x,tag="td",...)
-html_tr <- function(x,...).html_code(x,tag="tr",...)
+"[.html_group" <- function(x,i,....){
+  x <- NextMethod()
+  structure(x,class="html_group")
+}
+"[<-.html_group" <- function(x,i,....,value){
+  x <- NextMethod()
+  structure(x,class="html_group")
+}
+
+setAttribs.html_group <- function(x,...){
+  x <- lapply(x,setAttribs,...)
+  structure(x,class="html_group")
+}
+setStyle.html_group <- function(x,...){
+  x <- lapply(x,setStyle,...)
+  structure(x,class="html_group")
+}
+
+
+
+
+
+html_td <- function(x,...).html_group(x,tag="td",...)
+html_tr <- function(x,...).html_group(x,tag="tr",...)
 
 
 html_beforeDec <- html_style("text-align"="right",
                              "margin-right"="0px",
-                             "padding-right"="0px",
-                             "padding-left"="0.3em")
+                             "padding-right"="0px")
 
 html_dotDec <- html_style("text-align"="center",
                           "margin-left"="0px",
@@ -145,17 +175,19 @@ html_dotDec <- html_style("text-align"="center",
 
 html_afterDec <- html_style("text-align"="left",
                              "margin-left"="0px",
-                             "padding-left"="0px",
-                             "padding-right"="0.3em")
+                             "padding-left"="0px")
 
-html_td_spltDec <- function(x,...){
+html_td_spltDec <- function(x,style=character(),...){
+  html_beforeDec <- html_style(style,html_beforeDec)
+  html_dotDec <- html_style(style,html_dotDec)
+  html_afterDec <- html_style(style,html_afterDec)
   y <- matrix(x,nrow=3)
   y1 <- html_td(y[1,],style=html_beforeDec,...,vectorize=TRUE)
   y2 <- html_td(y[2,],style=html_dotDec,...,vectorize=TRUE)
   y3 <- html_td(y[3,],style=html_afterDec,...,vectorize=TRUE)
-  y <- rbind(y1,y2,y3)
-  dim(y) <- NULL
-  structure(y,class="html_code")
+  y <- mapply(list,y1,y2,y3,SIMPLIFY=FALSE)
+  y <- lapply(y,as.html_group)
+  structure(y,class="html_group")
 }
 
 html_table <- function(x,...) html(tag="table",...,.content=x)

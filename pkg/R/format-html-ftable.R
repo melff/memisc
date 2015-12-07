@@ -1,6 +1,8 @@
 ftable_format_stdstyle <- c(
-  "padding-top"="0px",
+  "padding-top"="3px",
   "padding-bottom"="0px",
+  "padding-left"="0.5ex",
+  "padding-right"="0.5ex",
   "margin-top"="0px",
   "margin-bottom"="0px"
 )
@@ -11,9 +13,10 @@ format_html.ftable <- function(x,
                                digits=0,
                                format="f",
                                toprule=2,midrule=1,bottomrule=2,
-                               split.dec=TRUE,...){
+                               split.dec=TRUE,
+                               style=ftable_format_stdstyle,
+                               ...){
   
-  style <- ftable_format_stdstyle
   first.col <- c("padding-left"="0.3em")
   toprule <- c("border-top"=paste0(midrule,"px solid"))
   bottomrule <- c("border-bottom"=paste0(midrule,"px solid"))
@@ -49,14 +52,12 @@ format_html.ftable <- function(x,
   
   if(split.dec){
     tmp <- spltDec(body)
-    body <- html_td_spltDec(tmp)
-    dim(body) <- c(3,n,m)
-    body <- aperm(body,c(2,1,3))
-    dim(body) <- c(n,3*m)
+    body <- html_td_spltDec(tmp,style=html_style(style))
+    dim(body) <- c(n,m)
     colspan <- 3L
   }
   else {
-    body <- html_td(body,vectorize=TRUE)
+    body <- html_td(body,vectorize=TRUE,style=html_style(style))
     dim(body) <- dim(x)
     colspan <- 1L
   }

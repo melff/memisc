@@ -15,6 +15,7 @@ format_html.data.frame <- function(x,
                                row.names=TRUE,
                                digits=getOption("digits"),
                                format="f",
+                               style=df_format_stdstyle,
                                ...){
 
   
@@ -50,41 +51,38 @@ format_html.data.frame <- function(x,
   for(i in 1:m) {
     if(is.int[i]){
       tmp <- formatC(x[,i],format="d")
-      col <- html_td(tmp,vectorize=TRUE)
+      col <- html_td(tmp,vectorize=TRUE,style=html_style(style))
       colspan <- c(colspan,1L)
       }
     else if(is.num[i]){
       tmp <- formatC(x[,i],digits=fdigits[i],format=format[i])
       if(split.dec){
         tmp <- spltDec(tmp)
-        col <- html_td_spltDec(tmp)
-        col <- matrix(col,ncol=3,byrow=TRUE)
+        col <- html_td_spltDec(tmp,style=html_style(style))
         colspan <- c(colspan,3L)
       }
       else{
-        col <- html_td(tmp,vectorize=TRUE)
+        col <- html_td(tmp,vectorize=TRUE,style=html_style(style))
         colspan <- c(colspan,1L)
       }
     }
     else {
       tmp <- as.character(x[,i])
-      col <- html_td(tmp,vectorize=TRUE)
+      col <- html_td(tmp,vectorize=TRUE,style=html_style(style))
+      col <- setStyle(col,align.left)
       colspan <- c(colspan,1L)
     }
     body <- cbind(body,col)
   }
-
-  body[,1] <- lapply(body[,1],setStyle,firstcol)
-  body[,m] <- lapply(body[,m],setStyle,lastcol)
+  
   if(row.names){
     tmp <- rownames(x)
-    ldr <- html_td(tmp,vectorize=TRUE,style=html_style(c(firstcol,align.right)))
+    ldr <- html_td(tmp,vectorize=TRUE,style=html_style(c(style,firstcol,align.right)))
     body <- cbind(ldr,body)
   }
    
   body[1,] <- lapply(body[1,],setStyle,toprule)
   body[n,] <- lapply(body[n,],setStyle,bottomrule)
-  
   body <- apply(body,1,html_tr)
   
   hdr <- colnames(x)
@@ -93,10 +91,12 @@ format_html.data.frame <- function(x,
     colspan <- c(1L,colspan)
   }
   
-  hdr <- html_td(hdr,vectorize=TRUE)
+  hdr <- html_td(hdr,vectorize=TRUE,style=html_style(style))
   hdr[] <- mapply(setAttribs,hdr,colspan=colspan,SIMPLIFY=FALSE)
+  hdr <- lapply(hdr,setStyle,df_format_stdstyle)
   hdr <- lapply(hdr,setStyle,align.center)
   hdr <- lapply(hdr,setStyle,toprule)
+  hdr[[1]] <- setStyle(hdr[[1]],lastcol)
   hdr[[length(hdr)]] <- setStyle(hdr[[length(hdr)]],lastcol)
   hdr <- html_tr(hdr)
   

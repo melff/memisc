@@ -14,6 +14,7 @@ format_html.matrix <- function(x,
                                split.dec=TRUE,
                                digits=getOption("digits"),
                                format="f",
+                               style=mat_format_stdstyle,
                                ...){
 
   
@@ -44,30 +45,25 @@ format_html.matrix <- function(x,
     tmp <- formatC(x,digits=digits,format=format)
     if(split.dec){
       tmp <- spltDec(tmp)
-      body <- html_td_spltDec(tmp)
-      dim(body) <- c(3,n,m)
-      body <- aperm(body,c(2,1,3))
-      dim(body) <- c(n,3*m)
+      body <- html_td_spltDec(tmp,style=html_style(style))
+      dim(body) <- c(n,m)
       colspan <- 3L
     }
     else{
-      body <- html_td(tmp,vectorize=TRUE)
+      body <- html_td(tmp,vectorize=TRUE,style=html_style(style))
       dim(body) <- dim(x)
       colspan <- 1L
     }
   }
   else {
     tmp <- as.character(x)
-    body <- html_td(tmp,vectorize=TRUE)
+    body <- html_td(tmp,vectorize=TRUE,style=html_style(style))
     colspan <- 1L
   }
 
-  body[,1] <- lapply(body[,1],setStyle,firstcol)
-  body[,m] <- lapply(body[,m],setStyle,lastcol)
-  
   if(length(rownames(x))){
     tmp <- rownames(x)
-    ldr <- html_td(tmp,vectorize=TRUE,style=html_style(c(firstcol,align.right)))
+    ldr <- html_td(tmp,vectorize=TRUE,style=html_style(c(style,firstcol,align.right)))
     body <- cbind(ldr,body)
   }
    
@@ -85,7 +81,7 @@ format_html.matrix <- function(x,
     }
     else
       colspan <- rep(colspan,m)
-    hdr <- html_td(hdr,vectorize=TRUE)
+    hdr <- html_td(hdr,vectorize=TRUE,style=html_style(style))
     hdr[] <- mapply(setAttribs,hdr,colspan=colspan,SIMPLIFY=FALSE)
     hdr <- lapply(hdr,setStyle,align.center)
     hdr <- lapply(hdr,setStyle,toprule)
