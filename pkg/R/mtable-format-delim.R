@@ -2,11 +2,14 @@ mtable_format_delim <- function(x,
                                 colsep="\t",
                                 rowsep="\n",
                                 interaction.sep = " x ",
+                                force.names = FALSE,
                                 ...
 ){
   
   coefs <- x$coefficients
   summaries <- x$summaries
+  
+  num.models <- length(coefs)
   
   coef.dims <- lapply(coefs,dim)
   coef.ldim <- sapply(coef.dims,length)
@@ -22,20 +25,32 @@ mtable_format_delim <- function(x,
   mtab <- character()
   
   frmt1 <- function(name,coefs,summaries){
-    coef.tab <- unclass(ftable(coefs,row.vars=c(3,1)))
+    
+    coef.tab <- coefs
+    dm <- dim(coefs)
+    if(length(dm)==3) dm <- c(dm,1)
+    dim(coef.tab) <- dm
+    coef.tab <- aperm(coef.tab,c(1,3,2,4))
+    dim(coef.tab) <- c(dm[1]*dm[3],dm[2]*dm[4])
     
     if(max.coef.ldim>3){
       hdr <- character(ncol(coef.tab))
       if(length(dim(coefs))>3){
-        eq.names <- dimnames(coefs)[[4]]
-        ii <- seq(from=1,length=length(eq.names),by=ncol(coef.tab)%%length(eq.names))
+        if(dm[4]>1)
+          eq.names <- dimnames(coefs)[[4]]
+        else
+          eq.names <- ""
+
+        ii <- seq(from=1,length=dm[4],by=dm[2])
         hdr[ii] <- eq.names
         }
       coef.tab <- rbind(hdr,coef.tab)
     }
-    hdr <- character(ncol(coef.tab))
-    hdr[1] <- name
-    coef.tab <- rbind(hdr,coef.tab)
+    if(num.models>1 || force.names){
+      hdr <- character(ncol(coef.tab))
+      hdr[1] <- name
+      coef.tab <- rbind(hdr,coef.tab)
+    }
     if(length(summaries)){
       sum.tab <- matrix("",nrow=length(summaries),ncol=ncol(coef.tab))
       sum.tab[,1] <- summaries
@@ -47,13 +62,19 @@ mtable_format_delim <- function(x,
     mtab <- cbind(mtab,frmt1(n,coefs[[n]],summaries[,n]))
   }
   
-  hdrlines <- seq.int(max(coef.ldim)-2)
   smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
   
   ldr <- character(length(coef.names)*coef.dims1)
   ii <- seq(from=1,length=length(coef.names),by=coef.dims1)
   ldr[ii] <- coef.names
-  ldr <- c(character(length(hdrlines)),ldr,rownames(summaries))
+
+  hldr <- NULL
+  if(num.models>1 || force.names)
+    hldr <- c(hldr,"")
+  if(max.coef.ldim>3)
+    hldr <- c(hldr,"")
+  
+  ldr <- c(hldr,ldr,rownames(summaries))
   mtab <- cbind(ldr,mtab)
   mtab <- apply(mtab,1,paste,collapse=paste0(colsep))
   paste0(mtab,collapse=rowsep)

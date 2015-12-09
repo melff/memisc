@@ -46,7 +46,7 @@ format_html.matrix <- function(x,
     if(split.dec){
       tmp <- spltDec(tmp)
       body <- html_td_spltDec(tmp,style=html_style(style))
-      dim(body) <- c(n,m)
+      dim(body) <- dim(x)
       colspan <- 3L
     }
     else{
