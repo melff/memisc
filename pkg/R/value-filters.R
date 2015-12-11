@@ -212,23 +212,27 @@ is.valid <- function(x) !is.missing(x) & !is.na(x)
 nvalid <- function(x) sum(is.valid(x))
 
 
-setMethod("format","valid.values",function(x,...){
+format.valid.values <- function(x,...){
   paste(as.character(x@filter),collapse=", ")
-}) 
-setMethod("format","valid.range",function(x,...){
+}
+format.valid.range <- function(x,...){
   paste(as.character(x@filter[1:2]),collapse="-")
-}) 
-setMethod("format","missing.values",function(x,...){
+}
+format.missing.values <- function(x,...){
   if(length(x@filter) && length(x@range))
-      paste(
-          paste(as.character(x@filter),collapse=", "),
-          paste(as.character(x@range[1:2]),collapse="-"),
-          sep=", ")
+    paste(
+      paste(as.character(x@filter),collapse=", "),
+      paste(as.character(x@range[1:2]),collapse="-"),
+      sep=", ")
   else if(length(x@filter))
     paste(as.character(x@filter),collapse=", ")
   else if(length(x@range))
     paste(as.character(x@range[1:2]),collapse="-")
-}) 
+}
+
+# setMethod("format","valid.values",format.valid.values) 
+# setMethod("format","valid.range",format.valid.range) 
+# setMethod("format","missing.values",format.missing.values) 
 
 
 setMethod("show","value.filter",function(object){
