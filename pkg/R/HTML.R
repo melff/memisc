@@ -1,9 +1,29 @@
 html <- function(tag,...,.content=NULL){
   stopifnot(length(tag)==1)
+  args <- list(...)
+  content <- NULL
+  if(length(names(args))){
+    has.name <- nzchar(names(args))
+    attributes <- args[has.name]
+    if(any(!has.name) && length(.content))
+      stop("use either unnamed arguments or the .content argument")
+    if(any(!has.name))
+      content <- args[!has.name]
+    if(length(.content))
+      content <- .content
+  }
+  else{
+    if(length(args)&&length(.content))
+      stop("use either unnamed arguments or the .content argument")
+    if(length(args))
+      content <- args
+    else
+      content <- .content
+  }
   structure(
     list(tag=tag,
-         attributes=list(...),
-         content=.content),
+         attributes=attributes,
+         content=content),
     class="html_elem")
 }
 
@@ -25,8 +45,10 @@ as.character.html_elem <- function(x,...){
     if(is.list(x$content)){
       if(inherits(x$content,"html_elem"))
         content <- as.character(x$content)
-      else
-        content <- unlist(lapply(x$content,as.character))
+      else{
+        content <- lapply(x$content,as.character)
+        content <- unlist(content,as.character)
+      }
     }
     else
       content <- as.character(x$content)
@@ -122,14 +144,24 @@ setStyle.html_elem <- function(x,...){
 }
 
 as.html_group <- function(x) structure(check_html_classes(x),class="html_group")
-html_group <- function(x) as.html_group(list(x))
+html_group <- function(...){ 
+  x <- list(...)
+  x <- x[sapply(x,length)>0]
+  as.html_group(x)
+  }
 check_html_classes <- function(x){
   if(inherits(x,"html_elem")) return(x)
   if(inherits(x,"html_group")) return(x)
   if(is.character(x)) return(x)
   if(!is.list(x)) stop("check failed")
-  if(all(sapply(x,inherits,"html_elem") | sapply(x,inherits,"html_group"))) return(x)
+  if(all(.check_html_classes(x))) return(x)
   stop("check failed")
+}
+.check_html_classes <- function(x){
+  is_character <- sapply(x,is.character)
+  is_html_elem <- sapply(x,inherits,"html_elem")
+  is_html_group <- sapply(x,inherits,"html_group")
+  is_character | is_html_elem | is_html_group
 }
 
 as.character.html_group <- function(x)paste(unlist(lapply(x,as.character)),collapse="")
@@ -164,7 +196,8 @@ html_tr <- function(x,...).html_group(x,tag="tr",...)
 
 html_beforeDec <- html_style("text-align"="right",
                              "margin-right"="0px",
-                             "padding-right"="0px")
+                             "padding-right"="0px",
+                             "padding-left"="0.3em")
 
 html_dotDec <- html_style("text-align"="center",
                           "margin-left"="0px",
@@ -174,8 +207,9 @@ html_dotDec <- html_style("text-align"="center",
                           width="1px")
 
 html_afterDec <- html_style("text-align"="left",
-                             "margin-left"="0px",
-                             "padding-left"="0px")
+                            "margin-left"="0px",
+                            "padding-left"="0px",
+                            "padding-right"="0.3em")
 
 html_td_spltDec <- function(x,style=character(),...){
   html_beforeDec <- html_style(style,html_beforeDec)
@@ -191,5 +225,7 @@ html_td_spltDec <- function(x,style=character(),...){
 }
 
 html_table <- function(x,...) html(tag="table",...,.content=x)
+html_p <- function(x,...) html(tag="p",...,.content=x)
+html_div <- function(x,...) html(tag="div",...,.content=x)
 
 
