@@ -193,6 +193,9 @@ setStyle.html_group <- function(x,...){
 html_td <- function(x,...).html_group(x,tag="td",...)
 html_tr <- function(x,...).html_group(x,tag="tr",...)
 
+html_dt <- function(x,...).html_group(x,tag="dt",...)
+html_dd <- function(x,...).html_group(x,tag="dd",...)
+
 
 html_beforeDec <- html_style("text-align"="right",
                              "margin-right"="0px",

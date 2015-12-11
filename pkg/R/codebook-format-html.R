@@ -31,39 +31,45 @@ format_html.codebookEntry <- function(x,name="",
   wording <- annot["wording"]
   if(length(annot)) annot <- annot[names(annot) %nin% c("description","wording")]
   
-  title_html <- mk_elem(name[1],type=var_tag,class="cbe-name")
+  title_html <- html(var_tag,.content=name[1],class="cbe-name")
   if(length(description) && !is.na(description))
-    title_html <- paste(title_html," &mdash; ",mk_span(sQuote(description),class="cbe-description"))
+    title_html <- html_group(title_html," &mdash; ",html("span",.content=sQuote(description),class="cbe-description"))
   
-  title_html <- mk_scope(title_html,type=title_tag,class="cbe-title",id=paste0(varid_prefix,name[1]))
+  title_html <- html(title_tag,.content=title_html,class="cbe-title",id=paste0(varid_prefix,name[1]))
   
   wording_html <- if(length(wording) && !is.na(wording)) 
-    mk_p(dQuote(wording), class="cbe-wording") 
+    html_p(dQuote(wording), class="cbe-wording") 
   else NULL
+  x.spec <- gsub("--","&ndash;",x@spec)
+  spec_html <- cbind(html_td(names(x.spec),style=html_style(align.left),vectorize=TRUE),
+                     html_td(x.spec,style=html_style(align.left),vectorize=TRUE))
+  spec_html <- apply(spec_html,1,html_tr)
+  spec_html <- as.html_group(spec_html)
   
-  
-  spec_html <- cbind(mk_td(names(x@spec),style=proc_style(align.left)),
-                     mk_td(x@spec,style=proc_style(align.left)))
-  spec_html[] <- gsub("--","&ndash;",spec_html)
-  spec_html <- apply(spec_html,1,paste0,collapse="")
-  spec_html <- mk_tr(spec_html)
-  spec_html <- mk_p(mk_table(spec_html,class="cbe-spec"))
+  spec_html <- html_p(html_table(spec_html,class="cbe-spec"))
   
   tab <- x@stats$tab
   descr <- x@stats$descr
   
   if(length(tab)){
     
-    tab_html <- cbind(
-      formatC(tab[,1],format="d"),
+    counts_html <- formatC(tab[,1],format="d")
+    counts_html <- html_td(counts_html,vectorize=TRUE,style=html_style(align.right,lrpad))
+    
+    perc_html <- cbind(
       formatC(tab[,2],format="f",digits=1),
       formatC(tab[,3],format="f",digits=1)
     )
-    tab_html[tab_html=="NA"] <- ""
-    tab_html <- cbind(tab_html[,1],t(apply(tab_html[,-1,drop=FALSE],1,spltDec)))
+    perc_html[perc_html=="NA"] <- ""
     
-    tab_html[,1] <- mk_td(tab_html[,1],style=proc_style(c(align.right,lrpad)))
-    tab_html[,-1] <- mk_td_spltDec(tab_html[,-1,drop=FALSE])
+    perc_html <- spltDec(perc_html)
+    perc_html <- html_td_spltDec(perc_html)
+    
+    tab_html <- c(
+      counts_html,
+      perc_html
+    )
+    dim(tab_html) <- dim(tab)
     
     tab_rown <- trimws(rownames(tab))
     
@@ -82,52 +88,58 @@ format_html.codebookEntry <- function(x,name="",
     
     tab_lab <- sapply(tab_lab,paste,collapse=" ")
     
-    tab_lab_html <- cbind(mk_td(tab_val,style=proc_style(c(align.right,lrpad))),
-                          mk_td(tab_m,style=proc_style(c(align.center,lrpad))),
-                          mk_td(tab_lab,style=proc_style(c(align.left,lrpad))))
+    tab_lab_html <- cbind(html_td(tab_val,style=html_style(c(align.right,lrpad)),vectorize=TRUE),
+                          html_td(tab_m,style=html_style(c(align.center,lrpad)),vectorize=TRUE),
+                          html_td(tab_lab,style=html_style(c(align.left,lrpad)),vectorize=TRUE))
     
     tab_html <- cbind(tab_lab_html,tab_html)
-    tab_html <- apply(tab_html,1,paste0,collapse="")
-    tab_html <- mk_tr(tab_html)
+    tab_html <- as.html_group(apply(tab_html,1,html_tr))
     
-    tabh_html <- c(mk_td("Values and labels",colspan=3,style=proc_style(align.center)),
-                   mk_td("N",style=proc_style(align.center)),
-                   mk_td("Percent",colspan=6,style=proc_style(align.center)))
-    tabh_html <- mk_tr(paste0(tabh_html,collapse=""))
+    tabh_html <- html_group(html_td("Values and labels",colspan=3,style=html_style(align.center)),
+                            html_td("N",style=html_style(align.center)),
+                            html_td("Percent",colspan=6,style=html_style(align.center)))
+    tabh_html <- html_tr(tabh_html)
     
-    tab_html <- mk_table(c(tabh_html,tab_html),class="cbe-table")
-    tab_html <- mk_p(tab_html)
+    tab_html <- html_table(html_group(tabh_html,tab_html),class="cbe-table",
+                           style=html_style("border-collapse"="collapse"))
+    tab_html <- html_p(tab_html)
   }
   else tab_html <- NULL
   
   if(length(descr)){
     
-    descr_html <- cbind(
-      trimws(paste(names(descr),": ",sep="")),
-      formatC(descr,format="f",digits=3)
-    )
+    descr_ldr_html <- trimws(paste(names(descr),": ",sep=""))
+    descr_ldr_html <- html_td(descr_ldr_html,style=html_style(align.right,lrpad),vectorize=TRUE)
+
+    descr_html <- formatC(descr,format="f",digits=3)
     
-    descr_html <- cbind(descr_html[,1],t(sapply(descr_html[,-1,drop=FALSE],spltDec)))
+    descr_html <- spltDec(descr_html)
+    descr_html <- html_td_spltDec(descr_html)
     
-    descr_html[,1] <- mk_td(descr_html[,1],style=proc_style(c(align.right,lrpad)))
-    descr_html[,-1] <- mk_td_spltDec(descr_html[,-1,drop=FALSE])
-    descr_html <- mk_tr(apply(descr_html,1,paste0,collapse=""))
-    descr_html <- mk_table(descr_html,class="cbe-table")
-    descr_html <- mk_p(descr_html)
+    descr_html <- cbind(descr_ldr_html,descr_html)
+    
+    descr_html <- apply(descr_html,1,html_tr)
+    descr_html <- html_table(descr_html,class="cbe-table",
+                             style=html_style("border-collapse"="collapse"))
+    descr_html <- html_p(descr_html)
   } else descr_html <- NULL
   
   if(length(annot)){
-    annot_html <- cbind(mk_elem(paste0(names(annot),":"),type="dt"),
-                        mk_elem(annot,type="dd"))
-    annot_html <- mk_scope(c(t(annot_html)),type="dl",class="cbe-annotations")
-    annot_html <- mk_p(annot_html)
+    annot_html <- cbind(html_dt(paste0(names(annot),":"),vectorize=TRUE),
+                        html_dd(annot,vectorize=TRUE))
+    annot_html <- as.html_group(t(annot_html))
+    annot_html <- html("dl",.content=annot_html,class="cbe-annotations")
+    annot_html <- html_p(annot_html)
   } else annot_html <- NULL
   
-  mk_div(c(
-    mk_div(c(title_html,wording_html),class="cbe-header",style=proc_style(c(toprule,midrule,padding))),
-    mk_div(c(spec_html,tab_html,descr_html,annot_html),class="cbe-body",style=proc_style(padding))
-  ),class="codebook-entry")
-  
+  header_html <- html_div(html_group(title_html,wording_html),class="cbe-header",
+                          style=html_style(c(toprule,midrule,padding)))
+  body_html <- html_div(html_group(spec_html,tab_html,descr_html,annot_html),class="cbe-body",
+                        style=html_style(padding))
+
+  cbe_html <- html_div(
+                  html_group(header_html,body_html),class="codebook-entry")
+  as.character(cbe_html)
 }
 
 format_html.codebook <- function(x,toprule=2,
@@ -145,5 +157,5 @@ format_html.codebook <- function(x,toprule=2,
                     varid_prefix=varid_prefix,
                     title_tag=title_tag
                   ))
-  mk_div(unlist(out),class="codebook")
+  as.character(html_div(unlist(out),class="codebook"))
 }
