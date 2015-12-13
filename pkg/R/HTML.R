@@ -1,10 +1,11 @@
-html <- function(tag,...,.content=NULL){
+html <- function(tag,...,.content=NULL,linebreak=FALSE){
   stopifnot(length(tag)==1)
   args <- list(...)
   content <- NULL
+  attribs <- NULL
   if(length(names(args))){
     has.name <- nzchar(names(args))
-    attributes <- args[has.name]
+    attribs <- args[has.name]
     if(any(!has.name) && length(.content))
       stop("use either unnamed arguments or the .content argument")
     if(any(!has.name))
@@ -22,8 +23,9 @@ html <- function(tag,...,.content=NULL){
   }
   structure(
     list(tag=tag,
-         attributes=attributes,
-         content=content),
+         attributes=attribs,
+         content=content,
+         linebreak=linebreak),
     class="html_elem")
 }
 
@@ -41,6 +43,9 @@ as.character.html_elem <- function(x,...){
     }
   }
   out <- paste0(out,">")
+  if(length(x$linebreak)>1 && x$linebreak[1]){
+    out <- paste0(out,"\n")
+  }
   if(length(x$content)){
     if(is.list(x$content)){
       if(inherits(x$content,"html_elem"))
@@ -56,6 +61,12 @@ as.character.html_elem <- function(x,...){
     out <- paste0(out,paste(content,collapse=""))
     out <- paste0(out,"</",x$tag,">")
   }
+  if(length(x$linebreak)>1){
+    if(x$linebreak[2])
+      out <- paste0(out,"\n")
+  }
+  else if(x$linebreak)
+    out <- paste0(out,"\n")
   out
 }
 
@@ -86,6 +97,11 @@ setAttribs.html_elem <- function(x,...){
   x$attributes[n] <- value
   x
 }
+
+c.html_elem <- function(...)
+  structure(list(...),class="html_group")
+
+
 
 html_style <- function(...) as.html_style(c(...))
 
@@ -135,12 +151,12 @@ setStyle.html_elem <- function(x,...){
 }
 
 
-.html <- function(x,tag,...) html(tag=tag,...,.content=x)
-.html_group <- function(x,tag,...,vectorize=FALSE){
+.html <- function(x,tag,...,linebreak=FALSE) html(tag=tag,...,.content=x,linebreak=linebreak)
+.html_group <- function(x,tag,...,vectorize=FALSE,linebreak=FALSE){
   if(vectorize)
-    structure(lapply(x,.html,tag=tag,...),class="html_group")
+    structure(lapply(x,.html,tag=tag,...,linebreak=linebreak),class="html_group")
   else
-    html(tag=tag,...,.content=x)
+    html(tag=tag,...,.content=x,linebreak=linebreak)
 }
 
 as.html_group <- function(x) structure(check_html_classes(x),class="html_group")
@@ -190,11 +206,11 @@ setStyle.html_group <- function(x,...){
 
 
 
-html_td <- function(x,...).html_group(x,tag="td",...)
-html_tr <- function(x,...).html_group(x,tag="tr",...)
+html_td <- function(x,...,linebreak=FALSE).html_group(x,tag="td",...,linebreak=linebreak)
+html_tr <- function(x,...,linebreak=TRUE).html_group(x,tag="tr",...,linebreak=linebreak)
 
-html_dt <- function(x,...).html_group(x,tag="dt",...)
-html_dd <- function(x,...).html_group(x,tag="dd",...)
+html_dt <- function(x,...,linebreak=TRUE).html_group(x,tag="dt",...,linebreak=linebreak)
+html_dd <- function(x,...,linebreak=TRUE).html_group(x,tag="dd",...,linebreak=linebreak)
 
 
 html_beforeDec <- html_style("text-align"="right",
@@ -214,21 +230,21 @@ html_afterDec <- html_style("text-align"="left",
                             "padding-left"="0px",
                             "padding-right"="0.3em")
 
-html_td_spltDec <- function(x,style=character(),...){
+html_td_spltDec <- function(x,style=character(),...,linebreak=FALSE){
   html_beforeDec <- html_style(style,html_beforeDec)
   html_dotDec <- html_style(style,html_dotDec)
   html_afterDec <- html_style(style,html_afterDec)
   y <- matrix(x,nrow=3)
   y1 <- html_td(y[1,],style=html_beforeDec,...,vectorize=TRUE)
   y2 <- html_td(y[2,],style=html_dotDec,...,vectorize=TRUE)
-  y3 <- html_td(y[3,],style=html_afterDec,...,vectorize=TRUE)
+  y3 <- html_td(y[3,],style=html_afterDec,...,vectorize=TRUE,linebreak=linebreak)
   y <- mapply(list,y1,y2,y3,SIMPLIFY=FALSE)
   y <- lapply(y,as.html_group)
   structure(y,class="html_group")
 }
 
-html_table <- function(x,...) html(tag="table",...,.content=x)
-html_p <- function(x,...) html(tag="p",...,.content=x)
-html_div <- function(x,...) html(tag="div",...,.content=x)
+html_table <- function(x,...,linebreak=c(TRUE,TRUE)) html(tag="table",...,.content=x,linebreak=linebreak)
+html_p <- function(x,...,linebreak=TRUE) html(tag="p",...,.content=x,linebreak=linebreak)
+html_div <- function(x,...,linebreak=c(TRUE,TRUE)) html(tag="div",...,.content=x,linebreak=linebreak)
 
 
