@@ -116,12 +116,12 @@ format_html.ftable <- function(x,
       }
       else {
         if(i == n.col.vars){
-          htmp1 <- html_td(c(names(row.vars),names(col.vars)[i]),
+          htmp1 <- html_td(c(names(row.vars),paste0(names(col.vars)[i],":")),
                          style=html_style(upd_vect(hstyle,align.left)),
                          vectorize=TRUE)
         }
         else
-          htmp1 <- html_td(c(rep("",n.row.vars),names(col.vars)[i]),
+          htmp1 <- html_td(c(rep("",n.row.vars),paste0(names(col.vars)[i],":")),
                          style=html_style(upd_vect(hstyle,align.left)),
                          vectorize=TRUE)
       }      
