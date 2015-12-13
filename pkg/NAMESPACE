@@ -312,7 +312,13 @@ S3method(relabel,ftable_matrix)
 
 S3method(as.character,html_elem)
 S3method(print,html_elem)
+S3method(c,html_elem)
 S3method(as.character,html_style)
 S3method(print,html_style)
 S3method(as.character,html_group)
 S3method(print,html_group)
+
+S3method(setStyle,html_elem)
+S3method(setStyle,html_group)
+S3method(setAttribs,html_elem)
+S3method(setAttribs,html_group)
