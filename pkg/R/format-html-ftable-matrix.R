@@ -26,13 +26,16 @@ format_html.ftable_matrix <- function(x,
   
   n <- sapply(x[,1],nrow)
   m <- sapply(x[1,],ncol)
-  n.row.vars <- sapply(row.vars,length)
-  n.col.vars <- sapply(col.vars,length)
-  max.n.row.vars <- max(n.row.vars)
-  max.n.col.vars <- max(n.col.vars)
   
-  if(missing(varontop)) varontop <- max(n.col.vars) <= 1
-  if(missing(varinfront)) varinfront <- max(n.row.vars) <= 1
+  l.cv <- sapply(col.vars,length)
+  max.l.cv <- max(l.cv)
+  
+  l.rv <- sapply(row.vars,length)
+  max.l.rv <- max(l.rv)
+  
+  if(missing(varontop)) varontop <- (max.l.cv <= 1)
+  if(missing(varinfront)) varinfront <- (max.l.rv <= 1)
+  if(varontop) max.l.cv <- max.l.cv + 1
   
   d <- digits
   digits <- integer(M)
@@ -42,203 +45,234 @@ format_html.ftable_matrix <- function(x,
   format <- integer(M)
   format[] <- fo
   
-  # cv_get_desc is defined in toLatex-ftable-matrix.R
-  cv.desc <- sapply(col.vars,cv_get_desc,compact=TRUE)
-  end.g <- cv.desc["end.g",]
-  nms.cv <- cv.desc["nms.cv",]
-  mcols <- cv.desc["mcols",]
-  width <- cv.desc["width",]
-  ii <- cv.desc["ii",]
-  cv.repg <- cv.desc["cv.repg",]
   
-  if(split.dec) mcols <- lapply(mcols,`*`,3)
-  
-  headers <-mapply(htfm_mkHeader,col.vars,n.col.vars,mcols,width,cv.repg,ii,varontop,SIMPLIFY=FALSE)
+  headers <- mapply(htfm_mkHeader,col.vars,m,
+                    MoreArgs=list(max.l.cv,varontop,split.dec,style,midrule),SIMPLIFY=FALSE)
+  leaders <- mapply(htfm_mkLeader,row.vars,n,
+                    MoreArgs=list(max.l.rv,varinfront,style),SIMPLIFY=FALSE)
 
-  
-  l.hd <- sapply(headers,length)
-  max.l.hd <- max(l.hd)
-  
-  for(i in 1:M){
-    
-    jj <- seq.int(to=max.l.hd,length.out=l.hd[i])
-    if(split.dec)
-      tmp.hdr1 <- mk_td(rep("",width[[i]]),extra="colspan=\"3\"")
-    else
-      tmp.hdr1 <- mk_td(rep("",width[[i]]))
-    if(n.col.vars[i]>1||!varontop & any(nzchar(nms.cv[[i]])) )
-      tmp.hdr1 <- c(mk_td(""),tmp.hdr1)
-    tmp.header <- vector("list",max.l.hd)
-    tmp.header[] <- list(tmp.hdr1)
-    tmp.header[jj] <- headers[[i]]
-    headers[[i]] <- tmp.header
-  }
-  
-  headers <- lapply(1:max.l.hd,.getElts,x=headers)
-  headers <- lapply(headers,unlist)
-  
-  header <- unlist(lapply(headers,paste0,collapse=""))
-  len.hdr <- length(header)
-  lheader <- matrix("",ncol=max.n.row.vars,nrow=len.hdr)
-  lheader[len.hdr,seq.int(to=max.n.row.vars,length.out=n.row.vars[1])] <- names(row.vars[[1]])
-  if(varinfront) lheader[,1] <- ""
-  lheader[] <- mk_td(lheader) 
-  lheader <- apply(lheader,1,paste0,collapse="")
-  header <- paste0(lheader,header)
-  if(varinfront)
-    header <- paste0(mk_td(""),header)
-  
-  leaders <- mapply(htfm_mkLeader,row.vars,n.row.vars,n,SIMPLIFY=FALSE)
-  
-  if(varinfront){
-    
-    for(i in 1:N){
-      
-      nm.row.vars.i <- names(row.vars[[i]])
-      tmp.leaders <- mk_td("")
-      tmp.leaders <- matrix(tmp.leaders,nrow=n[i],ncol=max.n.row.vars+1)
-      jj <- seq.int(to=max.n.row.vars+1,length.out=n.row.vars[i])
-      tmp.leaders[,jj] <- leaders[[i]]
-      if(nzchar(nm.row.vars.i[1]))
-        tmp.leaders[1,1] <- mk_td(nm.row.vars.i[1])
-      else if(varinfront && length(n[i] < 2)){
-        tmp.leaders[1,1] <- tmp.leaders[1,max.n.row.vars+1]
-        tmp.leaders[1,max.n.row.vars+1] <- mk_td("")
-      }
-      leaders[[i]] <- tmp.leaders
-      if(i > 1 && n.row.vars[i] > 1 && any(nzchar(nm.row.vars.i[-n.row.vars[i]]))){
-        
-        tmp.leaders <- character(max.n.row.vars)
-        tmp.leaders[jj] <- mk_td(names(row.vars[[i]]))
-        leaders[[i]] <- rbind(tmp.leaders,leaders[[i]])
-      }
-    }
-  }
-  else {
-    
-    for(i in 1:N){
-      
-      tmp.leaders <- matrix(mk_td(""),nrow=n[i],ncol=max.n.row.vars)
-      jj <- seq.int(to=max.n.row.vars,length.out=n.row.vars[i])
-      tmp.leaders[,jj] <- leaders[[i]]
-      leaders[[i]] <- tmp.leaders
-      if(i > 1 && any(nzchar(names(row.vars[[i]])))
-      ){
-        tmp.leaders <- character(max.n.row.vars)
-        tmp.leaders[jj] <- mk_td(names(row.vars[[i]]))
-        leaders[[i]] <- rbind(tmp.leaders,leaders[[i]])
-      }
-    }
-  }
-  
   body <- array(list(),dim=dim(x))
   
-  for(j in 1:M){
-    for(i in 1:N){
+  mm <- length(headers[[1]])
+  nn <- ncol(leaders[[1]])
+  
+  lheaders <- matrix("",nrow=mm,ncol=nn)
+  lstyle <- upd_vect(style,align.left)
+  
+  for(i in 1:N){
+    rv.i <- row.vars[[i]]
+
+    if(l.rv[i] > 1 || (!varinfront && nzchar(names(rv.i)))){
       
-      tmp.bdy <- htfm_mkBody(x[[i,j]],ii[[j]],format[[j]],digits[[j]],split.dec)
-      if(n.col.vars[[j]] > 1 |  (!varontop & nzchar(nms.cv[[j]]))[1])
-        tmp.bdy <- cbind(mk_td(""),tmp.bdy)
-      if(varinfront){
-        
-        nm.row.vars.i <- names(row.vars[[i]])
-        if(i > 1 && n.row.vars[i] > 1 && any(nzchar(nm.row.vars.i[-n.row.vars[i]])))
-          tmp.bdy <- rbind(mk_td(""),tmp.bdy)
+      n.rv.i <- names(rv.i)
+      if(l.rv[i] > 1 && varinfront)
+        n.rv.i[1] <- ""
+
+      if(i == 1)
+        lheaders[mm,] <- n.rv.i
+      else {
+        tmp.ldr <- leaders[[i]]
+        tmp.ldr <- rbind(html_td(n.rv.i,vectorize=TRUE),tmp.ldr)
+        leaders[[i]] <- tmp.ldr
       }
-      else{
+    }
+    if(i < N) {
+      tmp.ldr <- leaders[[i]]
+      nnn <- nrow(tmp.ldr)
+      tmp.ldr[nnn,] <- lapply(tmp.ldr[nnn,],setStyle,midrule)
+      leaders[[i]] <- tmp.ldr
+    }
+    
+    for(j in 1:M){
+      cv.j <- col.vars[[j]]
+      tmp.bdy <- htfm_mkBody(x[[i,j]],format[[j]],digits[[j]],split.dec,style)
+      if(i > 1 && (l.rv[i] > 1 || (!varinfront && nzchar(names(rv.i))))){
+
+        if(split.dec){
+          tmp. <- spltDec(rep("",ncol(tmp.bdy)))
+          tmp.bdy <- rbind(html_td_spltDec(tmp.),tmp.bdy)
+        }        
+        else
+          tmp.bdy <- rbind(html_td(rep("",ncol(tmp.bdy)),vectorize=TRUE),tmp.bdy)
+      }
+      if(l.cv[j] > 1 || (!varontop && nzchar(names(cv.j)))){
         
-        if(i > 1 && any(nzchar(names(row.vars[[i]]))))
-          tmp.bdy <- rbind(mk_td(""),tmp.bdy)
+        tmp.bdy <- cbind(html_td(rep("",nrow(tmp.bdy)),vectorize=TRUE),tmp.bdy)
+      }
+      if(i < N){
+        nnn <- nrow(tmp.bdy)
+        tmp.bdy[nnn,] <- lapply(tmp.bdy[nnn,],setStyle,midrule)
       }
       body[[i,j]] <- tmp.bdy
     }
   }
-  
-  ans <- list()
-  for(i in 1:N){
+
+  lheaders <- array(html_td(lheaders,vectorize=TRUE,style=html_style(lstyle)),
+          dim=dim(lheaders))
+
+  leaders <- rbind(lheaders,do.call(rbind,leaders))
     
-    tmp.bdy <- cbind(leaders[[i]],do.call(cbind,body[i,,drop=FALSE]))
-    tmp.bdy <- apply(tmp.bdy,1,paste0,collapse="")
-    ans[[i]] <- tmp.bdy
+  ans <- list()
+  for(j in 1:M){
+    ans.j <- body[,j]
+    ans.j <- do.call(rbind,ans.j)
+    ans.j <- apply(ans.j,1,as.html_group)
+    ans[[j]] <- as.html_group(c(headers[[j]],ans.j))
   }
-  ans <- c(header,unlist(ans))
-  ans <- mk_tr(ans)
-  ans <- c("<table class=\"ftable\" style=\"border-collapse: collapse;\">",
-           ans,
-           "</table>")
-  
-  ans <- paste0(ans,collapse="\n")
+  ans <- do.call(cbind,ans)
+  ans <- cbind(leaders,ans)
+  mmm <- nrow(ans)
+  ans[1,] <- lapply(ans[1,],setStyle,toprule)
+  ans[mm,] <- lapply(ans[mm,],setStyle,midrule)
+  ans[mmm,] <- lapply(ans[mmm,],setStyle,bottomrule)
+  ans <- apply(ans,1,as.html_group)
+  ans <- html_tr(ans,vectorize=TRUE)
+  ans <- html_table(ans,class="ftable",style=html_style("border-collapse"="collapse"))
+  ans <- as.character(ans)
   return(ans)
-  
   
 }
 
 
-htfm_mkHeader <- function(col.vars,n.col.vars,mcols,width,cv.repg,ii,varontop){
-  
+htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec,style,midrule){
+ 
+  align.right <- c("text-align"="right")  
+  align.left <- c("text-align"="left")  
+  align.center <- c("text-align"="center")
+ 
   nms.cv <- names(col.vars)
+  n.col.vars <- length(col.vars)
   
-  header <- character()
-  for(i in 1:n.col.vars){
+  hstyle <- upd_vect(style,align.center)
+  header <- vector("list",length=n.col.vars)
+  mm <- 1
+  for(i in rev(1:n.col.vars)){
     
-    if(i==1 && varontop){
-      if(nzchar(nms.cv[i])){
-        tmp.header <- mk_td(nms.cv[i],extra=paste0("colspan=\"",mcols[i],"\""))
-        if(n.col.vars>1)
-          tmp.header <- c(mk_td(""),tmp.header)
+    cv <- col.vars[[i]]
+    ncv <- length(cv)
+    if(split.dec)
+      colspan <- mm*3
+    else
+      colspan <- mm
+    mm <- mm*ncv
+    cv <- rep(cv,m%/%mm)
+    
+    header.i <- html_td(cv,vectorize=TRUE,style=html_style(hstyle),
+                        colspan=colspan) 
+    header.i <- setStyle(header.i,midrule)
+    
+    if(n.col.vars > 1 || !varontop){
+      
+      if(i == 1 && varontop || !length(nms.cv)){
+        htmp <- html_td("",
+                        style=html_style(upd_vect(hstyle,align.left)))
       }
-      else
-        tmp.header <- ""
-      tmp.header <- paste0(tmp.header,collapse="")
-      header <- append(header,list(tmp.header))
+      else {
+        if(!nzchar(nms.cv[i])){
+          htmp <- NULL
+        }
+        else
+          htmp <- html_td(paste0(nms.cv[i],":"),
+                          style=html_style(upd_vect(hstyle,align.left)))
+      }    
+      if(length(htmp))
+        header.i <- c(htmp,header.i)
     }
-    
-    if(i==n.col.vars){
-      tmp.header <- character(width)
-      tmp.header[ii] <- mk_td(rep(col.vars[[i]],cv.repg[i]),
-                              extra=paste0("colspan=\"",mcols[i+1],"\""))
-    }
-    else {
-      tmp.header <- mk_td(rep(col.vars[[i]],cv.repg[i]),
-                          extra=paste0("colspan=\"",mcols[i+1],"\""))
-    }
-    if(n.col.vars==1){
-      
-      if(nzchar(nms.cv[i]) && !varontop)
-        tmp.header <- c(mk_td(paste0(nms.cv[i],":")),tmp.header)
-      
-    }
-    else {
-      
-      if((i > 1 || !varontop) && nzchar(nms.cv[i]))
-        tmp.header <- c(mk_td(paste0(nms.cv[i],":")),tmp.header)
-      else
-        tmp.header <- c(mk_td(""),tmp.header)
-    }
-    header <- append(header,list(tmp.header))
+    header[[i]] <- header.i
   }
+  
+  if(varontop){
+
+    if(split.dec)
+      colspan <- mm*3
+    else
+      colspan <- mm
+    
+    if(n.col.vars > 1){
+      htmp1 <- html_td("",
+                       style=html_style(upd_vect(hstyle)))
+      htmp2 <- html_td(nms.cv[1],
+                      style=html_style(upd_vect(hstyle,align.center,midrule)),
+                      colspan=colspan)
+      htmp <- c(htmp1,htmp2)
+    }
+    else if(nzchar(nms.cv[1])){
+      htmp <- html_td(names(col.vars)[1],
+                      style=html_style(upd_vect(hstyle,align.center,midrule)),
+                      colspan=colspan)
+    }
+    else {
+      htmp <- html_td("",
+                      style=html_style(upd_vect(hstyle,align.center)),
+                      colspan=colspan)
+    }
+    header <- c(html_group(htmp),header)
+  }
+  
+  tmp.header <- header
+
+  if(split.dec)
+    colspan <- m*3
+  else
+    colspan <- m
+  if(n.col.vars > 1 || !varontop)
+    colspan <- colspan + 1
+  
+  header <- rep(list(html_td("",colspan=colspan)),max.l.cv)
+  
+  i <- seq(to=max.l.cv,length=length(tmp.header))
+  header[i] <- tmp.header
   header
 }
 
-htfm_mkLeader <- function(row.vars,n.row.vars,n) {
+htfm_mkLeader <- function(row.vars,n,max.l.rv,varinfront,style) {
   
-  leader <- matrix(mk_td(""),nrow=n,ncol=n.row.vars)
+  align.left <- c("text-align"="left")  
+  n.row.vars <- length(row.vars)
+  nms.row.vars <- names(row.vars)
+  lstyle <- upd_vect(style,align.left)
+  leader <- matrix("",nrow=n,ncol=n.row.vars)
   
-  for(i in 1:n.row.vars){
+  for(ii in 1:n.row.vars){
     
-    rv <- row.vars[[i]]
-    rep.rv <- if(i==1)1 else nn.rv
+    rv <- row.vars[[ii]]
+    rep.rv <- if(ii==1)1 else nn.rv
     rv <- rep(rv,rep.rv)
     nn.rv <- length(rv)
     rv.n <- n/nn.rv
     pos <- (1:nn.rv)*rv.n
     pos <- pos - rv.n + 1
-    leader[pos,i] <- mk_td(rv)
+    leader[pos,ii] <- rv
   }
+  if(varinfront){
+    lleader <- character(n)
+    if(nzchar(nms.row.vars[1]))
+      lleader[1] <- nms.row.vars[1]
+    else if(n==1){
+      lleader[1] <- leader[1,1]
+      leader[1,1] <- ""
+    }
+      
+    leader <- cbind(lleader,leader)
+    if(n.row.vars > 1){
+      hleader <- character(n.row.vars+1)
+      ii <- 2:n.row.vars
+      hleader[i] <- nms.row.vars[ii]
+      leader <- rbind(hleader,leader)
+    }
+  }
+  
+  tmp.leader <- leader
+  leader <- matrix("",nrow=nrow(leader),ncol=max.l.rv+as.integer(varinfront))
+  ii <- seq(to=ncol(leader),length=ncol(tmp.leader))
+  leader[,ii] <- tmp.leader
+  
+  leader <- array(html_td(leader,vectorize=TRUE,style=html_style(lstyle)),
+                  dim=dim(leader))
   leader
 }
 
-htfm_mkBody <- function(x,ii,format,digits,split.dec){
+htfm_mkBody <- function(x,format,digits,split.dec,style){
   
   n <- nrow(x)
   m <- ncol(x)
@@ -251,21 +285,18 @@ htfm_mkBody <- function(x,ii,format,digits,split.dec){
   format <- integer(m)
   format[] <- fo
   
-  total.width <- max(ii)
+  body <- array(list(),dim=c(n,m))
   
-  body <- array("",dim=c(nrow(x),total.width))
-  
-  for(i in seq(along=digits)){
+  for(i in 1:m){
     tmp <- formatC(x[,i],digits=digits[i],format=format[i])
     tmp <- gsub("-","&minus;",tmp,fixed=TRUE)
     if(!split.dec)
-      body[,ii[i]] <- mk_td(tmp)
+      body[,i] <- html_td(tmp,vectorize=TRUE,style=html_style(style))
     else {
-      tmp <- matrix(spltDec(tmp),ncol=3,byrow=TRUE)
-      tmp <- mk_td_spltDec(tmp)
-      body[,ii[i]] <- apply(tmp,1,paste0,collapse="")
+      tmp <- spltDec(tmp)
+      tmp <- html_td_spltDec(tmp,style=html_style(style))
+      body[,i] <- tmp
     }
-      
   }
   body
 }
