@@ -10,12 +10,16 @@ mtable_format_html(x,
                     interaction.sep = " &times; ",
                     toprule=2,midrule=1,bottomrule=2,
                     split.dec=TRUE,
+                    style=mtable_format_stdstyle,
+                    force.names=FALSE,
                     \dots
   )
 \method{format_html}{mtable}(x,
                     interaction.sep = " &times; ",
                     toprule=2,midrule=1,bottomrule=2,
                     split.dec=TRUE,
+                    style=mtable_format_stdstyle,
+                    force.names=FALSE,
                     \dots
   )
 }
@@ -31,6 +35,9 @@ mtable_format_html(x,
         in an interaction effect}
     \item{split.dec}{logical; whether numbers should be centered
     at the decimal point by splitting the table cells.}
+    \item{style}{string containing default the CSS styling.}
+    \item{force.names}{logical; should model names be shown even
+     if estimates of only one model are displayed?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{

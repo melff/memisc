@@ -14,6 +14,7 @@ mtable_format_print(x,
   center.at=getOption("OutDec"),
   align.integers=c("dot","right","left"),
   padding = "  ",
+  force.names=FALSE,
   \dots
   )
 }
@@ -31,6 +32,8 @@ mtable_format_print(x,
     \item{align.integers}{how to align integer values.}
     \item{padding}{a character string, usually whitespace, used to insert left- and right-padding of 
         table contents.}
+    \item{force.names}{logical; should model names be shown even
+     if estimates of only one model are displayed?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{

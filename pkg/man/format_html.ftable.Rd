@@ -13,7 +13,7 @@
                    digits = 0, 
                    format = "f", 
                    toprule = 2, midrule = 1, bottomrule = 2, 
-                   split.dec = TRUE, \dots)
+                   split.dec = TRUE, style = ftable_format_stdstyle, \dots)
 }
 \arguments{
   \item{x}{an object of class \code{\link{ftable}}.}
@@ -29,6 +29,7 @@
      thickness in pixels of rule at the bottom of the table.}
     \item{split.dec}{logical; whether numbers should be centered
     at the decimal point by splitting the table cells.}
+    \item{style}{string containing default the CSS styling.}
     \item{\dots}{further arguments, ignored.}}
 \seealso{
   See Also as \code{\link{format_html}}, \code{\link{show_html}}, \code{\link{write_html}}.

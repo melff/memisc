@@ -257,7 +257,7 @@ htfm_mkLeader <- function(row.vars,n,max.l.rv,varinfront,style) {
     if(n.row.vars > 1){
       hleader <- character(n.row.vars+1)
       ii <- 2:n.row.vars
-      hleader[i] <- nms.row.vars[ii]
+      hleader[ii] <- nms.row.vars[ii]
       leader <- rbind(hleader,leader)
     }
   }

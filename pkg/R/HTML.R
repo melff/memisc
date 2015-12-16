@@ -181,7 +181,8 @@ check_html_classes <- function(x){
   else return(FALSE)
 }
 
-as.character.html_group <- function(x)paste(unlist(lapply(x,as.character)),collapse="")
+as.character.html_group <- function(x,...)
+  paste(unlist(lapply(x,as.character)),collapse="")
 print.html_group <- function(x,...) 
   cat(as.character(x),...)
 

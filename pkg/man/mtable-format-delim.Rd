@@ -10,6 +10,7 @@ mtable_format_delim(x,
           colsep="\t",
           rowsep="\n",
           interaction.sep = " x ",
+          force.names=FALSE,
           \dots
           )
 }
@@ -19,6 +20,8 @@ mtable_format_delim(x,
      \item{rowsep}{a character string which seperates the rows in the output.}
      \item{interaction.sep}{a character string that separates factors that are involved
         in an interaction effect}
+     \item{force.names}{logical; should model names be shown even
+     if estimates of only one model are displayed?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{

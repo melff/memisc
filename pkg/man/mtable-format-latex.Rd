@@ -20,7 +20,9 @@
             bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
             interaction.sep = " $\\\\times$ ",
             sdigits=1,
-            drop=TRUE,
+            force.names = FALSE,
+            compact=FALSE,
+            sumry.multicol=FALSE,
             \dots
   )
 }
@@ -43,8 +45,10 @@
      \item{interaction.sep}{a character string that separates factors that are involved
         in an interaction effect}
      \item{sdigits}{integer; number of digits after decimal dot for summary statistics.}
-     \item{drop}{logical value; should redundant column headings
-        dropped if only one model is given as argument?}
+    \item{force.names}{logical; should model names be shown even
+     if estimates of only one model are displayed?}
+    \item{compact}{logical; should the table be compact, without extra columns
+    between multi-equation models?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{
