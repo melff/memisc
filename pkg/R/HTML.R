@@ -170,14 +170,15 @@ check_html_classes <- function(x){
   if(inherits(x,"html_group")) return(x)
   if(is.character(x)) return(x)
   if(!is.list(x)) stop("check failed")
-  if(all(.check_html_classes(x))) return(x)
+  if(all(sapply(x,.check_html_classes))) return(x)
   stop("check failed")
 }
 .check_html_classes <- function(x){
-  is_character <- sapply(x,is.character)
-  is_html_elem <- sapply(x,inherits,"html_elem")
-  is_html_group <- sapply(x,inherits,"html_group")
-  is_character | is_html_elem | is_html_group
+  if(inherits(x,"html_elem")) return(TRUE)
+  if(inherits(x,"html_group")) return(TRUE)
+  if(is.character(x)) return(TRUE)
+  if(is.list(x)) return(all(sapply(x,.check_html_classes)))
+  else return(FALSE)
 }
 
 as.character.html_group <- function(x)paste(unlist(lapply(x,as.character)),collapse="")
