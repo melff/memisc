@@ -78,8 +78,8 @@ mtable_format_print <- function(x,
     as.matrix(format(c(coef.tab,summaries),justify="centre"))
   }
   
-  for(n in names(coefs)){
-    mtab <- cbind(mtab,frmt1(coefs[[n]],summaries[,n]))
+  for(i in 1:length(coefs)){
+    mtab <- cbind(mtab,frmt1(coefs[[i]],summaries[,i]))
   }
   
   if(num.models>1 || force.names)
