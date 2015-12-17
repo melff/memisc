@@ -37,7 +37,9 @@ mtable_format_print <- function(x,
   
   mtab <- character()
   align.integers <- match.arg(align.integers)
+  
   frmt1 <- function(coefs,summaries){
+  
     if(length(dim(coefs))==3){
       coef.tab <- apply(coefs,2,centerAt,
                         at=center.at,
@@ -78,20 +80,46 @@ mtable_format_print <- function(x,
     as.matrix(format(c(coef.tab,summaries),justify="centre"))
   }
   
-  for(i in 1:length(coefs)){
-    mtab <- cbind(mtab,frmt1(coefs[[i]],summaries[,i]))
-  }
-  
-  if(num.models>1 || force.names)
-    mtab <- rbind(names(coefs),mtab)
-  mtab <- apply(mtab,2,format,justify="centre")
-
-  if(num.models>1 || force.names){
-    hdrlines <- if(grp.coefs) 1:3 else 1
+  if(length(x$model.groups)){
+    for(i in seq_along(x$model.groups)){
+      
+      mg <- x$model.groups[[i]]
+      mtab.m <- character()
+      
+      for(j in mg){
+        mtab.m <- cbind(mtab.m,frmt1(coefs[[j]],summaries[,j]))
+      }
+      mtab.m <- rbind(names(coefs)[mg],mtab.m)
+      mtab.m <- apply(mtab.m,2,format,justify="centre")
+      mtab.m <- apply(mtab.m,1,paste,collapse=" ")
+      grp.line <- paste(rep(sectionsep,nchar(mtab.m[1])),collapse="")
+      mtab.m <- c(names(x$model.groups)[i],grp.line,mtab.m)
+      mtab.m <- format(mtab.m, justify="centre")
+      mtab <- cbind(mtab,mtab.m)
+    }
   }
   else {
-    hdrlines <- if(grp.coefs) 1 else 0
+    for(i in 1:length(coefs)){
+      mtab <- cbind(mtab,frmt1(coefs[[i]],summaries[,i]))
+    }    
+    if(num.models>1 || force.names)
+      mtab <- rbind(names(coefs),mtab)
+    mtab <- apply(mtab,2,format,justify="centre")
+  }
+  
+  if(num.models>1 || force.names){
+    if(length(x$model.groups))
+      hdrlines <- if(grp.coefs) 1:5 else 1:3
+    else
+      hdrlines <- if(grp.coefs) 1:3 else 1
+  }
+  else {
+    if(length(x$model.groups))
+      hdrlines <- if(grp.coefs) 1:3 else 1
+    else
+      hdrlines <- if(grp.coefs) 1 else 0
   } 
+
   smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
   
   ldr <- character(length(coef.names)*coef.dims1)
