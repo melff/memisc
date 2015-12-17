@@ -40,6 +40,12 @@ mtable_format_html <- function(x,
   
   coef.dims1 <- unique(sapply(coef.dims,"[[",1))
   stopifnot(length(coef.dims1)==1)
+  
+  grp.coefs <- max.coef.ldim > 3 
+  if(grp.coefs){
+    coef.dims4 <- sapply(coef.dims[coef.ldim>3],"[",4)
+    grp.coefs <- grp.coefs && any(coef.dims4>1)
+  }
 
   coef.names <- dimnames(coefs[[1]])[[3]]  
   if(interaction.sep !=" x ")
@@ -76,7 +82,7 @@ mtable_format_html <- function(x,
     colspan <- dm[2]
     if(split.dec)
       colspan <- 3*colspan
-    if(max.coef.ldim>3){
+    if(grp.coefs){
       if(dm[4]>1)
         eq.names <- dimnames(coefs)[[4]]
       else
@@ -119,10 +125,7 @@ mtable_format_html <- function(x,
     
     if(num.models>1 || force.names){
       
-      hstyle <- upd_vect(style,align.center)
-      if(length(dim(coefs))>3 && dim(coefs)[4]>1 || max.coef.ldim==3){
-        hstyle <- upd_vect(hstyle,midrule)
-      }
+      hstyle <- upd_vect(style,align.center,midrule)
       header <- html_td(name,colspan=colspan,style=html_style(hstyle))
       mtab <- c(html_group(header),mtab)
     }
@@ -131,9 +134,34 @@ mtable_format_html <- function(x,
     mtab
   }
   
-  
-  for(n in names(coefs)){
-    mtab <- cbind(mtab,frmt1(n,coefs[[n]],summaries[,n]))
+  if(length(x$model.groups)){
+    for(i in seq_along(x$model.groups)){
+      
+      mg <- x$model.groups[[i]]
+      mtab.m <- character()
+      colspan <- 0
+      
+      for(j in mg){
+        dm <- dim(coefs)[[j]]
+        colspan.j <- prod(dm[c(2,4)])
+        if(split.dec)
+          colspan.j <- 3*colspan.j
+        colspan <- colspan + colspan.j
+        mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j]))
+      }
+      
+      mtab.m <- apply(mtab.m,1,as.html_group)
+      model.name <- names(x$model.groups)[i]
+      hstyle <- upd_vect(style,align.center,midrule,toprule)
+      model.name <- html_td(model.name,colspan=colspan,style=html_style(hstyle))
+      mtab.m <- c(list(model.name),mtab.m)
+      mtab <- cbind(mtab,mtab.m)
+    }
+  }
+  else {
+    for(i in 1:length(coefs)){
+      mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i]))
+    }
   }
   
   dm <- coef.dims[[1]]
@@ -151,7 +179,8 @@ mtable_format_html <- function(x,
   hldr <- NULL
   if(num.models > 1 || force.names || max.coef.ldim > 3){
     
-    hldr <- rep("",(num.models > 1 || force.names)+(max.coef.ldim > 3))
+    hldr <- rep("",(num.models > 1 || force.names)+as.integer(grp.coefs)
+                    + as.integer(length(x$model.groups)>0))
     hldr <- html_td(hldr,vectorize=TRUE,style=html_style(lstyle))
     hldr[length(hldr)] <- setStyle(hldr[length(hldr)],midrule)
     hldr[1] <- setStyle(hldr[1],toprule)
