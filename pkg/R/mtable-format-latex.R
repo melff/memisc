@@ -45,6 +45,12 @@ mtable_format_latex <- function(x,
   sdigits <- structure(integer(length(coefs)),names=names(coefs))
   sdigits[] <- tmp
   
+  grp.coefs <- max.coef.ldim > 3 
+  if(grp.coefs){
+    coef.dims4 <- sapply(coef.dims[coef.ldim>3],"[",4)
+    grp.coefs <- grp.coefs && any(coef.dims4>1)
+  }
+  
   mtab <- character()
   
   frmt1 <- function(name,coefs,summaries,sdigits){
@@ -61,7 +67,7 @@ mtable_format_latex <- function(x,
     if(!useDcolumn)
       coef.tab[] <- paste0("$",coef.tab,"$")
       
-    if(max.coef.ldim>3){
+    if(grp.coefs){
       hdr <- character(ncol(coef.tab))
       if(dm[4]>1){
         eq.names <- dimnames(coefs)[[4]]
@@ -97,22 +103,59 @@ mtable_format_latex <- function(x,
   tab.spec <- character()
   cmidrule.start <- 0
   cmidrule.end <- 0
+
+  cmidrule0.start <- 0
+  cmidrule0.end <- 0
   
-  for(n in names(coefs)){
-    nc <- prod(dim(coefs[[n]])[-c(3,1)])
-    tmp.spec <- coef.spec[1:nc]
-    tmp.spec <- paste0(tmp.spec,collapse="")
-    tab.spec <- c(tab.spec,tmp.spec)
-    coef.spec <- coef.spec[-(1:nc)]
-    mtab <- cbind(mtab,frmt1(n,coefs[[n]],summaries[,n],sdigits[n]))
-    ci <- length(cmidrule.start)
-    if(compact){
-      cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+1)
-      cmidrule.end <- c(cmidrule.end,cmidrule.end[ci]+nc)
+  if(length(x$model.groups)){
+  
+    for(i in seq_along(x$model.groups)){
+
+      mg <- x$model.groups[[i]]
+      mtab.m <- character()
+      tab.spec.m <- character()
+      nc0 <- 0
+      for(j in mg){
+        nc <- prod(dim(coefs[[j]])[-c(3,1)])
+        nc0 <- nc0 + nc
+        tmp.spec <- coef.spec[1:nc]
+        tmp.spec <- paste0(tmp.spec,collapse="")
+        tab.spec.m <- c(tab.spec.m,tmp.spec)
+        coef.spec <- coef.spec[-(1:nc)]
+        mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j],sdigits[j]))
+        ci <- length(cmidrule.start)
+        cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+1)
+        cmidrule.end <- c(cmidrule.end,cmidrule.end[ci]+nc)
+      }
+      mtab.m <- apply(mtab.m,1,paste,collapse=colsep)
+      group.name <- names(x$model.groups)[i]
+      group.name <- paste0("\\multicolumn{",nc0,"}{c}{",group.name,"}")
+      mtab.m <- c(group.name,mtab.m)
+      mtab <- cbind(mtab,mtab.m)
+      tab.spec.m <- paste0(tab.spec.m,collapse="")
+      tab.spec <- c(tab.spec,tab.spec.m)
+      ci0 <- length(cmidrule0.start)
+      cmidrule0.start <- c(cmidrule0.start,cmidrule0.end[ci0]+2)
+      cmidrule0.end <- c(cmidrule0.end,cmidrule0.end[ci0]+1+nc0)
     }
-    else{
-      cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+2)
-      cmidrule.end <- c(cmidrule.end,cmidrule.end[ci]+1+nc)
+  }
+  else {
+    for(i in 1:length(coefs)){
+      nc <- prod(dim(coefs[[i]])[-c(3,1)])
+      tmp.spec <- coef.spec[1:nc]
+      tmp.spec <- paste0(tmp.spec,collapse="")
+      tab.spec <- c(tab.spec,tmp.spec)
+      coef.spec <- coef.spec[-(1:nc)]
+      mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i],sdigits[i]))
+      ci <- length(cmidrule.start)
+      if(compact){
+        cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+1)
+        cmidrule.end <- c(cmidrule.end,cmidrule.end[ci]+nc)
+      }
+      else{
+        cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+2)
+        cmidrule.end <- c(cmidrule.end,cmidrule.end[ci]+1+nc)
+      }
     }
   }
   
@@ -128,7 +171,11 @@ mtable_format_latex <- function(x,
     hldr <- c(hldr,"")
     nhdrl <- nhdrl + 1
   }
-  if(max.coef.ldim>3){
+  if(grp.coefs){
+    hldr <- c(hldr,"")
+    nhdrl <- nhdrl + 1
+  }  
+  if(length(x$model.groups)){
     hldr <- c(hldr,"")
     nhdrl <- nhdrl + 1
   }  
@@ -136,6 +183,7 @@ mtable_format_latex <- function(x,
     hdrlines <- 1:nhdrl
   else
     hdrlines <- 0
+  
   ldr <- c(hldr,ldr,rownames(summaries))
 
   if(compact){
@@ -150,14 +198,31 @@ mtable_format_latex <- function(x,
   mtab <- paste(ldr,mtab,sep=colsep)
   tab.spec <- paste0("l",tab.spec)
   mtab <- paste0(mtab,"\\\\")
-  if(num.models>1 && max.coef.ldim>3){
+  
+  cmidrule.pos <- 1
+  
+  if(length(x$model.groups)){
+      
+      use.cmidrule0 <- cmidrule0.start < cmidrule0.end
+      if(any(use.cmidrule0)){
+        cmidrule0.start <- cmidrule0.start[use.cmidrule0]
+        cmidrule0.end <- cmidrule0.end[use.cmidrule0]
+        cmidrules0 <- paste0(cmidrule,"{",cmidrule0.start,"-",cmidrule0.end,"}")
+        cmidrules0 <- paste(cmidrules0,collapse="")
+        mtab[cmidrule.pos] <- paste0(mtab[cmidrule.pos],rowsep,cmidrules0)
+      }
+      
+      cmidrule.pos <- cmidrule.pos + 1
+  }
+  
+  if(num.models>1 && grp.coefs){
     use.cmidrule <- cmidrule.start < cmidrule.end
     if(any(use.cmidrule)){
       cmidrule.start <- cmidrule.start[use.cmidrule]
       cmidrule.end <- cmidrule.end[use.cmidrule]
       cmidrules <- paste0(cmidrule,"{",cmidrule.start,"-",cmidrule.end,"}")
       cmidrules <- paste(cmidrules,collapse="")
-      mtab[1] <- paste0(mtab[1],rowsep,cmidrules)
+      mtab[cmidrule.pos] <- paste0(mtab[cmidrule.pos],rowsep,cmidrules)
     }
   }
   
