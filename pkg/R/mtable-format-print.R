@@ -117,7 +117,7 @@ mtable_format_print <- function(x,
     if(length(x$model.groups))
       hdrlines <- if(grp.coefs) 1:3 else 1
     else
-      hdrlines <- if(grp.coefs) 1 else 0
+      hdrlines <- if(grp.coefs) 1 else integer(0)
   } 
 
   smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
