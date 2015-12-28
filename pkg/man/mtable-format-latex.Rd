@@ -12,14 +12,14 @@
                       paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") 
                     else "r",
             LaTeXdec=".",
-            ddigits=getOption("digits"),
+            ddigits=min(3,getOption("digits")),
             useBooktabs=TRUE,
             toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
             midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
             cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
             bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
             interaction.sep = " $\\\\times$ ",
-            sdigits=1,
+            sdigits=min(1,ddigits),
             force.names = FALSE,
             compact=FALSE,
             sumry.multicol=FALSE,
@@ -49,6 +49,8 @@
      if estimates of only one model are displayed?}
     \item{compact}{logical; should the table be compact, without extra columns
     between multi-equation models?}
+    \item{sumry.multicol}{logical, should summaries enclosed into
+         \code{\\multicol} commands?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{

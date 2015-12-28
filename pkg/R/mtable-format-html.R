@@ -201,7 +201,10 @@ mtable_format_html <- function(x,
 format_html.mtable <- function(x,
                                interaction.sep = " &times; ",
                                toprule=2,midrule=1,bottomrule=2,
-                               split.dec=TRUE,...)
+                               split.dec=TRUE,
+                               style=mtable_format_stdstyle,
+                               force.names=FALSE,...)
   mtable_format_html(x,interaction.sep=interaction.sep,
                      toprule=toprule,midrule=midrule,bottomrule=bottomrule,
-                     split.dec=split.dec,...)
+                     split.dec=split.dec,style=style,
+                     force.names=force.names,...)
