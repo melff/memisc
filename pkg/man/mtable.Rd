@@ -220,5 +220,7 @@ mtable123[c("dpi","ddpi"),
 mt01 <- mtable(lm0,lm1,summary.stats=c("R-squared","N"))
 mt12 <- mtable(lm1,lm2,summary.stats=c("R-squared","F","N"))
 c(mt01,mt12) # not that this makes sense, but ...
+c("Group 1"=mt01,
+  "Group 2"=mt12)
 }
 \keyword{misc}
