@@ -116,13 +116,6 @@ combine_mtables <- function(...){
   coefs <- do.call("c",coefs)
   nms <- names(coefs)
   
-  if(length(unique(nms))<length(nms)) {
-    warning("duplicate model names, dropping previous duplicates")
-    keep <- !rev(duplicated(rev(nms)))
-    coefs <- coefs[keep]
-    }
-  else keep <- rep(TRUE,length(nms))
-  
   rown <- lapply(args,rownames)
   rown <- unique(unlist(rown))
   
@@ -132,13 +125,13 @@ combine_mtables <- function(...){
   s.rown <- lapply(smrys,rownames)
   s.rown <- unique(unlist(s.rown))
   smrys <- lapply(smrys,smryxpand,s.rown)
-  smrys <- do.call("cbind",smrys)[,keep]
+  smrys <- do.call("cbind",smrys)
 
-  names(coefs) <- model.names[keep]
-  colnames(smrys) <- model.names[keep]
+  names(coefs) <- model.names
+  colnames(smrys) <- model.names
     
   calls <- lapply(args,"[[","calls")
-  calls <- do.call("c",calls)[keep]
+  calls <- do.call("c",calls)
   
   structure(list(
     coefficients=coefs,
