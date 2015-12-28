@@ -4,10 +4,10 @@ format_html.ftable_matrix <- function(x,
                                format="f",
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
+                               style=ftable_format_stdstyle,
                                varontop,varinfront,
                                ...){
   
-  style <- ftable_format_stdstyle
   first.col <- c("padding-left"="0.3em")
   toprule <- c("border-top"=paste0(midrule,"px solid"))
   bottomrule <- c("border-bottom"=paste0(midrule,"px solid"))
