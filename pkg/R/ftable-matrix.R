@@ -95,7 +95,7 @@ rbind.ftable <- function(..., deparse.level=1){
     class="ftable_matrix")
 }
 
-cbind.ftable_matrix <- function(...){
+cbind.ftable_matrix <- function(..., deparse.level=1){
 
   args <- list(...)
   inh.fm <- sapply(args,inherits,"ftable_matrix")
@@ -129,7 +129,7 @@ cbind.ftable_matrix <- function(...){
     class="ftable_matrix")
 }
 
-rbind.ftable_matrix <- function(...){
+rbind.ftable_matrix <- function(..., deparse.level=1){
 
   args <- list(...)
   inh.fm <- sapply(args,inherits,"ftable_matrix")
@@ -275,11 +275,12 @@ format.ftable_matrix <- function(x,quote=TRUE,digits=0,format="f",...){
   res
 }
 
-write.ftable_matrix <- function(x,
+Write.ftable_matrix <- function(x,
                             file = "",
                             quote = TRUE,
                             append = FALSE,
-                            digits = 0){
+                            digits = 0,
+                            ...){
   r <- format.ftable_matrix(x,quote=quote,digits=digits)
   r <- apply(r,1,paste,collapse=" ")
   cat(r, file = file, append = append, sep = "\n")
@@ -287,5 +288,5 @@ write.ftable_matrix <- function(x,
 }
 
 print.ftable_matrix <- function(x,quote=FALSE,...)
-  write.ftable_matrix(x,file="",quote=quote,...)
+  Write.ftable_matrix(x,file="",quote=quote,...)
 
