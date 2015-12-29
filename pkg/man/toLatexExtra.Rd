@@ -2,6 +2,7 @@
 \alias{toLatex.default}
 \alias{toLatex.ftable}
 \alias{toLatex.matrix}
+\alias{toLatex.ftable_matrix}
 \title{Additional Methods for LaTeX Representations for R objects}
 \description{
   Methods for the generic function \code{\link[utils]{toLatex}} of package ``\link{utils}''
@@ -12,12 +13,13 @@
 }
 \usage{
 \method{toLatex}{default}(object,\dots)
+
 \method{toLatex}{ftable}(object,
     show.titles=TRUE,
     digits=0,
     format="f",
     useDcolumn=TRUE,
-    colspec= if (useDcolumn)
+    colspec=if(useDcolumn)
                 paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
              else "r",
     LaTeXdec=".",
@@ -29,6 +31,7 @@
     bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
     extrarowsep = NULL,
     \dots)
+
 \method{toLatex}{matrix}(object,
     show.titles=TRUE,
     show.vars=FALSE,
@@ -37,7 +40,7 @@
     digits=if(is.table(object)) 0 else getOption("digits"),
     format="f",
     useDcolumn=TRUE,
-    colspec= if (useDcolumn)
+    colspec=if(useDcolumn)
                 paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
              else "r",
     LaTeXdec=".",
@@ -48,39 +51,76 @@
     cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
     bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
     \dots)
+
+\method{toLatex}{ftable_matrix}(object,
+    show.titles=TRUE,
+    digits=0,
+    format="f",
+    useDcolumn=TRUE,
+    colspec=if(useDcolumn)
+                paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
+             else "r",
+    LaTeXdec=".",
+    ddigits=max(1,digits),
+    useBooktabs=TRUE,
+    toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
+    midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
+    cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
+    bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
+    compact=FALSE,
+    varontop,varinfront,
+    groupsep="3pt",
+    grouprule=midrule,
+    \dots)
 }
 \arguments{
-     \item{object}{an \code{\link{ftable}}, a matrix or an object coercable into a matrix.  }
-     \item{show.titles}{logical; should variable names (in case of the \code{ftable} and \code{table} methods)
+     \item{object}{an \code{\link{ftable}}, a matrix or an object coercable into 
+     a matrix.  }
+     \item{show.titles}{logical, should variable names (in case of the 
+     \code{ftable} and \code{table} methods)
       or row and column names (in case of the \code{matrix} method) be appear
       in the \code{LaTeX} code? }
-     \item{show.vars,show.xvar,show.yvar}{logical; should the names of the dimnames of \code{object}
+     \item{show.vars,show.xvar,show.yvar}{logical, should the names of the dimnames of \code{object}
       be shown in the margins of the LaTeX tabular? Such names usually represent the
       row and/or column variables of a two-dimensional \code{\link{table}}.
      }
      \item{digits}{number of significant digits.
         }
-     \item{format}{format specifier, see \code{\link{format}}. }
-     \item{useDcolumn}{should the facilities of the \code{dcolumn} LaTeX package be used?
+     \item{format}{chracter containing a format specifier, see \code{\link{format}}. }
+     \item{useDcolumn}{logical, should the facilities of the \code{dcolumn} LaTeX package be used?
           Note that, if TRUE, you will need to include \code{\\usepackage{dcolumn}}
           in the preamble of your LaTeX document.}
-     \item{colspec}{LaTeX table column format specifyer(s).}
-     \item{LaTeXdec}{the decimal point in the final LaTeX output.}
-     \item{ddigits}{alignment specification or digits after the decimal point.}
-     \item{useBooktabs}{should the facilities of the \code{booktabs} LaTeX package be used?
+     \item{colspec}{character, LaTeX table column format specifyer(s).}
+     \item{LaTeXdec}{character, the decimal point in the final LaTeX output.}
+     \item{ddigits}{integer, digits after the decimal point.}
+     \item{useBooktabs}{logical, should the facilities of the \code{booktabs} LaTeX package be used?
           Note that, if TRUE, you will need to include \code{\\usepackage{booktabs}}
           in the preamble of your LaTeX document.}
-     \item{toprule}{appearance of the top border of the LaTeX \code{tabular} environment.}
-     \item{midrule}{how are coefficients and summary statistics
+     \item{toprule}{character string, TeX code that determines the appearance of the top border of the LaTeX \code{tabular} environment.}
+     \item{midrule}{character string, TeX code that determines how  coefficients and summary statistics are
         separated in the LaTeX \code{tabular} environment.}
-     \item{cmidrule}{appearance of rules under section headings.}
-     \item{bottomrule}{appearance of the bottom border of the LaTeX \code{tabular} environment.}
-     \item{extrarowsep}{extra code to be inserted between the column titles and the
+     \item{cmidrule}{character string, TeX code that determines the appearance of rules under section headings.}
+     \item{bottomrule}{character string, TeX code that determines the appearance of the bottom border of the LaTeX \code{tabular} environment.}
+     \item{extrarowsep}{character string, extra code to be inserted between the column titles and the
      table body produced by \code{toLatex}. }
+     \item{compact}{logical, if \code{TRUE}, extra column space between sub-tables 
+        is suppressed. Defaults to \code{FALSE}}
+    \item{varontop}{logical, whether names of column variables should appear on top of factor levels}
+    \item{varinfront}{logical, whether names of row variables should appear in front of factor levels}
+     \item{groupsep}{character string, containing a TeX length; extra 
+      vertical space inserted between sub-tables, unless \code{compact} is \code{TRUE}.}
+     \item{grouprule}{character string, TeX code that determines how
+           sub-table headings are embellished.}
      \item{\dots}{further argument, currently ignored.}
 }
 \examples{
 toLatex(diag(5))
+
 toLatex(ftable(UCBAdmissions))
+
+toLatex(rbind(
+  ftable(margin.table(UCBAdmissions,c(2,1))),
+  ftable(margin.table(UCBAdmissions,c(3,1)))
+))
 }
 \keyword{misc}

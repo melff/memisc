@@ -11,7 +11,7 @@ toLatex.ftable_matrix <- function(object,
                                   ddigits=max(1,digits),
                                   useBooktabs=TRUE,
                                   toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
-                                  midrule=if(useBooktabs) "\\midrule" else "\\hline\n",
+                                  midrule=if(useBooktabs) "\\midrule" else "\\hline",
                                   cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
                                   bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
                                   compact=FALSE,
@@ -219,7 +219,7 @@ toLatex.ftable_matrix <- function(object,
     tmp.bdy <- cbind(leaders[[i]],do.call(cbind,body[i,,drop=FALSE]))
     tmp.bdy <- apply(tmp.bdy,1,paste0,collapse="&")
     tmp.rowsep <- rep("\\\\",length(tmp.bdy))
-    if(i<N && (!varinfront || max.n.row.vars > 1))
+    if(i<N && (!varinfront || max.n.row.vars > 1) && !compact)
       tmp.rowsep[length(tmp.bdy)] <- paste0(tmp.rowsep[length(tmp.bdy)],"[",groupsep,"]")
     if(i>1 && (!varinfront || max.n.row.vars > 1) && any(nzchar(names(row.vars[[i]])))){
       
