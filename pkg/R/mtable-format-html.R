@@ -127,7 +127,7 @@ mtable_format_html <- function(x,
       
       hstyle <- upd_vect(style,align.center,midrule)
       header <- html_td(name,colspan=colspan,style=html_style(hstyle))
-      mtab <- c(html_group(header),mtab)
+      mtab <- c(list(header),mtab)
     }
     
     mtab[1] <- lapply(mtab[1],setStyle,toprule)

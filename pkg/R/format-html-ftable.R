@@ -92,7 +92,7 @@ format_html.ftable <- function(x,
   body <- cbind(leaders,body)
   nn <- nrow(body)
   body[nn,] <- lapply(body[nn,],setStyle,bottomrule)
-  body <- apply(body,1,html_tr)
+  body <- as.html_group(apply(body,1,html_tr))
   
   header <- list()
   mm <- 1
@@ -135,7 +135,7 @@ format_html.ftable <- function(x,
     else
       attribs$style <- html_style(upd_vect(hstyle,midrule))
       
-    htmp2 <- lapply(html_td(cv,vectorize=TRUE),setAttribs,attribs)
+    htmp2 <- setAttribs(html_td(cv,vectorize=TRUE),attribs)
     header <- c(list(c(htmp1,htmp2)),header)
   }
   if(show.titles && n.col.vars == 1){
@@ -149,7 +149,7 @@ format_html.ftable <- function(x,
         colspan <- colspan*3
       attribs <- list(colspan=colspan,
                       style=html_style(upd_vect(hstyle,align.center,midrule)))
-      htmp2 <- lapply(html_td(names(col.vars),vectorize=TRUE),setAttribs,attribs)
+      htmp2 <- setAttribs(html_td(names(col.vars),vectorize=TRUE),attribs)
       header <- c(list(c(htmp1,htmp2)),header)
     }
   }

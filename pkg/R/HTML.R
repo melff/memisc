@@ -76,14 +76,14 @@ content <- function(x) x$content
   x
 }
 
-attrib <- function(x) 
+attribs <- function(x) 
   structure(x$attributes,class="html_attributes")
 
-"attrib<-" <- function(x,value){
+"attribs<-" <- function(x,value){
   x$attributes <- value
   x
 }
-"[<-.html.attributes" <- function(x,i,...,value){
+"[<-.html_attributes" <- function(x,i,...,value){
   x <- unclass(x)
   x[i] <- list(value)
   structure(x,class="html_attributes")
@@ -98,8 +98,7 @@ setAttribs.html_elem <- function(x,...){
   x
 }
 
-c.html_elem <- function(...)
-  structure(list(...),class="html_group")
+c.html_elem <- function(...) reduce(list(...),join_html)
 
 
 
@@ -195,6 +194,8 @@ print.html_group <- function(x,...)
   structure(x,class="html_group")
 }
 
+c.html_group <- function(...) reduce(list(...),join_html)
+
 setAttribs.html_group <- function(x,...){
   x <- lapply(x,setAttribs,...)
   structure(x,class="html_group")
@@ -204,7 +205,18 @@ setStyle.html_group <- function(x,...){
   structure(x,class="html_group")
 }
 
+join_html <- function(x,y){
 
+  if(inherits(x,"html_elem")&&inherits(y,"html_elem"))
+    return(structure(list(x,y),class="html_group"))
+  else if(inherits(x,"html_group")&&inherits(y,"html_elem"))
+    return(structure(c(unclass(x),list(y)),class="html_group"))
+  else if(inherits(x,"html_elem")&&inherits(y,"html_group"))
+    return(structure(c(list(x),unclass(y)),class="html_group"))
+  else if(inherits(x,"html_group")&&inherits(y,"html_group"))
+    return(structure(c(unclass(x),unclass(y)),class="html_group"))
+  else stop("cannot handle these arguments.")
+}
 
 
 

@@ -206,7 +206,7 @@ htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec,style,midrule){
                       style=html_style(upd_vect(hstyle,align.center)),
                       colspan=colspan)
     }
-    header <- c(html_group(htmp),header)
+    header <- c(list(htmp),header)
   }
   
   tmp.header <- header
