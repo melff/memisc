@@ -6,8 +6,7 @@
  Format Objects in HTML, show the HTML Format or Write it to a File
 }
 \description{
- \code{show_html} is for showing objects (at present only
- 'mtable' results) in a convenient way in HTML format. 
+ \code{show_html} is for showing objects in a convenient way in HTML format. 
  \code{write_html} writes them in HTML format into a file.
  Both functions call the generic \code{format_html} for the format conversion.
 }

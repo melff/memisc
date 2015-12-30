@@ -262,3 +262,6 @@ html_p <- function(x,...,linebreak=TRUE) html(tag="p",...,.content=x,linebreak=l
 html_div <- function(x,...,linebreak=c(TRUE,TRUE)) html(tag="div",...,.content=x,linebreak=linebreak)
 
 
+format_html.html_elem <- function(x,...) as.character.html_elem(x)
+format_html.html_group <- function(x,...) as.character.html_group(x)
+

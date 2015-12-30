@@ -312,15 +312,31 @@ S3method(Write,ftable_matrix)
 S3method(toLatex,ftable_matrix)
 S3method(relabel,ftable_matrix)
 
+export(html,content,attribs,style,
+  setContent,setStyle,setAttribs,
+  html_group,as.html_group,
+  html_style,as.html_style,
+  "content<-","attribs<-","style<-")
+  
 S3method(as.character,html_elem)
 S3method(print,html_elem)
 S3method(c,html_elem)
-S3method(as.character,html_style)
-S3method(print,html_style)
+S3method(format_html,html_elem)
+
 S3method(as.character,html_group)
 S3method(print,html_group)
+S3method(c,html_group)
+S3method("[",html_group)
+S3method("[<-",html_group)
+S3method(format_html,html_group)
 
-S3method(setStyle,html_elem)
-S3method(setStyle,html_group)
+
 S3method(setAttribs,html_elem)
 S3method(setAttribs,html_group)
+S3method("[<-",html_attributes)
+
+S3method(as.character,html_style)
+S3method(print,html_style)
+S3method(setStyle,html_elem)
+S3method(setStyle,html_group)
+S3method("[<-",html_style)
