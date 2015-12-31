@@ -27,6 +27,7 @@ format_html(x, \dots)
     digits=getOption("digits"),
     format="f",
     style=df_format_stdstyle,
+    margin="2ex auto", 
     \dots)
     
 \method{format_html}{matrix}(x,
@@ -35,6 +36,7 @@ format_html(x, \dots)
     digits=getOption("digits"),
     format="f",
     style=mat_format_stdstyle,
+    margin="2ex auto", 
     \dots)
 }
 \arguments{
@@ -72,6 +74,8 @@ format_html(x, \dots)
   the "ftable" object was created from a table created with \code{\link{genTable}} or the like.}
   \item{format}{a format string for \code{\link{formatC}}}
   \item{style}{string containing the stanard CSS styling of table cells.}
+  \item{margin}{character string, determines the margin and thus
+    the position of the HTML table.}
   \item{\dots}{other arguments, passed on to formatter functions.}
 }
 \value{

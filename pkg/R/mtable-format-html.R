@@ -12,6 +12,7 @@ mtable_format_html <- function(x,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,
+                               margin="2ex auto",
                                force.names = FALSE,
                                ...
 ){
@@ -190,7 +191,10 @@ mtable_format_html <- function(x,
   body <- apply(body,1,as.html_group)
   body <- html_tr(body,vectorize=TRUE)
   
-  ans <- html_table(body,class="mtable",style=css("border-collapse"="collapse"))
+  table_style <- c("border-collapse"="collapse")
+  if(length(margin))
+    table_style <- c(table_style,margin=margin)
+  ans <- html_table(body,class="mtable",style=as.css(table_style))
   
   ans <- as.character(ans)
   return(ans)
@@ -203,8 +207,9 @@ format_html.mtable <- function(x,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,
+                               margin="2ex auto",
                                force.names=FALSE,...)
   mtable_format_html(x,interaction.sep=interaction.sep,
                      toprule=toprule,midrule=midrule,bottomrule=bottomrule,
-                     split.dec=split.dec,style=style,
+                     split.dec=split.dec,style=style,margin=margin,
                      force.names=force.names,...)

@@ -15,6 +15,7 @@ format_html.matrix <- function(x,
                                digits=getOption("digits"),
                                format="f",
                                style=mat_format_stdstyle,
+                               margin="2ex auto",
                                ...){
 
   
@@ -93,7 +94,11 @@ format_html.matrix <- function(x,
   else
     ans <- html_table(body)
   
-  ans <- setStyle(ans,"border-collapse"="collapse")
+  table_style <- c("border-collapse"="collapse")
+  if(length(margin))
+    table_style <- c(table_style,margin=margin)
+  style(ans) <- as.css(table_style)
+
   ans <- as.character(ans)
   return(ans)
 }

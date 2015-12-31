@@ -16,6 +16,7 @@ format_html.data.frame <- function(x,
                                digits=getOption("digits"),
                                format="f",
                                style=df_format_stdstyle,
+                               margin="2ex auto",
                                ...){
 
   
@@ -100,8 +101,11 @@ format_html.data.frame <- function(x,
   hdr[[length(hdr)]] <- setStyle(hdr[[length(hdr)]],lastcol)
   hdr <- html_tr(hdr)
   
-  ans <- html_table(c(list(hdr),body))
-  ans <- setStyle(ans,"border-collapse"="collapse")
+  table_style <- c("border-collapse"="collapse")
+  if(length(margin))
+    table_style <- c(table_style,margin=margin)
+  ans <- html_table(c(list(hdr),body),style=as.css(table_style))
+
   ans <- as.character(ans)
   return(ans)
 }

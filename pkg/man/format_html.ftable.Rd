@@ -16,7 +16,8 @@
                    format = "f", 
                    toprule = 2, midrule = 1, bottomrule = 2, 
                    split.dec = TRUE, 
-                   style = ftable_format_stdstyle, 
+                   style = ftable_format_stdstyle,
+                   margin="2ex auto", 
                    \dots)
 \method{format_html}{ftable_matrix}(x,
                    show.titles=TRUE,
@@ -24,7 +25,8 @@
                    format="f",
                    toprule=2,midrule=1,bottomrule=2,
                    split.dec=TRUE,
-                   style = ftable_format_stdstyle, 
+                   style = ftable_format_stdstyle,
+                   margin="2ex auto", 
                    varontop,varinfront,
                    \dots)
 }
@@ -43,6 +45,8 @@
     \item{split.dec}{logical; whether numbers should be centered
     at the decimal point by splitting the table cells.}
     \item{style}{string containing the stanard CSS styling of table cells.}
+    \item{margin}{character string, determines the margin and thus
+      the position of the HTML table.}
     \item{varontop}{logical; whether names of column variables should appear on top of factor levels}
     \item{varinfront}{logical; whether names of row variables should appear in front of factor levels}
     \item{\dots}{further arguments, ignored.}}

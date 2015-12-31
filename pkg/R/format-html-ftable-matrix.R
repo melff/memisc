@@ -5,6 +5,7 @@ format_html.ftable_matrix <- function(x,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                style=ftable_format_stdstyle,
+                               margin="2ex auto",
                                varontop,varinfront,
                                ...){
   
@@ -127,7 +128,12 @@ format_html.ftable_matrix <- function(x,
   ans[mmm,] <- lapply(ans[mmm,],setStyle,bottomrule)
   ans <- apply(ans,1,as.html_group)
   ans <- html_tr(ans,vectorize=TRUE)
-  ans <- html_table(ans,class="ftable",style=css("border-collapse"="collapse"))
+  
+  table_style <- c("border-collapse"="collapse")
+  if(length(margin))
+    table_style <- c(table_style,margin=margin)
+  ans <- html_table(ans,class="ftable",style=as.css(table_style))
+
   ans <- as.character(ans)
   return(ans)
   

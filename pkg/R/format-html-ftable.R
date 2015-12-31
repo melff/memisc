@@ -15,6 +15,7 @@ format_html.ftable <- function(x,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                style=ftable_format_stdstyle,
+                               margin="2ex auto",
                                ...){
   
   first.col <- c("padding-left"="0.3em")
@@ -159,7 +160,11 @@ format_html.ftable <- function(x,
   
   header <- html_tr(header,vectorize=TRUE)
 
-  ans <- html_table(c(header,body),class="ftable",style=css("border-collapse"="collapse"))
+  table_style <- c("border-collapse"="collapse")
+  if(length(margin))
+    table_style <- c(table_style,margin=margin)
+  ans <- html_table(c(header,body),class="ftable",
+                                   style=as.css(table_style))
   
   ans <- as.character(ans)
   return(ans)
