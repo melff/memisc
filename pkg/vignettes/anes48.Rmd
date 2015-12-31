@@ -37,7 +37,12 @@ It should be noted that the analyses reported in the following are conducted
 only for purpose of demonstrating the features of the package and are
 not to be considered of conclusive scientific evidence of any kind.
 
-Before we start, we adjust \code{knitr}'s output (with which this
+This vignette is run with the help of the [*knitr* package](http://cran.r-project.org/web/packages/knitr/). This
+allows to showcase not only data management facilities provided
+by *memisc*. The following code also demonstrates how output
+created with some of the facilities of *memisc* can neatly
+integrated in reports generated with *knitr*.
+Before we start, we adjust *knitr*'s output (with which this
 vignette is formatted) to produce HTML where possible.
 ```{r}
 knit_print.codebook <-function(x,...) 
@@ -53,6 +58,9 @@ knit_print.ftable <-function(x,options,...)
                           options$ftable.digits
                        else 0,
                 ...))
+# We can now adjust the number of digits after the comma
+# for each column e.g. by adding an `ftable.digits` option
+# to an R chunk, as in ```{r,ftable=c(2,2,0)}
 
 knit_print.mtable <-function(x,...)
   knitr::asis_output(format_html(x,...))
@@ -63,7 +71,7 @@ knit_print.mtable <-function(x,...)
 We start with importing the data into R.
 The following code extracts the SPSS portable file
 `NES1948.POR` from
-zip file `NES1948.ZIP` delivered with the `memisc` package.
+zip file `NES1948.ZIP` delivered with the *memisc* package.
 ```{r, message=FALSE}
 library(memisc)
 options(digits=3)
@@ -91,10 +99,7 @@ the data set:
 ```{r}
 names(nes1948)
 ```
-Note that the variable names are all changed from uppercase to lowercase (SPSS 
-does not distinguish uppercase and lowercase variable names and uppercase looks 
-like shouting). Casefolding could have been suppressed by the call 
-`spsp.portable.file(nes1948.por,tolower=FALSE)`.
+Note that the variable names are all changed from uppercase to lowercase (SPSS does not distinguish uppercase and lowercase variable names and uppercase looks like shouting). Casefolding could have been suppressed by the call `spsp.portable.file(nes1948.por,tolower=FALSE)`.  
 
 We also can ask for a description ("variable label") for each variable:
 ```{r}
@@ -238,8 +243,9 @@ Tables of percentages may seem more informative about the impact
 of various factors on the vote. So we use the function
 `genTable` to obtain such tables of percentages:
 ```{r, ftable.digits=c(2,2,2,0)}
-ftable(genTable(percent(vote3)~occup4,data=vote.48),
-       row.vars=2)
+gt1 <- genTable(percent(vote3)~occup4,data=vote.48)
+## For knitr-ing, we use ```{r, ftable.digits=c(2,2,2,0)} here.
+ftable(gt1,row.vars=2)
 ```
 
 Obviously, voters from farmer and blue collar worker households
@@ -249,8 +255,8 @@ the Republican Candidate Dewey.
 
 
 ```{r, ftable.digits=c(2,2,2,0)}
-ftable(genTable(percent(vote3)~relig3,data=vote.48),
-       row.vars=2)
+gt2 <- genTable(percent(vote3)~relig3,data=vote.48)
+ftable(gt2,row.vars=2)
 ```
 
 
@@ -259,8 +265,8 @@ were more supportive of Truman than of Dewey.
 
 
 ```{r, ftable.digits=c(2,2,2,0)}
-ftable(genTable(percent(vote3)~race2,data=vote.48),
-       row.vars=2)
+gt3 <- genTable(percent(vote3)~race2,data=vote.48)
+ftable(gt3,row.vars=2)
 ```
 
 
@@ -270,8 +276,8 @@ so that such an inference would be very shaky.
 
 
 ```{r, ftable.digits=c(2,2,2,0)}
-ftable(genTable(percent(vote3)~total.income,data=vote.48),
-       row.vars=2)
+gt4 <- genTable(percent(vote3)~total.income,data=vote.48)
+ftable(gt4,row.vars=2)
 ```
 The table of percentage of vote by income suggests that income had
 some considerable influence on the choice either of Truman or of Dewey,
@@ -280,6 +286,7 @@ refined analysis that takes into account the uncertainty about the
 vote percentages. Therefore, the percentages of support for Truman
 broken down by income shown with confidence intervals:
 ```{r, ftable.digits=c(2,2,2)}
+## For knitr-ing, we use ```{r, ftable.digits=c(2,2,2)} here.
 inc.tab <- genTable(percent(vote3,ci=TRUE)~total.income,data=vote.48)
 ftable(inc.tab,row.vars=c(3,2))
 ```
