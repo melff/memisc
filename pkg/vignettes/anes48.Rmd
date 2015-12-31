@@ -37,6 +37,24 @@ It should be noted that the analyses reported in the following are conducted
 only for purpose of demonstrating the features of the package and are
 not to be considered of conclusive scientific evidence of any kind.
 
+Before we start, we adjust \code{knitr}'s output (with which this
+vignette is formatted) to produce HTML where possible.
+```{r}
+knit_print.codebook <-function(x,...) 
+  knitr::asis_output(format_html(x,...))
+
+knit_print.ftable <-function(x,options,...)
+  knitr::asis_output(
+    c_format_html(x,
+                digits=if(length(options$ftable.digits))
+                          options$ftable.digits
+                       else 0,
+                ...))
+
+knit_print.mtable <-function(x,...)
+  knitr::asis_output(format_html(x,...))
+```
+
 # Reading In a "Portable" SPSS Data File
 
 We start with importing the data into R.
@@ -205,14 +223,15 @@ relgious denomination, and race. First, we look upon a simple
 contingency table. 
 
 ```{r}
-xtabs(~vote3+occup4,data=vote.48)
+ftable(xtabs(~vote3+occup4,data=vote.48))
 ```
 
 Tables of percentages may seem more informative about the impact
 of various factors on the vote. So we use the function
 `genTable` to obtain such tables of percentages:
-```{r}
-t(genTable(percent(vote3)~occup4,data=vote.48))
+```{r, ftable.digits=c(2,2,2,0)}
+ftable(genTable(percent(vote3)~occup4,data=vote.48),
+       row.vars=2)
 ```
 
 Obviously, voters from farmer and blue collar worker households
@@ -221,8 +240,9 @@ of upper white collar background largely supported
 the Republican Candidate Dewey.
 
 
-```{r}
-t(genTable(percent(vote3)~relig3,data=vote.48))
+```{r, ftable.digits=c(2,2,2,0)}
+ftable(genTable(percent(vote3)~relig3,data=vote.48),
+       row.vars=2)
 ```
 
 
@@ -230,8 +250,9 @@ This table shows that Catholics and adherents of other denominations
 were more supportive of Truman than of Dewey.
 
 
-```{r}
-t(genTable(percent(vote3)~race2,data=vote.48))
+```{r, ftable.digits=c(2,2,2,0)}
+ftable(genTable(percent(vote3)~race2,data=vote.48),
+       row.vars=2)
 ```
 
 
@@ -240,8 +261,9 @@ number of members of this group in the sample is very small, however,
 so that such an inference would be very shaky.
 
 
-```{r}
-t(genTable(percent(vote3)~total.income,data=vote.48))
+```{r, ftable.digits=c(2,2,2,0)}
+ftable(genTable(percent(vote3)~total.income,data=vote.48),
+       row.vars=2)
 ```
 The table of percentage of vote by income suggests that income had
 some considerable influence on the choice either of Truman or of Dewey,
@@ -249,7 +271,7 @@ but the unequal distribution of income categories warrants a more
 refined analysis that takes into account the uncertainty about the
 vote percentages. Therefore, the percentages of support for Truman
 broken down by income shown with confidence intervals:
-```{r}
+```{r, ftable.digits=c(2,2,2)}
 inc.tab <- genTable(percent(vote3,ci=TRUE)~total.income,data=vote.48)
 ftable(inc.tab,row.vars=c(3,2))
 ```
@@ -257,7 +279,7 @@ ftable(inc.tab,row.vars=c(3,2))
 Occupational class is more evenly distributed in the sample, thus it may be possible
 to obtain more precise estimates of the percentages of support for Truman for occupational
 classes:
-```{r}
+```{r, ftable.digits=c(2,2,2)}
 occup.tab <- genTable(percent(vote3,ci=TRUE)~occup4,data=vote.48)
 ftable(occup.tab,row.vars=c(3,2))
 ```
@@ -310,16 +332,12 @@ candidate Truman.
 ```{r}
 mtable(model1,model2,model3,summary.stats=c("Nagelkerke R-sq.","Deviance","AIC","N"))
 ```
-`mtable` returns an object of class `"mtable"`. The
-`print` method for this class produces output as seen above.
-This output has a format close to the requirements of social science
-publications. With the appropriate formatting methods for objects of this
-class one can produce almost publication-ready output. For example,
-`mtable_format_html` creates HTML output - as used by `show_html`, 
-which can be imported into many word-processor software.
+`mtable` returns an object of class `"mtable"`. When formatted
+it looks close to the requirements of typical social science
+publications. Yet at least we want to change the technical variable
+names into non-technical ones, for which we can use `relabel`:
 
-```{r,results='asis'}
-show_html(
+```{r}
 relabel(mtable(
             "Model 1"=model1,
             "Model 2"=model2,
@@ -331,7 +349,6 @@ relabel(mtable(
           total.income="Income",
           gsub=TRUE
           )
-)
 ```
 
 
