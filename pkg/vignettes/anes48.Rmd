@@ -88,6 +88,11 @@ the data set:
 ```{r}
 names(nes1948)
 ```
+Note that the variable names are all changed from uppercase to lowercase (SPSS 
+does not distinguish uppercase and lowercase variable names and uppercase looks 
+like shouting). Casefolding could have been suppressed by the call 
+`spsp.portable.file(nes1948.por,tolower=FALSE)`.
+
 We also can ask for a description ("variable label") for each variable:
 ```{r}
 description(nes1948)
