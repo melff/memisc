@@ -41,8 +41,8 @@ format_html.codebookEntry <- function(x,name="",
     html_p(dQuote(wording), class="cbe-wording") 
   else NULL
   x.spec <- gsub("--","&ndash;",x@spec)
-  spec_html <- cbind(html_td(names(x.spec),style=html_style(align.left),vectorize=TRUE),
-                     html_td(x.spec,style=html_style(align.left),vectorize=TRUE))
+  spec_html <- cbind(html_td(names(x.spec),style=css(align.left),vectorize=TRUE),
+                     html_td(x.spec,style=css(align.left),vectorize=TRUE))
   spec_html <- apply(spec_html,1,html_tr)
   spec_html <- as.html_group(spec_html)
   
@@ -54,7 +54,7 @@ format_html.codebookEntry <- function(x,name="",
   if(length(tab)){
     
     counts_html <- formatC(tab[,1],format="d")
-    counts_html <- html_td(counts_html,vectorize=TRUE,style=html_style(align.right,lrpad))
+    counts_html <- html_td(counts_html,vectorize=TRUE,style=css(align.right,lrpad))
     
     perc_html <- cbind(
       formatC(tab[,2],format="f",digits=1),
@@ -88,20 +88,20 @@ format_html.codebookEntry <- function(x,name="",
     
     tab_lab <- sapply(tab_lab,paste,collapse=" ")
     
-    tab_lab_html <- cbind(html_td(tab_val,style=html_style(c(align.right,lrpad)),vectorize=TRUE),
-                          html_td(tab_m,style=html_style(c(align.center,lrpad)),vectorize=TRUE),
-                          html_td(tab_lab,style=html_style(c(align.left,lrpad)),vectorize=TRUE))
+    tab_lab_html <- cbind(html_td(tab_val,style=css(c(align.right,lrpad)),vectorize=TRUE),
+                          html_td(tab_m,style=css(c(align.center,lrpad)),vectorize=TRUE),
+                          html_td(tab_lab,style=css(c(align.left,lrpad)),vectorize=TRUE))
     
     tab_html <- cbind(tab_lab_html,tab_html)
     tab_html <- as.html_group(apply(tab_html,1,html_tr))
     
-    tabh_html <- html_group(html_td("Values and labels",colspan=3,style=html_style(align.center)),
-                            html_td("N",style=html_style(align.center)),
-                            html_td("Percent",colspan=6,style=html_style(align.center)))
+    tabh_html <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
+                            html_td("N",style=css(align.center)),
+                            html_td("Percent",colspan=6,style=css(align.center)))
     tabh_html <- html_tr(tabh_html)
     
     tab_html <- html_table(html_group(tabh_html,tab_html),class="cbe-table",
-                           style=html_style("border-collapse"="collapse"))
+                           style=css("border-collapse"="collapse"))
     tab_html <- html_p(tab_html)
   }
   else tab_html <- NULL
@@ -109,7 +109,7 @@ format_html.codebookEntry <- function(x,name="",
   if(length(descr)){
     
     descr_ldr_html <- trimws(paste(names(descr),": ",sep=""))
-    descr_ldr_html <- html_td(descr_ldr_html,style=html_style(align.right,lrpad),vectorize=TRUE)
+    descr_ldr_html <- html_td(descr_ldr_html,style=css(align.right,lrpad),vectorize=TRUE)
 
     descr_html <- formatC(descr,format="f",digits=3)
     
@@ -120,7 +120,7 @@ format_html.codebookEntry <- function(x,name="",
     
     descr_html <- apply(descr_html,1,html_tr)
     descr_html <- html_table(descr_html,class="cbe-table",
-                             style=html_style("border-collapse"="collapse"))
+                             style=css("border-collapse"="collapse"))
     descr_html <- html_p(descr_html)
   } else descr_html <- NULL
   
@@ -133,9 +133,9 @@ format_html.codebookEntry <- function(x,name="",
   } else annot_html <- NULL
   
   header_html <- html_div(html_group(title_html,wording_html),class="cbe-header",
-                          style=html_style(c(toprule,midrule,padding)))
+                          style=css(c(toprule,midrule,padding)))
   body_html <- html_div(html_group(spec_html,tab_html,descr_html,annot_html),class="cbe-body",
-                        style=html_style(padding))
+                        style=css(padding))
 
   cbe_html <- html_div(
                   html_group(header_html,body_html),class="codebook-entry")

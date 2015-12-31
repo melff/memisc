@@ -51,24 +51,24 @@ format_html.data.frame <- function(x,
   for(i in 1:m) {
     if(is.int[i]){
       tmp <- formatC(x[,i],format="d")
-      col <- html_td(tmp,vectorize=TRUE,style=html_style(style))
+      col <- html_td(tmp,vectorize=TRUE,style=css(style))
       colspan <- c(colspan,1L)
       }
     else if(is.num[i]){
       tmp <- formatC(x[,i],digits=fdigits[i],format=format[i])
       if(split.dec){
         tmp <- spltDec(tmp)
-        col <- html_td_spltDec(tmp,style=html_style(style))
+        col <- html_td_spltDec(tmp,style=css(style))
         colspan <- c(colspan,3L)
       }
       else{
-        col <- html_td(tmp,vectorize=TRUE,style=html_style(style))
+        col <- html_td(tmp,vectorize=TRUE,style=css(style))
         colspan <- c(colspan,1L)
       }
     }
     else {
       tmp <- as.character(x[,i])
-      col <- html_td(tmp,vectorize=TRUE,style=html_style(style))
+      col <- html_td(tmp,vectorize=TRUE,style=css(style))
       col <- setStyle(col,align.left)
       colspan <- c(colspan,1L)
     }
@@ -77,7 +77,7 @@ format_html.data.frame <- function(x,
   
   if(row.names){
     tmp <- rownames(x)
-    ldr <- html_td(tmp,vectorize=TRUE,style=html_style(c(style,firstcol,align.right)))
+    ldr <- html_td(tmp,vectorize=TRUE,style=css(c(style,firstcol,align.right)))
     body <- cbind(ldr,body)
   }
    
@@ -91,7 +91,7 @@ format_html.data.frame <- function(x,
     colspan <- c(1L,colspan)
   }
   
-  hdr <- html_td(hdr,vectorize=TRUE,style=html_style(style))
+  hdr <- html_td(hdr,vectorize=TRUE,style=css(style))
   hdr[] <- mapply(setAttribs,hdr,colspan=colspan,SIMPLIFY=FALSE)
   hdr <- lapply(hdr,setStyle,df_format_stdstyle)
   hdr <- lapply(hdr,setStyle,align.center)

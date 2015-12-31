@@ -102,25 +102,25 @@ c.html_elem <- function(...) reduce(list(...),join_html)
 
 
 
-html_style <- function(...) as.html_style(c(...))
+css <- function(...) as.css(c(...))
 
-as.html_style <- function(x){
-  if(inherits(x,"html_style")) x
+as.css <- function(x){
+  if(inherits(x,"css")) x
   else structure(as.character(unclass(x)),
                  names=names(x),
-                 class="html_style")
+                 class="css")
 }
 
-"[<-.html_style" <- function(x,i,...,value){
+"[<-.css" <- function(x,i,...,value){
   x <- unclass(x)
   x[i] <- as.character(value)
-  structure(x,class="html_style")
+  structure(x,class="css")
 }
-as.character.html_style <- function(x,...){
+as.character.css <- function(x,...){
   n <- names(x)
   paste0(n,": ",x,";")
 }
-print.html_style <- function(x,...)
+print.css <- function(x,...)
   cat(as.character(x),...)
 
 
@@ -128,7 +128,7 @@ style <- function(x){
   x$attributes$style
 }
 "style<-" <- function(x,value){
-  x$attributes$style <- as.html_style(value)
+  x$attributes$style <- as.css(value)
   x
 }
 
@@ -144,7 +144,7 @@ setStyle.html_elem <- function(x,...){
     x$attributes$style <- s
   }
   else {
-    x$attributes$style <- as.html_style(value)
+    x$attributes$style <- as.css(value)
   }
   x
 }
@@ -227,27 +227,27 @@ html_dt <- function(x,...,linebreak=TRUE).html_group(x,tag="dt",...,linebreak=li
 html_dd <- function(x,...,linebreak=TRUE).html_group(x,tag="dd",...,linebreak=linebreak)
 
 
-html_beforeDec <- html_style("text-align"="right",
+html_beforeDec <- css("text-align"="right",
                              "margin-right"="0px",
                              "padding-right"="0px",
                              "padding-left"="0.3em")
 
-html_dotDec <- html_style("text-align"="center",
+html_dotDec <- css("text-align"="center",
                           "margin-left"="0px",
                           "margin-right"="0px",
                           "padding-right"="0px",
                           "padding-left"="0px",
                           width="1px")
 
-html_afterDec <- html_style("text-align"="left",
+html_afterDec <- css("text-align"="left",
                             "margin-left"="0px",
                             "padding-left"="0px",
                             "padding-right"="0.3em")
 
 html_td_spltDec <- function(x,style=character(),...,linebreak=FALSE){
-  html_beforeDec <- html_style(style,html_beforeDec)
-  html_dotDec <- html_style(style,html_dotDec)
-  html_afterDec <- html_style(style,html_afterDec)
+  html_beforeDec <- css(style,html_beforeDec)
+  html_dotDec <- css(style,html_dotDec)
+  html_afterDec <- css(style,html_afterDec)
   y <- matrix(x,nrow=3)
   y1 <- html_td(y[1,],style=html_beforeDec,...,vectorize=TRUE)
   y2 <- html_td(y[2,],style=html_dotDec,...,vectorize=TRUE)

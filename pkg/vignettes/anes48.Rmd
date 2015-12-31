@@ -45,7 +45,7 @@ knit_print.codebook <-function(x,...)
 
 knit_print.ftable <-function(x,options,...)
   knitr::asis_output(
-    c_format_html(x,
+    format_html(x,
                 digits=if(length(options$ftable.digits))
                           options$ftable.digits
                        else 0,

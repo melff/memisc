@@ -52,12 +52,12 @@ format_html.ftable <- function(x,
   
   if(split.dec){
     tmp <- spltDec(body)
-    body <- html_td_spltDec(tmp,style=html_style(style))
+    body <- html_td_spltDec(tmp,style=css(style))
     dim(body) <- dim(x)
     colspan <- 3L
   }
   else {
-    body <- html_td(body,vectorize=TRUE,style=html_style(style))
+    body <- html_td(body,vectorize=TRUE,style=css(style))
     dim(body) <- dim(x)
     colspan <- 1L
   }
@@ -85,7 +85,7 @@ format_html.ftable <- function(x,
     else
       lstyle <- lstyle1
     
-    leaders[i,] <- html_td(leaders[i,],style=html_style(lstyle),
+    leaders[i,] <- html_td(leaders[i,],style=css(lstyle),
                            vectorize=TRUE) 
   }
   
@@ -111,29 +111,29 @@ format_html.ftable <- function(x,
     if(show.titles){
       if(n.col.vars == 1){
         htmp1 <- html_td(c(names(row.vars),""),
-                         style=html_style(upd_vect(hstyle,align.left)),
+                         style=css(upd_vect(hstyle,align.left)),
                          vectorize=TRUE)
       }
       else {
         if(i == n.col.vars){
           htmp1 <- html_td(c(names(row.vars),paste0(names(col.vars)[i],":")),
-                         style=html_style(upd_vect(hstyle,align.left)),
+                         style=css(upd_vect(hstyle,align.left)),
                          vectorize=TRUE)
         }
         else
           htmp1 <- html_td(c(rep("",n.row.vars),paste0(names(col.vars)[i],":")),
-                         style=html_style(upd_vect(hstyle,align.left)),
+                         style=css(upd_vect(hstyle,align.left)),
                          vectorize=TRUE)
       }      
     }
     else 
-      htmp1 <- html_td(rep("",ncol(leaders)),style=html_style(hstyle),
+      htmp1 <- html_td(rep("",ncol(leaders)),style=css(hstyle),
                        vectorize=TRUE)
     
     if(i==n.col.vars)
-      attribs$style <- html_style(hstyle)
+      attribs$style <- css(hstyle)
     else
-      attribs$style <- html_style(upd_vect(hstyle,midrule))
+      attribs$style <- css(upd_vect(hstyle,midrule))
       
     htmp2 <- setAttribs(html_td(cv,vectorize=TRUE),attribs)
     header <- c(list(c(htmp1,htmp2)),header)
@@ -142,13 +142,13 @@ format_html.ftable <- function(x,
     if(nzchar(names(col.vars))){
       hstyle <- upd_vect(style,lrpad)
       htmp1 <- html_td(rep("",ncol(leaders)),
-                       style=html_style(hstyle),
+                       style=css(hstyle),
                        vectorize=TRUE)
       colspan <- ncol(x)
       if(split.dec) 
         colspan <- colspan*3
       attribs <- list(colspan=colspan,
-                      style=html_style(upd_vect(hstyle,align.center,midrule)))
+                      style=css(upd_vect(hstyle,align.center,midrule)))
       htmp2 <- setAttribs(html_td(names(col.vars),vectorize=TRUE),attribs)
       header <- c(list(c(htmp1,htmp2)),header)
     }
@@ -159,7 +159,7 @@ format_html.ftable <- function(x,
   
   header <- html_tr(header,vectorize=TRUE)
 
-  ans <- html_table(c(header,body),class="ftable",style=html_style("border-collapse"="collapse"))
+  ans <- html_table(c(header,body),class="ftable",style=css("border-collapse"="collapse"))
   
   ans <- as.character(ans)
   return(ans)

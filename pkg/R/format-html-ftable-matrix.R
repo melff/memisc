@@ -107,7 +107,7 @@ format_html.ftable_matrix <- function(x,
     }
   }
 
-  lheaders <- array(html_td(lheaders,vectorize=TRUE,style=html_style(lstyle)),
+  lheaders <- array(html_td(lheaders,vectorize=TRUE,style=css(lstyle)),
           dim=dim(lheaders))
 
   leaders <- rbind(lheaders,do.call(rbind,leaders))
@@ -127,7 +127,7 @@ format_html.ftable_matrix <- function(x,
   ans[mmm,] <- lapply(ans[mmm,],setStyle,bottomrule)
   ans <- apply(ans,1,as.html_group)
   ans <- html_tr(ans,vectorize=TRUE)
-  ans <- html_table(ans,class="ftable",style=html_style("border-collapse"="collapse"))
+  ans <- html_table(ans,class="ftable",style=css("border-collapse"="collapse"))
   ans <- as.character(ans)
   return(ans)
   
@@ -157,7 +157,7 @@ htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec,style,midrule){
     mm <- mm*ncv
     cv <- rep(cv,m%/%mm)
     
-    header.i <- html_td(cv,vectorize=TRUE,style=html_style(hstyle),
+    header.i <- html_td(cv,vectorize=TRUE,style=css(hstyle),
                         colspan=colspan) 
     header.i <- setStyle(header.i,midrule)
     
@@ -165,7 +165,7 @@ htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec,style,midrule){
       
       if(i == 1 && varontop || !length(nms.cv)){
         htmp <- html_td("",
-                        style=html_style(upd_vect(hstyle,align.left)))
+                        style=css(upd_vect(hstyle,align.left)))
       }
       else {
         if(!nzchar(nms.cv[i])){
@@ -173,7 +173,7 @@ htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec,style,midrule){
         }
         else
           htmp <- html_td(paste0(nms.cv[i],":"),
-                          style=html_style(upd_vect(hstyle,align.left)))
+                          style=css(upd_vect(hstyle,align.left)))
       }    
       if(length(htmp))
         header.i <- c(htmp,header.i)
@@ -190,20 +190,20 @@ htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec,style,midrule){
     
     if(n.col.vars > 1){
       htmp1 <- html_td("",
-                       style=html_style(upd_vect(hstyle)))
+                       style=css(upd_vect(hstyle)))
       htmp2 <- html_td(nms.cv[1],
-                      style=html_style(upd_vect(hstyle,align.center,midrule)),
+                      style=css(upd_vect(hstyle,align.center,midrule)),
                       colspan=colspan)
       htmp <- c(htmp1,htmp2)
     }
     else if(nzchar(nms.cv[1])){
       htmp <- html_td(names(col.vars)[1],
-                      style=html_style(upd_vect(hstyle,align.center,midrule)),
+                      style=css(upd_vect(hstyle,align.center,midrule)),
                       colspan=colspan)
     }
     else {
       htmp <- html_td("",
-                      style=html_style(upd_vect(hstyle,align.center)),
+                      style=css(upd_vect(hstyle,align.center)),
                       colspan=colspan)
     }
     header <- c(list(htmp),header)
@@ -267,7 +267,7 @@ htfm_mkLeader <- function(row.vars,n,max.l.rv,varinfront,style) {
   ii <- seq(to=ncol(leader),length=ncol(tmp.leader))
   leader[,ii] <- tmp.leader
   
-  leader <- array(html_td(leader,vectorize=TRUE,style=html_style(lstyle)),
+  leader <- array(html_td(leader,vectorize=TRUE,style=css(lstyle)),
                   dim=dim(leader))
   leader
 }
@@ -291,10 +291,10 @@ htfm_mkBody <- function(x,format,digits,split.dec,style){
     tmp <- formatC(x[,i],digits=digits[i],format=format[i])
     tmp <- gsub("-","&minus;",tmp,fixed=TRUE)
     if(!split.dec)
-      body[,i] <- html_td(tmp,vectorize=TRUE,style=html_style(style))
+      body[,i] <- html_td(tmp,vectorize=TRUE,style=css(style))
     else {
       tmp <- spltDec(tmp)
-      tmp <- html_td_spltDec(tmp,style=html_style(style))
+      tmp <- html_td_spltDec(tmp,style=css(style))
       body[,i] <- tmp
     }
   }

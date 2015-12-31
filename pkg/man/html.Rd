@@ -22,17 +22,17 @@
 \alias{setAttribs.html_group}
 \alias{[<-.html_attributes}
 
-\alias{html_style}
-\alias{as.html_style}
+\alias{css}
+\alias{as.css}
 \alias{style}
 \alias{style<-}
 \alias{setStyle}
 \alias{setStyle.character}
 \alias{setStyle.html_elem}
 \alias{setStyle.html_group}
-\alias{as.character.html_style}
-\alias{print.html_style}
-\alias{[<-.html_style}
+\alias{as.character.css}
+\alias{print.css}
+\alias{[<-.css}
 \title{
 Building Blocks for HTML Code
 }
@@ -60,7 +60,7 @@ the call to \code{html}, but can also later recalled or modified with
 \code{attribs} or \code{setAttribs}. 
 A potentially important attribute is of course the style
 attribute, which can contain CSS styling. It can be recalled or modified with \code{style} or \code{setStyle}. Styling strings can also 
-be created with \code{hmtl_style} or \code{as.html_style}
+be created with \code{hmtl_style} or \code{as.css}
 
 }
 \usage{
@@ -79,8 +79,8 @@ setAttribs(x,\dots)
 \method{setAttribs}{html_elem}(x,\dots)
 \method{setAttribs}{html_group}(x,\dots)
 
-html_style(\dots)
-as.html_style(x)
+css(\dots)
+as.css(x)
 style(x)
 style(x) <- value
 setStyle(x,\dots)
@@ -109,7 +109,7 @@ setStyle(x,\dots)
       For \code{html_group}: several objects of class \code{"html_elem"}
       or \code{"html_group"}.
       
-      For \code{html_style}: named arguments (character strings!) 
+      For \code{css}: named arguments (character strings!) 
       become components of a styling in CSS format.
       }
   \item{.content}{an optional character string, \code{"html_elem"}, or 
@@ -193,10 +193,10 @@ content(div) <- c(tag,tag,tag)
 div
 
 
-html_style("background-color"="black",
+css("background-color"="black",
                   color="white")
 
-as.html_style(c("background-color"="black",
+as.css(c("background-color"="black",
                   color="white"))
 
 
@@ -210,7 +210,7 @@ style(Hello) <- c(color="white",
 Link <- html("a","More examples here ...",
               href="http://elff.eu/software/memisc",
               title="More examples here ...",
-              style=html_style(color="white"))
+              style=css(color="white"))
 Link <- html("p"," (",Link,")")
 style(Link) <- c(color="white",
                  "font-size"="15px",

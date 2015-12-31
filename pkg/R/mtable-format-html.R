@@ -66,10 +66,10 @@ mtable_format_html <- function(x,
     if(split.dec){
       coef.tab <- spltDec(coef.tab)
       coef.tab <- gsub("([*]+)","<span class=\"signif.symbol\">\\1</span>",coef.tab)
-      coef.tab <- html_td_spltDec(coef.tab, style=html_style(style))
+      coef.tab <- html_td_spltDec(coef.tab, style=css(style))
     }
     else
-      coef.tab <- html_td(coef.tab, style=html_style(style),vectorize=TRUE)
+      coef.tab <- html_td(coef.tab, style=css(style),vectorize=TRUE)
     
     dim(coef.tab) <- dm
     if(dm[2]==1)
@@ -89,7 +89,7 @@ mtable_format_html <- function(x,
         eq.names <- ""
       
       hstyle <- upd_vect(style,align.center,midrule)
-      eq.names <- html_td(eq.names,colspan=colspan,style=html_style(hstyle),vectorize=TRUE)
+      eq.names <- html_td(eq.names,colspan=colspan,style=css(hstyle),vectorize=TRUE)
       coef.tab <- rbind(eq.names,coef.tab)
       colspan <- colspan*neq
     }
@@ -100,10 +100,10 @@ mtable_format_html <- function(x,
     
     if(split.dec){
       sum.tab <- spltDec(sum.tab)
-      sum.tab <- html_td_spltDec(sum.tab, style=html_style(style))
+      sum.tab <- html_td_spltDec(sum.tab, style=css(style))
     }
     else
-      sum.tab <- html_td(sum.tab, style=html_style(style),vectorize=TRUE)
+      sum.tab <- html_td(sum.tab, style=css(style),vectorize=TRUE)
     
     dim(sum.tab) <- dms
     if(dms[2]==1)
@@ -126,7 +126,7 @@ mtable_format_html <- function(x,
     if(num.models>1 || force.names){
       
       hstyle <- upd_vect(style,align.center,midrule)
-      header <- html_td(name,colspan=colspan,style=html_style(hstyle))
+      header <- html_td(name,colspan=colspan,style=css(hstyle))
       mtab <- c(list(header),mtab)
     }
     
@@ -153,7 +153,7 @@ mtable_format_html <- function(x,
       mtab.m <- apply(mtab.m,1,as.html_group)
       model.name <- names(x$model.groups)[i]
       hstyle <- upd_vect(style,align.center,midrule,toprule)
-      model.name <- html_td(model.name,colspan=colspan,style=html_style(hstyle))
+      model.name <- html_td(model.name,colspan=colspan,style=css(hstyle))
       mtab.m <- c(list(model.name),mtab.m)
       mtab <- cbind(mtab,mtab.m)
     }
@@ -169,10 +169,10 @@ mtable_format_html <- function(x,
   ii.coef <- seq(from=1,by=dm[1],length=dm[3])
   ldr[ii.coef] <- coef.names
   lstyle <- upd_vect(style,align.left,firstcol)
-  ldr <- html_td(ldr,vectorize=TRUE,style=html_style(lstyle))
+  ldr <- html_td(ldr,vectorize=TRUE,style=css(lstyle))
   ldr[length(ldr)] <- setStyle(ldr[length(ldr)],midrule)
 
-  sldr <- html_td(rownames(summaries),vectorize=TRUE,style=html_style(lstyle))
+  sldr <- html_td(rownames(summaries),vectorize=TRUE,style=css(lstyle))
   sldr[length(sldr)] <- setStyle(sldr[length(sldr)],bottomrule)
   ldr <- c(ldr,sldr)
   
@@ -181,7 +181,7 @@ mtable_format_html <- function(x,
     
     hldr <- rep("",(num.models > 1 || force.names)+as.integer(grp.coefs)
                     + as.integer(length(x$model.groups)>0))
-    hldr <- html_td(hldr,vectorize=TRUE,style=html_style(lstyle))
+    hldr <- html_td(hldr,vectorize=TRUE,style=css(lstyle))
     hldr[length(hldr)] <- setStyle(hldr[length(hldr)],midrule)
     hldr[1] <- setStyle(hldr[1],toprule)
     ldr <- c(hldr,ldr)
@@ -190,7 +190,7 @@ mtable_format_html <- function(x,
   body <- apply(body,1,as.html_group)
   body <- html_tr(body,vectorize=TRUE)
   
-  ans <- html_table(body,class="mtable",style=html_style("border-collapse"="collapse"))
+  ans <- html_table(body,class="mtable",style=css("border-collapse"="collapse"))
   
   ans <- as.character(ans)
   return(ans)
