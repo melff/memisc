@@ -346,3 +346,5 @@ S3method(print,css)
 S3method(setStyle,html_elem)
 S3method(setStyle,html_group)
 S3method("[<-",css)
+
+S3method(format_html,descriptions)

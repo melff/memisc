@@ -430,22 +430,17 @@ cbind.data.set <- function (..., deparse.level = 1)
 
 setMethod("description","data.set",function(x){
   res <- lapply(x,description)
-  res <- sapply(res,function(des){
-          if(length(des)) sQuote(des)
-          else " (none) "
-          })
   structure(res,class="descriptions")
 })
 print.descriptions <- function(x,quote=FALSE,...){
-  ans <- c(
-      "",
-      paste("",format(names(x),justify="left"),format(x,justify="left")),
-      ""
-      )
-  writeLines(ans)
+  Write.descriptions(x,file=stdout())
 }
 
 Write.descriptions <- function(x,file=stdout(),...){
+  x <- sapply(x,function(des){
+          if(length(des)) sQuote(des)
+          else " (none) "
+          })
   out <- c(
     "",
     paste("",format(names(x),justify="left"),format(x,justify="left")),

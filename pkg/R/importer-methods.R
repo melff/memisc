@@ -161,10 +161,6 @@ setMethod("subset","importer",
 
 setMethod("description","importer",function(x){
   res <- lapply(x,description)
-  res <- sapply(res,function(des){
-          if(length(des)) sQuote(des)
-          else " (none) "
-          })
   structure(res,class="descriptions")
 })
 

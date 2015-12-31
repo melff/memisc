@@ -43,6 +43,9 @@ vignette is formatted) to produce HTML where possible.
 knit_print.codebook <-function(x,...) 
   knitr::asis_output(format_html(x,...))
 
+knit_print.descriptions <-function(x,...) 
+  knitr::asis_output(format_html(x,...))
+
 knit_print.ftable <-function(x,options,...)
   knitr::asis_output(
     format_html(x,
