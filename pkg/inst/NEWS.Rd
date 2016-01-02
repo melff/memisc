@@ -26,7 +26,7 @@
   }
   \subsection{USER-VISIBLE CHANGES}{
    \itemize{
-     \item All vignettes are now using \emph{knitr}-
+     \item All vignettes are now using \emph{knitr}.
    }
   }
 }
