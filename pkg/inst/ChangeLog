@@ -1,3 +1,66 @@
+2016-01-02:
+  - Small vignette update.
+  - New maintainer address
+
+2015-12-31:
+  - R-dependency should be >= 3.0, because this is needed for knitr vignettes.
+  - Some improvements of ANES vignette.
+  - Improvements for variable descriptions in data sets and importers, 
+    including HTML formatting.
+  - Added explanation of `tolower` to ANES Vignette.
+  - New argument `margin` of `format_html` method functions, 
+    which determines the positioning of the HTML tables. By default it centers the table horizontally.
+  - Export `format_html` cell standard styles.
+  - Renamed `html_style` into `css`, etc.
+  - Automatic HTML output in ANES vignette.
+  - Remove LaTeX/PDF Vignette
+  - Added documentation for `html()` and friends. 
+    Implemented `show_html()` method function for HTML code.
+
+2015-12-30:
+  - Make concatenation of html-elements safer
+  
+2015-12-29:
+  - Added documentation for `toLatex` method for "ftable_matrix" objects
+  - No longer make a fuss about duplicate model names in `combine_mtables`
+
+2015-12-28: 
+  - Added example for named model groups in `mtables`.
+  - Added documentation of `format_html.ftable_matrix`.
+  - Updated documentation of `mtable_format_latex`
+  - Create and use `Write` method function for `ftable_matrix` objects.
+  - Added documentation of `ftable_matrix` objects
+
+2015-12-18:
+  - Added support for with model groups in `mtable`. `c.mtable` now creates 
+    groups of models, if arguments are tagged.
+
+2015-12-16:
+  - Fixed issues shown by R CMD check
+  - Adapt `format_html.ftable_matrix` to html-objects infrastructure.
+  
+2015-12-13:
+  - Enable automatic insertion of linebreaks into HTML code.
+  - Export methods for html objects etc.
+
+2015-12-12:
+  - Adapted HTML formatting of 'codebook's to new HTML infrastructure.
+  - Added syntactic sugar to 'html()'. Corrected formatting of fixed-point numbers.
+  - Made formatting of value filters safer.
+
+2015-12-07: 
+  - Encapsulate fixed-point numbers into "html_group" objects
+  - Update version number
+  
+2015-12-06:
+  - Start object-oriented infrastructure for the creation of HTML code.
+  
+2015-11-13: 
+  - Import 'str' and 'ls.str' from 'utils' package to prevent a NOTE in R CMD check
+  
+2015-11-09: 
+  - Make `percentages()` a little more robust against empty cells in marginal tables.
+
 2015-09-24:
   - Fixed Latex output of data frames.
 
@@ -10,7 +73,8 @@
 2015-09-06:
   - Fixed treatment of value labels in HTML formatting of codebooks.
 
-2015-09-03: Added basic HTML formatting of `ftable_matrix` objects. (LaTeX formatting was already implemented.)
+2015-09-03: 
+  - Added basic HTML formatting of `ftable_matrix` objects. (LaTeX formatting was already implemented.)
 
 2015-08-29: 
    - Fix CSS class of ftable formatted in HTML

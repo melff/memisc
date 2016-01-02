@@ -1,6 +1,37 @@
 \name{NEWS}
-\title{memisc News}
+\title{\emph{memisc} News}
 \encoding{UTF-8}
+
+\section{Version 0.99}{
+  \subsection{NEW FEATURES}{
+  \itemize{
+    \item A new object-oriented infrastructure for the creation of HTML code
+          is used in \code{format_html} methods. This infrastructure is exposed 
+          by the \code{html} function.
+    \item Support for with model groups in \code{mtable}. \code{c.mtable} now creates 
+          groups of models, if arguments are tagged.
+    \item Flattened contingency tables (\code{ftable}s as they are created
+          by the eponymous function in the \code{stats} package) can now be
+          combined into \code{ftable_matrix} objects. This can be done by
+          using \code{rbind()} or \code{cbind()}.
+    }
+  }
+  \subsection{BUGFIXES}{
+  \itemize{
+    \item Set dependency to R version >= 3.0 for this is needed for \emph{knitr} 
+    vignettes.
+    \item \code{str} and \code{ls.str} are imported from the 
+          \code{utils} package to prevent a NOTE in R CMD check
+    }
+  }
+  \subsection{USER-VISIBLE CHANGES}{
+   \itemize{
+     \item All vignettes are now using \emph{knitr}-
+   }
+  }
+}
+
+
 \section{Version 0.98}{
   \subsection{NEW FEATURES}{
   \itemize{
