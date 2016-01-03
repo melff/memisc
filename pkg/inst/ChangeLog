@@ -1,6 +1,7 @@
 2016-01-03:
   - Removed `UnZip` from package, which has been redundant for some time.
   - Use `knitr::rmarkdown` instead of `knitr::knit` in vignettes.
+  - Added vignette for `ftable_matrix`.
   - `show_html` can be used with arbitrary output functions, e.g. `rstudio::viewer`.
   
 2016-01-02:
