@@ -1,0 +1,13 @@
+,Model 1,Model 2,Model 3
+Constant,30.628***,6.360***,28.566***
+,(7.409),(1.252),(7.355)
+Percentage of population under 15,-0.471**,,-0.461**
+,(0.147),,(0.145)
+Percentage of population over 75,-1.934,,-1.691
+,(1.041),,(1.084)
+Real per-capita disposable income,,0.001,-0.000
+,,(0.001),(0.001)
+Growth rate of real per-capita disp. income,,0.529*,0.410*
+,,(0.210),(0.196)
+R-squared,0.3,0.2,0.3
+N,50,50,50

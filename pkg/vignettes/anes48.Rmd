@@ -1,6 +1,16 @@
 % \VignetteIndexEntry{Analysing the American National Election Study of 1948}
 % \VignetteEngine{knitr::rmarkdown}
 
+
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(comment=NA,
+               fig.path="files/",
+               fig.align="center",
+               fig.retina=2,
+               dpi=72,
+               results="markup")
+```
+
 # Introduction
 
 This vignette gives an example for the analysis of a typical social science data set.
@@ -397,3 +407,9 @@ religious denomination is weaker than that of occupational class. However,
 as the third column in the above table indicates the effect of religious
 denomination remains statistically significant.
 
+```{r,echo=FALSE}
+rm(knit_print.codebook,
+   knit_print.descriptions,
+   knit_print.ftable,
+   knit_print.mtable)
+```

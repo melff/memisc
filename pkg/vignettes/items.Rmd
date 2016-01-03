@@ -2,6 +2,15 @@
 % \VignetteEngine{knitr::rmarkdown}
 % \VignetteEncoding{UTF-8}
 
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(comment=NA,
+               fig.path="files/",
+               fig.align="center",
+               fig.retina=2,
+               dpi=72,
+               results="markup")
+```
+
 # Motivation
 
 R is a great tool to do data analysis and for data management tasks that arise in the context of big data analytics. Nevertheless there is still room for improvement in terms of the support for data management tasks that arise in the social sciences, especially when it comes to handling data that come from social surveys and opinion surveys. The main reason for this is that the way that questionnaire item responses as they are usually coded in machine-readable survey data sets do not directly and easily translate into R's data types for numeric and categorical data, that is, numerical vectors and factors. As a consequence, many social scientists exercise their everyday data management tasks with commercial software packages such as SPSS or Stata, but there may be social scientists who either cannot afford such commercial software or prefer to use, out of principle, open-source software for all steps of data management and analysis.

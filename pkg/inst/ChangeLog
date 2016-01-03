@@ -1,5 +1,7 @@
 2016-01-03:
   - Removed `UnZip` from package, which has been redundant for some time.
+  - Major vignette update. Use `knitr::rmarkdown` instead of `knitr::knit`. More
+    extensive documentation of `mtable`.
 
 2016-01-02:
   - Small vignette update.
