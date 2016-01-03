@@ -1,0 +1,45 @@
+%\VignetteEngine{knitr::knitr}
+% \VignetteIndexEntry{"mtable" results in HTML format}
+
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(comment=NA,
+               fig.align="center",
+               results="markup")
+```
+
+## A Demonstration of Showing `mtable` results in HTML Format
+
+First, we load the package and estimate some regression models.
+
+```{r, message=FALSE}
+library(memisc)
+lm0 <- lm(sr ~ pop15 + pop75,              data = LifeCycleSavings)
+lm1 <- lm(sr ~                 dpi + ddpi, data = LifeCycleSavings)
+lm2 <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+```
+
+Next, we put them together into a table with `mtable()`.
+
+```{r}
+mtable123 <- mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2,
+                    summary.stats=c("sigma","R-squared","F","p","N"))
+```
+Third, we improve the appearance of the results by relabeling the `mtable` object.
+```{r, comment=NA}
+mtable123 <- relabel(mtable123,
+                      "(Intercept)" = "Constant",
+                      pop15 = "Percentage of population under 15",
+                      pop75 = "Percentage of population over 75",
+                      dpi = "Real per-capita disposable income",
+                      ddpi = "Growth rate of real per-capita disp. income"
+)
+```
+Finally we view the results in HTML format.
+```{r, results='asis'}
+show_html(mtable123)
+```
+The results can be written into an HTML file using
+`write_html(mtable123,file="mtable123.html")` or the like. MS Word or LibreOffice can import such a file. An example HTML file can be found [here](http://www.martin-elff.net/uploads/memisc/mtable123.html). The file in docx format can be found [here](http://www.martin-elff.net/uploads/memisc/mtable123.docx) and [here](http://www.martin-elff.net/uploads/memisc/mtable123.odt) in open document format (odt).[^1]
+
+[^1]: Unfortunately, LibreOffice currently seems to do a less than perfect job in importing HTML tables. The columns are a bit too wide and need to be adjusted by hand as do the skips after paragraphs. The example you find at the link mentioned above is thus manually adjusted.
+

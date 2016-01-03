@@ -5,8 +5,6 @@
 ```{r,echo=FALSE,message=FALSE}
 knitr::opts_chunk$set(comment=NA,
                fig.align="center",
-               fig.retina=2,
-               dpi=72,
                results="markup")
 ```
 
@@ -405,7 +403,7 @@ as its syntax is more R-ish (or so I believe).
 Here we load an example data set -- a subset of the German Longitudinal Election Study for 2013[^3] -- into
 R's memory.
 ```{r}
-load("gles2013work.RData")
+load(system.file("gles/gles2013work.RData",package="memisc"))
 ```
 As a simple example for the use of `recode()` we use this function to recode German Bundesländer into
 an item with two values or East and West Germany. But first we create a codebook for the variable that

@@ -5,8 +5,6 @@
 ```{r,echo=FALSE,message=FALSE}
 knitr::opts_chunk$set(comment=NA,
                fig.align="center",
-               fig.retina=2,
-               dpi=72,
                results="markup")
 ```
 
