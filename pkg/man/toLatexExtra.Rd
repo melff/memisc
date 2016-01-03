@@ -61,7 +61,7 @@
                 paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
              else "r",
     LaTeXdec=".",
-    ddigits=max(1,digits),
+    ddigits=digits,
     useBooktabs=TRUE,
     toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
     midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
