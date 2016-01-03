@@ -169,8 +169,8 @@ precedence and are \emph{not} coerced to lower case.
 }
 \examples{
 # Extract American National Election Study of 1948
-nes1948.por <- UnZip("anes/NES1948.ZIP","NES1948.POR",
-                     package="memisc")
+nes1948.por <- unzip(system.file("anes/NES1948.ZIP",package="memisc"),
+                     "NES1948.POR",exdir=tempfile())
 
 # Get information about the variables contained.
 nes1948 <- spss.portable.file(nes1948.por)

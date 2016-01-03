@@ -75,7 +75,8 @@ zip file `NES1948.ZIP` delivered with the *memisc* package.
 ```{r, message=FALSE}
 library(memisc)
 options(digits=3)
-nes1948.por <- UnZip("anes/NES1948.ZIP","NES1948.POR",package="memisc")
+nes1948.por <- unzip(system.file("anes/NES1948.ZIP",package="memisc"),
+                     "NES1948.POR",exdir=tempfile())
 ```
 Now the portable file is in a temporary directory and the path
 to the file is contained in the string variable `nes1948.por`.

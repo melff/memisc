@@ -1,3 +1,6 @@
+2016-01-03:
+  - Removed `UnZip` from package, which has been redundant for some time.
+
 2016-01-02:
   - Small vignette update.
   - New maintainer address

@@ -29,6 +29,12 @@
      \item All vignettes are now using \emph{knitr}.
    }
   }
+  \subsection{DEFUNCT}{
+    \itemize{
+      \item The function \code{UnZip} has been removed from the package. \code{unzip} in conjunction with
+      \code{system.file} does the same job, as can be seen in the example for \code{spss.portable.file}.
+    }
+  }
 }
 
 

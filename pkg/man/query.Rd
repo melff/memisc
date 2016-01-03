@@ -53,8 +53,8 @@ query(x,pattern,\dots)
   objects, or \code{NULL}.
 }
 \examples{
-nes1948.por <- UnZip("anes/NES1948.ZIP","NES1948.POR",
-                     package="memisc")
+nes1948.por <- unzip(system.file("anes/NES1948.ZIP",package="memisc"),
+                     "NES1948.POR",exdir=tempfile())
 nes1948 <- spss.portable.file(nes1948.por)
 query(nes1948,"TRUMAN")
 }

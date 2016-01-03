@@ -95,7 +95,6 @@ export(
       Substitute,
       collect,
       fapply,
-      UnZip,
       "%nin%",
       codebook,
       wild.codes,
