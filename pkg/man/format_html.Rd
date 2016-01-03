@@ -41,9 +41,14 @@ format_html(x, \dots)
 }
 \arguments{
   \item{x}{an object.}
-  \item{output}{character string; 
-  describes how the HTML formatted object is shown.
-  If "console", the HTML code is written to the 
+  \item{output}{character string or a function
+    that determines how the HTML formatted object is shown.
+  
+  If \code{output} is a function, it is called with the path
+  of a (temporary) file with HTML code, e.g. \emph{RStudio}'s \code{viewer}
+  function.
+  
+  If it equals "console", the HTML code is written to the 
   console (for use e.g. in output produced with \code{knitr}),
   if "file-show", the contents of a file with the HTML code is shown
   via \code{\link{file.show}}, and

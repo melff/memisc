@@ -14,12 +14,23 @@ show_html <- function(x,output=NULL,...){
   else
     deflt.output <- "console"
   
-  if(!missing(output))
-    output <- match.arg(output,c("console","browser","file-show"))
-  else
+  if(missing(output))
     output <- getOption("show_html.output",deflt.output)
   
-  if(output=="console") cat(ht)
+  if(mode(output)=="character")
+      output <- match.arg(output,c("console","browser","file-show"))
+  else if(!is.function(output))
+      stop("'output' should be either a character string of a function")
+  
+  if(is.function(output)){
+    
+    tf <- tempfile()
+    tf <- paste0(tf,".html")
+    cat(ht,file=tf)
+    
+    output(tf)
+  }
+  else if(output=="console") cat(ht)
   else {
     
     tf <- tempfile()
@@ -28,7 +39,7 @@ show_html <- function(x,output=NULL,...){
     
     if(output=="file-show")
       file.show(tf,title=deparse(substitute(x)))
-    else
+    else 
       browseURL(tf)
   }
   
