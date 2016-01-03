@@ -4,7 +4,6 @@
 
 ```{r,echo=FALSE,message=FALSE}
 knitr::opts_chunk$set(comment=NA,
-               fig.path="files/",
                fig.align="center",
                fig.retina=2,
                dpi=72,
