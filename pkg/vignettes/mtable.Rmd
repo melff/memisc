@@ -399,7 +399,7 @@ mt123
 ```
 
 
-# Adapting mtable to new model classes and other tricks - the API of mtable
+# Adapting "mtable" to new model classes and other tricks - the API of mtable
 
 `mtable()` is designed to be easily adapted to all kind of model classes: If there
 is a model class like, say, "modcls" then all that is needed to get `mtable()` to 

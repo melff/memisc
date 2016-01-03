@@ -309,6 +309,7 @@ S3method(print,ftable_matrix)
 S3method(Write,ftable_matrix)
 
 S3method(toLatex,ftable_matrix)
+S3method(format_html,ftable_matrix)
 S3method(relabel,ftable_matrix)
 
 export(

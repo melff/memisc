@@ -8,7 +8,7 @@ toLatex.ftable_matrix <- function(object,
                                   useDcolumn=TRUE,
                                   colspec=if(useDcolumn) paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") else "r",
                                   LaTeXdec=".",
-                                  ddigits=max(1,digits),
+                                  ddigits=digits,
                                   useBooktabs=TRUE,
                                   toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
                                   midrule=if(useBooktabs) "\\midrule" else "\\hline",
@@ -123,8 +123,8 @@ toLatex.ftable_matrix <- function(object,
   
   if(varinfront) {
     
-    start.g <- mapply(`+`,start.g,1)
-    end.g <- mapply(`+`,end.g,1)
+    start.g <- mapply(`+`,start.g,1,SIMPLIFY=FALSE)
+    end.g <- mapply(`+`,end.g,1,SIMPLIFY=FALSE)
   }
   
   header <- unlist(lapply(headers,paste0,collapse=if(compact)"&" else "&&"))
@@ -141,6 +141,7 @@ toLatex.ftable_matrix <- function(object,
   cln <- sapply(cln,paste0,collapse="")
   
   header <- paste0(header,"\\\\")
+  
   if(varontop)
     header[-1] <- paste0(cln,"\n",header[-1])
   else
