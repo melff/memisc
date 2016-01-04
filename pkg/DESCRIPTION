@@ -2,7 +2,7 @@ Package: memisc
 Type: Package
 Title: Tools for Management of Survey Data and the Presentation of Analysis Results
 Version: 0.99.2
-Date: 2016-01-03
+Date: 2016-01-04
 Author: Martin Elff (with contributions by Christopher N. Lawrence, Dave Atkins, Jason W. Morgan, Achim Zeileis)
 Maintainer: Martin Elff <memisc@elff.eu>
 Description: One of the aims of this package is to make life easier for
@@ -13,8 +13,7 @@ Description: One of the aims of this package is to make life easier for
         Stata files. Further, it provides functionality to produce
         tables and data frames of arbitrary descriptive statistics and
         (almost) publication-ready tables of regression model
-        estimates. Also some convenience tools for graphics,
-        programming, and simulation are provided.
+        estimates, which can be exported to LaTeX and HTML.
 License: GPL-2
 LazyLoad: Yes
 Depends: R (>= 3.0.0), lattice, stats, methods, utils, MASS
