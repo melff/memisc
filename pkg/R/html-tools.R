@@ -12,13 +12,13 @@ show_html <- function(x,output=NULL,...){
       deflt.output <- "browser"
   }
   else
-    deflt.output <- "console"
+    deflt.output <- "stdout"
   
   if(missing(output))
-    output <- getOption("show_html.output",deflt.output)
+    output <- getOption("html_viewer",deflt.output)
   
   if(mode(output)=="character")
-      output <- match.arg(output,c("console","browser","file-show"))
+      output <- match.arg(output,c("stdout","browser","file-show"))
   else if(!is.function(output))
       stop("'output' should be either a character string of a function")
   
@@ -30,7 +30,7 @@ show_html <- function(x,output=NULL,...){
     
     output(tf)
   }
-  else if(output=="console") cat(ht)
+  else if(output=="stdout") cat(ht)
   else {
     
     tf <- tempfile()

@@ -46,10 +46,10 @@ format_html(x, \dots)
   
   If \code{output} is a function, it is called with the path
   of a (temporary) file with HTML code, e.g. \emph{RStudio}'s \code{viewer}
-  function.
+  function (which is available in the package \code{rstudioapi}.
   
-  If it equals "console", the HTML code is written to the 
-  console (for use e.g. in output produced with \code{knitr}),
+  If \code{output} equals "stdout", the HTML code is written to the 
+  standard output stream (for use e.g. in output produced with \code{knitr}),
   if "file-show", the contents of a file with the HTML code is shown
   via \code{\link{file.show}}, and
   if "browser", the contents of a file with the HTML code is shown
@@ -61,7 +61,7 @@ format_html(x, \dots)
   it is "browser", in interactive sessions with RStudio
   it is "file-show".
   
-  These default sessions can be overriden by the option "show_html.output"
+  These default sessions can be overriden by the option "html_viewer"
   (see \code{\link{options}}).
   }
   \item{file}{character string; name or path of the file where to

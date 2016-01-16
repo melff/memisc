@@ -1,3 +1,11 @@
+2016-01-16:
+  - Use "html_viewer" option instead of "show_html.output".
+
+2016-01-04:
+  - Deleted last sentence in package description.
+  - Put back vignette for `ftable-matrix`.
+  - `show_html` can be used with arbitrary output functions, e.g. `rstudio::viewer`.
+
 2016-01-03:
   - Removed `UnZip` from package, which has been redundant for some time.
   - Use `knitr::rmarkdown` instead of `knitr::knit` in vignettes.
