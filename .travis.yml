@@ -2,7 +2,7 @@ language: r
 sudo: required
 
 # Be strict when checking our package
-#warnings_are_errors: true
+warnings_are_errors: true
 
 before_install: cd pkg
 
