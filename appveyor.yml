@@ -28,22 +28,22 @@ on_failure:
   - travis-tool.sh dump_logs
 
 artifacts:
-  - path: '*.Rcheck\**\*.log'
+  - path: 'pkg\*.Rcheck\**\*.log'
     name: Logs
 
-  - path: '*.Rcheck\**\*.out'
+  - path: 'pkg\*.Rcheck\**\*.out'
     name: Logs
 
-  - path: '*.Rcheck\**\*.fail'
+  - path: 'pkg\*.Rcheck\**\*.fail'
     name: Logs
 
-  - path: '*.Rcheck\**\*.Rout'
+  - path: 'pkg\*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '\*_*.tar.gz'
+  - path: 'pkg\*_*.tar.gz'
     name: Bits
 
-  - path: '\*_*.zip'
+  - path: 'pkg\*_*.zip'
     name: Bits
 
 version: 0.99.3.{build}
