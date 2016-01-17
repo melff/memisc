@@ -12,6 +12,8 @@ install:
 
 # Adapt as necessary starting from here
 
+before_build: cd pkg
+
 build_script:
   - travis-tool.sh install_deps
 
