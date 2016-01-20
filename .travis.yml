@@ -14,4 +14,8 @@ r_binary_packages:
   - ordinal
   - simex
   
-
+notifications:
+  email:
+    recipients: memisc@elff.eu
+    on_success: always
+    on_failure: always
