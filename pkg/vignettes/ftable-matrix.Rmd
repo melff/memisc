@@ -1,4 +1,4 @@
-% \VignetteIndexEntry{Combinding Flattened Contingency Tables (and Other Tables)}
+% \VignetteIndexEntry{Combining flattened contingency tables (and other tables)}
 % \VignetteEngine{knitr::rmarkdown}
 % \VignetteEncoding{UTF-8}
 
