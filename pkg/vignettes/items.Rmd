@@ -1,4 +1,4 @@
-% \VignetteIndexEntry{Handling Questionnaire Items with "memisc"}
+% \VignetteIndexEntry{Handling questionnaire items with "memisc"}
 % \VignetteEngine{knitr::rmarkdown}
 % \VignetteEncoding{UTF-8}
 
