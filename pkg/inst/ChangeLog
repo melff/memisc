@@ -1,6 +1,9 @@
 2016-01-24:
   - Do not wrap HTML tables and list in HTML paragraphs in `format_html.CodebookEntry`.
 
+2016-01-21:
+  - Correct spelling and case of vignette titles.
+  
 2016-01-16:
   - Use "html_viewer" option instead of "show_html.output".
 
