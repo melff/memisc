@@ -36,6 +36,7 @@ format_html.codebookEntry <- function(x,name="",
     title_html <- html_group(title_html," &mdash; ",html("span",.content=sQuote(description),class="cbe-description"))
   
   title_html <- html(title_tag,.content=title_html,class="cbe-title",id=paste0(varid_prefix,name[1]))
+  title_html <- html_group(html_p(""),title_html)
   
   wording_html <- if(length(wording) && !is.na(wording)) 
     html_p(dQuote(wording), class="cbe-wording") 
@@ -47,6 +48,7 @@ format_html.codebookEntry <- function(x,name="",
   spec_html <- as.html_group(spec_html)
   
   spec_html <- html_table(spec_html,class="cbe-spec")
+  spec_html <- html_group(html_p(""),spec_html)
   
   tab <- x@stats$tab
   descr <- x@stats$descr
@@ -102,6 +104,7 @@ format_html.codebookEntry <- function(x,name="",
     
     tab_html <- html_table(html_group(tabh_html,tab_html),class="cbe-table",
                            style=css("border-collapse"="collapse"))
+    tab_html <- html_group(html_p(""),tab_html)
   }
   else tab_html <- NULL
   
@@ -120,6 +123,7 @@ format_html.codebookEntry <- function(x,name="",
     descr_html <- apply(descr_html,1,html_tr)
     descr_html <- html_table(descr_html,class="cbe-table",
                              style=css("border-collapse"="collapse"))
+    descr_html <- html_group(html_p(""),descr_html)
   } else descr_html <- NULL
   
   if(length(annot)){
@@ -127,11 +131,12 @@ format_html.codebookEntry <- function(x,name="",
                         html_dd(annot,vectorize=TRUE))
     annot_html <- as.html_group(t(annot_html))
     annot_html <- html("dl",.content=annot_html,class="cbe-annotations")
+    annot_html <- html_group(html_p(""),annot_html)
   } else annot_html <- NULL
   
   header_html <- html_div(html_group(title_html,wording_html),class="cbe-header",
                           style=css(c(toprule,midrule,padding)))
-  body_html <- html_div(html_group(spec_html,tab_html,descr_html,annot_html),class="cbe-body",
+  body_html <- html_div(html_group(spec_html,tab_html,descr_html,annot_html,html_p("")),class="cbe-body",
                         style=css(padding))
 
   cbe_html <- html_div(
