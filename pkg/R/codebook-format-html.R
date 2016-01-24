@@ -46,7 +46,7 @@ format_html.codebookEntry <- function(x,name="",
   spec_html <- apply(spec_html,1,html_tr)
   spec_html <- as.html_group(spec_html)
   
-  spec_html <- html_p(html_table(spec_html,class="cbe-spec"))
+  spec_html <- html_table(spec_html,class="cbe-spec")
   
   tab <- x@stats$tab
   descr <- x@stats$descr
@@ -102,7 +102,6 @@ format_html.codebookEntry <- function(x,name="",
     
     tab_html <- html_table(html_group(tabh_html,tab_html),class="cbe-table",
                            style=css("border-collapse"="collapse"))
-    tab_html <- html_p(tab_html)
   }
   else tab_html <- NULL
   
@@ -121,7 +120,6 @@ format_html.codebookEntry <- function(x,name="",
     descr_html <- apply(descr_html,1,html_tr)
     descr_html <- html_table(descr_html,class="cbe-table",
                              style=css("border-collapse"="collapse"))
-    descr_html <- html_p(descr_html)
   } else descr_html <- NULL
   
   if(length(annot)){
@@ -129,7 +127,6 @@ format_html.codebookEntry <- function(x,name="",
                         html_dd(annot,vectorize=TRUE))
     annot_html <- as.html_group(t(annot_html))
     annot_html <- html("dl",.content=annot_html,class="cbe-annotations")
-    annot_html <- html_p(annot_html)
   } else annot_html <- NULL
   
   header_html <- html_div(html_group(title_html,wording_html),class="cbe-header",
