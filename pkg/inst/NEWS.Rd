@@ -23,6 +23,7 @@
     \item \code{str} and \code{ls.str} are imported from the 
           \code{utils} package to prevent a NOTE in R CMD check
     \item Do not wrap HTML tables and list in HTML paragraphs in \code{format_html.CodebookEntry}.
+    \item \code{show} and \code{codebookEntry} methods for the "datetime.item" now work as expected. 
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

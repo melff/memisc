@@ -8,7 +8,7 @@ as.POSIXct.datetime.item <- function(x, tz = "", ...){
    origin <- if(is.null(x@origin)) "1970-01-01" else x@origin
    if(missing(tz)) {
       
-      tz <- if(is.character(x@tzone)) x@tzone else "GMT"
+      tz <- if(is.character(x@tzone) && !nzchar(x@tzone)) x@tzone else "UTC"
    }
    as.POSIXct(x@.Data,
       tz=tz,
@@ -16,7 +16,16 @@ as.POSIXct.datetime.item <- function(x, tz = "", ...){
 }
 
 setMethod("as.item","POSIXct",function(x,...){
-   new("datetime.item",as.numeric(x),tzone=attr(x,"tzone"),...)
+
+   annotation <-new("annotation",NULL)
+   new("datetime.item",
+       as.numeric(x),
+       tzone=attr(x,"tzone"),
+       origin=NULL,
+       value.labels=NULL,
+       value.filter=NULL,
+       measurement="date/time",
+       annotation=annotation)
 })
 
 setMethod("as.item","datetime.item",as_item_item)
@@ -57,7 +66,8 @@ str.datetime.item <- function(object,give.head=TRUE,width=getOption("width"),...
 
 
 format.datetime.item <- function(x,justify="right",format="",tz="",usetz=FALSE,...){
-  if (missing(tz) && !is.null(tzone <- attr(x, "tzone"))) tz <- tzone
+  if (missing(tz) && !is.null(tzone <- x@tzone)) tz <- tzone
+  if(!nzchar(tz)) tz <- "UTC"
   format(as.POSIXct.datetime.item(x),format=format,tz=tz,usetz=usetz,...)
 }
 setMethod("format","datetime.item",format.datetime.item)
@@ -97,11 +107,12 @@ print.datetime.item <- function(x,
 }
 
 setMethod("show","datetime.item",function(object){
+  tzone <- if(length(object@tzone)) object@tzone else "UTC"
   cat("\nDate/time item",
     if(length(description(object))) sQuote(description(object)) else NULL,
     paste("(",
           "length = ",length(object),
-          ", time zone = ",object@tzone,
+          ", time zone = ",tzone,
           ")",sep=""),
     "\n\n")
   print.datetime.item(object,width=getOption("width"),compress=TRUE,usetz=FALSE)
@@ -134,9 +145,11 @@ setMethod("codebookEntry","datetime.item",function(x){
   new("codebookEntry",
     spec = spec,
     stats = list(
-      descr=format(summary(x)),
-      `N.miss.` = sum(ism & !isna),
-      NAs = sum(isna)
+      descr=format(c(
+                     format(summary(x)),
+                    `N.miss.` = sum(ism & !isna),
+                    NAs = sum(isna)),
+                    justify="left")
       ),
     annotation = annotation
   )

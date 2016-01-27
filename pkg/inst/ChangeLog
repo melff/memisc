@@ -1,3 +1,6 @@
+2016-01-27:
+  - Fixed `show` and `codebookEntry` methods for "datetime.item" class.
+
 2016-01-24:
   - Do not wrap HTML tables and list in HTML paragraphs in `format_html.CodebookEntry`.
 
