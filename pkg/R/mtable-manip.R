@@ -54,11 +54,11 @@ dimnames.mtable <- function(x){
   
   if(is.character(i)){
     i <- match(i,rownms)
-    if(anyNA(i)) stop("undefined row names")
+    if(any(is.na(i))) stop("undefined row names")
   } 
   if(is.character(j)) {
     j <- match(j,colnms)
-    if(anyNA(j)) stop("undefined column names")
+    if(any(is.na(j))) stop("undefined column names")
   }
   if(is.logical(i)) {
     tmp <- logical(nrows)
