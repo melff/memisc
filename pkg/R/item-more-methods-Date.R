@@ -1,40 +1,19 @@
-
-# setMethod("as.POSIXct","numeric.item",function(x,...){
-#    as.POSIXct(x@.Data,...)
-# })
-
-
-as.POSIXct.datetime.item <- function(x, tz = "", ...){
-   origin <- if(is.null(x@origin)) "1970-01-01" else x@origin
-   if(missing(tz)) {
-      
-      tz <- if(is.character(x@tzone) && !nzchar(x@tzone)) x@tzone else "UTC"
-   }
-   as.POSIXct(x@.Data,
-      tz=tz,
-      origin=origin)
-}
-
-setMethod("as.item","POSIXct",function(x,...){
+setMethod("as.item","Date",function(x,...){
 
    annotation <-new("annotation",NULL)
-   new("datetime.item",
+   new("Date.item",
        as.numeric(x),
-       tzone=attr(x,"tzone"),
-       origin=NULL,
-       value.labels=NULL,
-       value.filter=NULL,
-       measurement="date/time",
+       measurement="date",
        annotation=annotation)
 })
 
-setMethod("as.item","datetime.item",as_item_item)
+setMethod("as.item","Date.item",as_item_item)
 
+as.Date.numeric.item <- function(x)
+                          as.Date(as.numeric(x),
+                                  origin=structure(0,class="Date"))
 
-
-
-
-as.data.frame.datetime.item <- function (x, row.names = NULL, optional = FALSE, ...)
+as.data.frame.Date.item <- function (x, row.names = NULL, optional = FALSE, ...)
 {
     nrows <- length(x)
     nm <- paste(deparse(substitute(x), width.cutoff = 500), collapse = " ")
@@ -44,7 +23,7 @@ as.data.frame.datetime.item <- function (x, row.names = NULL, optional = FALSE, 
         else row.names <- .set_row_names(nrows)
     }
 
-    x <- as.POSIXct.datetime.item(x)
+    x <- as.Date.numeric.item(x)
 
     value <- list(x)
     if (!optional)
@@ -54,35 +33,31 @@ as.data.frame.datetime.item <- function (x, row.names = NULL, optional = FALSE, 
     value
 }
 
-str.datetime.item <- function(object,give.head=TRUE,width=getOption("width"),...){
+str.Date.item <- function(object,give.head=TRUE,width=getOption("width"),...){
   if(give.head){
-    hdr <- " Date-time item"
+    hdr <- " Date item"
     cat(hdr,"")
   }
-  str(as.POSIXct.datetime.item(object),give.head=FALSE,width=width,...)
+  str(as.Date.numeric.item(object),give.head=FALSE,width=width,...)
 }
 
 
-
-
-format.datetime.item <- function(x,justify="right",format="",tz="",usetz=FALSE,...){
-  if (missing(tz) && !is.null(tzone <- x@tzone)) tz <- tzone
-  if(!nzchar(tz)) tz <- "UTC"
-  format(as.POSIXct.datetime.item(x),format=format,tz=tz,usetz=usetz,...)
+format.Date.item <- function(x,...){
+  format(as.Date.numeric.item(x),...)
 }
-setMethod("format","datetime.item",format.datetime.item)
+setMethod("format","Date.item",format.Date.item)
 
-print.datetime.item <- function(x,
+print.Date.item <- function(x,
     width=getOption("width"),
     compress=FALSE,
-    usetz=TRUE,...,print.gap=NULL){
+    ...,print.gap=NULL){
     if(length(x)){
       mkdots <- function(n) paste(rep(".",n),collapse="")
       pg <- if(is.null(print.gap) || compress) 1 else print.gap
       l <- length(x)
       if(compress) {
         x <- x[seq_len(min(width,l))]
-        x <- format(x,usetz=usetz,...)
+        x <- format(x,...)
         x <- trimws(x)
         xw <- cumsum(nchar(x,"w")+1)
         hdr <- paste(" [","1:",length(x),"]",sep="")
@@ -98,40 +73,36 @@ print.datetime.item <- function(x,
       }
       else
         print.default(
-              format(x,usetz=usetz,...),
+              format(x,...),
               quote=FALSE,print.gap=print.gap)
     }
     else
-      print(as.POSIXct.datetime.item(x),print.gap=print.gap)
+      print(as.Date.numeric.item(x),print.gap=print.gap)
 }
 
-setMethod("show","datetime.item",function(object){
-  tzone <- if(length(object@tzone)) object@tzone else "UTC"
-  cat("\nDate/time item",
+setMethod("show","Date.item",function(object){
+  cat("\nDate item",
     if(length(description(object))) sQuote(description(object)) else NULL,
     paste("(",
           "length = ",length(object),
-          ", time zone = ",tzone,
           ")",sep=""),
     "\n\n")
-  print.datetime.item(object,width=getOption("width"),compress=TRUE,usetz=FALSE)
+  print.Date.item(object,width=getOption("width"),compress=TRUE)
 })
-setMethod("print","datetime.item",print.datetime.item)
+setMethod("print","Date.item",print.Date.item)
 
-
-setMethod("summary","datetime.item",function(object,...,maxsum=100,digits=3){
+setMethod("summary","Date.item",function(object,...,maxsum=100,digits=3){
   ism <- is.missing(object)
-  xvalid <- as.POSIXct.datetime.item(object[!ism])
+  xvalid <- as.Date.numeric.item(object[!ism])
   summary(xvalid)
 })
 
-
-setMethod("codebookEntry","datetime.item",function(x){
+setMethod("codebookEntry","Date.item",function(x){
   annotation <- annotation(x)
   filter <- x@value.filter
   spec <- c(
             "Storage mode:"=storage.mode(x),
-            "Measurement:"="Date/time"
+            "Measurement:"="Date"
             )
   if(length(filter)) spec <- c(spec,
                               switch(class(filter),
@@ -154,10 +125,10 @@ setMethod("codebookEntry","datetime.item",function(x){
   )
 })
 
-
-xtfrm.datetime.item <- function(x) x@.Data
-setMethod("as.character","datetime.item",function(x,...)
-   format(as.POSIXct.datetime.item(x))
+xtfrm.Date.item <- function(x) x@.Data
+setMethod("as.character","Date.item",function(x,...)
+   format(as.Date.numeric.item(x))
 )
 
-unique.datetime.item <- unique.item.vector
+unique.Date.item <- unique.item.vector
+

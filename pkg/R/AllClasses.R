@@ -56,6 +56,15 @@ setClass("character.item",
   contains=c("item","item.vector","character")
 )
 
+setClass("Date.item",
+  contains=c("item","numeric.item","item.vector","double","numeric")
+)
+
+setClass("datetime.item",
+   representation(tzone="character or NULL",origin="character or NULL"),
+   contains=c("item","numeric.item","item.vector","double","numeric")
+ )
+
 setClass("named.list",
   contains="list",
   representation(
@@ -130,9 +139,3 @@ setClass("codebookEntry",
     annotation = "character or NULL"
   )
 )
-
-
-setClass("datetime.item",
-   representation(tzone="character or NULL",origin="character or NULL"),
-   contains=c("item","numeric.item","item.vector","double","numeric")
- )

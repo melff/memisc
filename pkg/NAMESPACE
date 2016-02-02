@@ -192,7 +192,9 @@ exportClasses(
   spss.system.importer,
   Stata.importer,
   importer,
-  codebook
+  codebook,
+  datetime.item,
+  Date.item
   )
 
 exportMethods(
@@ -282,15 +284,18 @@ S3method(rbind,data.set)
 
 S3method(as.POSIXct,datetime.item)
 S3method(as.data.frame,datetime.item)
+S3method(as.data.frame,Date.item)
 
 S3method(xtfrm,integer.item)
 S3method(xtfrm,double.item)
 S3method(xtfrm,character.item)
 S3method(xtfrm,datetime.item)
+S3method(xtfrm,Date.item)
 S3method(unique,integer.item)
 S3method(unique,double.item)
 S3method(unique,character.item)
 S3method(unique,datetime.item)
+S3method(unique,Date.item)
 
 S3method(toLatex,data.frame)
 S3method(toLatex,data.set)

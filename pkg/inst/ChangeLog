@@ -1,3 +1,7 @@
+2016-02-02:
+  - Implemented "Date.item" class, which allows to use `data.set` or `as.data.set`,
+    etc. with "Date" objects.
+
 2016-01-29:
   - Use `any(is.na(...))` instead of `anyNA(...)` in `[.mtable`.
 
