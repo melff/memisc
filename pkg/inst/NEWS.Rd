@@ -14,6 +14,9 @@
           by the eponymous function in the \code{stats} package) can now be
           combined into \code{ftable_matrix} objects. This can be done by
           using \code{rbind()} or \code{cbind()}.
+      
+    \item There is now an object class for survey items containing dates (without
+          times), called \code{"Date.item"}.
     }
   }
   \subsection{BUGFIXES}{
@@ -76,7 +79,7 @@
       Finally, parts of "mtables" can be extracted using the \code{[} operator as
       with matrices, and "mtables" can now also be concatenated.
       
-      \item There is now an object class for survey items containing dates, called
+      \item There is now an object class for survey items containing dates and times, called
       \code{"datetime.item"}
       
       \item There is a new function \code{wild.codes} to check wild codes (i.e. 
