@@ -63,7 +63,7 @@ deploy:
   tag: 0.99.5
   provider: GitHub
   auth_token:
-    secure: dmzZ4ohXYLWbEtp4RW9xBSEFtIirUua57jeak2h6yu/g90RoxnVwLxwpkeVPKrdh==
+    secure: dmzZ4ohXYLWbEtp4RW9xBSEFtIirUua57jeak2h6yu/g90RoxnVwLxwpkeVPKrdh
   artifact: source,binary 
 
   draft: false
