@@ -46,7 +46,7 @@ artifacts:
   - path: 'pkg\*_*.zip'
     name: Bits
 
-version: 0.99.3.{build}
+version: 0.99.5-{build}
 
 branches:
   only:
