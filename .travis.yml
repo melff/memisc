@@ -1,7 +1,11 @@
 language: r
+
 sudo: required
 
-# Be strict when checking our package
+os:
+  - linux
+  - osx
+
 warnings_are_errors: true
 
 before_install: cd pkg
@@ -13,9 +17,16 @@ r_binary_packages:
   - lme4
   - ordinal
   - simex
-  
+
 notifications:
   email:
     recipients: memisc@elff.eu
     on_success: always
     on_failure: always
+    
+deploy:
+  provider: releases
+  api_key: 
+    secure: Oz5LKbiXX07sEMWBFew7s39zPMAmdxv3XsTbBpVVZBlKYJMHP7T20KeK5j4smZpKHFfSDFpoeK8YGWb5Y2zpVCqPmCnboe+bbIH8mu8Vdmdrz7BMZlIikTLVX9gb5hMveJXRdc0WIZWkaWGeCacDhLBzEMeZPDS7IFlHwbehb/xM7oabmMIpN2OYb5qwTG3QZ1BqncKW6pQsVLo21nDRxkQDRv7P2Lz7a2dAMhq+USN0fBHl8RtsEb/OfU4qQrYR5VzfHzQydLfb3YdJqaHAki9Sm9wQ47EgO+bbUi9kIwbAjpYdOIvEgmTYYReepNBUrZCzkruDqO3MzvLGCipmcDkUG4fcPoOEUJEio3EELe9hjPwVpsnO5Vzwc4lpI8+QTcr0BfGH1fJwiBr/5xbqbzrjFriJGVI7Llwp/GZJmrq/rt45Wmsm7d7H7yOXy3qmyW/A9FWXImyWJeTriFsg+mVsnUxc05/waa/srnaPOxF0pgYK3fqjdgv1cNE9Dhlpre9fGgcB/p/vAfjiLqWmc53A4YqkIR4efCArKdHkr76eaNS7HqLppxrVb6OVfjhaUhCiwNeTo/uLhD5kSL5aK/DjY15+r71BODKAnitiElAiBkvHyYi0KMyEpqteGmJ7D1Crli6or1I9KiPnR9v3YvLhIwj3WSHK+k48l8yrspw=
+  skip_cleanup: true
+
