@@ -3,6 +3,7 @@
 
 language: c
 sudo: required
+warnings_are_errors: true
 
 before_install:
   - curl -OL https://raw.githubusercontent.com/melff/r-builder/master/pkg-build.sh
