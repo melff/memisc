@@ -29,8 +29,7 @@ notifications:
     on_failure: change
 
 env:
-  matrix:
-    - RVERSION=oldrel   
-    - RVERSION=release  WARNINGS_ARE_ERRORS=1
-    - RVERSION=devel    WARNINGS_ARE_ERRORS=1
+  - RVERSION=oldrel   
+  - RVERSION=release WARNINGS_ARE_ERRORS=1
+  - RVERSION=devel WARNINGS_ARE_ERRORS=1
 
