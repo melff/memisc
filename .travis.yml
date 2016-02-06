@@ -13,7 +13,7 @@ before_install:
 
 install:
   - ./pkg-build.sh install_deps
-  - ./pkg-build.sh r_binary_install knitr rmarkdown evaluate digest formatR highr markdown stringr yaml car
+  - ./pkg-build.sh r_install knitr rmarkdown evaluate digest formatR highr markdown stringr yaml car
 
 script:
   - ./pkg-build.sh run_build
