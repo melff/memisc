@@ -1,0 +1,22 @@
+language: r
+
+sudo: required
+
+warnings_are_errors: true
+
+before_install: cd pkg
+
+r_binary_packages:
+  - SparseM
+  - AER
+  - eha
+  - lme4
+  - ordinal
+  - simex
+
+notifications:
+  email:
+    recipients: memisc@elff.eu
+    on_success: change
+    on_failure: always
+    
