@@ -3,7 +3,6 @@
 
 language: c
 sudo: required
-warnings_are_errors: true
 
 before_install:
   - curl -OL https://raw.githubusercontent.com/melff/r-builder/master/pkg-build.sh
@@ -31,7 +30,7 @@ notifications:
 
 env:
   matrix:
-    - RVERSION=oldrel
-    - RVERSION=release
-    - RVERSION=devel
+    - RVERSION=oldrel   
+    - RVERSION=release  WARNINGS_ARE_ERRORS=1
+    - RVERSION=devel    WARNINGS_ARE_ERRORS=1
 
