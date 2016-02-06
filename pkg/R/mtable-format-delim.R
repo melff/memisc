@@ -62,7 +62,7 @@ mtable_format_delim <- function(x,
       sum.tab[,1] <- summaries
       coef.tab <- rbind(coef.tab,sum.tab)
     }
-    coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
+    apply(coef.tab,1,paste,collapse=colsep)
   }
   
   if(length(x$model.groups)){
