@@ -7,8 +7,9 @@ knitr::opts_chunk$set(comment=NA,
                fig.align="center",
                results="markup")
 ```
+# Handling questionnaire items with *memisc*
 
-# Motivation
+## Motivation
 
 R is a great tool to do data analysis and for data management tasks that arise in the context of big data analytics. Nevertheless there is still room for improvement in terms of the support for data management tasks that arise in the social sciences, especially when it comes to handling data that come from social surveys and opinion surveys. The main reason for this is that the way that questionnaire item responses as they are usually coded in machine-readable survey data sets do not directly and easily translate into R's data types for numeric and categorical data, that is, numerical vectors and factors. As a consequence, many social scientists exercise their everyday data management tasks with commercial software packages such as SPSS or Stata, but there may be social scientists who either cannot afford such commercial software or prefer to use, out of principle, open-source software for all steps of data management and analysis.
 
@@ -35,12 +36,12 @@ data analysis by replacing them with `NA`, but it would convenient to have facil
 
 [^1]: Those familiar with British politics will realise that this is a simplification of the menu of available choices that voters in England typically face in an election of the House of Commons.
 
-# Standard attributes of survey items
+## Standard attributes of survey items
 
 The "memisc" package introduces a new data type (more correctly an `S4` class) that allows to handle such data, that allows to adjust labels or missing values definitions and to translate such data as needed either into numeric vectors 
 of factors, thereby automatically filtering out the missing values. This data time (or `S4` class) is, for lack of a better term, called `"item"`. In general, users do not bother with the construction of such item vectors. Usually they are  generated when data sets are imported from data files in SPSS or Stata format. This page is mainly concerned with describing the structure of such item vectors and how they can be manipulated in the data management step that usually precedes data analysis. It is thus possible to do all the data management in *R* from importing the pristine data obtained from data archives or other data providers, such as the survey institutes to which a principal investigator has delegated data collection. Of course, the facilities introduced by the `"item"` data type also allow to create appropriate representations of survey item responses if a principal investigator obtains only raw numeric codes. In the following, the construction of `"item"` vectors from raw numeric data is mainly used to highlight their structure.
 
-## Value labels {#value_labels}
+### Value labels {#value_labels}
 
 ```{r,echo=FALSE}
 set.seed(20)
@@ -102,7 +103,7 @@ voteint
 str(voteint)
 ```
 
-## Missing values {#missing_values}
+### Missing values {#missing_values}
 
 In the coding plan shown above, the values 97, 98, and 99 are marked as "missing values", that is, while they represent coded responses, they are not to be considered as valid in the sense of providing information about the respondent's vote intention. For the statistical analysis of vote intention it is natural to replace them by `NA`. Yet replacing codes 97, 98, and 99 already at the stage of importing data into *R* memory would mean a loss of potentially precious information since it precludes, e.g. the motivation to refuse responding to the vote intention question or the antencedents of undecidedness. Hence it is better to mark those values and to delay their replacement by `NA` to a later stage in the analysis of vote intentions and to be able to undo or change the "missingness" of these values. For example, not only may one be interested in the antecedents of response refusals but also be interested to analyse vote intention with non-voting excluded or included. The memisc package provides, like SPSS and PSPP, facilities to mark particular values of an item vector as "missing" and change such designations throughout the data preperation stage.
 
@@ -145,7 +146,7 @@ valid.range(voteint) <- c(1,9)
 missing.values(voteint)
 ```
 
-## Other attributes of survey items {#annotations}
+### Other attributes of survey items {#annotations}
 Other software packages targeted at social scientists also allow to add annotations to the variables in a data set, which are not subject to the syntactic constraints of variable names. These annotations are usually called "variable labels" in these software packages. In `"memisc"` the corresponding term is "description". In continuation of the running example, we add a description to the vote intention variable:
 ```{r}
 description(voteint) <- "Vote intention"
@@ -159,7 +160,7 @@ annotation(voteint)
 annotation(voteint)["wording"]
 ```
 
-## Codebooks of survey items
+### Codebooks of survey items
 
 It is common in survey research to describe a data set in the form of a *codebook*. A codebook summarises each variable in the data set in terms of its relevant attributes, that is, the label attached to the variable (in the context of the `memisc` package this is called its "description"), the labels attached to the values of the variable, which values of the variable are supposed to be *missing* or *valid*, as well as univariate summary statistics of each variable, usually without and with missing variables included. Such functionality is provided in this package by the function `codebook()`. `codebook()` when applied to an `"item"` object returns a `"codebook"` object, which when printed to the console gives an overview of the variable usually required for the codebook of a data set (the production of codebooks for whole data sets is described further below). To illustrate the `codebook()` function we now produce a codebook of the `voteint` item variable created above:
 ```{r}
@@ -204,7 +205,7 @@ into HTML:
 show_html(codebook(voteint))
 ```
 
-# Data sets: Containers of survey items
+## Data sets: Containers of survey items
 
 Usually one expects to be able handle data on responses to survey items not in isolation, but as part of a data set,
 which contains a multitude of observations on many variables. The usual data structure in *R* to contain observation-on-variables
@@ -212,7 +213,7 @@ data is the *data frame*. In principle it is possible to put survey item vectors
 the `"memisc"` package provides a special data structure to contain survey item data called data sets or data set-objects, that is, objects of class `"data.set"`. This opens up the possibility to automatically translate survey items into regular vectors
 and factors, as expected by typical data analysis functions, such as `lm()` or `glm()`.
 
-## The structure of `"data.set"` objects
+### The structure of `"data.set"` objects
 
 Data set objects have essentially the same row-by-column structure as data frames: 
 They are a set of vectors (however of class `"item"`)
@@ -262,7 +263,7 @@ print(Data)
 ```
 but you should not do this with large data sets, such as the Eurobarometer trend file ...
 
-## Manipulating data in data sets
+### Manipulating data in data sets
 
 Typical data management tasks that you would otherwise have done in commercial packages like SPSS or
 Stata can be conducted within data set objects. Actually to provide this possibility (to the author
@@ -324,7 +325,7 @@ EnglandData
 ```
 
 
-## Codebooks of data sets {#codebooks}
+### Codebooks of data sets {#codebooks}
 
 Previouly, we created a code book for individual survey items. But it is also possible to create a codebook for a whole
 data set (what one usually wants to have a codebook of). Obtaining a codebook is simple, by applying the function `codebook()`
@@ -337,7 +338,7 @@ On a website, it looks better in HTML:
 show_html(codebook(Data))
 ```
 
-## Translating data sets into data frames
+### Translating data sets into data frames
 
 The punchline of the existence of `"data.set"` objects however
 is that they can be coerced into regular data frames, using `as.data.frame()`, which causes
@@ -381,7 +382,7 @@ For convenience, there is also a codebook method for data frames:
 show_html(codebook(DataFr))
 ```
 
-# More tools for data preparation
+## More tools for data preparation
 
 When social scientists work with survey data, these are not always organised and coded in a way that 
 suits the intended data analysis. For this reasons, the `"memisc"` package provides the two functions
@@ -389,7 +390,7 @@ suits the intended data analysis. For this reasons, the `"memisc"` package provi
 for complex distinctions of cases and can be seen as a more general version of `ifelse()`. These two
 functions are demonstrated with a "real-life" example.
 
-## Recoding {#recode}
+### Recoding {#recode}
 
 The function `recode()` is similar in semantics to the function of the same name in 
 package [`"car"`][CAR] and designed in such a way that it does not conflict with this function.
@@ -431,7 +432,7 @@ codes are transferred into new ones, but also the new codes are labelled.
 [^3]: The [German Longitudinal Election Study](http://gles.eu) is funded by the German National Science Foundation (DFG) and carried out outin close cooperation with the [DGfW](http://www.dgfw.info/), German Society for Electoral Studies.
 Principal investigators are Hans Rattinger (University of Mannheim, until 2014), Sigrid Roßteutscher (University of Frankfurt), Rüdiger Schmitt-Beck (University of Mannheim), Harald Schoen (Mannheim Centre for European Social Research, from 2015), Bernhard Weßels (Social Science Research Center Berlin), and Christof Wolf (GESIS – Leibniz Institute for the Social Sciences, since 2012). Neither the funding organisation nor the principal investigators bear any responsibility for the example code shown here.
 
-## Case distinctions 
+### Case distinctions 
 
 Recoding can be used to combine the codes of an item into a smaller set, but sometimes one needs to do more
 complex data preparations, in which the values of some variable are set conditional on values of another one, etc.

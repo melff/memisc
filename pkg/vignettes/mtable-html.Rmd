@@ -1,4 +1,4 @@
-%\VignetteEngine{knitr::knitr}
+% \VignetteEngine{knitr::rmarkdown}
 % \VignetteIndexEntry{"mtable" results in HTML format}
 
 ```{r,echo=FALSE,message=FALSE}
@@ -7,7 +7,7 @@ knitr::opts_chunk$set(comment=NA,
                results="markup")
 ```
 
-## A Demonstration of Showing `mtable` results in HTML Format
+# A demonstration of showing `mtable` results in HTML format
 
 First, we load the package and estimate some regression models.
 

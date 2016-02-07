@@ -1,4 +1,4 @@
-% \VignetteIndexEntry{Analysing the American National Election Study of 1948}
+% \VignetteIndexEntry{Analysing the American National Election Study of 1948 with "memisc"}
 % \VignetteEngine{knitr::rmarkdown}
 
 
@@ -8,7 +8,9 @@ knitr::opts_chunk$set(comment=NA,
                results="markup")
 ```
 
-# Introduction
+# Analysing the American National Election Study of 1948 with *memisc*
+
+## Introduction
 
 This vignette gives an example for the analysis of a typical social science data set.
 It is the data file of the *American National Election Study* of
@@ -73,7 +75,7 @@ knit_print.mtable <-function(x,...)
   knitr::asis_output(format_html(x,...))
 ```
 
-# Reading In a "Portable" SPSS Data File
+## Reading in a "portable" SPSS data file
 
 We start with importing the data into R.
 The following code extracts the SPSS portable file
@@ -125,7 +127,7 @@ codebook(nes1948[1:5])
 ```
 
 
-## Reading In a Subset of the Data
+### Reading in a subset of the data
 After we have decided which variables to use we can read in a subset of
 the data:
 ```{r}
@@ -204,9 +206,9 @@ of the class and type of the variables in the data set,
 the value labels and defined missing values, and counts of
 the distinct values of the variables.
 
-# Analysis
+## Analysis
 
-## Some Descriptive Analyses
+### Some descriptive analyses
 
 We start our analyses with a contingency table, but first
 we make some preparations: We recode the variables of
@@ -313,7 +315,7 @@ other occupational classes, the confidence intervals do not even overlap.
 However, it is not clear whether farmers are distinct from the blue-collar
 and lower white-collar classes.
 
-## Logit Modelling of Candidate Choice
+### Logit modelling of candidate choice
 
 In the following we conduct a logit analysis of the vote for Truman.
 First, we assign non-standard contrasts the categorical predictors.

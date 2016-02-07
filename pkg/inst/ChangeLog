@@ -1,3 +1,6 @@
+2016-02-07:
+  - Unified headlines in vignettes.
+
 2016-02-02:
   - Implemented "Date.item" class, which allows to use `data.set` or `as.data.set`,
     etc. with "Date" objects.
