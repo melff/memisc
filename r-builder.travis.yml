@@ -25,8 +25,9 @@ after_failure:
 
 notifications:
   email:
+    recipients: memisc@elff.eu
     on_success: change
-    on_failure: change
+    on_failure: always
 
 env:
   - RVERSION=oldrel 

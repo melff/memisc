@@ -1,22 +1,37 @@
-language: r
+## Sample .travis.yml file for use with metacran/r-builder
+## See https://github.com/metacran/r-builder for details.
 
+language: c
 sudo: required
 
-warnings_are_errors: true
+before_install:
+  - curl -OL https://raw.githubusercontent.com/melff/r-builder/master/pkg-build.sh
+  - chmod 755 pkg-build.sh
+  - cp pkg-build.sh pkg
+  - cd pkg
+  - ./pkg-build.sh bootstrap
 
-before_install: cd pkg
+install:
+  - ./pkg-build.sh install_deps
+  - ./pkg-build.sh r_install knitr rmarkdown evaluate digest formatR highr markdown stringr yaml car
 
-r_binary_packages:
-  - SparseM
-  - AER
-  - eha
-  - lme4
-  - ordinal
-  - simex
+script:
+  - ./pkg-build.sh run_build
+  - ./pkg-build.sh run_check
+#  - ./pkg-build.sh run_tests
+
+after_failure:
+  - ./pkg-build.sh dump_logs
 
 notifications:
   email:
     recipients: memisc@elff.eu
     on_success: change
     on_failure: always
-    
+
+env:
+  - RVERSION=oldrel 
+  - RVERSION=release WARNINGS_ARE_ERRORS=1
+  - RVERSION=devel WARNINGS_ARE_ERRORS=1
+
+
