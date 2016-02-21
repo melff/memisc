@@ -113,6 +113,11 @@ combine_mtables <- function(...){
     model.groups <- mapply(`+`,mg,mg1,SIMPLIFY=FALSE)
   }
   
+  if(all(sapply(coefs,length)==1) && length(argnames) && any(nzchar(argnames))){
+    model.names[nzchar(argnames)] <- argnames[nzchar(argnames)]
+    model.groups <- NULL
+  }
+  
   coefs <- do.call("c",coefs)
   nms <- names(coefs)
   
@@ -126,10 +131,10 @@ combine_mtables <- function(...){
   s.rown <- unique(unlist(s.rown))
   smrys <- lapply(smrys,smryxpand,s.rown)
   smrys <- do.call("cbind",smrys)
-
+  
   names(coefs) <- model.names
   colnames(smrys) <- model.names
-    
+  
   calls <- lapply(args,"[[","calls")
   calls <- do.call("c",calls)
   

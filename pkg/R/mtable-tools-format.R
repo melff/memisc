@@ -67,6 +67,10 @@ coefxpand <- function(x,names){
 }
 
 smryxpand <- function(x,names){
+  
+  if(!length(x)) {
+    return(structure(rep("",length(names)),names=names))
+  }
   d <- dx <- dim(x)
   dd <- ddx <- dimnames(x)
   d[1] <- length(names)
