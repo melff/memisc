@@ -295,7 +295,10 @@ htfm_mkBody <- function(x,format,digits,split.dec,style){
   
   for(i in 1:m){
     tmp <- formatC(x[,i],digits=digits[i],format=format[i])
-    tmp <- gsub("-","&minus;",tmp,fixed=TRUE)
+    if(getOption("html.use.ampersand",FALSE))
+      tmp <- gsub("-","&minus;",tmp,fixed=TRUE)
+    else
+      tmp <- gsub("-","\u2212",tmp,fixed=TRUE)
     if(!split.dec)
       body[,i] <- html_td(tmp,vectorize=TRUE,style=css(style))
     else {

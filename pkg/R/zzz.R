@@ -25,6 +25,7 @@ memisc_env <- environment()
         "*"=.05
     ))
   options(labelled.factor.coerce.NA = FALSE)
+  options(html.use.ampersand=FALSE)
 }
 
 

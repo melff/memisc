@@ -8,7 +8,7 @@ mtable_format_stdstyle <- c(
 )
 
 mtable_format_html <- function(x,
-                               interaction.sep = " &times; ",
+                               interaction.sep = NULL,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,
@@ -26,6 +26,13 @@ mtable_format_html <- function(x,
   align.left <- c("text-align"="left")  
   align.center <- c("text-align"="center")
   lrpad <- c("padding-left"="0.3em","padding-right"="0.3em")
+  
+  if(!length(interaction.sep)){
+    if(getOption("html.use.ampersand",FALSE))
+      interaction.sep <- " &times; "
+    else 
+      interaction.sep <- " \u00d7 "
+  }
   
   colsep <- ""
   rowsep <- "\n"
@@ -57,7 +64,10 @@ mtable_format_html <- function(x,
   frmt1 <- function(name,coefs,summaries,is.last){
     
     coef.tab <- coefs
-    coef.tab[] <- gsub("-","&minus;",coef.tab[],fixed=TRUE)
+    if(getOption("html.use.ampersand",FALSE))
+      coef.tab[] <- gsub("-","&minus;",coef.tab[],fixed=TRUE)
+    else
+      coef.tab[] <- gsub("-","\u2212",coef.tab[],fixed=TRUE)
     #coef.tab[] <- gsub("([*]+)","<sup>\\1</sup>",coef.tab[]) # looks ugly ...
     
     dm <- dim(coefs)
@@ -203,7 +213,7 @@ mtable_format_html <- function(x,
 
 
 format_html.mtable <- function(x,
-                               interaction.sep = " &times; ",
+                               interaction.sep = NULL,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,

@@ -49,7 +49,10 @@ format_html.ftable <- function(x,
   }
   
   body <- array(trimws(body),dim=dim(x))
-  body[] <- gsub("-","&minus;",body[],fixed=TRUE)
+  if(getOption("html.use.ampersand",FALSE))
+    body[] <- gsub("-","&minus;",body[],fixed=TRUE)
+  else
+    body[] <- gsub("-","\u2212",body[],fixed=TRUE)
   
   if(split.dec){
     tmp <- spltDec(body)

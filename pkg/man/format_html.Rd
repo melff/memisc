@@ -61,7 +61,7 @@ format_html(x, \dots)
   it is "browser", in interactive sessions with RStudio
   it is "file-show".
   
-  These default sessions can be overriden by the option "html_viewer"
+  These default settings can be overriden by the option "html_viewer"
   (see \code{\link{options}}).
   }
   \item{file}{character string; name or path of the file where to
