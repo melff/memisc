@@ -1,3 +1,8 @@
+2016-02-21:
+  - Make the use of ampersand-escapes in HTML output optional and use unicode characters
+    by default. (So that pandoc will not escape them.)
+  - Minor improvenent of `c.mtable()`.
+
 2016-02-07:
   - Unified headlines in vignettes.
 
