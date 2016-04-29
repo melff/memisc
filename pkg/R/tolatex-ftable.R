@@ -87,7 +87,8 @@ toLatex.ftable <- function(object,
     else
       header[i] <- paste(header[i],collapse=" && ")
   }
-  
+
+  show.titles <- show.titles && length(names(row.vars)) && length(names(col.vars))
   if(show.titles){
     if(length(names(col.vars))==1){
       
