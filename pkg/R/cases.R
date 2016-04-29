@@ -28,7 +28,7 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
     #if(any(is.na(conditions))) stop("NA in logical condition")
     na.cond <- rowSums(is.na(conditions)) > 0
 
-    done <- rowSums(conditions)
+    done <- rowSums(conditions, na.rm=TRUE)
     if(any(done!=1) && check.xor!="ignore") {
       msg <- switch(check.xor,warn=warning,stop=stop)
       if(any(done==0) && any(done>1)) msg("conditions are neither exhaustive nor mutually exclusive")
@@ -84,7 +84,7 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
       labels <- ifelse(nzchar(labels),labels,deflabels)
     else labels <- deflabels
 
-    done <- rowSums(conditions)
+    done <- rowSums(conditions,na.rm=TRUE)
     if(any(done!=1) && check.xor!="ignore") {
       msg <- switch(check.xor,warn=warning,stop=stop)
       if(any(done==0) && any(done>1)) msg("conditions are neither exhaustive nor mutually exclusive")
