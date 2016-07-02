@@ -1,3 +1,21 @@
+2016-07-02:
+  - Fix type that crept in while fixing bug in parseSysHeader
+
+2016-06-05:
+  - Fix 'felicity' issue pointed out by Martin Maechler
+  - Make formatting of codebooks a bit more robust
+
+2016-04-30:
+  - Fix issue #8 - `toLatex.ftable()` does no longer attempt to show
+    titles if they are not available.
+  - Fix issue #1 (error in 'parseSysHeader')
+	
+2016-04-29:
+  - Make `cases()` robust with respect to NA conditions.
+
+2016-04-17:
+  - Fix extracolsep in `toLatex.ftable()` as suggested by Kirill Müller
+	
 2016-02-21:
   - Make the use of ampersand-escapes in HTML output optional and use unicode characters
     by default. (So that pandoc will not escape them.)
