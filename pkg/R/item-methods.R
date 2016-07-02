@@ -284,7 +284,11 @@ setMethod("as.ordered","item.vector",function(x){
     }
     filter <- x@value.filter
     use.levels <- if(length(filter)) is.valid2(values,filter) else TRUE
-    f <- suppressWarnings(ordered(x@.Data,levels=values[use.levels],labels=labels[use.levels]))
+    values <- values[use.levels]
+    labels <- labels[use.levels]
+    if(any(duplicated(values))) stop("Duplicate values")
+    if(any(duplicated(labels))) stop("Duplicate labels")
+    f <- ordered(x@.Data,levels=values,labels=labels)
     if(length(attr(x,"contrasts")))
       attr(f,"contrasts") <- contrasts(x)
     f
@@ -301,7 +305,11 @@ setMethod("as.factor","item.vector",function(x){
     }
     filter <- x@value.filter
     use.levels <- if(length(filter)) is.valid2(values,filter) else TRUE
-    f <- suppressWarnings(factor(x@.Data,levels=values[use.levels],labels=labels[use.levels]))
+    values <- values[use.levels]
+    labels <- labels[use.levels]
+    if(any(duplicated(values))) stop("Duplicate values")
+    if(any(duplicated(labels))) stop("Duplicate labels")
+    f <- factor(x@.Data,levels=values,labels=labels)
     if(length(attr(x,"contrasts")))
       contrasts(f) <- contrasts(x)
     f
@@ -341,7 +349,8 @@ relabel.item <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
   }
   vll[i] <- subst
   vl@.Data <- vll
-  x@value.labels <- vl
+  if(validObject(vl))
+      x@value.labels <- vl
   return(x)
 }
 

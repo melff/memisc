@@ -55,19 +55,27 @@ setMethod("[",signature(x="value.labels",i="logical",j="missing",drop="missing")
   new("value.labels",x@.Data[i], values=x@values[i]))
 
 setAs(from="numeric",to="value.labels",function(from,to){
-  if(length(names(from))){
-    new("value.labels",names(from),values=unname(from))
-  }
-  #else new("value.labels",as.character(from),values=from)
-  else new("value.labels",character(0),values=logical(0))
+    if(length(names(from))){
+        if(any(dups <- duplicated(names(from))))
+            warning("Duplicate labels ",
+                    paste(sQuote(unique(names(from)[dups])),collapse=" "),
+                    call.=FALSE)
+        if(any(duplicated(from))) warning("Duplicate values",call.=FALSE)
+        new("value.labels",names(from),values=unname(from))
+    }
+    else new("value.labels",character(0),values=logical(0))
 })
 
 setAs(from="character",to="value.labels",function(from,to){
-  if(length(names(from))){
-    new("value.labels",names(from),values=unname(from))
-  }
-  #else new("value.labels",from,values=from)
-  else new("value.labels",character(0),values=logical(0))
+    if(length(names(from))){
+        if(any(dups <- duplicated(names(from))))
+            warning("Duplicate labels",
+                    paste(sQuote(unique(names(from)[dups])),collapse=" "),
+                    call.=FALSE)
+        if(any(duplicated(from))) warning("Duplicate values",call.=FALSE)
+        new("value.labels",names(from),values=unname(from))
+    }
+    else new("value.labels",character(0),values=logical(0))
 })
 
 

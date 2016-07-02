@@ -47,6 +47,8 @@ relabel.factor <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
     if(length(i))
       labels[i] <- subst
   }
+  if(any(duplicated(labels)))
+      warning("Duplicate labels")
   levels(x) <- labels
   return(x)
 }
