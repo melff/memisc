@@ -120,7 +120,7 @@ parseSysHeader <- function(file){
       mrang_val[is.lo,1] <- -Inf
     if(length(is.hi))
       mrang_val[is.hi,2] <- Inf
-    nmissings$values[n_missings == -3] <- split(unname(mrang_val[,3,drop=FALSE]),seq_len(nrow(mrang_val)))
+    missings$values[n_missings == -3] <- split(unname(mrang_val[,3,drop=FALSE]),seq_len(nrow(mrang_val)))
     missings$ranges[n_missings == -3] <- split(mrang_val[,1:2,drop=FALSE],row(mrang_val[,1:2,drop=FALSE]))
   }
   missings$values[n_missings == -2] <- list(NULL)
