@@ -172,8 +172,8 @@ setMethod("format","codebookEntry",
              else NULL
 
   spec <- paste("  ",names(x@spec),x@spec)
-  tab <- x@stats$tab
-  descr <- x@stats$descr
+  tab <- unclass(x@stats$tab)
+  descr <- unclass(x@stats$descr)
   
   if(length(tab)){
     if(ncol(tab)>2){
