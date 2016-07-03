@@ -9,13 +9,13 @@
   - Fix issue #8 - `toLatex.ftable()` does no longer attempt to show
     titles if they are not available.
   - Fix issue #1 (error in 'parseSysHeader')
-	
+
 2016-04-29:
   - Make `cases()` robust with respect to NA conditions.
 
 2016-04-17:
   - Fix extracolsep in `toLatex.ftable()` as suggested by Kirill Müller
-	
+
 2016-02-21:
   - Make the use of ampersand-escapes in HTML output optional and use unicode characters
     by default. (So that pandoc will not escape them.)
@@ -39,7 +39,7 @@
 
 2016-01-21:
   - Correct spelling and case of vignette titles.
-  
+ 
 2016-01-16:
   - Use "html_viewer" option instead of "show_html.output".
 
@@ -53,7 +53,7 @@
   - Use `knitr::rmarkdown` instead of `knitr::knit` in vignettes.
   - Added vignette for `ftable_matrix`.
   - `show_html` can be used with arbitrary output functions, e.g. `rstudio::viewer`.
-  
+
 2016-01-02:
   - Small vignette update.
   - New maintainer address
@@ -75,12 +75,12 @@
 
 2015-12-30:
   - Make concatenation of html-elements safer
-  
+
 2015-12-29:
   - Added documentation for `toLatex` method for "ftable_matrix" objects
   - No longer make a fuss about duplicate model names in `combine_mtables`
 
-2015-12-28: 
+2015-12-28:
   - Added example for named model groups in `mtables`.
   - Added documentation of `format_html.ftable_matrix`.
   - Updated documentation of `mtable_format_latex`
@@ -94,7 +94,7 @@
 2015-12-16:
   - Fixed issues shown by R CMD check
   - Adapt `format_html.ftable_matrix` to html-objects infrastructure.
-  
+
 2015-12-13:
   - Enable automatic insertion of linebreaks into HTML code.
   - Export methods for html objects etc.
@@ -104,35 +104,35 @@
   - Added syntactic sugar to 'html()'. Corrected formatting of fixed-point numbers.
   - Made formatting of value filters safer.
 
-2015-12-07: 
+2015-12-07:
   - Encapsulate fixed-point numbers into "html_group" objects
   - Update version number
-  
+
 2015-12-06:
   - Start object-oriented infrastructure for the creation of HTML code.
-  
-2015-11-13: 
+
+2015-11-13:
   - Import 'str' and 'ls.str' from 'utils' package to prevent a NOTE in R CMD check
-  
-2015-11-09: 
+
+2015-11-09:
   - Make `percentages()` a little more robust against empty cells in marginal tables.
 
 2015-09-24:
   - Fixed Latex output of data frames.
 
-2015-09-13: 
+2015-09-13:
   - Fix regressions caused by `rbind()` and `cbind()` methods for "ftable" objects.
 
-2015-09-12: 
+2015-09-12:
   - Added some new `relabel()` methods.
 
 2015-09-06:
   - Fixed treatment of value labels in HTML formatting of codebooks.
 
-2015-09-03: 
+2015-09-03:
   - Added basic HTML formatting of `ftable_matrix` objects. (LaTeX formatting was already implemented.)
 
-2015-08-29: 
+2015-08-29:
    - Fix CSS class of ftable formatted in HTML
    - Implement `ftable_matrix` objects - objects composed from several `ftable`s.
 
@@ -142,7 +142,7 @@
 2015-08-18:
   - Fix bug that presented Stata 9-10 files to be successfully imported.
 
-2015-08-16: 
+2015-08-16:
   - Fix that allows to import ANES 2008 data with the provided buggy SPSS script files.
 
 2015-08-03:
@@ -168,13 +168,13 @@
 2015-07-14:
   - Added vignette about survey items (objects of class "item")
 
-2015-07-13: 
+2015-07-13:
   - Add basic documentation for 'summaryTemplate' generic function.
   - Add documentation for 'dsView'.
   - Fix codoc mismatches pointed out by R CMD check.
   - 'spss.fixed.file' now checks whether there are undefined variables in 'varlab.file' etc.
 
-2015-07-10: 
+2015-07-10:
   - Correct `sourcename` default argument of `collect` methods.
   - Get rid of duplicate aliases in documentation.
   - FIX: `coef.tab` not `coef.table`
@@ -182,10 +182,10 @@
   - Add documentation for data set manipulation (`merge` etc.)
   - Make `cases` more fussy about logical conditions.
 
-2015-07-02: 
+2015-07-02:
   - Provide HTML formatting of data frames.
 
-2015-06-15: 
+2015-06-15:
   - New option 'show.baselevel' for function 'mtable' that allows to decised whether the baseline category of 
     dummy variable shows up in the table.
 
@@ -200,7 +200,7 @@
   - Nicer grouping of coefficients of multiple-equation models
   - 'applyTemplate' now returns empty strings for undefined quantities.
 
-2015-06-02: 
+2015-06-02:
   - Moved 'toLatex' method for 'data.set' objects into different file. Added 'toLatex' method for data frames.
 
 2015-06-01:
@@ -223,7 +223,7 @@
   - Fixed bugs introduced by rewrite of 'import-internal-spss-syntax.R'.
     Dependency 'MicroDatosEs' should work okay now.
 
-2015-05-12: 
+2015-05-12:
   - Fixed a bug introduced by side-effects of manipulating the arguments of 'readfixed'. 
   - Make sure that codebook entries for items in external data sources are complete.
   - Add dots to 'format_html.codebookEntry' formal arguments.
@@ -236,10 +236,10 @@
     to an old-school but more flexible and stable Turing approach. 
   - 'spss.fixed.file()' should work for a wider range of situations.
 
-2015-05-10: 
+2015-05-10:
   - Use endash in HTML format of codebooks, correct removal extra styling of variable names
 
-2015-05-09: 
+2015-05-09:
   - Remove hardcoded styling of variable names in codebook entries.
   - Codebook support for numeric vectors and factors
   - Fix console output of data.set objects
@@ -266,13 +266,13 @@
   - Support for HTML formatting of "ftables"
   - Added function 'wild.codes' to find, well, wild codes.
 
-2015-04-20: 
+2015-04-20:
   - Fix collect method of "data.set" objects, by providing "as.data.set" method for lists.
 
-2015-04-09: 
+2015-04-09:
   - Improvement of header formatting of mtables for LaTeX
 
-2015-04-07: 
+2015-04-07:
   - Shorter vignette for html output of mtable results.
   - Update README.md
   - Create README.md
@@ -280,12 +280,12 @@
   - Added knitr vignette for HTML output example 
   - Corrected NEWS.Rd
   - Minor correction of format of ANES48 vignette
-  
-2015-04-06: 
+
+2015-04-06:
   - Improved HTML output of 'mtable' results  - alignment on decimal signs and straight borders. 
   - Updated documentation of 'mtable' results.
-  
-2015-04-05: 
+
+2015-04-05:
   - New coefficient style - confidence intervals right of estimates
   - Some cleanup in mtable; special formatting functions for mtable objects (needs testing)
 
@@ -311,7 +311,7 @@
   - Added github URL
   - Listed packages that are 'enhanced' by supporting them for `mtable`
 
-2014-12-14: 
+2014-12-14:
   - Correct buglet in 'recode' method for numeric vectors
 
 2014-11-04:
@@ -361,12 +361,11 @@
     were included into the package, but had not been exported yet
     from the package namespace.
     This is now fixed.
-              
 
 2013-01-27:
   - Minor improvement of 'codebook' output for external SPSS data sets.
   - Fixed a bug in 'dumbswap.c' discovered while building a windows binary.
-  
+
 2013-01-26:
   - Included getSummary methods
      - for objects of classes "ivreg", "tobit" (from package "AER"),
@@ -387,7 +386,7 @@
       - It works now, even if 'varlab.file', 'codes.file',
         or 'missval.file' arguments are missing. (This was broken by an earlier revision.)
       - It now handles value labels of character string variables correctly.
-    
+
 2013-01-04:
   - Updated contact email address. Corrected "initialize" method for "data.set" objects.
 

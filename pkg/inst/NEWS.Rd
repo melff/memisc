@@ -25,13 +25,25 @@
     vignettes.
     \item \code{str} and \code{ls.str} are imported from the 
           \code{utils} package to prevent a NOTE in R CMD check
-    \item Do not wrap HTML tables and list in HTML paragraphs in \code{format_html.CodebookEntry}.
-    \item \code{show} and \code{codebookEntry} methods for the "datetime.item" now work as expected. 
+    \item HTML tables and lists are no loger wrapped in HTML paragraphs in \code{format_html.CodebookEntry}.
+    \item \code{show} and \code{codebookEntry} methods for the
+    "datetime.item" now work asexpected. 
+    \item \code{cases} handles \code{NA}s more gracefully
+    \item \code{toLatex.ftable} output has been improved: No attempt at
+          showing non-existent variable names, better application of
+          \code{extracolsep}.
+    \item Duplicate value labels now produce an error if item object is
+          coerced into a factor. (This addresses a 'felicity' issue pointed
+          out by MartinMaechler.)
+    \item A bug concerning missing values in SPSS files is fixed.
+    \item Headlines in vignettes are now coherent.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{
    \itemize{
      \item All vignettes are now using \emph{knitr}.
+     \item HTML output uses unicode characters by default instead of
+     amersand-escapes to enhance compatibility with \emph{pandoc}.
    }
   }
   \subsection{DEFUNCT}{
