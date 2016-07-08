@@ -1,3 +1,6 @@
+2016-07-08:
+  - Suggest 'rmarkdown' package
+
 2016-07-02:
   - Fix type that crept in while fixing bug in parseSysHeader
 
