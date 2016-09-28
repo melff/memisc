@@ -1,3 +1,6 @@
+2016-09-28: 
+  - More efficient 'subset' method for large external data sets
+
 2016-07-09:
   - No 'useRs' in DESCRIPTION and software names in single quotes
 

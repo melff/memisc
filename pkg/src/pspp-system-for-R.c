@@ -1272,3 +1272,144 @@ second_lowest_double_val()
 #error Unknown floating-point representation.
 #endif /* FPREP != FPREP_IEEE754 */
 }
+
+
+SEXP read_sysfile_vars (SEXP SysFile, SEXP what,
+                          SEXP s_vars, SEXP s_ncases, SEXP s_types){
+  PROTECT(SysFile);
+    sys_file *s = get_sys_file(SysFile);
+    if(s->case_size == 0) error("case size is zero -- why??");
+
+  PROTECT(s_vars = coerceVector(s_vars,LGLSXP));
+  PROTECT(s_ncases = coerceVector(s_ncases,INTSXP));
+  PROTECT(s_types = coerceVector(s_types,INTSXP));
+  int nvar = length(s_vars);
+  int new_ncases, ncases = INTEGER(s_ncases)[0];
+  int *types = INTEGER(s_types);
+//   if(LENGTH(s_vars)!=nvar) error("\'s_vars\' argument has wrong length");
+
+  int ii,i,j,k,l, m=0;
+  for(j = 0; j < nvar; j++) m+=LOGICAL(s_vars)[j];
+
+  SEXP x, y, data;
+  /*char *charbuf;
+  int charbuflen = 0;*/
+  PROTECT(data = allocVector(VECSXP,m));
+  k = 0;
+  l = 0;
+   for(j = 0; j < s->case_size; j++){
+      if(types[j] == 0){
+        if(k >= nvar) error("index k out of bounds, k = %d, nvar = %d",k,m);
+        if(LOGICAL(s_vars)[k]){
+          if(l >= m) error("index l out of bounds, l = %d, m = %d",l,m);
+          SET_VECTOR_ELT(data,l,allocVector(REALSXP,ncases));
+          l++;
+          }
+        k++;
+      }
+      else if(types[j] >= 1) {
+        if(k >= nvar) error("index k out of bounds, k = %d, nvar = %d",k,m);
+        if(LOGICAL(s_vars)[k]){
+          if(l >= m) error("index l out of bounds, l = %d, m = %d",l,m);
+          SET_VECTOR_ELT(data,l,allocVector(STRSXP,ncases));
+          l++;
+          }
+        k++;
+      }
+    }
+
+    int str_len = 0;
+    int str_count = 0;
+    int read_len;
+    char char_buf[STRMAX];
+   if(s->case_size == 0) error("case size is zero after buffer allocation -- why??");
+   R_flt64 swapped_sysmis = dswap(s->sysmis,s->swap_code);
+#ifdef DEBUG
+   Rprintf("\nswapped_sysmis = %g",swapped_sysmis);
+#endif
+   ii = 0;
+    for(i = 0; i < ncases; i++){
+      read_len = sys_read_case(s);
+      if(read_len == 0){
+        new_ncases = i;
+        for(j = 0; j < m; j++){
+          x = VECTOR_ELT(data,j);
+          SET_VECTOR_ELT(data,j,lengthgets(x,new_ncases));
+        }
+        ncases = new_ncases;
+        break;
+      }
+      if(read_len < s->case_size) {
+            warning("end of file in unfinished case, i=%d, read length=%d",i,read_len);
+            new_ncases = i;
+            ncases = new_ncases;
+            break;
+      }
+      k = 0;
+      l = 0;
+      for(j = 0; j < s->case_size; j++){
+	/*Rprintf("i=%d, j=%d, k=%d, l=%d, ii=%d\n",i,j,k,l,ii);*/
+	if(types[j] == 0){
+	  if(k >= nvar) error("index k out of bounds, k = %d, nvar = %d",k,m);
+	  if(LOGICAL(s_vars)[k]){
+	    if(l >= m) error("index l out of bounds, l = %d, m = %d",l,m);
+	    x = VECTOR_ELT(data,l);
+	    if(s->buf[j] == swapped_sysmis) REAL(x)[ii] = NA_REAL;
+	    else REAL(x)[ii] = dswap(s->buf[j],s->swap_code);
+	    l++;
+	  }
+	  k++;
+	}
+	else if(types[j] >= 1) {
+	  memset(char_buf,0,STRMAX);
+	  memcpy(char_buf,s->buf+j,8);
+	  if(types[j]<=8){
+	    if(k >= nvar) error("index k out of bounds, k = %d, nvar = %d",k,m);
+	    if(LOGICAL(s_vars)[k]){
+	      trim(char_buf,(int)strlen(char_buf));
+	      if(l >= m) error("index l out of bounds, l = %d, m = %d",l,m);
+	      x = VECTOR_ELT(data,l);
+	      SET_STRING_ELT(x,ii,mkChar(char_buf));
+	      l++;
+	    }
+	    k++;
+	  } else {
+	    str_len = types[j];
+	    str_count = 1;
+	  }
+	}
+	else if(types[j] == -1){
+	  if(8*str_count > STRMAX-8) error("str_count out of bounds, 8*str_count = %d, STRMAX = %d",8*str_count,STRMAX);
+	  memcpy(&char_buf[8*str_count],s->buf+j,8);
+	  str_count++;
+	  if(8*str_count >= str_len){
+	    trim(char_buf,(int)strlen(char_buf));
+	    if(k >= nvar) error("index k out of bounds, k = %d, nvar = %d",k,m);
+	    if(LOGICAL(s_vars)[k]){
+	      if(l >= m) error("index l out of bounds, l = %d, m = %d",l,m);
+	      x = VECTOR_ELT(data,l);
+	      SET_STRING_ELT(x,ii,mkChar(char_buf));
+	      l++;
+	    }
+	    str_count = 0;
+	    k++;
+	  }
+	}
+	else error("invalid type specifier");
+      }
+      ii++;
+    }
+    k = 0;
+    for(j = 0; j < nvar; j++){
+      if(LOGICAL(s_vars)[j]){
+        x = VECTOR_ELT(what,j);
+        if(k >= nvar) error("index k out of bounds, k = %d, nvar = %d",k,m);
+        y = VECTOR_ELT(data,k);
+        copyMostAttrib(x,y);
+        k++;
+      }
+    }
+
+    UNPROTECT(5);
+    return data;
+}

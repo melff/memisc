@@ -147,6 +147,16 @@ setMethod("readSubset","spss.system.importer",
       types=x@data.spec$types
 )})
 
+setMethod("readVars","spss.system.importer",
+  function(x,nrows,cols){
+    if(!.Call("check_pointer",x@ptr)) stop("pointer is NULL, you need to recreate the object")
+    .Call("read_sysfile_vars",x@ptr,
+      what=x,
+      vars=cols,n=nrows,
+      types=x@data.spec$types
+)})
+
+
 setMethod("show","spss.system.importer",
   function(object){
     file.name <- attr(object@ptr,"file.name")

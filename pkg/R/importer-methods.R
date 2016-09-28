@@ -118,44 +118,95 @@ setMethod("[",signature(x="importer",i="missing",j="missing",drop="ANY"),
     bracket.importer(x,Nargs=nargs()-1-(!missing(drop))-length(list(...)),i,j,drop=drop,...)
 )
 
+c_Data <- function(x1,x2) {
+  if(is.null(x1)) return(x2) 
+  else {
+    y <- x1
+    y@.Data <- c(x1@.Data,x2@.Data)
+    return(y)
+  }
+}
 
 setMethod("subset","importer",
-  function (x, subset, select, drop = FALSE, ...){
-    ncases <- nrow(x)
+    function (x, subset, select, drop = FALSE,
+              ...)
+{
+
+    if(missing(subset) && missing(select))
+        return(as.data.set(x))
+              
+    nobs <- nrow(x)
     names <- names(x)
     nvars <- length(names)
+    cs <- getOption("subset.chunk.size",nobs)
 
-    if (missing(subset))
-        r <- rep(TRUE,ncases)
-    else {
-        e <- substitute(subset)
-        subset.vars <- all.vars(e)
-        r.s <- rep(TRUE,ncases)
-        j.s <- names %in% subset.vars
-        r <- NA
-        r <- eval(e, x[r.s,j.s,drop=FALSE], parent.frame())
-        if (!is.logical(r))
-            stop("'subset' must evaluate to logical")
-        r <- r & !is.na(r)
+    if(missing(select)){
+        cols <- rep(TRUE,nvars)
+        select.vars <- names(x)
     }
-    if (missing(select)) x[r,, drop = drop,...]
     else {
         nl <- as.list(1:nvars)
         names(nl) <- names
-        use <- logical(nvars)
-        use[eval(substitute(select), nl, parent.frame())] <- TRUE
-        y <- x[r, use, drop = drop,...]
-        vars <- sapply(substitute(select)[-1],as.character)
-        ii <- match(vars,names[use])
-        y <- y[ii]
-        new.names <- names(vars)
-        if(length(new.names) && any(nzchar(new.names))){
-          names.y <- names(y)
-          names.y[nzchar(new.names)] <- new.names[nzchar(new.names)]
-          names(y) <- names.y
+        cols <- logical(nvars)
+        cols[eval(substitute(select), nl, parent.frame())] <- TRUE
+        select.vars <- sapply(substitute(select)[-1],as.character)
+
+    }
+    if(nobs < cs) cs <- nobs
+    m <- nobs %/% cs
+    r <- nobs %% cs
+
+    seekData(x)
+    if(missing(subset)){
+        res <- readVars(x,nrows=nobs,cols=cols)
+        names(res) <- names(x)[cols]
+        res <- res[select.vars]
+        attr(res,"row.names") <- 1:nobs
+    }
+    else {
+        select.cols <- cols
+        e <- substitute(subset)
+        subset.vars <- all.vars(e)
+        subset.cols <- names(x) %in% subset.vars
+        cols <- select.cols | subset.cols
+        chunk.names <- names(x)[cols]
+        res <- x@.Data[select.cols]
+        res.nobs <- 0
+        for(i in 1:m){
+            chunk <- readVars(x,nrows=cs,cols=cols)
+            names(chunk) <- chunk.names
+            use.obs <- eval(e,chunk,parent.frame())
+            if(!is.logical(use.obs)) stop("non-logical subset arg")
+            res.nobs <- res.nobs + sum(use.obs)
+            chunk <- chunk[select.vars]
+            chunk <- lapply(chunk,"[",use.obs)
+            res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
         }
-        y
-   }   
+        if(r > 0){
+            chunk <- readVars(x,nrows=r,cols=cols)
+            names(chunk) <- chunk.names
+            use.obs <- eval(e,chunk,parent.frame())
+            if(!is.logical(use.obs)) stop("non-logical subset arg")
+            res.nobs <- res.nobs + sum(use.obs)
+            chunk <- chunk[select.vars]
+            chunk <- lapply(chunk,"[",use.obs)
+            res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
+        }
+        for(j in 1:length(res)){
+            attributes(res[[j]]) <- attributes(chunk[[j]])
+        }
+        names(res) <- names(x)[select.cols]
+        res <- res[select.vars]
+        attr(res,"row.names") <- 1:res.nobs
+    }
+    new.names <- names(select.vars)
+    if(length(new.names) && any(nzchar(new.names))){
+        names.res <- names(res)
+        names.res[nzchar(new.names)] <- new.names[nzchar(new.names)]
+        names(res) <- names.res
+    }
+    class(res) <- "data.frame"
+    new("data.set",res)
 })
 
 
