@@ -217,7 +217,7 @@ spss.parse1.missing.values <- function(text){
     if(grepl("thru",mvspec,ignore.case=TRUE)){
       lo <- .pattern("thru",mvspec,before=TRUE,ignore.case=TRUE)
       hi <- .remainder(lo)
-      lo <- as.numeric(lo)
+      suppressWarnings(lo <- as.numeric(lo))
       if(!is.finite(lo)) lo <- -Inf
       
       if(grepl(",",hi)){
@@ -226,7 +226,7 @@ spss.parse1.missing.values <- function(text){
         vals <- as.numeric(vals)
       }
       else vals <- NULL
-      hi <- as.numeric(hi)
+      suppressWarnings(hi <- as.numeric(hi))
       if(!is.finite(hi)) hi <- Inf  
       range <- c(lo,hi)
     }
