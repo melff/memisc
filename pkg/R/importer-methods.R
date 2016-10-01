@@ -139,7 +139,8 @@ setMethod("subset","importer",
     names <- names(x)
     nvars <- length(names)
     cs <- getOption("subset.chunk.size",nobs)
-
+    if(cs < 1) stop("'subset.chunk.size' option must be a positive integer or NULL")
+    
     if(missing(select)){
         cols <- rep(TRUE,nvars)
         select.vars <- names(x)

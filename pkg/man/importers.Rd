@@ -155,11 +155,18 @@ precedence and are \emph{not} coerced to lower case.
 
     The \code{as.data.set} and \code{subset} methods
     for \code{"importer"} objects internally use the
-    generic functions \code{seekData}, \code{readData},
-    and \code{readSubset}, which have methods for the
+    generic functions \code{seekData}, \code{readData}, \code{readSubset},
+    and \code{readVars}, which have methods for the
     subclasses of \code{"importer"}.
     These functions are not callable
     from outside the package, however.
+
+    The \code{subset} method for \code{"importer"} objects reads in
+    the data `chunk-wise' to create the subset of observations if
+    the option \code{"subset.chunk.size"} is set to a non-\code{NULL}
+    value, e.g. by \code{options(subset.chunk.size=1000)}. This may be
+    useful in case of very large data sets from which only a tiny subset
+    of observations is needed for analysis.
     
     Since the functions described here are more or less complete rewrite
     based on the description of the file structure provided
