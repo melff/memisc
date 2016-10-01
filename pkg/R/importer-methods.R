@@ -170,6 +170,7 @@ setMethod("subset","importer",
         subset.cols <- names(x) %in% subset.vars
         cols <- select.cols | subset.cols
         chunk.names <- names(x)[cols]
+        chunk.cols <- chunk.names %in% select.vars
         res <- x@.Data[select.cols]
         res.nobs <- 0
         for(i in 1:m){
@@ -177,20 +178,24 @@ setMethod("subset","importer",
             names(chunk) <- chunk.names
             use.obs <- eval(e,chunk,parent.frame())
             if(!is.logical(use.obs)) stop("non-logical subset arg")
-            res.nobs <- res.nobs + sum(use.obs)
-            chunk <- chunk[select.vars]
-            chunk <- lapply(chunk,"[",use.obs)
-            res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
+            if(any(use.obs)){
+                res.nobs <- res.nobs + sum(use.obs)
+                chunk <- chunk[chunk.cols]
+                chunk <- lapply(chunk,"[",use.obs)
+                res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
+            }
         }
         if(r > 0){
             chunk <- readVars(x,nrows=r,cols=cols)
             names(chunk) <- chunk.names
             use.obs <- eval(e,chunk,parent.frame())
             if(!is.logical(use.obs)) stop("non-logical subset arg")
-            res.nobs <- res.nobs + sum(use.obs)
-            chunk <- chunk[select.vars]
-            chunk <- lapply(chunk,"[",use.obs)
-            res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
+            if(any(use.obs)){
+                res.nobs <- res.nobs + sum(use.obs)
+                chunk <- chunk[chunk.cols]
+                chunk <- lapply(chunk,"[",use.obs)
+                res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
+            }
         }
         for(j in 1:length(res)){
             attributes(res[[j]]) <- attributes(chunk[[j]])
