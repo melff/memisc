@@ -1070,7 +1070,7 @@ SEXP count_cases_sysfile (SEXP SysFile){
 }
 #undef DEBUG
 
-SEXP read_sysfile_subset (SEXP SysFile, SEXP what,
+SEXP read_sysfile_slice (SEXP SysFile, SEXP what,
                           SEXP s_vars, SEXP s_cases, SEXP s_types){
   PROTECT(SysFile);
     sys_file *s = get_sys_file(SysFile);
@@ -1274,7 +1274,7 @@ second_lowest_double_val()
 }
 
 
-SEXP read_sysfile_vars (SEXP SysFile, SEXP what,
+SEXP read_sysfile_subset (SEXP SysFile, SEXP what,
                           SEXP s_vars, SEXP s_ncases, SEXP s_types){
   PROTECT(SysFile);
     sys_file *s = get_sys_file(SysFile);

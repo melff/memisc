@@ -51,17 +51,17 @@ setMethod("readData","Stata.importer",
       types=x@data.spec$types
 ))
 
-setMethod("readSubset","Stata.importer",
+setMethod("readSlice","Stata.importer",
   function(x,rows,cols)
-    .Call("dta_read_subset",x@ptr,
+    .Call("dta_read_slice",x@ptr,
       what=x,
       j=cols,i=rows,
       types=x@data.spec$types
 ))
 
-setMethod("readVars","Stata.importer",
+setMethod("readSubset","Stata.importer",
   function(x,nrows,cols)
-    .Call("dta_read_vars",x@ptr,
+    .Call("dta_read_subset",x@ptr,
       what=x,
       cols=cols,n=nrows,
       types=x@data.spec$types

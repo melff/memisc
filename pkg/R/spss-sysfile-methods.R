@@ -138,19 +138,19 @@ setMethod("readData","spss.system.importer",
       types=x@data.spec$types
 )})
 
-setMethod("readSubset","spss.system.importer",
+setMethod("readSlice","spss.system.importer",
   function(x,rows,cols){
     if(!.Call("check_pointer",x@ptr)) stop("pointer is NULL, you need to recreate the object")
-    .Call("read_sysfile_subset",x@ptr,
+    .Call("read_sysfile_slice",x@ptr,
       what=x,
       j=cols,i=rows,
       types=x@data.spec$types
 )})
 
-setMethod("readVars","spss.system.importer",
+setMethod("readSubset","spss.system.importer",
   function(x,nrows,cols){
     if(!.Call("check_pointer",x@ptr)) stop("pointer is NULL, you need to recreate the object")
-    .Call("read_sysfile_vars",x@ptr,
+    .Call("read_sysfile_subset",x@ptr,
       what=x,
       vars=cols,n=nrows,
       types=x@data.spec$types

@@ -569,7 +569,7 @@ SEXP _dta_read_labels (SEXP s_dta_file, SEXP s_lbl_len, SEXP s_padding){
 }
 
 
-SEXP dta_read_subset(SEXP s_dta_file, SEXP what, SEXP vars, SEXP obs, SEXP s_types){
+SEXP dta_read_slice(SEXP s_dta_file, SEXP what, SEXP vars, SEXP obs, SEXP s_types){
   dta_file *dtaf = get_dta_file(s_dta_file);
   PROTECT(vars = coerceVector(vars,LGLSXP));
   PROTECT(obs = coerceVector(obs,LGLSXP));
@@ -697,7 +697,7 @@ SEXP dta_read_subset(SEXP s_dta_file, SEXP what, SEXP vars, SEXP obs, SEXP s_typ
 
 
 
-SEXP dta_read_vars(SEXP s_dta_file, SEXP what, SEXP vars, SEXP s_nobs, SEXP s_types){
+SEXP dta_read_subset(SEXP s_dta_file, SEXP what, SEXP vars, SEXP s_nobs, SEXP s_types){
   dta_file *dtaf = get_dta_file(s_dta_file);
   PROTECT(vars = coerceVector(vars,LGLSXP));
   PROTECT(s_nobs = coerceVector(s_nobs,INTSXP));

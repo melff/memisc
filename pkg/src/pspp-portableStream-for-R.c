@@ -978,7 +978,7 @@ SEXP countCasesPorStream(SEXP porStream, SEXP s_types){
 }
 //#undef DEBUG
 
-SEXP readSubsetPorStream(SEXP porStream, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_types){
+SEXP readSlicePorStream(SEXP porStream, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_types){
   porStreamBuf *b = get_porStreamBuf(porStream);
   PROTECT(s_vars = coerceVector(s_vars,LGLSXP));
   PROTECT(s_cases = coerceVector(s_cases,LGLSXP));
@@ -1077,7 +1077,7 @@ SEXP readSubsetPorStream(SEXP porStream, SEXP what, SEXP s_vars, SEXP s_cases, S
 
 
 
-SEXP readVarsPorStream(SEXP porStream, SEXP what,
+SEXP readSubsetPorStream(SEXP porStream, SEXP what,
 		       SEXP s_vars, SEXP s_ncases, SEXP s_types){
   porStreamBuf *b = get_porStreamBuf(porStream);
   PROTECT(s_vars = coerceVector(s_vars,LGLSXP));

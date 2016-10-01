@@ -119,7 +119,7 @@ setMethod("readData","spss.fixed.importer",
       stop=x@data.spec$stop
 ))
 
-setMethod("readSubset","spss.fixed.importer",
+setMethod("readSlice","spss.fixed.importer",
   function(x,rows,cols)
     readfixedsubset(x@ptr,
     what=x,
