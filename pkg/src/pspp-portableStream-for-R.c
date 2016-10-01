@@ -1073,3 +1073,89 @@ SEXP readSubsetPorStream(SEXP porStream, SEXP what, SEXP s_vars, SEXP s_cases, S
   UNPROTECT(4);
   return data;
 }
+
+
+
+
+SEXP readVarsPorStream(SEXP porStream, SEXP what,
+		       SEXP s_vars, SEXP s_ncases, SEXP s_types){
+  porStreamBuf *b = get_porStreamBuf(porStream);
+  PROTECT(s_vars = coerceVector(s_vars,LGLSXP));
+  PROTECT(s_ncases = coerceVector(s_ncases,INTSXP));
+  PROTECT(s_types = coerceVector(s_types,INTSXP));
+  int nvar = length(s_types);
+  int ncases = INTEGER(s_ncases)[0];
+  int *types = INTEGER(s_types);
+  // if(LENGTH(s_vars)!=nvar) error("\'s_vars\' argument has wrong length");
+
+  int ii,i,j,k, m=0;
+  for(j = 0; j < nvar; j++) m+=LOGICAL(s_vars)[j];
+
+  SEXP x, y, data;
+  char *charbuf;
+  int charbuflen = 0;
+  PROTECT(data = allocVector(VECSXP,m));
+  k = 0;
+  for(j = 0; j < nvar; j++){
+    if(types[j] > charbuflen) charbuflen = types[j];
+    if(LOGICAL(s_vars)[j]){
+      if(types[j]==0)
+        SET_VECTOR_ELT(data,k,allocVector(REALSXP,ncases));
+      else {
+        SET_VECTOR_ELT(data,k,allocVector(STRSXP,ncases));
+        }
+      k++;
+    }
+  }
+  charbuf = R_alloc(charbuflen+1,sizeof(char));
+  ii = 0;
+  for(i = 0; i < ncases; i++){
+    if(atEndPorStream(b) || (b->pos < 80 && b->buf[b->pos] == 'Z')){
+      int new_length = ii;
+      for(j = 0; j < m; j++){
+        x = VECTOR_ELT(data,j);
+        SET_VECTOR_ELT(data,j,lengthgets(x,new_length));
+      }
+      break;
+    }
+    k = 0;
+    for(j = 0; j < nvar; j++){
+      if(atEndPorStream(b)) {
+	printPorStreamBuf(b);
+	warning("\nPremature end of data");
+      }
+      if(types[j]==0){
+	if(LOGICAL(s_vars)[j]){
+	  REAL(VECTOR_ELT(data,k))[ii] = readDoublePorStream1(b);
+	  k++;
+	}
+	else {
+	  readDoublePorStream1(b);
+	}
+      }
+      else {
+	if(LOGICAL(s_vars)[j]){
+	  SET_STRING_ELT(VECTOR_ELT(data,k), ii,
+			 mkChar(readCHARPorStream(b,charbuf,types[j])));
+	  k++;
+	}
+	else {
+	  readCHARPorStream(b,charbuf,types[j]);
+	}
+      }
+    }
+    ii++;
+  }
+  k = 0;
+  for(j = 0; j < nvar; j++){
+    if(LOGICAL(s_vars)[j]){
+      x = VECTOR_ELT(what,j);
+      y = VECTOR_ELT(data,k);
+      copyMostAttrib(x,y);
+      k++;
+    }
+  }
+
+  UNPROTECT(4);
+  return data;
+}

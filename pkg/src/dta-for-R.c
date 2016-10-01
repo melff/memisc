@@ -697,4 +697,118 @@ SEXP dta_read_subset(SEXP s_dta_file, SEXP what, SEXP vars, SEXP obs, SEXP s_typ
 
 
 
+SEXP dta_read_vars(SEXP s_dta_file, SEXP what, SEXP vars, SEXP s_nobs, SEXP s_types){
+  dta_file *dtaf = get_dta_file(s_dta_file);
+  PROTECT(vars = coerceVector(vars,LGLSXP));
+  PROTECT(s_nobs = coerceVector(s_nobs,INTSXP));
+  int nobs = INTEGER(s_nobs)[0];
+  /*if(nobs > dtaf->n_records) error("obs argument has wrong length");*/
+  int nvar = length(vars);
+  if(nvar != length(s_types)) error("vars and types arguments differ in length");
+  int i,j,k,l;
+  SEXP ans, x, y;
+  int m = 0;
+  for(j = 0; j < nvar; j++)
+    m += LOGICAL(vars)[j];
+  
+  PROTECT(ans = allocVector(VECSXP,m));
+  unsigned char *types = RAW(s_types);
+  k = 0;
+  for(j = 0; j< nvar; j++){
+    if(LOGICAL(vars)[j]){
+      if(types[j]<=DTA_MAXSTR)
+        SET_VECTOR_ELT(ans,k,allocVector(STRSXP,nobs));
+      else switch(types[j]){
+        case DTA_BYTE:
+        case DTA_SHORT:
+        case DTA_LONG:
+          SET_VECTOR_ELT(ans,k,allocVector(INTSXP,nobs));
+          break;
+        case DTA_FLOAT:
+        case DTA_DOUBLE:
+          SET_VECTOR_ELT(ans,k,allocVector(REALSXP,nobs));
+          break;
+        default:
+          error("unknown data type %d",types[j]);
+          break;
+      }
+      k++;
+    }
+  }
+  int tmp_int;
+  double tmp_double;
+  for(i = 0; i < nobs; i++){
+    l = 0;
+    for(j = 0; j < nvar; j++){
+      if(types[j]<=DTA_MAXSTR){
+	dta_read_string(dtaf,charbuf,types[j]);
+	charbuf[types[j]] = 0; /* just to be sure ... */
+	if(LOGICAL(vars)[j]){
+	  x = VECTOR_ELT(ans,l);
+	  SET_STRING_ELT(x,i,mkChar(charbuf));
+	  l++;
+	}
+      }
+      else switch(types[j]){
+	case DTA_BYTE:
+	  tmp_int = dta_read_byte(dtaf);
+	  if(LOGICAL(vars)[j]){
+	    x = VECTOR_ELT(ans,l);
+	    INTEGER(x)[i] = tmp_int;
+	    l++;
+	  }
+	  break;
+	case DTA_SHORT:
+	  tmp_int = dta_read_short(dtaf);
+	  if(LOGICAL(vars)[j]){
+	    x = VECTOR_ELT(ans,l);
+	    INTEGER(x)[i] = tmp_int;
+	    l++;
+	  }
+	  break;
+	case DTA_LONG:
+	  tmp_int = dta_read_int(dtaf);
+	  if(LOGICAL(vars)[j]){
+	    x = VECTOR_ELT(ans,l);
+	    INTEGER(x)[i] = tmp_int;
+	    l++;
+	  }
+	  break;
+	case DTA_FLOAT:
+	  tmp_double = dta_read_float(dtaf);
+	  if(LOGICAL(vars)[j]){
+	    x = VECTOR_ELT(ans,l);
+	    REAL(x)[i] = tmp_double;
+	    l++;
+	  }
+	  break;
+	case DTA_DOUBLE:
+	  tmp_double = dta_read_double(dtaf);
+	  if(LOGICAL(vars)[j]){
+	    x = VECTOR_ELT(ans,l);
+	    REAL(x)[i] = tmp_double;
+	    l++;
+	  }
+	  break;
+	default:
+	  error("I should never arrive here!!");
+	  break;
+	}
+    }
+  }
+  
+  k = 0;
+  for(j = 0; j < nvar; j++){
+    if(LOGICAL(vars)[j]){
+      x = VECTOR_ELT(what,j);
+      y = VECTOR_ELT(ans,k);
+      copyMostAttrib(x,y);
+      k++;
+    }
+  }
+
+  UNPROTECT(3);
+  return ans;
+}
+
 

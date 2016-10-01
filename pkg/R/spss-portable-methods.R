@@ -124,6 +124,14 @@ setMethod("readSubset","spss.portable.importer",
       types=x@data.spec$types
 ))
 
+setMethod("readVars","spss.portable.importer",
+  function(x,nrows,cols)
+    .Call("readVarsPorStream",x@ptr,
+      what=x,
+      vars=cols,n=nrows,
+      types=x@data.spec$types
+))
+
 setMethod("show","spss.portable.importer",
   function(object){
     file.name <- attr(object@ptr,"file.name")

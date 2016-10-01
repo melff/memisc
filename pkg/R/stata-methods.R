@@ -59,6 +59,14 @@ setMethod("readSubset","Stata.importer",
       types=x@data.spec$types
 ))
 
+setMethod("readVars","Stata.importer",
+  function(x,nrows,cols)
+    .Call("dta_read_vars",x@ptr,
+      what=x,
+      cols=cols,n=nrows,
+      types=x@data.spec$types
+))
+
 setMethod("show","Stata.importer",
   function(object){
     file.name <- attr(object@ptr,"file.name")
