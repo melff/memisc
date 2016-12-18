@@ -46,7 +46,7 @@ It should be noted that the analyses reported in the following are conducted
 only for purpose of demonstrating the features of the package and are
 not to be considered of conclusive scientific evidence of any kind.
 
-This vignette is run with the help of the [*knitr* package](http://cran.r-project.org/package=knitr). This
+This vignette is run with the help of the [*knitr* package](https://cran.r-project.org/package=knitr). This
 allows to showcase not only data management facilities provided
 by *memisc*. The following code also demonstrates how output
 created with some of the facilities of *memisc* can neatly

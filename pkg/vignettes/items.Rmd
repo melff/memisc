@@ -399,7 +399,7 @@ to this function. In other words, users of this other package may use `recode()`
 The version of the `recode()` function provided by `"memisc"` differs from the `"car"` version in so far
 as its syntax is more R-ish (or so I believe).
 
-[CAR]: http://cran.r-project.org/package=car
+[CAR]: https://cran.r-project.org/package=car
 
 Here we load an example data set -- a subset of the German Longitudinal Election Study for 2013[^3] -- into
 R's memory.
