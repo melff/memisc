@@ -19,6 +19,12 @@
           times), called \code{"Date.item"}.
     }
   }
+  \subsection{IMPROVEMENTS}{
+    \itemize{
+      \item Subset methods for importer objects are much more memory
+          efficient and now can handle files of size larger than 1GB.
+    }
+  }
   \subsection{BUGFIXES}{
   \itemize{
     \item Set dependency to R version >= 3.0 for this is needed for \emph{knitr} 
