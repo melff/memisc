@@ -24,8 +24,11 @@ withVCov(object, vcov, \dots)
 }
 \arguments{
   \item{object}{a fitted model object}
-  \item{vcov}{a function that returns a variance matrix estimate, or a
-    given matrix that is such an estimate}
+  \item{vcov}{a function that returns a variance matrix estimate, a
+    given matrix that is such an estimate, or a character string that
+    identifies a function that returns a variance matrix estimate
+    (e.g. \code{"HAC"} for \code{vcovHAC}).
+  }
   \item{\dots}{further arguments, passed to \code{vcov()} or, respectively,
     to the parent method of \code{summary()}  }
 }
@@ -35,14 +38,16 @@ attributed to a fitted model object. Such a matrix may be produced by
 any of the variance estimators provided by the "sandwich" package or
 any package that extends it.
 
-\code{withSE()} is merely an alias of \code{withVCov()} that better
-represents what the wants to eventually obtain (wile the original name
-of the function reflects what it actually does).
-
 \code{withVCov()} has no consequences on how a fitted model itself is
 printed or represented, but it does have consequences what standard
 errors are reported, when the function \code{summary()} or the function
 \code{mtable()} is applied.
+
+\code{withSE()} is a convenience front-end to \code{withVCov()}. It can
+be called in the same way as \code{withVCov}, but also allows to specify
+the type of variance estimate by a character string that identifies
+the function that gives the covariance matrix (e.g. \code{"OPG"} for
+\code{vcovOPG}).
 }
 \value{
   \code{withVCov} returns a slightly modified model object: It adds an
@@ -52,23 +57,29 @@ errors are reported, when the function \code{summary()} or the function
   attribute \code{c("withVCov.lm", "withVCov", "lm")}.  
 }
 \examples{
-## generate poisson regression relationship
+## Generate poisson regression relationship
 x <- sin(1:100)
 y <- rpois(100, exp(1 + x))
 ## compute usual covariance matrix of coefficient estimates
 fm <- glm(y ~ x, family = poisson)
 
 library(sandwich)
-fmv <- withVCov(fm,vcovOPG)
+fmo <- withVCov(fm,vcovOPG)
 vcov(fm)
-vcov(fmv)
+vcov(fmo)
 
 summary(fm)
-summary(fmv)
+summary(fmo)
 
 mtable(Default=fm,
-       HAC=withVCov(fm,vcovHAC),
-       OPG=withVCov(fm,vcovOPG),
+       OPG=withSE(fm,"OPG"),
+       summary.stats=c("Deviance","N")
+       )
+
+vo <- vcovOPG(fm)
+
+mtable(Default=fm,
+       OPG=withSE(fm,vo),
        summary.stats=c("Deviance","N")
        )
 }

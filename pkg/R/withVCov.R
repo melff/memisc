@@ -1,6 +1,19 @@
-withVCov <- function(object, vcov, ...) UseMethod("withVCov")
+withSE <- function(object, vcov, ...){
+    if(is.matrix(vcov)) UseMethod("withVCov")
+    else if(is.function(vcov)) UseMethod("withVCov")
+    else if(is.character(vcov)){
+        if(exists(vcov))
+            vcov <- get(vcov)
+        else if(exists(vcov2 <- paste0("vcov",vcov)))
+            vcov <- get(vcov2)
+        else
+            stop("neither '",vcov,"' nor '", vcov2, "' is a known function")
+        withVCov(object, vcov=vcov, ...)
+    }
+    else stop("cannot handle 'vcov' argument of type",typeof(vcov))
+}
 
-withSE <- withVCov
+withVCov <- function(object, vcov, ...) UseMethod("withVCov")
 
 withVCov.lm <- function(object, vcov, ...){
 
