@@ -115,7 +115,8 @@ export(
       format_html,
       dsView,
       summaryTemplate,
-      percentages
+      percentages,
+      withVCov
       )
 S3method(getSummary,aftreg)
 S3method(getSummary,betareg)
@@ -168,6 +169,8 @@ S3method(percent,default)
 S3method(percent,logical)
 S3method(By,default)
 S3method(By,data.frame)
+S3method(summary,withVCov)
+S3method(summary,withVCov.lm)
 
 exportClasses(
   atomic,
