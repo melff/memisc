@@ -1,24 +1,30 @@
-withVCov <- function(x,vcov){
+withVCov <- function(object, vcov, ...) UseMethod("withVCov")
+
+withSE <- withVCov
+
+withVCov.lm <- function(object, vcov, ...){
 
     if(is.function(vcov))
-        V <- vcov(x)
+        V <- vcov(object, ...)
     else if(is.matrix(vcov))
         V <- vcov
     else
         stop("argument 'vcov' should be a matrix")
 
-    cls <- class(x)
+    cls <- class(object)
     cls <- c(paste("withVCov",cls[1],sep="."),
              "withVCov",
-             class(x))
-    structure(x,
+             class(object))
+    structure(object,
               .VCov=V,
               class=cls)
 }
 
-summary.withVCov <- function(x){
+vcov.withVCov <- function(object, ...) attr(object,".VCov")
 
-    V <- attr(x,".VCov")
+summary.withVCov <- function(object, ...){
+
+    V <- attr(object,".VCov")
     
     res <- NextMethod()
     coefTab <- res$coefficients
@@ -35,9 +41,9 @@ summary.withVCov <- function(x){
     res
 }
 
-summary.withVCov.lm <- function(x){
+summary.withVCov.lm <- function(object, ...){
 
-    V <- attr(x,".VCov")
+    V <- attr(object,".VCov")
     
     res <- NextMethod()
     coefTab <- res$coefficients
