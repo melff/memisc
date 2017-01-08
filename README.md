@@ -1,7 +1,10 @@
 # memisc 
 ### Tools for Managing Survey Data and Creating Tables of Estimates and Data Summaries
 
-[![CRAN](http://www.r-pkg.org/badges/version/memisc)](http://cran.rstudio.com/package=memisc) [![Build Status](https://travis-ci.org/melff/memisc.svg?branch=master)](https://travis-ci.org/melff/memisc) 
+[![CRAN](http://www.r-pkg.org/badges/version/memisc)](http://cran.rstudio.com/package=memisc) 
+[![Total downloads from RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/memisc)](http://cran.r-project.org/web/packages/memisc/index.html)
+[![Current release on GitHub](http://img.shields.io/github/release/melff/memisc.svg)](http://github.com/melff/memisc/releases/)
+[![Build Status](https://travis-ci.org/melff/memisc.svg?branch=master)](https://travis-ci.org/melff/memisc) 
 
 <!--[![Build status](https://ci.appveyor.com/api/projects/status/iav1id61lmlh7nkb?svg=true)](https://ci.appveyor.com/project/melff/memisc) one CI is enough .. -->
 
