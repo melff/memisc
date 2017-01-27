@@ -4,7 +4,7 @@
 init:
   ps: |
         $ErrorActionPreference = "Stop"
-        Invoke-WebRequest http://raw.github.com/melff/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
 
 install:
@@ -13,8 +13,8 @@ install:
 # Adapt as necessary starting from here
 
 before_build:
-  - cp ..\travis-tool.sh .\travis-tool.sh
-  - cp travis-tool.sh.cmd pkg\travis-tool.sh.cmd
+  - cp ../travis-tool.sh ./travis-tool.sh
+  - cp travis-tool.sh.cmd pkg/travis-tool.sh.cmd
   - cd pkg
   - bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   
@@ -47,7 +47,7 @@ artifacts:
   - path: 'pkg\*_*.zip'
     name: binary
 
-version: 0.99.5-{build}
+version: 0.99.8
 
 branches:
   only:
@@ -60,7 +60,6 @@ notifications:
     on_build_failure: true
 
 deploy:
-  tag: 0.99.5
   provider: GitHub
   auth_token:
     secure: dmzZ4ohXYLWbEtp4RW9xBSEFtIirUua57jeak2h6yu/g90RoxnVwLxwpkeVPKrdh
@@ -70,5 +69,5 @@ deploy:
   prerelease: false
   on:
     branch: master                 # release from master branch only
-    appveyor_repo_tag: true        # deploy on tag push only
+    # appveyor_repo_tag: true        # deploy on tag push only
   
