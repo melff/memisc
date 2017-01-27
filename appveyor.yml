@@ -11,6 +11,9 @@ install:
   ps: Bootstrap
 
 # Adapt as necessary starting from here
+environment:
+  USE_RTOOLS: true
+
 
 before_build:
   - cp ../travis-tool.sh ./travis-tool.sh
