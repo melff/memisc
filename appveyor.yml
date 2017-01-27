@@ -50,7 +50,7 @@ artifacts:
   - path: 'pkg\*_*.zip'
     name: binary
 
-version: 0.99.8
+version: 0.99.8-{build}
 
 branches:
   only:
@@ -63,6 +63,7 @@ notifications:
     on_build_failure: true
 
 deploy:
+- tag: 0.99.8
   provider: GitHub
   auth_token:
     secure: dmzZ4ohXYLWbEtp4RW9xBSEFtIirUua57jeak2h6yu/g90RoxnVwLxwpkeVPKrdh
