@@ -1,8 +1,7 @@
 language: r
-r:
-  - oldrel
-  - release
-  - devel
+  # - oldrel
+  # - release
+  # - devel
 
 sudo: required
 
@@ -21,6 +20,6 @@ r_binary_packages:
 notifications:
   email:
     recipients: memisc@elff.eu
-    on_success: change
+    on_success: always
     on_failure: always
     
