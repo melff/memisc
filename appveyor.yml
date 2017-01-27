@@ -59,7 +59,7 @@ branches:
 notifications:
   - provider: Email
     to: memisc@elff.eu
-    on_build_success: change
+    on_build_success: true
     on_build_failure: true
 
 deploy:

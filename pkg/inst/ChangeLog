@@ -1,4 +1,9 @@
-2016-09-28: 
+2016-12-24:
+  - New `withVCov` and `withSE` generic functions to more
+    conveniently provide sandwich estimates of variances and standard
+    errors
+
+2016-09-28:
   - More efficient 'subset' method for large external data sets
 
 2016-07-09:

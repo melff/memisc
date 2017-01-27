@@ -14,10 +14,12 @@
           by the eponymous function in the \code{stats} package) can now be
           combined into \code{ftable_matrix} objects. This can be done by
           using \code{rbind()} or \code{cbind()}.
-      
     \item There is now an object class for survey items containing dates (without
           times), called \code{"Date.item"}.
-    }
+    \item Support for includingn sandwich estimates of sampling variances and
+          standard errors into the output of \code{summary} and \code{mtable},
+          by the new generic functions \code{withVCov} and \code{withSE}.
+  }
   }
   \subsection{IMPROVEMENTS}{
     \itemize{
