@@ -50,7 +50,7 @@ artifacts:
   - path: 'pkg\*_*.zip'
     name: binary
 
-version: 0.99.8-{build}
+version: 0.99.9-{build}
 
 branches:
   only:
@@ -63,15 +63,15 @@ notifications:
     on_build_failure: true
 
 deploy:
-- tag: 0.99.8
+- tag: 0.99.9
   provider: GitHub
   auth_token:
     secure: dmzZ4ohXYLWbEtp4RW9xBSEFtIirUua57jeak2h6yu/g90RoxnVwLxwpkeVPKrdh
   artifact: source,binary 
 
-  draft: false
-  prerelease: false
+  draft: true
+  prerelease: true
   on:
     branch: master                 # release from master branch only
-    # appveyor_repo_tag: true        # deploy on tag push only
+    appveyor_repo_tag: true        # deploy on tag push only
   
