@@ -338,16 +338,15 @@ relabel.item <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
     }
   }
   else {
-    i <- match(names(subst),vll)
-    if(any(is.na(i))) {
-      if(warn) warning("undefined label(s) selected")
-      if(any(!is.na(i)))
-        subst <- subst[!is.na(i)]
-      i <- i[!is.na(i)]
-    }
-    vll[i] <- subst
+      i <- match(names(subst),vll)
+      if(any(is.na(i))) {
+          if(warn) warning("undefined label(s) selected")
+          if(any(!is.na(i)))
+              subst <- subst[!is.na(i)]
+          i <- i[!is.na(i)]
+      }
+      vll[i] <- subst
   }
-  vll[i] <- subst
   vl@.Data <- vll
   if(validObject(vl))
       x@value.labels <- vl

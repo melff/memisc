@@ -1,3 +1,7 @@
+2017-02-03:
+  - Fixed a bug in `relabel` method for `item' objects. `relabel(x,...,gsub=TRUE)` should
+    now work as expected.
+
 2016-12-24:
   - New `withVCov` and `withSE` generic functions to more
     conveniently provide sandwich estimates of variances and standard
@@ -53,7 +57,7 @@
 
 2016-01-21:
   - Correct spelling and case of vignette titles.
- 
+
 2016-01-16:
   - Use "html_viewer" option instead of "show_html.output".
 
