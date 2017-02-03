@@ -108,18 +108,9 @@ readLabPorStream <- function(pstream,types){
   #cat("\nNumber of labels:",nlabs)
   #cat("\nvars[1]=",vars[1])
   type <- types[[vars[1]]]
-  #cat("\nType: ",c("integer","real","character")[type])
+  #cat("\nType: ",type," i.e. ",c("integer","character")[type+1])
   #browser()
   if(type==0){
-    labs <- numeric(nlabs)
-    namlabs <- character(nlabs)
-    for(j in 1:nlabs){
-      labs[j] <- as.integer(readDoublePorStream(pstream))
-      nlabs[j] <- trimws(readStringPorStream(pstream))
-      #cat("\n",labs[j]," ",sQuote(nlabs[j]))
-      }
-    }
-  else if(type==1){
     labs <- numeric(nlabs)
     namlabs <- character(nlabs)
     for(j in 1:nlabs){
@@ -152,7 +143,7 @@ readDocumentPorStream <- function(stream){
 parseHeaderPorStream <- function(stream){
   header <- list()
   ident <- readPorStream(stream,start=40,n=40)
-  #if(!length(grep("SPSS PORT",ident,fixed=TRUE))) stop("not a portable file or not ascii encoded")
+  if(!length(grep("SPSS PORT",ident,fixed=TRUE))) stop("not a portable file or not ascii encoded")
   header$encoding <- split(ident," ")[[1]][1]
   header$control <- readRangePorStream(stream,200 + c(0,60))
   header$digits <- readRangePorStream(stream,200 + c(64,73))
@@ -162,12 +153,12 @@ parseHeaderPorStream <- function(stream){
   header$slash <- readRangePorStream(stream,200 + c(142,142))
   header$translation <- readRangePorStream(stream,200 + c(0,255))
   transl <- setTranslationPorStream(stream,header$translation)
-#   if(
-#     !identical(header$digits,"0123456789") ||
-#     !identical(header$cletters,"ABCDEFGHIJKLMNOPQRSTUVWXYZ") ||
-#     !identical(header$lletters,"abcdefghijklmnopqrstuvwxyz") ||
-#     !identical(header$slash,"/")
-#     ) stop("import of files of this encoding not yet supported")
+  if(
+      !identical(header$digits,"0123456789") ||
+      !identical(header$cletters,"ABCDEFGHIJKLMNOPQRSTUVWXYZ") ||
+      !identical(header$lletters,"abcdefghijklmnopqrstuvwxyz") ||
+      !identical(header$slash,"/")
+  ) stop("import of files of this encoding not yet supported")
 
   seekPorStream(stream,pos=464)
   header$version <- readOnePorStream(stream)
@@ -188,25 +179,25 @@ parseHeaderPorStream <- function(stream){
     #browser()
     if(!(tag.code %in% valid.tags)) break
     if(tag.code=="1") {
-            #cat("\nFound product tag")
+            #cat("Found product tag\n")
             header$product <- readStringPorStream(stream)
             }
     if(tag.code=="2") {
-            #cat("\nFound author tag")
+            #cat("Found author tag\n")
             header$author <- readStringPorStream(stream)
             }
     if(tag.code=="3") {
-            #cat("\nFound subproduct tag")
+            #cat("Found subproduct tag\n")
             header$subproduct <- readStringPorStream(stream)
             }
     if(tag.code=="4") {
-            #cat("\nFound number of variables tag")
+            #cat("Found number of variables tag\n")
             header$nvar[1] <- readIntPorStream(stream)
             header$nvar[2] <- readIntPorStream(stream)
             types <- integer()
             }
     if(tag.code=="7") {
-            #cat("\nFound variable record tag")
+            #cat("Found variable record tag\n")
             variable <- readVarPorStream(stream)
             nameidx <- match("name",names(variable))
             #print(variable)
@@ -216,11 +207,11 @@ parseHeaderPorStream <- function(stream){
             dictionary[[variable$name]] <- variable[-nameidx]
             }
     if(tag.code=="D") {
-            #cat("\nFound value labels tag in line ",lineTellPorStream(stream))
+            #cat("Found value labels tag in line ",lineTellPorStream(stream),"\n")
             value.labels <- c(value.labels,list(readLabPorStream(stream,types)))
           }
     if(tag.code=="E") {
-             #cat("\nFound document tag")
+             #cat("Found document tag\n")
              document <- paste(readDocumentPorStream(stream),collapse="\n")
            }
 

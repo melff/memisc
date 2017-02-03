@@ -1,6 +1,9 @@
 2017-02-03:
   - Fixed a bug in `relabel` method for `item' objects. `relabel(x,...,gsub=TRUE)` should
     now work as expected.
+  - Fixed a bug in `readLabPorStream`, coming from wrong assumptions about the encoding
+    of value labels of character string variables in "portable" files. Some more SPSS "portable"
+    files should now read into R.
 
 2016-12-24:
   - New `withVCov` and `withSE` generic functions to more
