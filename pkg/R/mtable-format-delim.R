@@ -72,7 +72,10 @@ mtable_format_delim <- function(x,
       mtab.m <- character()
       
       for(j in mg){
-        mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j]))
+        if(length(summaries))
+            mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j]))
+        else
+            mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],NULL))
       }
       model.name <- names(x$model.groups)[i]
       hdr <- rep("",ncol(mtab.m))
@@ -82,13 +85,19 @@ mtable_format_delim <- function(x,
     }
   }
   else {
-    for(i in 1:length(coefs)){
-      mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i]))
+      for(i in 1:length(coefs)){
+          if(length(summaries))
+              mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i]))
+          else
+              mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]]))
     }
   }
-  
-  smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
-  
+
+  if(length(summaries))
+      smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
+  else
+      smrylines <- NULL
+      
   ldr <- character(length(coef.names)*coef.dims1)
   ii <- seq(from=1,length=length(coef.names),by=coef.dims1)
   ldr[ii] <- coef.names
@@ -100,8 +109,12 @@ mtable_format_delim <- function(x,
     hldr <- c(hldr,"")
   if(length(x$model.groups))
     hldr <- c("",hldr)
-    
-  ldr <- c(hldr,ldr,rownames(summaries))
+
+  if(length(summaries))
+      ldr <- c(hldr,ldr,rownames(summaries))
+  else
+      ldr <- c(hldr,ldr)
+      
   mtab <- cbind(ldr,mtab)
   mtab <- apply(mtab,1,paste,collapse=paste0(colsep))
   paste0(mtab,collapse=rowsep)

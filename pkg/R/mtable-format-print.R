@@ -72,11 +72,14 @@ mtable_format_print <- function(x,
         grp.line <- paste(rep(" ",nchar(coef.tab[1])),collapse="")
       coef.tab <- c(grp.line,coef.tab)
     }
-    
-    summaries <- centerAt(summaries,
+
+    if(length(summaries)){
+        summaries <- centerAt(summaries,
                           at=center.at,
                           integers=align.integers)
-    summaries <- format(summaries)
+        summaries <- format(summaries)
+    }
+      
     as.matrix(format(c(coef.tab,summaries),justify="centre"))
   }
   
@@ -87,7 +90,10 @@ mtable_format_print <- function(x,
       mtab.m <- character()
       
       for(j in mg){
-        mtab.m <- cbind(mtab.m,frmt1(coefs[[j]],summaries[,j]))
+            if(length(summaries))
+                mtab.m <- cbind(mtab.m,frmt1(coefs[[j]],summaries[,j]))
+            else
+                mtab.m <- cbind(mtab.m,frmt1(coefs[[j]],NULL))
       }
       mtab.m <- rbind(names(coefs)[mg],mtab.m)
       mtab.m <- apply(mtab.m,2,format,justify="centre")
@@ -100,7 +106,10 @@ mtable_format_print <- function(x,
   }
   else {
     for(i in 1:length(coefs)){
-      mtab <- cbind(mtab,frmt1(coefs[[i]],summaries[,i]))
+        if(length(summaries))
+            mtab <- cbind(mtab,frmt1(coefs[[i]],summaries[,i]))
+        else
+            mtab <- cbind(mtab,frmt1(coefs[[i]],NULL))
     }    
     if(num.models>1 || force.names)
       mtab <- rbind(names(coefs),mtab)
@@ -120,12 +129,16 @@ mtable_format_print <- function(x,
       hdrlines <- if(grp.coefs) 1 else integer(0)
   } 
 
-  smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
+  if(length(summaries))
+      smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
+  else
+      smrylines <- NULL
   
   ldr <- character(length(coef.names)*coef.dims1)
   ii <- seq(from=1,length=length(coef.names),by=coef.dims1)
   ldr[ii] <- coef.names
-  ldr <- c(ldr,rownames(summaries))
+  if(length(summaries))  
+      ldr <- c(ldr,rownames(summaries))
   ldr <- c(character(length(hdrlines)),ldr)
   ldr <- format(ldr,justify="left")
   

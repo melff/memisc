@@ -83,21 +83,30 @@ mtable_format_latex <- function(x,
       name <- paste0("\\multicolumn{",ncol(coef.tab),"}{c}{",name,"}")
     else
       name <- NULL
-    
-    if(!useDcolumn)
-      summaries <- paste0("$",summaries,"$")
-    else if(sumry.multicol){
-        has.dot <- grep(".",summaries,fixed=TRUE)
-        sumry.spec <- if(useDcolumn && has.dot) paste("D{.}{",LaTeXdec,"}{",sdigits,"}",sep="") else "r"
-        summaries <- paste0("\\multicolumn{1}{",sumry.spec,"}{",summaries,"}")
-    }
 
-    sum.tab <- matrix("",nrow=length(summaries),ncol=ncol(coef.tab))
-    sum.tab[,1] <- summaries
-    
-    coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
-    sum.tab <- apply(sum.tab,1,paste,collapse=colsep)
-    c(name,eq.names,coef.tab,sum.tab)
+      
+    if(length(summaries)){
+
+        if(!useDcolumn)
+            summaries <- paste0("$",summaries,"$")
+        else if(sumry.multicol){
+            has.dot <- grep(".",summaries,fixed=TRUE)
+            sumry.spec <- if(useDcolumn && has.dot) paste("D{.}{",LaTeXdec,"}{",sdigits,"}",sep="") else "r"
+            summaries <- paste0("\\multicolumn{1}{",sumry.spec,"}{",summaries,"}")
+        }
+
+        sum.tab <- matrix("",nrow=length(summaries),ncol=ncol(coef.tab))
+        sum.tab[,1] <- summaries
+        
+        coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
+        sum.tab <- apply(sum.tab,1,paste,collapse=colsep)
+        c(name,eq.names,coef.tab,sum.tab)
+    }
+    else{
+        
+        coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
+        c(name,eq.names,coef.tab)
+    }
   }
 
   tab.spec <- character()
@@ -122,7 +131,10 @@ mtable_format_latex <- function(x,
         tmp.spec <- paste0(tmp.spec,collapse="")
         tab.spec.m <- c(tab.spec.m,tmp.spec)
         coef.spec <- coef.spec[-(1:nc)]
-        mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j],sdigits[j]))
+        if(length(summaries))
+            mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j],sdigits[j]))
+        else
+            mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],NULL,sdigits[j]))
         ci <- length(cmidrule.start)
         cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+1)
         cmidrule.end <- c(cmidrule.end,cmidrule.end[ci]+nc)
@@ -146,7 +158,10 @@ mtable_format_latex <- function(x,
       tmp.spec <- paste0(tmp.spec,collapse="")
       tab.spec <- c(tab.spec,tmp.spec)
       coef.spec <- coef.spec[-(1:nc)]
-      mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i],sdigits[i]))
+      if(length(summaries))
+          mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i],sdigits[i]))
+      else
+          mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],NULL,sdigits[i]))
       ci <- length(cmidrule.start)
       if(compact){
         cmidrule.start <- c(cmidrule.start,cmidrule.end[ci]+1)
@@ -158,9 +173,12 @@ mtable_format_latex <- function(x,
       }
     }
   }
-  
-  smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
-  
+
+  if(length(summaries))
+      smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
+  else
+      smrylines <- NULL
+    
   ldr <- character(length(coef.names)*coef.dims1)
   ii <- seq(from=1,length=length(coef.names),by=coef.dims1)
   ldr[ii] <- coef.names
@@ -183,9 +201,12 @@ mtable_format_latex <- function(x,
     hdrlines <- 1:nhdrl
   else
     hdrlines <- 0
-  
-  ldr <- c(hldr,ldr,rownames(summaries))
 
+  if(length(summaries))
+      ldr <- c(hldr,ldr,rownames(summaries))
+  else
+      ldr <- c(hldr,ldr)
+    
   if(compact){
     mtab <- apply(mtab,1,paste,collapse=colsep)
     tab.spec <- paste0(tab.spec,collapse="")
@@ -240,11 +261,12 @@ mtable_format_latex <- function(x,
   tabend <- "\\end{tabular}"
   
   splash <- c("%")
-  splash <- c(splash,"% Calls:")
+  splash <- c(splash,"%  Calls:")
   calls <- x$calls
   for(i in seq(calls)){
-    tmp <- paste("% ",names(calls)[i],": ",sep="")
-    tmp <- paste(tmp,paste(trimws(deparse(calls[[i]])),collapse=" "),"")
+    tmp1 <- paste("%  ",names(calls)[i],": ",sep="")
+    tmp2 <- paste("%   ",deparse(calls[[i]]))
+    tmp <- c(tmp1,tmp2)
     splash <- c(splash,tmp)
   }
   splash <- c(splash,"%")

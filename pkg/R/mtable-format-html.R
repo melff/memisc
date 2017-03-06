@@ -105,35 +105,40 @@ mtable_format_html <- function(x,
       colspan <- colspan*neq
     }
     dms <- c(1,dm[2],length(summaries),dm[4])
-    sum.tab <- array("",dim=dms)
-    sum.tab[1,1,,1] <- summaries
-    sum.tab[] <- gsub("-","&minus;",sum.tab[],fixed=TRUE)
-    
-    if(split.dec){
-      sum.tab <- spltDec(sum.tab)
-      sum.tab <- html_td_spltDec(sum.tab, style=css(style))
-    }
-    else
-      sum.tab <- html_td(sum.tab, style=css(style),vectorize=TRUE)
-    
-    dim(sum.tab) <- dms
-    if(dms[2]==1)
-      dim(sum.tab) <- c(prod(dms[c(1,3)]),dms[4])
-    else{
-      sum.tab <- apply(sum.tab,c(1,3,4),as.html_group)
-      dim(sum.tab) <- c(prod(dms[c(1,3)]),dms[4])
-    }
-    
+
     nn <- nrow(coef.tab)
     coef.tab[nn,] <- lapply(coef.tab[nn,],setStyle,midrule)
-    nn <- nrow(sum.tab)
-    sum.tab[nn,] <- lapply(sum.tab[nn,],setStyle,midrule)
-    
     coef.tab <- apply(coef.tab,1,as.html_group)
-    sum.tab <- apply(sum.tab,1,as.html_group)
-    
-    mtab <- c(coef.tab,sum.tab)
-    
+
+    if(length(summaries)){
+          
+        sum.tab <- array("",dim=dms)
+        sum.tab[1,1,,1] <- summaries
+        sum.tab[] <- gsub("-","&minus;",sum.tab[],fixed=TRUE)
+
+        if(split.dec){
+            sum.tab <- spltDec(sum.tab)
+            sum.tab <- html_td_spltDec(sum.tab, style=css(style))
+        }
+        else
+            sum.tab <- html_td(sum.tab, style=css(style),vectorize=TRUE)
+        
+        dim(sum.tab) <- dms
+        if(dms[2]==1)
+            dim(sum.tab) <- c(prod(dms[c(1,3)]),dms[4])
+        else{
+            sum.tab <- apply(sum.tab,c(1,3,4),as.html_group)
+            dim(sum.tab) <- c(prod(dms[c(1,3)]),dms[4])
+        }
+        
+        nn <- nrow(sum.tab)
+        sum.tab[nn,] <- lapply(sum.tab[nn,],setStyle,midrule)
+        sum.tab <- apply(sum.tab,1,as.html_group)
+        mtab <- c(coef.tab,sum.tab)
+    }
+    else
+        mtab <- c(coef.tab)
+        
     if(num.models>1 || force.names){
       
       hstyle <- upd_vect(style,align.center,midrule)
@@ -158,7 +163,10 @@ mtable_format_html <- function(x,
         if(split.dec)
           colspan.j <- 3*colspan.j
         colspan <- colspan + colspan.j
-        mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j]))
+        if(length(summaries))
+            mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],summaries[,j]))
+        else
+            mtab.m <- cbind(mtab.m,frmt1(names(coefs)[j],coefs[[j]],NULL))
       }
       
       mtab.m <- apply(mtab.m,1,as.html_group)
@@ -170,8 +178,11 @@ mtable_format_html <- function(x,
     }
   }
   else {
-    for(i in 1:length(coefs)){
-      mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i]))
+      for(i in 1:length(coefs)){
+          if(length(summaries))
+              mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],summaries[,i]))
+          else
+              mtab <- cbind(mtab,frmt1(names(coefs)[i],coefs[[i]],NULL))
     }
   }
   
@@ -183,9 +194,12 @@ mtable_format_html <- function(x,
   ldr <- html_td(ldr,vectorize=TRUE,style=css(lstyle))
   ldr[length(ldr)] <- setStyle(ldr[length(ldr)],midrule)
 
-  sldr <- html_td(rownames(summaries),vectorize=TRUE,style=css(lstyle))
-  sldr[length(sldr)] <- setStyle(sldr[length(sldr)],bottomrule)
-  ldr <- c(ldr,sldr)
+  if(length(summaries)){
+        
+      sldr <- html_td(rownames(summaries),vectorize=TRUE,style=css(lstyle))
+      sldr[length(sldr)] <- setStyle(sldr[length(sldr)],bottomrule)
+      ldr <- c(ldr,sldr)
+  }  
   
   hldr <- NULL
   if(num.models > 1 || force.names || max.coef.ldim > 3){

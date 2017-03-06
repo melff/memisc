@@ -45,6 +45,7 @@
           out by MartinMaechler.)
     \item A bug concerning missing values in SPSS files is fixed.
     \item Headlines in vignettes are now coherent.
+    \item \code{mtable} with empty summary sections can be created (again).
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

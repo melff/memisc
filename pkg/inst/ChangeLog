@@ -1,3 +1,7 @@
+2017-03-05:
+  - Fixed handling of empty summaries in `mtable()`
+  - Better "splash screen" section of LaTeX formatted mtable objects.
+
 2017-02-03:
   - Fixed a bug in `relabel` method for `item' objects. `relabel(x,...,gsub=TRUE)` should
     now work as expected.
