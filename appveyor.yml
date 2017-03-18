@@ -50,7 +50,7 @@ artifacts:
   - path: 'pkg\*_*.zip'
     name: binary
 
-version: 0.99.9.1-{build}
+version: 0.99.9.2-{build}
 
 skip_non_tags: true
 
@@ -65,7 +65,7 @@ notifications:
     on_build_failure: true
 
 deploy:
-- tag: 0.99.9.1
+- tag: 0.99.9.2
   provider: GitHub
   auth_token:
     secure: dmzZ4ohXYLWbEtp4RW9xBSEFtIirUua57jeak2h6yu/g90RoxnVwLxwpkeVPKrdh
