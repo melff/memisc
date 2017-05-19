@@ -1,10 +1,12 @@
 mtable_format_stdstyle <- c(
-  "padding-top"="3px",
-  "padding-bottom"="0px",
+  "padding-top"="2px",
+  "padding-bottom"="1px",
   "padding-left"="0.5ex",
   "padding-right"="0.5ex",
   "margin-top"="0px",
-  "margin-bottom"="0px"
+  "margin-bottom"="0px",
+  "border-style"="none",
+  "border-width"="0px"
 )
 
 mtable_format_html <- function(x,
@@ -26,6 +28,8 @@ mtable_format_html <- function(x,
   align.left <- c("text-align"="left")  
   align.center <- c("text-align"="center")
   lrpad <- c("padding-left"="0.3em","padding-right"="0.3em")
+  row_style <- c("border-style"="none")
+  table_style <- c("border-collapse"="collapse" ,"border-style"="none")
   
   if(!length(interaction.sep)){
     if(getOption("html.use.ampersand",FALSE))
@@ -213,9 +217,9 @@ mtable_format_html <- function(x,
   } 
   body <- cbind(ldr,mtab)
   body <- apply(body,1,as.html_group)
-  body <- html_tr(body,vectorize=TRUE)
+    
+  body <- html_tr(body,vectorize=TRUE,style=as.css(row_style))
   
-  table_style <- c("border-collapse"="collapse")
   if(length(margin))
     table_style <- c(table_style,margin=margin)
   ans <- html_table(body,class="mtable",style=as.css(table_style))

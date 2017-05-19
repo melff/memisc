@@ -18,6 +18,8 @@ format_html.ftable_matrix <- function(x,
   align.left <- c("text-align"="left")  
   align.center <- c("text-align"="center")
   lrpad <- c("padding-left"="0.3em","padding-right"="0.3em")
+  row_style <- c("border-style"="none")
+  table_style <- c("border-collapse"="collapse" ,"border-style"="none")
   
   row.vars <- attr(x,"row.vars")
   col.vars <- attr(x,"col.vars")
@@ -127,9 +129,9 @@ format_html.ftable_matrix <- function(x,
   ans[mm,] <- lapply(ans[mm,],setStyle,midrule)
   ans[mmm,] <- lapply(ans[mmm,],setStyle,bottomrule)
   ans <- apply(ans,1,as.html_group)
-  ans <- html_tr(ans,vectorize=TRUE)
+    
+  ans <- html_tr(ans,vectorize=TRUE,style=as.css(row_style))
   
-  table_style <- c("border-collapse"="collapse")
   if(length(margin))
     table_style <- c(table_style,margin=margin)
   ans <- html_table(ans,class="ftable",style=as.css(table_style))

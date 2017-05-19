@@ -4,7 +4,9 @@ ftable_format_stdstyle <- c(
   "padding-left"="0.5ex",
   "padding-right"="0.5ex",
   "margin-top"="0px",
-  "margin-bottom"="0px"
+  "margin-bottom"="0px",
+  "border-style"="none",
+  "border-width"="0px"
 )
 
 
@@ -27,6 +29,8 @@ format_html.ftable <- function(x,
   align.left <- c("text-align"="left")  
   align.center <- c("text-align"="center")
   lrpad <- c("padding-left"="0.3em","padding-right"="0.3em")
+  row_style <- c("border-style"="none")
+  table_style <- c("border-collapse"="collapse" ,"border-style"="none")
   
   row.vars <- attr(x,"row.vars")
   col.vars <- attr(x,"col.vars")
@@ -96,7 +100,8 @@ format_html.ftable <- function(x,
   body <- cbind(leaders,body)
   nn <- nrow(body)
   body[nn,] <- lapply(body[nn,],setStyle,bottomrule)
-  body <- as.html_group(apply(body,1,html_tr))
+
+  body <- as.html_group(apply(body,1,html_tr,style=as.css(row_style)))
   
   header <- list()
   mm <- 1
@@ -161,9 +166,8 @@ format_html.ftable <- function(x,
   lh <- length(header)
   header[[lh]] <- lapply(header[[lh]],setStyle,midrule)
   
-  header <- html_tr(header,vectorize=TRUE)
+  header <- html_tr(header,vectorize=TRUE,style=as.css(row_style))
 
-  table_style <- c("border-collapse"="collapse")
   if(length(margin))
     table_style <- c(table_style,margin=margin)
   ans <- html_table(c(header,body),class="ftable",

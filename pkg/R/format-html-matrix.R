@@ -4,7 +4,9 @@ mat_format_stdstyle <- c(
   "padding-left"="0.5ex",
   "padding-right"="0.5ex",
   "margin-top"="0px",
-  "margin-bottom"="0px"
+  "margin-bottom"="0px",
+  "border-style"="none",
+  "border-width"="0px"
 )
 
 
@@ -12,6 +14,7 @@ mat_format_stdstyle <- c(
 format_html.matrix <- function(x,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
+                               formatC=FALSE,
                                digits=getOption("digits"),
                                format="f",
                                style=mat_format_stdstyle,
@@ -28,6 +31,8 @@ format_html.matrix <- function(x,
   align.right <- c("text-align"="right")  
   align.left <- c("text-align"="left")  
   align.center <- c("text-align"="center")
+  row_style <- c("border-style"="none")
+  table_style <- c("border-collapse"="collapse" ,"border-style"="none")
   
   colsep <- ""
   rowsep <- "\n"
@@ -43,7 +48,10 @@ format_html.matrix <- function(x,
     colspan <- 1L
     }
   else if(is.numeric(x)){
-    tmp <- formatC(x,digits=digits,format=format)
+    if(formatC)
+        tmp <- formatC(x,digits=digits,format=format)
+    else
+        tmp <- format(x)
     if(split.dec){
       tmp <- spltDec(tmp)
       body <- html_td_spltDec(tmp,style=css(style))
@@ -71,7 +79,7 @@ format_html.matrix <- function(x,
   body[1,] <- lapply(body[1,],setStyle,toprule)
   body[n,] <- lapply(body[n,],setStyle,bottomrule)
   
-  body <- apply(body,1,html_tr)
+  body <- apply(body,1,html_tr,style=as.css(row_style))
   
   if(length(colnames(x))){
     
@@ -87,14 +95,13 @@ format_html.matrix <- function(x,
     hdr <- lapply(hdr,setStyle,align.center)
     hdr <- lapply(hdr,setStyle,toprule)
     hdr[[length(hdr)]] <- setStyle(hdr[[length(hdr)]],lastcol)
-    hdr <- html_tr(hdr)
+    hdr <- html_tr(hdr,style=as.css(row_style))
     
     ans <- html_table(c(list(hdr),body))
   }
   else
     ans <- html_table(body)
   
-  table_style <- c("border-collapse"="collapse")
   if(length(margin))
     table_style <- c(table_style,margin=margin)
   style(ans) <- as.css(table_style)

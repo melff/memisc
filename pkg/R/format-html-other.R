@@ -12,6 +12,8 @@ format_html.descriptions <- function(x,
   align.right <- c("text-align"="right")  
   align.left <- c("text-align"="left")  
   align.center <- c("text-align"="center")
+  row_style <- c("border-style"="none")
+  table_style <- c("border-collapse"="collapse" ,"border-style"="none")
 
 
   tab <- cbind(
@@ -25,11 +27,10 @@ format_html.descriptions <- function(x,
               html_td("Description",style=css(align.center,padright,toprule,midrule)))
                     
   tab <- rbind(header,tab)
-  ans <- apply(tab,1,html_tr)
+  ans <- apply(tab,1,html_tr,style=as.css(row_style))
   
   ans <- html_table(ans)
   
-  table_style <- c("border-collapse"="collapse")
   if(length(margin))
     table_style <- c(table_style,margin=margin)
   style(ans) <- as.css(table_style)

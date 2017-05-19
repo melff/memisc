@@ -4,7 +4,9 @@ df_format_stdstyle <- c(
   "padding-left"="0.5ex",
   "padding-right"="0.5ex",
   "margin-top"="0px",
-  "margin-bottom"="0px"
+  "margin-bottom"="0px",
+  "border-style"="none",
+  "border-width"="0px"
 )
 
 
@@ -29,6 +31,8 @@ format_html.data.frame <- function(x,
   align.right <- c("text-align"="right")  
   align.left <- c("text-align"="left")  
   align.center <- c("text-align"="center")
+  row_style <- c("border-style"="none")
+  table_style <- c("border-collapse"="collapse" ,"border-style"="none")
   
   colsep <- ""
   rowsep <- "\n"
@@ -101,7 +105,6 @@ format_html.data.frame <- function(x,
   hdr[[length(hdr)]] <- setStyle(hdr[[length(hdr)]],lastcol)
   hdr <- html_tr(hdr)
   
-  table_style <- c("border-collapse"="collapse")
   if(length(margin))
     table_style <- c(table_style,margin=margin)
   ans <- html_table(c(list(hdr),body),style=as.css(table_style))
