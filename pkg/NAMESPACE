@@ -361,3 +361,8 @@ S3method(withVCov,lm)
 S3method(vcov,withVCov)
 S3method(summary,withVCov)
 S3method(summary,withVCov.lm)
+
+importFrom(repr,repr_html)
+S3method(repr_html,mtable)
+S3method(repr_html,ftable)
+S3method(repr_html,ftable_matrix)
