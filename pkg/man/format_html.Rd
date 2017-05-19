@@ -33,6 +33,7 @@ format_html(x, \dots)
 \method{format_html}{matrix}(x,
     toprule=2,midrule=1,bottomrule=2,
     split.dec=TRUE,
+    formatC=FALSE,
     digits=getOption("digits"),
     format="f",
     style=mat_format_stdstyle,
@@ -77,6 +78,8 @@ format_html(x, \dots)
   \item{row.names}{logical; whether row names should be shown/exported.}
   \item{digits}{number of digits to be shown after the decimal dot. This is only useful, if
   the "ftable" object was created from a table created with \code{\link{genTable}} or the like.}
+  \item{formatC}{logical; whether to use \code{\link{formatC}} instead
+  of \code{\link{format}} to format cell contents.}
   \item{format}{a format string for \code{\link{formatC}}}
   \item{style}{string containing the stanard CSS styling of table cells.}
   \item{margin}{character string, determines the margin and thus
