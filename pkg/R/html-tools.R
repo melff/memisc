@@ -30,6 +30,10 @@ show_html <- function(x,output=NULL,...){
     
     output(tf)
   }
+  else if(nzchar(Sys.getenv("JPY_PARENT_PID"))){
+      ## Inside Jupyter
+      IRdisplay::display_html(ht)
+  }     
   else if(output=="stdout") cat(ht)
   else {
     
