@@ -68,17 +68,10 @@ coefxpand <- function(x,names){
 
 smryxpand <- function(x,names){
   
-  if(!length(x)) {
-    return(structure(rep("",length(names)),names=names))
-  }
-  d <- dx <- dim(x)
-  dd <- ddx <- dimnames(x)
-  d[1] <- length(names)
-  dd[[1]] <- names
-  
-  res <- array("",dim=d,dimnames=dd)
-  call.arg <- list(res)
-  call.arg <- c(call.arg,ddx)
-  call.arg <- c(call.arg,list(value=as.vector(x)))
-  do.call("[<-",call.arg)
+    res <- structure(rep("",length(names)),names=names)
+    if(!length(x)) {
+        nms.x <- names(x)
+        res[nms.x] <- x
+    }
+    return(x)
 }

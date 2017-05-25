@@ -344,109 +344,213 @@ mtable <- function(...,
   }
   else
     summaries <- lapply(args,getSummary)
-  
-  calls <- lapply(summaries,function(x)x$call)
-  names(calls) <- argnames
 
-  ctemplate <- getCoefTemplate(coef.style)
-  if(!length(ctemplate)) stop("invalid coef.style argument")
-  ctemplate <- as.matrix(ctemplate)
-  ctdims <- dim(ctemplate)
-  lctdims <- length(ctdims)
-  if(lctdims>2) stop("can\'t handle templates with dim>2")
-  getCoef1 <- function(coef,contrasts,xlevels){
-        dimnames(coef)[[1]] <- prettyNames(dimnames(coef)[[1]],
-                        contrasts=contrasts,
-                        xlevels=xlevels,
-                        factor.style=factor.style,
-                        show.baselevel=show.baselevel,
-                        baselevel.sep=baselevel.sep)
-        adims <- if(length(dim(coef))==2) 1 else c(1,3)
-        ans <- apply(coef,adims,applyTemplate,
-                                template=ctemplate,
-                                float.style=float.style,
-                                digits=digits,
-                                signif.symbols=signif.symbols)
-        if(length(dim(ctemplate))){
-          newdims <- c(dim(ctemplate),dim(ans)[-1])
-          newdimnames <- c(dimnames(ctemplate),dimnames(ans)[-1])
-          newdimnames <- lapply(1:length(newdims),function(i){
-              if(length(newdimnames[[i]])) return(newdimnames[[i]])
-              else return(as.character(1:newdims[i]))
-              })
-          dim(ans) <- newdims
-          dimnames(ans) <- newdimnames
-        } else rownames(ans) <- names(ctemplate)
-        ans[ans=="()"] <- ""
-        return(ans)
-  }
-  getCoef <- function(i){
-        coef.i <- summaries[[i]]$coef
-        contrasts.i <- summaries[[i]]$contrasts
-        xlevels.i <- summaries[[i]]$xlevels
-        if(is.list(coef.i))
-          lapply(coef.i,getCoef1,contrasts=contrasts.i,xlevels=xlevels.i)
-        else
-          getCoef1(coef.i,contrasts=contrasts.i,xlevels=xlevels.i)
-      }
-
-  coefs <- lapply(seq(n.args),getCoef)
+  stemplates <- lapply(args,getSummaryTemplate)
   
-  coef.names <- lapply(coefs,dimnames)
-  coef.names <- lapply(coef.names,"[[",3)
-  coef.names <- unique(unlist(coef.names))
-  coefs <- Sapply(coefs,coefxpand,coef.names,simplify=FALSE)
+  structure(summaries,
+            names=argnames,
+            class="mtable",
+            coef.style=coef.style,
+            summary.stats=summary.stats,
+            signif.symbols=signif.symbols,
+            factor.style=factor.style,
+            show.baselevel=show.baselevel,
+            float.style=float.style,
+            digits=digits,
+            stemplates=stemplates,
+            sdigits=sdigits,
+            order=NULL
+            )
   
-  names(coefs) <- argnames
-  
-  if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
-    stemplates <- lapply(args,getSummaryTemplate)
-    sumstats <- lapply(seq(n.args),function(i){
-          sumstat <- summaries[[i]]$sumstat
-          stemplate <- stemplates[[i]]
-          sumstat <- drop(applyTemplate(sumstat,
-                                        template=stemplate,
-                                        digits=sdigits))
-          sumstat[nzchar(sumstat)]
-        })
-    sumstats <- clct.vectors(sumstats)
-    colnames(sumstats) <- argnames
-    if(is.character(summary.stats) && !all(summary.stats %in% rownames(sumstats))){
-      undefnd <- summary.stats[!(summary.stats %in% rownames(sumstats))]
-      undefnd <- paste(sQuote(undefnd),sep=", ")
-      if(length(undefnd)==1)
-        stop("summary statistic ",undefnd," is undefined")
-      else
-        stop("summary statistics ",undefnd," are undefined")
-    }
-    sumstats <- sumstats[summary.stats,,drop=FALSE]
-    sumstats[is.na(sumstats)] <- ""
-  }
-  else sumstats <- NULL
-
-  structure(list(
-    coefficients=coefs,
-    summaries=sumstats,
-    calls=calls),
-    class="mtable")
 }
+
+prefmt1 <- function(parm,template,float.style,digits,signif.symbols){
+    adims <- if(length(dim(parm))==2) 1 else c(1,3)
+    ans <- apply(parm,adims,applyTemplate,
+                 template=template,
+                 float.style=float.style,
+                 digits=digits,
+                 signif.symbols=signif.symbols)
+    if(length(dim(template))){
+        newdims <- c(dim(template),dim(ans)[-1])
+        newdimnames <- c(dimnames(template),dimnames(ans)[-1])
+        newdimnames <- lapply(1:length(newdims),function(i){
+            if(length(newdimnames[[i]])) return(newdimnames[[i]])
+            else return(as.character(1:newdims[i]))
+        })
+        dim(ans) <- newdims
+        dimnames(ans) <- newdimnames
+    } else rownames(ans) <- names(ctemplate)
+    ans[ans=="()"] <- ""
+    return(ans)
+}
+
+prefmt2 <- function(parm){
+    
+    if(length(dim(parm))<4)
+        dim(parm)[4] <- 1
+
+    parm <- aperm(parm,c(1,3,2,4))
+    dim(parm) <- c(prod(dim(parm)[1:2]),prod(dim(parm)[3:4]))
+
+    parm
+}
+
+colexpand <- function(x,nc){
+    x.nr <- nrow(x)
+    x.nc <- ncol(x)
+    y <- matrix("",nrow=x.nr,ncol=nc)
+    y[,1:x.nc] <- x
+    y
+}
+dimnames3 <- function(x)dimnames(x)[[3]]
+
+getRows <- function(x,r)x[r,,drop=FALSE]
+
+preformat_mtable <- function(x){
+
+    x <- unclass(x)
+    
+    coef.style <- attr(x,"coef.style")
+    summary.stats <- attr(x,"summary.stats")
+    signif.symbols <- attr(x,"signif.symbols")
+    factor.style <- attr(x,"factor.style")
+    show.baselevel <- attr(x,"show.baselevel")
+    float.style <- attr(x,"float.style")
+    digits <- attr(x,"digits")
+    stemplates <- attr(x,"stemplates")
+    sdigits <- attr(x,"sdigits")
+
+    allcompo <- unique(unlist(lapply(x,names)))
+    nonparnames <- c("sumstat","contrasts","xlevels","call")
+    partypes <- setdiff(allcompo,nonparnames)
+
+    sumstats <- lapply(x,`[[`,"sumstat")
+    contrasts <- lapply(x,`[[`,"contrasts")
+    xlevels <- lapply(x,`[[`,"xlevels")
+    calls <- lapply(x,`[[`,"call")
+    parms <- lapply(x,`[`,partypes)
+
+    modelnames <- names(x)
+
+    ctemplate <- getCoefTemplate(coef.style)
+    if(!length(ctemplate)) stop("invalid coef.style argument")
+    ctemplate <- as.matrix(ctemplate)
+    ctdims <- dim(ctemplate)
+    lctdims <- length(ctdims)
+    if(lctdims>2) stop("can\'t handle templates with dim>2")
+    
+    for(n in 1:length(parms)){
+        parms[[n]] <- lapply(parms[[n]],
+                             prefmt1,
+                             template=ctemplate,
+                             float.style=float.style,
+                             digits=digits,
+                             signif.symbols=signif.symbols)
+    }
+    
+    sect.headers <- parmtab <-
+        array(list(),
+              dim=c(length(partypes),length(parms)),
+              dimnames=list(partypes,names(parms)))
+
+    for(n in 1:length(parms)){
+        mod <- parms[[n]]
+        m <- names(mod)
+        parmtab[m,n] <- mod
+    }
+
+    parmnames <- structure(lapply(1:nrow(parmtab),
+                        function(i)
+                            unique(unlist(lapply(parmtab[i,],dimnames3)))),
+                        names=rownames(parmtab))
+    parmnames.reordered <- parmnames # Make reordering possible - to be implemented later ...
+    
+    for(n in 1:ncol(parmtab)){
+        mod <- parms[[n]]
+        for(m in rownames(parmtab)){
+            parmtab.mn <- parmtab[[m,n]]
+            parmtab.mn <- coefxpand(parmtab.mn,parmnames.reordered[[m]])
+            parmtab.mn <- prefmt2(parmtab.mn)
+            parmtab[[m,n]] <- parmtab.mn
+
+            modm <- mod[[m]]
+            if(length(dim(modm))>3){
+                nc.mn <- ncol(parmtab.mn)
+                d4 <- dim(modm)[4]
+                dn4 <- dimnames(modm)[[4]]
+                sect.headers[[m,n]] <- structure(dn4,span=nc.mn/d4)
+            }
+        }
+        maxncol <- max(unlist(lapply(parmtab[,n],ncol)) )
+        parmtab[,n] <- lapply(parmtab[,n],colexpand,maxncol)
+    }    
+
+    for(m in rownames(sect.headers)){
+        sh <- sect.headers[m,]
+        maxl <- max(unlist(lapply(sh,length)))
+        sh <- lapply(sh,`length<-`,maxl)
+        sect.headers[m,] <- sh
+    }
+
+    if(length(modelnames)) 
+        headers <- Map(structure,modelnames,span=lapply(parmtab,ncol))
+    else
+        headers <- NULL
+    
+    leaders <- structure(lapply(rownames(parmtab),
+                      function(m){
+                          pn <- parmnames.reordered[[m]]
+                          span <- nrow(parmtab[[m,1]])/length(pn)
+                          lapply(pn,structure,span=span)
+                      }),
+                      names=rownames(parmtab))
+    maxl <- max(unlist(lapply(leaders,length)))
+    leaders <- lapply(leaders,`length<-`,maxl)
+
+    if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
+        sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
+        if(is.character(summary.stats))
+            sst <- lapply(sumstats,getRows,summary.stats)
+        else
+            sst <- sumstats
+
+        snames <- unique(unlist(lapply(sst,rownames)))
+
+        nc <- lapply(parmtab[1,],ncol)
+        summary.stats <- Map(smryxpand,sst,list(snames))
+
+        snames <- lapply(snames,structure,span=1)
+        leaders <- c(leaders,summary.stats=list(snames))
+    }
+    else summary.stats <- NULL
+    
+    structure(list(parmtab=parmtab,
+                   leaders=leaders,
+                   headers=headers,
+                   sect.headers=sect.headers,
+                   summary.stats = summary.stats),
+              class="preformatted.mtable")
+}
+
 
 format.mtable <- function(x,
                           target=c("print","LaTeX","HTML","delim"),
                           ...){
-  target <- match.arg(target)
-  switch(target,
-         print=mtable_format_print(x,...),
-         LaTeX=mtable_format_latex(x,...),
-         HTML=mtable_format_html(x,...),
-         delim=mtable_format_delim(x,...)
-         )
+    target <- match.arg(target)
+    x <- preformat_mtable(x)
+    switch(target,
+           print=pf_mtable_format_print(x,...),
+           LaTeX=pf_mtable_format_latex(x,...),
+           HTML=pf_mtable_format_html(x,...),
+           delim=pf_mtable_format_delim(x,...)
+           )
 }
 
 print.mtable <- function(x,center.at=getOption("OutDec"),
       topsep="=",bottomsep="=",sectionsep="-",...){
-  calls <- x$calls
-  cat("\nCalls:\n")
+    calls <- sapply(x,"[[","call")
+    cat("\nCalls:\n")
   for(i in seq(calls)){
       cat(names(calls)[i],": ",sep="")
       print(calls[[i]])

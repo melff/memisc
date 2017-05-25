@@ -1,177 +1,188 @@
-mtable_format_print <- function(x,
-          topsep="=",
-          bottomsep="=",
-          sectionsep="-",
-          interaction.sep = " x ",
-          center.at=getOption("OutDec"),
-          align.integers=c("dot","right","left"),
-          padding="  ",
-          force.names = FALSE,
-          ...
-          ){
+mkRule <- function(x,length) paste(rep_len(x,length),collapse="")
 
-  colsep <- " "
-  rowsep <- "\n"
+set_length <- function(x,n,fill=""){
 
-  coefs <- x$coefficients
-  summaries <- x$summaries
-  
-  num.models <- length(coefs)
-  
-  coef.dims <- lapply(coefs,dim)
-  coef.ldim <- sapply(coef.dims,length)
-  max.coef.ldim <- max(coef.ldim)
-  
-  coef.dims1 <- unique(sapply(coef.dims,"[",1))
-  stopifnot(length(coef.dims1)==1)
-  
-  grp.coefs <- max.coef.ldim > 3 
-  if(grp.coefs){
-    coef.dims4 <- sapply(coef.dims[coef.ldim>3],"[",4)
-    grp.coefs <- grp.coefs && any(coef.dims4>1)
-  }
-  
-  coef.names <- dimnames(coefs[[1]])[[3]]
-  if(interaction.sep !=" x ")
-    coef.names <- gsub(" x ",interaction.sep,coef.names,fixed=TRUE)
-  
-  mtab <- character()
-  align.integers <- match.arg(align.integers)
-  
-  frmt1 <- function(coefs,summaries){
-  
-    if(length(dim(coefs))==3){
-      coef.tab <- apply(coefs,2,centerAt,
-                        at=center.at,
-                        integers=align.integers)
-      if(length(dim(coef.tab))<2)
-        dim(coef.tab) <- c(1,dim(coef.tab))
-      coef.tab <- apply(coef.tab,1,paste,collapse=" ")
-    }
-    else{
-      coef.tab <- apply(coefs,c(2,4),centerAt,
-                        at=center.at,
-                        integers=align.integers)
-      if(length(dim(coef.tab))<3)
-        dim(coef.tab) <- c(1,dim(coef.tab))
-      coef.tab <- apply(coef.tab,c(1,3),paste,collapse=" ")
-    }
-    if(grp.coefs){
-      if(length(dim(coefs))>3 && dim(coefs)[4]>1)
-        coef.tab <- rbind(dimnames(coefs)[[4]],coef.tab)
-      else
-        coef.tab <- rbind(character(ncol(coef.tab)),coef.tab)
-      coef.tab <- apply(coef.tab,2,format,justify="centre")
-    }
-    if(length(dim(coef.tab)))
-      coef.tab <- apply(coef.tab,1,paste,collapse=colsep)
-    if(grp.coefs && (num.models>1 || force.names)){
-      if(length(dim(coefs))>3 && dim(coefs)[4]>1)
-        grp.line <- paste(rep(sectionsep,nchar(coef.tab[1])),collapse="")
-      else
-        grp.line <- paste(rep(" ",nchar(coef.tab[1])),collapse="")
-      coef.tab <- c(grp.line,coef.tab)
-    }
+    l <- length(x)
+    nl <- min(n,l)
 
-    if(length(summaries)){
-        summaries <- centerAt(summaries,
-                          at=center.at,
-                          integers=align.integers)
-        summaries <- format(summaries)
-    }
-      
-    as.matrix(format(c(coef.tab,summaries),justify="centre"))
-  }
-  
-  if(length(x$model.groups)){
-    for(i in seq_along(x$model.groups)){
-      
-      mg <- x$model.groups[[i]]
-      mtab.m <- character()
-      
-      for(j in mg){
-            if(length(summaries))
-                mtab.m <- cbind(mtab.m,frmt1(coefs[[j]],summaries[,j]))
-            else
-                mtab.m <- cbind(mtab.m,frmt1(coefs[[j]],NULL))
-      }
-      mtab.m <- rbind(names(coefs)[mg],mtab.m)
-      mtab.m <- apply(mtab.m,2,format,justify="centre")
-      mtab.m <- apply(mtab.m,1,paste,collapse=" ")
-      grp.line <- paste(rep(sectionsep,nchar(mtab.m[1])),collapse="")
-      mtab.m <- c(names(x$model.groups)[i],grp.line,mtab.m)
-      mtab.m <- format(mtab.m, justify="centre")
-      mtab <- cbind(mtab,mtab.m)
-    }
-  }
-  else {
-    for(i in 1:length(coefs)){
-        if(length(summaries))
-            mtab <- cbind(mtab,frmt1(coefs[[i]],summaries[,i]))
-        else
-            mtab <- cbind(mtab,frmt1(coefs[[i]],NULL))
-    }    
-    if(num.models>1 || force.names)
-      mtab <- rbind(names(coefs),mtab)
-    mtab <- apply(mtab,2,format,justify="centre")
-  }
-  
-  if(num.models>1 || force.names){
-    if(length(x$model.groups))
-      hdrlines <- if(grp.coefs) 1:5 else 1:3
-    else
-      hdrlines <- if(grp.coefs) 1:3 else 1
-  }
-  else {
-    if(length(x$model.groups))
-      hdrlines <- if(grp.coefs) 1:3 else 1
-    else
-      hdrlines <- if(grp.coefs) 1 else integer(0)
-  } 
-
-  if(length(summaries))
-      smrylines <- seq(to=nrow(mtab),length=nrow(summaries))
-  else
-      smrylines <- NULL
-  
-  ldr <- character(length(coef.names)*coef.dims1)
-  ii <- seq(from=1,length=length(coef.names),by=coef.dims1)
-  ldr[ii] <- coef.names
-  if(length(summaries))  
-      ldr <- c(ldr,rownames(summaries))
-  ldr <- c(character(length(hdrlines)),ldr)
-  ldr <- format(ldr,justify="left")
-  
-  mtab <- cbind(ldr,mtab)
-  mtab <- apply(mtab,1,paste,collapse=paste0(colsep,colsep))
-  mtab <- paste0(padding,mtab,padding)
-  
-  if((any(nchar(topsep)))){
-    toprule <- rep(topsep,nchar(mtab[1]))
-    toprule <- paste(toprule,collapse="")
-  } else
-    toprule <- NULL
-  if((any(nchar(sectionsep)))){
-    secrule <- rep(sectionsep,nchar(mtab[1]))
-    secrule <- paste(secrule,collapse="")
-  } else
-    secrule <- NULL
-  if((any(nchar(bottomsep)))){
-    botrule <- rep(bottomsep,nchar(mtab[1]))
-    botrule <- paste(botrule,collapse="")
-  } else
-    botrule <- NULL
-  
-  ans <- c(
-    toprule,
-    if(length(hdrlines)) mtab[hdrlines],
-    if(length(hdrlines)) secrule,
-    mtab[-c(hdrlines,smrylines)],
-    if(length(summaries)) secrule,
-    if(length(summaries)) mtab[smrylines],
-    botrule
-  )
-  ans <- paste0(paste(ans,collapse=rowsep),rowsep)
-  return(ans)
+    y <- rep(fill,length=n)
+    y[1:nl] <- x[1:nl]
+    y
 }
 
+cols_folded <- function(x,n,sep){
+
+    nc <- ncol(x)
+    nr <- nrow(x)
+
+    m <- nc/n
+    dim(x) <- c(nr,n,m)
+    y <- apply(x,c(1,3),paste,collapse=sep)
+    y
+}
+
+
+
+ldxp1 <- function(x) {
+    span <- attr(x,"span")
+    y <- matrix(rep("",span),nrow=span,ncol=1)
+    y[1,] <- x
+    y
+}
+ldxp <- function(x)do.call(rbind,lapply(x,ldxp1))
+
+hdxp1 <- function(x) {
+    span <- attr(x,"span")
+    y <- matrix(rep("",span),nrow=1,ncol=span)
+    y[,1] <- x
+    y
+}
+hdxp <- function(x)do.call(cbind,lapply(x,hdxp1))
+
+mtable_format_print <- function(x,...)
+    pf_mtable_format_print(preformat_mtable(x),...)
+
+pf_mtable_format_print <- function(x,
+                                   topsep="=",
+                                   bottomsep="=",
+                                   sectionsep="-",
+                                   interaction.sep = " x ",
+                                   center.at=getOption("OutDec"),
+                                   align.integers=c("dot","right","left"),
+                                   padding="  ",
+                                   force.names = FALSE,
+                                   ...
+                                   ){
+
+    colsep <- " "
+    rowsep <- "\n"
+
+    pt <- x$parmtab
+    sst <- x$summary.stats
+    sh <- x$sect.headers
+    leaders <- x$leaders
+    headers <- x$headers
+
+    sh.nonnull <- !Sapply(sh,is.null)
+    need.sh <- apply(sh.nonnull,1,any)
+    if(length(sst))
+        need.sh <- c(need.sh,FALSE)
+    res <- NULL
+    
+    for(j in 1:ncol(pt)){
+        
+        pt.j <- pt[,j]
+        sh.j <- sh[,j]
+
+        ncol.j <- unique(sapply(pt.j,ncol))
+        stopifnot(length(ncol.j)==1)
+        span.j <- unique(sapply(sh.j,attr,"span"))
+
+        if(is.numeric(span.j))
+            pt.j <- lapply(pt.j,cols_folded,span.j,sep=colsep)
+
+        max.width <- 0
+        for(i in 1:length(pt.j)){
+            pt.ij <- pt.j[[i]]
+            pt.ij <- centerAt(pt.ij,at=center.at,integers=align.integers)
+            #pt.ij <- format(pt.ij,justify="centre")
+            if(need.sh[[i]]){
+                sh.ij <- sh.j[[i]]
+                if(length(sh.ij)){
+                    sh.ij <- set_length(sh.ij,ncol.j/span.j)
+                    #sh.ij <- format(sh.ij,justify="centre")
+                    pt.ij <- rbind(sh.ij,pt.ij)
+                }
+                else
+                    pt.ij <- rbind("",pt.ij)
+            }
+            #browser()
+            pt.ij <- apply(pt.ij,2,format,justify="centre")
+            pt.ij <- apply(pt.ij,1,paste,collapse=colsep)
+            max.width <- max(max.width,nchar(pt.ij[1]))
+            pt.j[[i]] <- pt.ij
+        }
+
+        pt.j <- lapply(pt.j,format,width=max.width+1)
+        pt.j <- unlist(pt.j)
+        if(length(sst)){
+            sst.j <- sst[[j]]
+            sst.j <- centerAt(sst.j,at=center.at,integers=align.integers)
+            pt.j <- c(pt.j,sst.j)
+        }
+
+        if(length(headers)){
+            header.j <- headers[[j]]
+            if(length(header.j)){
+                hspan.j <- attr(header.j,"span")
+                stopifnot(hspan.j==ncol.j) # TODO: deal with extra-wide heders
+            }
+            else {
+                header.j <- ""
+                hspan.j <- ncol.j
+            }
+            pt.j <- c(header.j,pt.j)
+        }
+        
+        
+        pt.j <- format(pt.j,justify="centre")
+        res <- cbind(res,pt.j)
+    }
+
+    if(length(leaders)){
+
+        for(i in 1:length(leaders)){
+            if(need.sh[i]){
+                leaders.i <- leaders[[i]]
+                leaders[[i]] <- c(list(structure("",span=1)),leaders.i)
+            }
+        }
+        
+        if(length(headers))
+            leaders <- c(list(headers=list(structure("",span=1))),leaders)
+# TODO: deal with multiline headers
+        leaders <- lapply(leaders,ldxp)
+        leaders <- do.call(rbind,leaders)
+        leaders <- format(leaders,justify="left")
+        
+        res <- cbind(leaders,res)
+    }
+
+    res <- apply(res,1,paste,collapse=colsep)
+    res <- paste0(padding,res,padding)
+    width <- nchar(res[1])
+    toprule <- mkRule(topsep,width)
+    sectionrule <- mkRule(sectionsep,width)
+    bottomrule <- mkRule(topsep,width)
+
+    sect.at <- integer()
+    csum <- 0
+    for(i in 1:nrow(pt)){
+        if(need.sh[i]){
+            csum <- csum + 1
+            sect.at <- c(sect.at,csum)
+        }
+        csum <- csum + nrow(pt[[i,1]])
+        sect.at <- c(sect.at,csum)
+    }
+    if(length(headers))
+        sect.at <- c(1,sect.at + 1)
+    res <- .insert(res,sect.at,list(sectionrule))
+    
+    res <- c(toprule,res,bottomrule)
+    res <- paste0(res,rowsep)
+    return(res)
+}
+
+.insert <- function(x,where,what){
+
+    l <- rep(list(NULL),length(x))
+    l[where] <- what
+    y <- Map(c,x,l)
+    unlist(y,recursive=FALSE)
+}
+
+.last <- function(x){
+    l <- length(x)
+    x[[l]]
+}
