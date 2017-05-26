@@ -355,6 +355,7 @@ mtable <- function(...,
             signif.symbols=signif.symbols,
             factor.style=factor.style,
             show.baselevel=show.baselevel,
+            baselevel.sep=baselevel.sep,
             float.style=float.style,
             digits=digits,
             stemplates=stemplates,
@@ -407,15 +408,33 @@ dimnames3 <- function(x)dimnames(x)[[3]]
 
 getRows <- function(x,r)x[r,,drop=FALSE]
 
+relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
+
+    relab.req <- list(...,
+                      gsub=gsub,fixed=fixed,warn=warn)
+    
+    relab.attr <- attr(x,"relabel")
+    if(!length(relab.attr))
+        relab.attr <-list(relab.req)
+    else
+        relab.attr <-c(relab.attr,
+                       list(relab.req))
+
+    attr(x,"relabel") <- relab.attr
+
+    x
+}
+
 preformat_mtable <- function(x){
 
     x <- unclass(x)
-    
+   
     coef.style <- attr(x,"coef.style")
     summary.stats <- attr(x,"summary.stats")
     signif.symbols <- attr(x,"signif.symbols")
     factor.style <- attr(x,"factor.style")
     show.baselevel <- attr(x,"show.baselevel")
+    baselevel.sep <- attr(x,"baselevel.sep")
     float.style <- attr(x,"float.style")
     digits <- attr(x,"digits")
     stemplates <- attr(x,"stemplates")
@@ -431,7 +450,6 @@ preformat_mtable <- function(x){
     calls <- lapply(x,`[[`,"call")
     parms <- lapply(x,`[`,partypes)
 
-    modelnames <- names(x)
 
     ctemplate <- getCoefTemplate(coef.style)
     if(!length(ctemplate)) stop("invalid coef.style argument")
@@ -439,9 +457,32 @@ preformat_mtable <- function(x){
     ctdims <- dim(ctemplate)
     lctdims <- length(ctdims)
     if(lctdims>2) stop("can\'t handle templates with dim>2")
+
+    relab.attr <- attr(x,"relabel")
+        
+    for(r in relab.attr){
+        x <- do.call("rename",c(list(x=x),r))
+    }
+    modelnames <- names(x)
     
     for(n in 1:length(parms)){
-        parms[[n]] <- lapply(parms[[n]],
+
+        parms.n <- parms[[n]]
+        for(r in relab.attr){
+            for(j in 1:length(parms.n)){
+                pmj <- parms.n[[j]]
+                rownames(pmj)  <- prettyNames(rownames(pmj),
+                                              contrasts=contrasts[[n]],
+                                              xlevels=xlevels[[n]],
+                                              factor.style=factor.style,
+                                              show.baselevel=show.baselevel,
+                                              baselevel.sep=baselevel.sep)
+                pmj  <- do.call("dimrename",c(list(x=pmj),r))
+                parms.n[[j]] <- pmj
+            }
+        }
+        
+        parms[[n]] <- lapply(parms.n,
                              prefmt1,
                              template=ctemplate,
                              float.style=float.style,
@@ -524,7 +565,7 @@ preformat_mtable <- function(x){
         leaders <- c(leaders,summary.stats=list(snames))
     }
     else summary.stats <- NULL
-    
+
     structure(list(parmtab=parmtab,
                    leaders=leaders,
                    headers=headers,
@@ -585,19 +626,19 @@ write.mtable <- function(object,file="",
 }
 
 
-relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
- relabelTab <- function(tab){
-  n.dims <- length(dim(tab))
-  for(i in 1:n.dims){
-    tab <- dimrename(tab,dim=i,...,gsub=gsub,fixed=fixed,warn=warn)
-    }
-  tab
- }
- cnames <- names(x$coefficients)
- x$coefficients <- lapply(x$coefficients,relabelTab)
- names(x$coefficients) <- cnames
- x$coefficients <- rename(x$coefficients,...,gsub=gsub,fixed=fixed,warn=warn)
- x$summaries <- relabelTab(x$summaries)
- return(x)
-}
-
+# relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
+# 
+#     attr.x <- attributes(x)
+#     x <- lapply(x,relabel1_mtable,...,gsub=gsub,fixed=fixed,warn=warn)
+#     attributes(x) <- attr.x
+#     x <- rename(x,...,gsub=gsub,fixed=fixed,warn=warn)
+#     return(x)
+# }
+# 
+# relabel1_mtable <- function(x,...){
+# 
+#     ii <- names(x) %nin% c("sumstat","contrasts","xlevels","call")
+#     x[ii] <- lapply(x[ii],dimrename,...)
+#     
+#     return(x)
+# }
