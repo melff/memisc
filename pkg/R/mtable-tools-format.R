@@ -54,16 +54,23 @@ centerAt <- function(x,at=getOption("OutDec"),integers=c("dot","right","left"),s
 }
 
 coefxpand <- function(x,names){
-  d <- dx <- dim(x)
-  dd <- ddx <- dimnames(x)
-  d[3] <- length(names)
-  dd[[3]] <- names
-  
-  res <- array("",dim=d,dimnames=dd)
-  call.arg <- list(res)
-  call.arg <- c(call.arg,ddx)
-  call.arg <- c(call.arg,list(value=as.vector(x)))
-  do.call("[<-",call.arg)
+    if(length(x)){
+        d <- dx <- dim(x)
+        dd <- ddx <- dimnames(x)
+        d[3] <- length(names)
+        dd[[3]] <- names
+        res <- array("",dim=d,dimnames=dd)
+        call.arg <- list(res)
+        call.arg <- c(call.arg,ddx)
+        call.arg <- c(call.arg,list(value=as.vector(x)))
+        do.call("[<-",call.arg)
+    }
+    else {
+        d3 <- length(names)
+        d <- c(0,0,d3)
+        dd <- list(NULL,NULL,names)
+        array("",dim=d,dimnames=dd)
+    }
 }
 
 smryxpand <- function(x,names){

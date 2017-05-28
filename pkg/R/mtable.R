@@ -366,6 +366,7 @@ mtable <- function(...,
 }
 
 prefmt1 <- function(parm,template,float.style,digits,signif.symbols){
+    if(!length(parm)) return(NULL)
     adims <- if(length(dim(parm))==2) 1 else c(1,3)
     ans <- apply(parm,adims,applyTemplate,
                  template=template,
@@ -400,10 +401,22 @@ prefmt2 <- function(parm){
 colexpand <- function(x,nc){
     x.nr <- nrow(x)
     x.nc <- ncol(x)
-    y <- matrix("",nrow=x.nr,ncol=nc)
-    y[,1:x.nc] <- x
+    y <- matrix("",nrow=x.nr,ncol=max(nc,1))
+    if(length(x))
+        y[,1:x.nc] <- x
     y
 }
+
+rowexpand <- function(x,nr){
+    x.nr <- nrow(x)
+    x.nc <- ncol(x)
+    y <- matrix("",nrow=nr,ncol=x.nc)
+    if(length(x))
+        y[1:x.nr,] <- x
+    y
+}
+
+
 dimnames3 <- function(x)dimnames(x)[[3]]
 
 getRows <- function(x,r)x[r,,drop=FALSE]
@@ -425,10 +438,17 @@ relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
     x
 }
 
+pt_getrow <- function(x,i){
+    y <- x[i,]
+    isn <- sapply(y,is.null)
+    if(any(isn)) return(y[!isn])
+    else return(y)
+}
+
 preformat_mtable <- function(x){
 
     x <- unclass(x)
-   
+    
     coef.style <- attr(x,"coef.style")
     summary.stats <- attr(x,"summary.stats")
     signif.symbols <- attr(x,"signif.symbols")
@@ -459,7 +479,7 @@ preformat_mtable <- function(x){
     if(lctdims>2) stop("can\'t handle templates with dim>2")
 
     relab.attr <- attr(x,"relabel")
-        
+    
     for(r in relab.attr){
         x <- do.call("rename",c(list(x=x),r))
     }
@@ -469,25 +489,25 @@ preformat_mtable <- function(x){
 
         parms.n <- parms[[n]]
         for(r in relab.attr){
-            for(j in 1:length(parms.n)){
-                pmj <- parms.n[[j]]
-                rownames(pmj)  <- prettyNames(rownames(pmj),
-                                              contrasts=contrasts[[n]],
-                                              xlevels=xlevels[[n]],
-                                              factor.style=factor.style,
-                                              show.baselevel=show.baselevel,
-                                              baselevel.sep=baselevel.sep)
-                pmj  <- do.call("dimrename",c(list(x=pmj),r))
-                parms.n[[j]] <- pmj
+                for(j in 1:length(parms.n)){
+                    pmj <- parms.n[[j]]
+                    rownames(pmj)  <- prettyNames(rownames(pmj),
+                                                  contrasts=contrasts[[n]],
+                                                  xlevels=xlevels[[n]],
+                                                  factor.style=factor.style,
+                                                  show.baselevel=show.baselevel,
+                                                  baselevel.sep=baselevel.sep)
+                    pmj  <- do.call("dimrename",c(list(x=pmj),r))
+                    parms.n[[j]] <- pmj
+                }
             }
-        }
-        
+            
         parms[[n]] <- lapply(parms.n,
                              prefmt1,
-                             template=ctemplate,
-                             float.style=float.style,
-                             digits=digits,
-                             signif.symbols=signif.symbols)
+                                 template=ctemplate,
+                                 float.style=float.style,
+                                 digits=digits,
+                                 signif.symbols=signif.symbols)
     }
     
     sect.headers <- parmtab <-
@@ -498,13 +518,21 @@ preformat_mtable <- function(x){
     for(n in 1:length(parms)){
         mod <- parms[[n]]
         m <- names(mod)
-        parmtab[m,n] <- mod
+        for(m. in m){
+            mod.m <- mod[[m]]
+            if(length(mod.m))
+                parmtab[[m,n]] <- mod.m
+        }
+        
     }
-
     parmnames <- structure(lapply(1:nrow(parmtab),
-                        function(i)
-                            unique(unlist(lapply(parmtab[i,],dimnames3)))),
-                        names=rownames(parmtab))
+                                  function(i)
+                                      unique(
+                                          unlist(
+                                              lapply(pt_getrow(parmtab,i),
+                                                     dimnames3)))),
+                           names=rownames(parmtab))
+
     parmnames.reordered <- parmnames # Make reordering possible - to be implemented later ...
     
     for(n in 1:ncol(parmtab)){
@@ -525,8 +553,14 @@ preformat_mtable <- function(x){
         }
         maxncol <- max(unlist(lapply(parmtab[,n],ncol)) )
         parmtab[,n] <- lapply(parmtab[,n],colexpand,maxncol)
-    }    
-
+    }
+    
+    for(m in 1:nrow(parmtab)){
+        maxnrow <- max(unlist(lapply(parmtab[m,],nrow)) )
+        parmtab[m,] <- lapply(parmtab[m,],rowexpand,maxnrow)
+    }
+    
+    
     for(m in rownames(sect.headers)){
         sh <- sect.headers[m,]
         maxl <- max(unlist(lapply(sh,length)))
@@ -535,44 +569,44 @@ preformat_mtable <- function(x){
     }
 
     if(length(modelnames)) 
-        headers <- Map(structure,modelnames,span=lapply(parmtab,ncol))
-    else
-        headers <- NULL
-    
-    leaders <- structure(lapply(rownames(parmtab),
-                      function(m){
-                          pn <- parmnames.reordered[[m]]
-                          span <- nrow(parmtab[[m,1]])/length(pn)
-                          lapply(pn,structure,span=span)
-                      }),
-                      names=rownames(parmtab))
-    maxl <- max(unlist(lapply(leaders,length)))
-    leaders <- lapply(leaders,`length<-`,maxl)
-
-    if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
-        sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
-        if(is.character(summary.stats))
-            sst <- lapply(sumstats,getRows,summary.stats)
+            headers <- Map(structure,modelnames,span=lapply(parmtab,ncol))
         else
-            sst <- sumstats
+            headers <- NULL
+        
+        leaders <- structure(lapply(rownames(parmtab),
+                                    function(m){
+                                        pn <- parmnames.reordered[[m]]
+                                        span <- nrow(parmtab[[m,1]])/length(pn)
+                                        lapply(pn,structure,span=span)
+                                    }),
+                             names=rownames(parmtab))
+        maxl <- max(unlist(lapply(leaders,length)))
+        leaders <- lapply(leaders,`length<-`,maxl)
 
-        snames <- unique(unlist(lapply(sst,rownames)))
+        if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
+            sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
+            if(is.character(summary.stats))
+                sst <- lapply(sumstats,getRows,summary.stats)
+            else
+                sst <- sumstats
 
-        nc <- lapply(parmtab[1,],ncol)
-        summary.stats <- Map(smryxpand,sst,list(snames))
+            snames <- unique(unlist(lapply(sst,rownames)))
 
-        snames <- lapply(snames,structure,span=1)
-        leaders <- c(leaders,summary.stats=list(snames))
+            nc <- lapply(parmtab[1,],ncol)
+            summary.stats <- Map(smryxpand,sst,list(snames))
+
+            snames <- lapply(snames,structure,span=1)
+            leaders <- c(leaders,summary.stats=list(snames))
+        }
+        else summary.stats <- NULL
+
+        structure(list(parmtab=parmtab,
+                       leaders=leaders,
+                       headers=headers,
+                       sect.headers=sect.headers,
+                       summary.stats = summary.stats),
+                  class="preformatted.mtable")
     }
-    else summary.stats <- NULL
-
-    structure(list(parmtab=parmtab,
-                   leaders=leaders,
-                   headers=headers,
-                   sect.headers=sect.headers,
-                   summary.stats = summary.stats),
-              class="preformatted.mtable")
-}
 
 
 format.mtable <- function(x,
@@ -626,19 +660,3 @@ write.mtable <- function(object,file="",
 }
 
 
-# relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
-# 
-#     attr.x <- attributes(x)
-#     x <- lapply(x,relabel1_mtable,...,gsub=gsub,fixed=fixed,warn=warn)
-#     attributes(x) <- attr.x
-#     x <- rename(x,...,gsub=gsub,fixed=fixed,warn=warn)
-#     return(x)
-# }
-# 
-# relabel1_mtable <- function(x,...){
-# 
-#     ii <- names(x) %nin% c("sumstat","contrasts","xlevels","call")
-#     x[ii] <- lapply(x[ii],dimrename,...)
-#     
-#     return(x)
-# }

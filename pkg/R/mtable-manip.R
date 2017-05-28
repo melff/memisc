@@ -1,77 +1,107 @@
 dim.mtable <- function(x){
-  
-  coefs <- x$coefficients
-  ncols <- length(coefs)
-  cdims <- lapply(coefs,dim)
-  nrows <- sapply(cdims,"[",3)
-  nrows <- max(nrows)
-  c(nrows,ncols)
+
+    sapply(dimnames(x),length)
 }
 
 dimnames.mtable <- function(x){
-  coefs <- x$coefficients
-  colnames <- names(coefs)
-  rownames <- lapply(coefs,dimnames)
-  rownames <- lapply(rownames,"[[",3)
-  rownames <- unique(unlist(rownames))
+  coln <- names(x)
+
+  allcompo <- unique(unlist(lapply(x,names)))
+  nonparnames <- c("sumstat","contrasts","xlevels","call")
+  partypes <- setdiff(allcompo,nonparnames)
+
+  parms <- lapply(x,`[`,partypes)
+  parms <- do.call(cbind,parms)
+
+  rown <- lapply(1:nrow(parms),function(i)unique(unlist(lapply(parms[i,],rownames))))
+
+  rown <- Map(
+      function(x,n)
+      {
+      names(x) <- rep(n,length(x))
+      x
+      },rown,partypes)
+  
+  rown <- do.call(c,rown)
+  
   list(
-    rownames,
-    colnames
+    rown,
+    coln
   )
 }
 
 "[.mtable" <- function(x, i, j, drop = FALSE){
-  
 
-  nrows <- nrow(x)
-  ncols <- ncol(x)
-  rownms <- rownames(x)
-  colnms <- colnames(x)
-  
-  mdrop <- missing(drop)
-  Narg <- nargs() - (!mdrop)
-  
-  if(Narg<3){
     
-    if(missing(i)){
-      
-      i <- 1:nrows
-      j <- 1:ncols
+    dn.x <- dimnames(x)
+    rown <- dn.x[[1]]
+    coln <- dn.x[[2]]
+
+    allcompo <- unique(unlist(lapply(x,names)))
+    nonparnames <- c("sumstat","contrasts","xlevels","call")
+    partypes <- setdiff(allcompo,nonparnames)
+    
+    nrows <- length(rown)
+    ncols <- length(coln)
+    
+    mdrop <- missing(drop)
+    Narg <- nargs() - (!mdrop)
+    
+    if(Narg<3){
+        
+        if(missing(i)){
+            
+            i <- 1:nrows
+            j <- 1:ncols
+        }
+        else {
+            
+            j <- i
+            i <- 1:nrows
+        }
     }
     else {
-      
-      j <- i
-      i <- 1:nrows
+        
+        if(missing(i)) i <- 1:nrows
+        if(missing(j)) j <- 1:ncols
     }
-  }
-  else {
-    
-    if(missing(i)) i <- 1:nrows
-    if(missing(j)) j <- 1:ncols
-  }
-  
-  #   return(list(Narg,i,j))(
-  
-  if(is.character(i)){
-    i <- match(i,rownms)
-    if(any(is.na(i))) stop("undefined row names")
-  } 
-  if(is.character(j)) {
-    j <- match(j,colnms)
-    if(any(is.na(j))) stop("undefined column names")
-  }
-  if(is.logical(i)) {
-    tmp <- logical(nrows)
-    tmp[] <- i
-    i <- which(tmp)
-  }
-  
-  if(is.logical(j)) {
-    tmp <- logical(ncols)
-    tmp[] <- j
-    j <- which(tmp)
-  }
 
+    if(is.logical(i))
+        i <- unique(rown[i])
+    else if(is.numeric(i)){
+        i <- unique(rown[i])
+    }
+    else if(!is.character(i)){
+        stop("wrong index type ",typeof(i))
+    }
+
+    if(is.logical(j))
+        j <- which(j)
+    else if(is.character(j)){
+        j <- match(j,names(x))
+    }
+    else if(!is.numeric(j)){
+                stop("wrong index type ",typeof(i))
+    }
+    
+    y <- unclass(x)[j]
+    attr.x <- attributes(x)
+    attr.x$names <- attr.x$names[j]
+    attr.x$stemplates <- attr.x$stemplates[j]
+    
+    for(pt in partypes){
+        for(m in 1:length(y)){
+            tmp <- y[[m]][[pt]]
+            i.tmp <- intersect(i,rownames(tmp))
+            if(length(i.tmp))
+                y[[m]][[pt]] <- tmp[i.tmp,,drop=FALSE]
+            else
+                y[[m]][[pt]] <- NULL
+        }
+    }
+
+    attributes(y) <- attr.x
+    return(structure(y,class="mtable"))
 }
 
 
@@ -80,10 +110,13 @@ dimnames.mtable <- function(x){
 
 combine_mtables <- function(...){
   
-  args <- list(...)
-  argnames <- names(args)
+    args <- list(...)
+    argnames <- names(args)
   
-
+    allcompo <- unique(unlist(lapply(x,names)))
+    nonparnames <- c("sumstat","contrasts","xlevels","call")
+    partypes <- setdiff(allcompo,nonparnames)
+    
 }
 
 c.mtable <- function(...) combine_mtables(...)
