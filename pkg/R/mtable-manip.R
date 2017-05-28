@@ -4,30 +4,31 @@ dim.mtable <- function(x){
 }
 
 dimnames.mtable <- function(x){
-  coln <- names(x)
 
-  allcompo <- unique(unlist(lapply(x,names)))
-  nonparnames <- c("sumstat","contrasts","xlevels","call")
-  partypes <- setdiff(allcompo,nonparnames)
+    coln <- names(x)
 
-  parms <- lapply(x,`[`,partypes)
-  parms <- do.call(cbind,parms)
+    allcompo <- unique(unlist(lapply(x,names)))
+    nonparnames <- c("sumstat","contrasts","xlevels","call")
+    partypes <- setdiff(allcompo,nonparnames)
 
-  rown <- lapply(1:nrow(parms),function(i)unique(unlist(lapply(parms[i,],rownames))))
+    parms <- lapply(x,`[`,partypes)
+    parms <- do.call(cbind,parms)
 
-  rown <- Map(
-      function(x,n)
-      {
-      names(x) <- rep(n,length(x))
-      x
-      },rown,partypes)
-  
-  rown <- do.call(c,rown)
-  
-  list(
-    rown,
-    coln
-  )
+    rown <- lapply(1:nrow(parms),function(i)unique(unlist(lapply(parms[i,],rownames))))
+
+    rown <- Map(
+        function(x,n)
+        {
+            names(x) <- rep(n,length(x))
+            x
+        },rown,partypes)
+    
+    rown <- do.call(c,rown)
+    
+    list(
+        rown,
+        coln
+    )
 }
 
 "[.mtable" <- function(x, i, j, drop = FALSE){
@@ -112,11 +113,48 @@ combine_mtables <- function(...){
   
     args <- list(...)
     argnames <- names(args)
-  
-    allcompo <- unique(unlist(lapply(x,names)))
-    nonparnames <- c("sumstat","contrasts","xlevels","call")
-    partypes <- setdiff(allcompo,nonparnames)
+    names(args) <- NULL
+
+    if(length(argnames)>1){
+        
+        mg <- sapply(args,length)   
+        mg1 <- lapply(mg,seq.int)
+        mg0 <- c(0,mg[-length(mg)])
+        model.groups <- Map(`+`,mg0,mg1)
+        names(model.groups) <- argnames
+    }
+    else
+        model.groups <- NULL
     
+    coef.style <- attr(args[[1]],"coef.style")
+    summary.stats <- unique(unlist(lapply(args,attr,"summary.stats")))
+    signif.symbols <- attr(args[[1]],"signif.symbols")       
+    factor.style <- attr(args[[1]],"factor.style")
+    show.baselevel <- attr(args[[1]],"show.baselevel")
+    baselevel.sep <- attr(args[[1]],"baselevel.sep")
+    float.style <- attr(args[[1]],"float.style")
+    digits <- attr(args[[1]],"digits")
+    stemplates <- do.call(c,lapply(args,attr,"stemplates"))
+    sdigits <- attr(args[[1]],"sdigits")
+
+    args <- lapply(args,unclass)
+
+    res <- do.call(c,args)
+
+    structure(res,
+            class="mtable",
+            coef.style=coef.style,
+            summary.stats=summary.stats,
+            signif.symbols=signif.symbols,
+            factor.style=factor.style,
+            show.baselevel=show.baselevel,
+            baselevel.sep=baselevel.sep,
+            float.style=float.style,
+            digits=digits,
+            stemplates=stemplates,
+            sdigits=sdigits,
+            model.groups=model.groups
+            )
 }
 
 c.mtable <- function(...) combine_mtables(...)

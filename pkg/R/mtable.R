@@ -359,8 +359,7 @@ mtable <- function(...,
             float.style=float.style,
             digits=digits,
             stemplates=stemplates,
-            sdigits=sdigits,
-            order=NULL
+            sdigits=sdigits
             )
   
 }
@@ -484,30 +483,31 @@ preformat_mtable <- function(x){
         x <- do.call("rename",c(list(x=x),r))
     }
     modelnames <- names(x)
+    modelgroups <- attr(x,"model.groups")
     
     for(n in 1:length(parms)){
 
         parms.n <- parms[[n]]
         for(r in relab.attr){
-                for(j in 1:length(parms.n)){
-                    pmj <- parms.n[[j]]
-                    rownames(pmj)  <- prettyNames(rownames(pmj),
-                                                  contrasts=contrasts[[n]],
-                                                  xlevels=xlevels[[n]],
-                                                  factor.style=factor.style,
-                                                  show.baselevel=show.baselevel,
-                                                  baselevel.sep=baselevel.sep)
-                    pmj  <- do.call("dimrename",c(list(x=pmj),r))
-                    parms.n[[j]] <- pmj
-                }
+            for(j in 1:length(parms.n)){
+                pmj <- parms.n[[j]]
+                rownames(pmj)  <- prettyNames(rownames(pmj),
+                                              contrasts=contrasts[[n]],
+                                              xlevels=xlevels[[n]],
+                                              factor.style=factor.style,
+                                              show.baselevel=show.baselevel,
+                                              baselevel.sep=baselevel.sep)
+                pmj  <- do.call("dimrename",c(list(x=pmj),r))
+                parms.n[[j]] <- pmj
             }
-            
+        }
+        
         parms[[n]] <- lapply(parms.n,
                              prefmt1,
-                                 template=ctemplate,
-                                 float.style=float.style,
-                                 digits=digits,
-                                 signif.symbols=signif.symbols)
+                             template=ctemplate,
+                             float.style=float.style,
+                             digits=digits,
+                             signif.symbols=signif.symbols)
     }
     
     sect.headers <- parmtab <-
@@ -568,44 +568,50 @@ preformat_mtable <- function(x){
         sect.headers[m,] <- sh
     }
 
-    if(length(modelnames)) 
-            headers <- Map(structure,modelnames,span=lapply(parmtab,ncol))
-        else
-            headers <- NULL
-        
-        leaders <- structure(lapply(rownames(parmtab),
-                                    function(m){
+    headers <- list()
+    if(length(modelnames)) {
+        headers[[1]] <- Map(structure,modelnames,span=lapply(parmtab,ncol))
+        if(length(modelgroups)){
+            ncols <- sapply(parmtab[1,],ncol)
+            sp <- lapply(modelgroups,function(mg)sum(ncols[mg]))
+            h <- Map(structure,names(modelgroups),span=sp)
+            headers <- c(list(h),headers)
+        }
+    }
+    
+    leaders <- structure(lapply(rownames(parmtab),
+                                function(m){
                                         pn <- parmnames.reordered[[m]]
                                         span <- nrow(parmtab[[m,1]])/length(pn)
                                         lapply(pn,structure,span=span)
                                     }),
                              names=rownames(parmtab))
-        maxl <- max(unlist(lapply(leaders,length)))
-        leaders <- lapply(leaders,`length<-`,maxl)
+    maxl <- max(unlist(lapply(leaders,length)))
+    leaders <- lapply(leaders,`length<-`,maxl)
 
-        if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
-            sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
-            if(is.character(summary.stats))
-                sst <- lapply(sumstats,getRows,summary.stats)
-            else
-                sst <- sumstats
+    if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
+        sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
+        if(is.character(summary.stats))
+            sst <- lapply(sumstats,getRows,summary.stats)
+        else
+            sst <- sumstats
 
-            snames <- unique(unlist(lapply(sst,rownames)))
+        snames <- unique(unlist(lapply(sst,rownames)))
 
-            nc <- lapply(parmtab[1,],ncol)
-            summary.stats <- Map(smryxpand,sst,list(snames))
+        nc <- lapply(parmtab[1,],ncol)
+        summary.stats <- Map(smryxpand,sst,list(snames))
 
-            snames <- lapply(snames,structure,span=1)
-            leaders <- c(leaders,summary.stats=list(snames))
-        }
-        else summary.stats <- NULL
+        snames <- lapply(snames,structure,span=1)
+        leaders <- c(leaders,summary.stats=list(snames))
+    }
+    else summary.stats <- NULL
 
-        structure(list(parmtab=parmtab,
-                       leaders=leaders,
-                       headers=headers,
-                       sect.headers=sect.headers,
-                       summary.stats = summary.stats),
-                  class="preformatted.mtable")
+    structure(list(parmtab=parmtab,
+                   leaders=leaders,
+                   headers=headers,
+                   sect.headers=sect.headers,
+                   summary.stats = summary.stats),
+              class="preformatted.mtable")
     }
 
 
@@ -624,19 +630,20 @@ format.mtable <- function(x,
 
 print.mtable <- function(x,center.at=getOption("OutDec"),
       topsep="=",bottomsep="=",sectionsep="-",...){
+
     calls <- sapply(x,"[[","call")
     cat("\nCalls:\n")
-  for(i in seq(calls)){
-      cat(names(calls)[i],": ",sep="")
-      print(calls[[i]])
+    for(i in seq(calls)){
+        cat(names(calls)[i],": ",sep="")
+        print(calls[[i]])
     }
-  cat("\n")
-  cat(format.mtable(x,target="print",
-                    center.at=center.at,
-                    topsep=topsep,
-                    bottomsep=bottomsep,
-                    sectionsep=sectionsep,...),
-      sep="")
+    cat("\n")
+    cat(format.mtable(x,target="print",
+                      center.at=center.at,
+                      topsep=topsep,
+                      bottomsep=bottomsep,
+                      sectionsep=sectionsep,...),
+        sep="")
 }
 
 toLatex.mtable <- function(object,...){
