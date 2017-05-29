@@ -569,7 +569,8 @@ preformat_mtable <- function(x){
     }
 
     headers <- list()
-    if(length(modelnames)) {
+    force.header <- getOption("mtable.force.header",default=FALSE)
+    if(length(modelnames) > 1 || length(modelnames) == 1 && force.header) {
         headers[[1]] <- Map(structure,modelnames,span=lapply(parmtab,ncol))
         if(length(modelgroups)){
             ncols <- sapply(parmtab[1,],ncol)

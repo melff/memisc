@@ -97,7 +97,8 @@ pf_mtable_format_print <- function(x,
         need.sh <- c(need.sh,FALSE)
     res <- NULL
     ncols <- NULL
-    
+    sh.topsep <- array(list(),dim=dim(sh))
+
     for(j in 1:ncol(pt)){
         
         pt.j <- pt[,j]
@@ -129,6 +130,13 @@ pf_mtable_format_print <- function(x,
             pt.ij <- apply(pt.ij,1,paste,collapse=colsep)
             max.width <- max(max.width,nchar(pt.ij[1]))
             pt.j[[i]] <- pt.ij
+            
+            if(need.sh[[i]]){
+                if(length(sh.ij))
+                    sh.topsep[i,j] <- mkRule(sectionsep,nchar(pt.ij[1]))
+                else
+                    sh.topsep[i,j] <- mkRule(" ",nchar(pt.ij[1]))
+            }
         }
 
         pt.j <- lapply(pt.j,format,width=max.width+1)
@@ -217,20 +225,38 @@ pf_mtable_format_print <- function(x,
     sectionrule <- mkRule(sectionsep,width)
     bottomrule <- mkRule(topsep,width)
 
-    sect.at <- integer()
-    csum <- 0
+    csum <- l.headers
+
+    sectsep.at <- integer()
+    sectseps <- character()
+
+    sect.topseps.at <- integer()
+    sect.topseps <- character()
     
+    leaders.gap <- mkRule(" ",nchar(leaders[i]))
     for(i in 1:nrow(pt)){
         if(need.sh[i]){
+            sect.topsep.i <- do.call(paste,c(leaders.gap,sh.topsep[i,],sep=colsep))
+            sect.topsep.i <- paste0(padding,sect.topsep.i,padding,colsep)
+            sect.topseps    <- c(sect.topseps,    sect.topsep.i)
+            sect.topseps.at <- c(sect.topseps.at, csum)
             csum <- csum + 1
-            sect.at <- c(sect.at,csum)
         }
+        sectseps   <- c(sectseps,   sectionrule)
+        sectsep.at <- c(sectsep.at, csum)
         csum <- csum + nrow(pt[[i,1]])
-        sect.at <- c(sect.at,csum)
     }
+    if(length(sst)){
+        sectseps   <- c(sectseps,   sectionrule)
+        sectsep.at <- c(sectsep.at, csum)
+    }
+#browser()
+    res <- .insert(res,
+                   c(sect.topseps.at,sectsep.at),
+                   c(sect.topseps,   sectseps)
+                   )
     if(l.headers){
-        lh21 <- l.headers*2-1
-        sect.at <- c(lh21,sect.at + lh21)
+        #lh21 <- l.headers*2-1
         if(l.headers > 1){
             lwdth <- nchar(leaders[1])
             llh <- mkRule(" ",lwdth)
@@ -239,7 +265,6 @@ pf_mtable_format_print <- function(x,
             res <- .insert(res,1:length(hlines),hlines)
         }
     }
-    res <- .insert(res,sect.at,list(sectionrule))
     
     res <- c(toprule,res,bottomrule)
     res <- paste0(res,rowsep)
@@ -249,6 +274,13 @@ pf_mtable_format_print <- function(x,
 .insert <- function(x,where,what){
 
     l <- rep(list(NULL),length(x))
+
+    what <- rep_len(what,length(where))
+
+    use <- where > 0
+    where <- where[use]
+    what <- what[use]
+
     l[where] <- what
     y <- Map(c,x,l)
     unlist(y,recursive=FALSE)
