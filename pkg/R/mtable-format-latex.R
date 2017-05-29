@@ -90,24 +90,11 @@ pf_mtable_format_latex <- function(x,
             pt.j <- c(pt.j,sst.j)
         }
 
-        if(length(headers)){
-            header.j <- headers[[j]]
-            if(length(header.j)){
-                hspan.j <- attr(header.j,"span")
-                stopifnot(hspan.j==ncol.j) # TODO: deal with extra-wide heders
-            }
-            else {
-                header.j <- ""
-                hspan.j <- ncol.j
-            }
-            header.j <- paste0("\n\\multicolumn{",hspan.j,"}{c}{",header.j,"}")
-            pt.j <- c(header.j,pt.j)
-        }
-        
         res <- cbind(res,pt.j)
     }
 
-    if(length(leaders)){
+    l.leaders <- length(leaders)
+    if(l.leaders){
 
         for(i in 1:length(leaders)){
             if(need.sh[i]){
@@ -116,9 +103,6 @@ pf_mtable_format_latex <- function(x,
             }
         }
         
-        if(length(headers))
-            leaders <- c(list(headers=list(structure("",span=1))),leaders)
-# TODO: deal with multiline headers
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
         leaders <- gsub(" x ",interaction.sep,leaders,fixed=TRUE)
@@ -126,8 +110,46 @@ pf_mtable_format_latex <- function(x,
         leaders <- gsub("$\\"," $\\",leaders,fixed=TRUE)
         res <- cbind(leaders,res)
     }
-
+    
     res <- apply(res,1,paste,collapse=modelsep)
+  
+    l.headers <- length(headers)
+    hlines <- character()
+    if(length(headers)){
+
+        headers1 <- Map(structure,list(""),span=ncols) # To take care of multi-eqn models
+        headers <- c(headers,list(headers1))
+        headers <- rev(headers)
+        hspan <- list()
+        
+        for(k in 1:length(headers)){
+            hspan[[k]] <- sapply(headers[[k]],attr,"span")
+        }
+        ghspan <- mkGrpSpan(hspan)
+        headers <- headers[-1]
+        ghspan <- ghspan[-1]
+
+        headers <- rev(headers)
+        hspan <- rev(hspan)
+        ghspan <- rev(ghspan)
+
+        if(compact) multip <- 1
+        else multip <- 2
+        for(k in 1:l.headers){
+
+            header.k <- unlist(headers[[k]])
+            hspan.k <- hspan[[k]]
+            ghspan.k <- (ghspan[[k]]-1)*multip
+            hspan.k <- hspan.k + ghspan.k 
+            header.k <- paste0("\n\\multicolumn{",hspan.k,"}{c}{",header.k,"}")
+            if(l.leaders)
+                header.k <- c("",header.k)
+            headers[[k]] <- paste(header.k,collapse=modelsep)
+        }
+        headers <- unlist(headers)
+        res <- c(headers,res)
+    }
+    
     res <- paste0(res,tabcr)
 
     sect.at <- integer()
