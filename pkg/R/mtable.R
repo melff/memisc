@@ -418,7 +418,12 @@ rowexpand <- function(x,nr){
 
 dimnames3 <- function(x)dimnames(x)[[3]]
 
-getRows <- function(x,r)x[r,,drop=FALSE]
+getRows <- function(x,r){
+    r <- intersect(r,rownames(x))
+    y <- try(x[r,,drop=FALSE])
+    if(inherits(y,"try-error")) browser()
+    y
+}
 
 relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
 
@@ -468,7 +473,6 @@ preformat_mtable <- function(x){
     xlevels <- lapply(x,`[[`,"xlevels")
     calls <- lapply(x,`[[`,"call")
     parms <- lapply(x,`[`,partypes)
-
 
     ctemplate <- getCoefTemplate(coef.style)
     if(!length(ctemplate)) stop("invalid coef.style argument")
@@ -598,7 +602,6 @@ preformat_mtable <- function(x){
             sst <- sumstats
 
         snames <- unique(unlist(lapply(sst,rownames)))
-
         nc <- lapply(parmtab[1,],ncol)
         summary.stats <- Map(smryxpand,sst,list(snames))
 

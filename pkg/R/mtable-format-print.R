@@ -97,7 +97,7 @@ pf_mtable_format_print <- function(x,
         need.sh <- c(need.sh,FALSE)
     res <- NULL
     ncols <- NULL
-    sh.topsep <- array(list(),dim=dim(sh))
+    sec.hrule <- array(list(),dim=dim(sh))
 
     for(j in 1:ncol(pt)){
         
@@ -133,9 +133,9 @@ pf_mtable_format_print <- function(x,
             
             if(need.sh[[i]]){
                 if(length(sh.ij))
-                    sh.topsep[i,j] <- mkRule(sectionsep,nchar(pt.ij[1]))
+                    sec.hrule[i,j] <- mkRule(sectionsep,nchar(pt.ij[1]))
                 else
-                    sh.topsep[i,j] <- mkRule(" ",nchar(pt.ij[1]))
+                    sec.hrule[i,j] <- mkRule(" ",nchar(pt.ij[1]))
             }
         }
 
@@ -214,7 +214,7 @@ pf_mtable_format_print <- function(x,
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
         leaders <- format(leaders,justify="left")
-        
+
         res <- cbind(leaders,res)
     }
 
@@ -230,16 +230,16 @@ pf_mtable_format_print <- function(x,
     sectsep.at <- integer()
     sectseps <- character()
 
-    sect.topseps.at <- integer()
-    sect.topseps <- character()
+    sec.hrules.at <- integer()
+    sec.hrules <- character()
     
     leaders.gap <- mkRule(" ",nchar(leaders[i]))
     for(i in 1:nrow(pt)){
         if(need.sh[i]){
-            sect.topsep.i <- do.call(paste,c(leaders.gap,sh.topsep[i,],sep=colsep))
-            sect.topsep.i <- paste0(padding,sect.topsep.i,padding,colsep)
-            sect.topseps    <- c(sect.topseps,    sect.topsep.i)
-            sect.topseps.at <- c(sect.topseps.at, csum)
+            sec.hrule.i <- do.call(paste,c(leaders.gap,sec.hrule[i,],sep=colsep))
+            sec.hrule.i <- paste0(padding,sec.hrule.i,padding,colsep)
+            sec.hrules    <- c(sec.hrules,    sec.hrule.i)
+            sec.hrules.at <- c(sec.hrules.at, csum)
             csum <- csum + 1
         }
         sectseps   <- c(sectseps,   sectionrule)
@@ -250,11 +250,12 @@ pf_mtable_format_print <- function(x,
         sectseps   <- c(sectseps,   sectionrule)
         sectsep.at <- c(sectsep.at, csum)
     }
-#browser()
+
     res <- .insert(res,
-                   c(sect.topseps.at,sectsep.at),
-                   c(sect.topseps,   sectseps)
+                   c(sec.hrules.at,sectsep.at),
+                   c(sec.hrules,   sectseps)
                    )
+    
     if(l.headers){
         #lh21 <- l.headers*2-1
         if(l.headers > 1){

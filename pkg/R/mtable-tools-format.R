@@ -75,10 +75,11 @@ coefxpand <- function(x,names){
 
 smryxpand <- function(x,names){
   
-    res <- structure(rep("",length(names)),names=names)
-    if(!length(x)) {
-        nms.x <- names(x)
-        res[nms.x] <- x
+    res <- matrix(rep("",length(names)),ncol=1)
+    rownames(res) <- names              
+    if(length(x)) {
+        nms.x <- rownames(x)
+        res[nms.x,] <- x
     }
-    return(x)
+    return(res)
 }

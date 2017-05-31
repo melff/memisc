@@ -108,6 +108,17 @@ dimnames.mtable <- function(x){
 
 
 ##
+get.summary.stats <- function(x){
+    y <- attr(x,"summary.stats")
+    if(is.logical(y)){
+        if(isTRUE(y)){
+           names(unlist(attr(x,"stemplates")))
+        }
+        else character()
+    }
+    else
+        y
+}
 
 combine_mtables <- function(...){
   
@@ -127,7 +138,10 @@ combine_mtables <- function(...){
         model.groups <- NULL
     
     coef.style <- attr(args[[1]],"coef.style")
-    summary.stats <- unique(unlist(lapply(args,attr,"summary.stats")))
+    
+    summary.stats <- lapply(args,get.summary.stats)
+    summary.stats <- unique(unlist(summary.stats))
+
     signif.symbols <- attr(args[[1]],"signif.symbols")       
     factor.style <- attr(args[[1]],"factor.style")
     show.baselevel <- attr(args[[1]],"show.baselevel")
