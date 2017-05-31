@@ -41,6 +41,7 @@ pf_mtable_format_latex <- function(x,
     if(length(sst))
         need.sh <- c(need.sh,FALSE)
     res <- NULL
+    sec.hrule <- array(list(),dim=dim(sh))
     
     for(j in 1:ncol(pt)){
         
@@ -50,8 +51,9 @@ pf_mtable_format_latex <- function(x,
         ncol.j <- unique(sapply(pt.j,ncol))
         stopifnot(length(ncol.j)==1)
         span.j <- unique(sapply(sh.j,attr,"span"))
+        if(!is.numeric(span.j)) span.j <- 1
 
-        if(is.numeric(span.j))
+        if(span.j > 1)
             pt.j <- lapply(pt.j,cols_folded,span.j,sep=colsep)
 
         for(i in 1:length(pt.j)){
@@ -59,11 +61,19 @@ pf_mtable_format_latex <- function(x,
             pt.ij <- centerAt(pt.ij,at=".",integers="dot")
             if(!useDcolumn)
                 pt.ij[] <- paste0("$",pt.ij,"$")
+            
             if(need.sh[[i]]){
                 sh.ij <- sh.j[[i]]
-                if(!length(sh.ij)) sh.ij <- ""
+                if(!length(sh.ij)) {
+                    sh.ij <- ""
+                    sec.hrule[[i,j]] <- list(draw=FALSE,length=ncol(pt.ij))
+                }
+                else
+                    sec.hrule[[i,j]] <- list(draw=TRUE,length=ncol(pt.ij))
+
                 sh.ij <- set_length(sh.ij,ncol.j/span.j)
-                sh.ij <- paste0("\n\\multicolumn{",span.j,"}{c}{",sh.ij,"}")
+                sh.ij <- if(span.j==1 && !nzchar(sh.ij)) ""
+                         else paste0("\n\\multicolumn{",span.j,"}{c}{",sh.ij,"}")
                 pt.ij <- rbind(sh.ij,pt.ij)
             }
             pt.ij <- apply(pt.ij,1,paste,collapse=colsep)
@@ -112,9 +122,10 @@ pf_mtable_format_latex <- function(x,
     }
     
     res <- apply(res,1,paste,collapse=modelsep)
-  
+
+    wdld <- as.integer(nzchar(leaders[1,]))
     l.headers <- length(headers)
-    hlines <- character()
+    hi.rules <- character()
     if(length(headers)){
 
         headers1 <- Map(structure,list(""),span=ncols) # To take care of multi-eqn models
@@ -145,6 +156,12 @@ pf_mtable_format_latex <- function(x,
             if(l.leaders)
                 header.k <- c("",header.k)
             headers[[k]] <- paste(header.k,collapse=modelsep)
+            
+            hi.rule.k.start <- wdld  + cumsum(c(1,hspan.k[-1]) + as.integer(!compact))
+            hi.rule.k.end <- hi.rule.k.start + hspan.k - 1
+            hi.rules.k <- paste0(cmidrule,"{",hi.rule.k.start,"-",hi.rule.k.end,"}")
+            hi.rules.k <- paste(hi.rules.k,collapse="")
+            hi.rules[k] <- hi.rules.k
         }
         headers <- unlist(headers)
         res <- c(headers,res)
@@ -152,25 +169,63 @@ pf_mtable_format_latex <- function(x,
     
     res <- paste0(res,tabcr)
 
-    sect.at <- integer()
-    csum <- 0
+
+    l.headers <- length(headers)
+
+    csum <- l.headers
+
+    sectsep.at <- integer()
+    sectseps <- character()
+
+    sec.hrules.at <- integer()
+    sec.hrules <- character()
+
+    sectionrule <- midrule
+    
+    if(compact) leaders.gap <- 1
+        else leaders.gap <- 2
     for(i in 1:nrow(pt)){
         if(need.sh[i]){
+            sec.hrules.i <- sec.hrule[i,]
+            sec.hrules.i.draw <- sapply(sec.hrules.i,"[[","draw")
+            sec.hrules.i.length <- sapply(sec.hrules.i,"[[","length")
+            sec.hrules.i.stepsize <- if(compact)
+                                         sec.hrules.i.length
+                                     else
+                                         sec.hrules.i.length + 1
+            l <- length(sec.hrules.i.stepsize)
+            sec.hrules.i.start <- leaders.gap + cumsum(c(1,sec.hrules.i.stepsize[-l]))
+            sec.hrules.i.end   <- sec.hrules.i.start + sec.hrules.i.length - 1
+            sec.hrules.i <- paste0(cmidrule,"{",sec.hrules.i.start,"-",sec.hrules.i.end,"}")
+            sec.hrules.i[!sec.hrules.i.draw] <- ""
+            sec.hrules.i <- paste(sec.hrules.i,collapse="")
+            sec.hrules    <- c(sec.hrules,    sec.hrules.i)
+            sec.hrules.at <- c(sec.hrules.at, csum)
             csum <- csum + 1
-            sect.at <- c(sect.at,csum)
         }
+        sectseps   <- c(sectseps,   sectionrule)
+        sectsep.at <- c(sectsep.at, csum)
         csum <- csum + nrow(pt[[i,1]])
-        sect.at <- c(sect.at,csum)
     }
-    if(length(headers))
-        sect.at <- c(1,sect.at + 1)
-    res <- .insert(res,sect.at,list(midrule))
+    if(length(sst)){
+        sectseps   <- c(sectseps,   sectionrule)
+        sectsep.at <- c(sectsep.at, csum)
+    }
+
+    res <- .insert(res,
+                   c(sec.hrules.at,sectsep.at),
+                   c(sec.hrules,   sectseps)
+                   )
     
+    if(l.headers > 1){
+        hi.rules.at <- seq.int(l.headers-1)
+        res <- .insert(res,hi.rules.at,hi.rules)
+    }
     res <- c(toprule,res,bottomrule)
 
     tab.spec <- character()
     
-    if(length(leaders))
+    if(l.leaders)
         tab.spec <- c(tab.spec,"l")
     for(j in 1:ncol(pt)){
         if(!compact) tab.spec <- c(tab.spec,"c")
