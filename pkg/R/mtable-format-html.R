@@ -1,5 +1,5 @@
 mtable_format_stdstyle <- c(
-  "padding-top"="2px",
+  "padding-top"="1px",
   "padding-bottom"="1px",
   "padding-left"="0.5ex",
   "padding-right"="0.5ex",
