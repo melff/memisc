@@ -153,7 +153,7 @@ pf_mtable_format_print <- function(x,
 
     l.headers <- length(headers)
     hlines <- character()
-    if(length(headers)){
+    if(l.headers){
 
         headers1 <- Map(structure,list(""),span=ncols) # To take care of multi-eqn models
         headers <- c(headers,list(headers1))

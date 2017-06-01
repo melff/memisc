@@ -63,6 +63,8 @@ pf_mtable_format_html <- function(x,
     sh <- x$sect.headers
     leaders <- x$leaders
     headers <- x$headers
+    l.headers <- length(headers)
+    l.leaders <- length(leaders)
 
     ncols <- sapply(pt[1,],ncol)
 
@@ -79,8 +81,9 @@ pf_mtable_format_html <- function(x,
 
         ncol.j <- unique(sapply(pt.j,ncol))
         stopifnot(length(ncol.j)==1)
-        span.j <- unique(sapply(sh.j,attr,"span"))
-
+        span.j <- unique(unlist(lapply(sh.j,attr,"span")))
+        if(is.null(span.j)|| !span.j) span.j <- 1
+        
         for(i in 1:length(pt.j)){
 
             pt.ij <- pt.j[[i]]
@@ -103,7 +106,9 @@ pf_mtable_format_html <- function(x,
             if(need.sh[[i]]){
                 hstyle <- upd_vect(style,align.center,midrule)
                 sh.ij <- sh.j[[i]]
-                colspan <- ncol.j
+                if(!length(sh.ij))
+                    sh.ij <- ""
+                colspan <- span.j
                 if(split.dec)
                     colspan <- 3*colspan
                 sh.ij <- html_td(sh.ij,colspan=colspan,style=css(hstyle),vectorize=TRUE)
@@ -115,6 +120,10 @@ pf_mtable_format_html <- function(x,
 
         if(length(sst)){
             sst.j <- sst[[j]]
+            if(getOption("html.use.ampersand",FALSE))
+                sst.j <- gsub("-","&minus;",sst.j,fixed=TRUE)
+            else
+                sst.j <- gsub("-","\u2212",sst.j,fixed=TRUE)
             sst.j <- colexpand(sst.j,ncol.j)
             dm.ij <- dim(sst.j)
             if(split.dec){
@@ -129,38 +138,18 @@ pf_mtable_format_html <- function(x,
 
         pt.j <- apply(pt.j,1,as.html_group)
         
-        if(length(headers)){
-            header.j <- headers[[j]]
-            if(length(header.j)){
-                hspan.j <- attr(header.j,"span")
-                stopifnot(hspan.j==ncol.j) # TODO: deal with extra-wide heders
-            }
-            else {
-                header.j <- ""
-                hspan.j <- ncol.j
-            }
-            hstyle <- upd_vect(style,align.center,midrule)
-            if(split.dec)
-                hspan.j <- hspan.j*3
-            header.j <- html_td(header.j,colspan=hspan.j,style=css(hstyle),vectorize=TRUE)
-            pt.j <- c(list(header.j),pt.j)
-        }
-        
         res <- cbind(res,pt.j)
     }
 
-    if(length(leaders)){
+    if(l.leaders){
 
-        for(i in 1:length(leaders)){
+        for(i in 1:l.leaders){
             if(need.sh[i]){
                 leaders.i <- leaders[[i]]
                 leaders[[i]] <- c(list(structure("",span=1)),leaders.i)
             }
         }
         
-        if(length(headers))
-            leaders <- c(list(headers=list(structure("",span=1))),leaders)
-# TODO: deal with multiline headers
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
 
@@ -173,6 +162,26 @@ pf_mtable_format_html <- function(x,
 
     res <- apply(res,1,as.html_group)
 
+    if(l.headers){
+        for(k in 1:l.headers){
+            headers.k <- headers[[k]]
+            hspan.k <- sapply(headers.k,attr,"span")
+            
+            hstyle <- upd_vect(style,align.center,midrule)
+            if(split.dec)
+                hspan.k <- hspan.k*3
+            if(l.leaders){
+                headers.k <- c(list(""),headers.k)
+                hspan.k <- c(1,hspan.k)
+            }
+            headers.k <- Map(html_td,headers.k,colspan=hspan.k,MoreArgs=list(style=css(hstyle)))
+            headers[[k]] <- headers.k
+        }
+        headers <- lapply(headers,as.html_group)
+        res <- c(headers,res)
+    }
+
+    
     res[[1]] <- lapply(res[[1]],setStyle,toprule)
     n <- length(res)
     res[[n]] <- lapply(res[[n]],setStyle,bottomrule)
@@ -188,8 +197,8 @@ pf_mtable_format_html <- function(x,
         csum <- csum + nrow(pt[[i,1]])
         sect.at <- c(sect.at,csum)
     }
-    if(length(headers))
-        sect.at <- c(1,sect.at + 1)
+    if(l.headers)
+        sect.at <- c(l.headers,sect.at + l.headers)
     for(i in sect.at)
         res[[i]] <- lapply(res[[i]],setStyle,midrule)
 
