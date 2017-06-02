@@ -15,12 +15,11 @@ format_html.mtable <- function(x,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,
                                margin="2ex auto",
-                               force.names=FALSE,...){
+                               ...){
   x <- preformat_mtable(x)
   res <- pf_mtable_format_html(x,interaction.sep=interaction.sep,
                         toprule=toprule,midrule=midrule,bottomrule=bottomrule,
-                        split.dec=split.dec,style=style,margin=margin,
-                        force.names=force.names,...)
+                        split.dec=split.dec,style=style,margin=margin,...)
   as.character(res)
 }
 
@@ -37,7 +36,7 @@ mtable_format_html <- function(x,
                           bottomrule=bottomrule,
                           split.dec=split.dec,
                           style=style,
-                          margin=martin,...)
+                          margin=margin,...)
 
 pf_mtable_format_html <- function(x,
                                interaction.sep = NULL,

@@ -57,7 +57,6 @@ mtable_format_print <- function(x,
                                 center.at=getOption("OutDec"),
                                 align.integers=c("dot","right","left"),
                                 padding="  ",
-                                force.names = FALSE,
                                 ...)
     pf_mtable_format_print(preformat_mtable(x),
                                    topsep=topsep,
@@ -67,7 +66,6 @@ mtable_format_print <- function(x,
                                    center.at=center.at,
                                    align.integers=align.integers,
                                    padding=padding,
-                                   force.names = force.names,
                                    ...)
 pf_mtable_format_print <- function(x,
                                    topsep="=",
@@ -77,7 +75,6 @@ pf_mtable_format_print <- function(x,
                                    center.at=getOption("OutDec"),
                                    align.integers=c("dot","right","left"),
                                    padding="  ",
-                                   force.names = FALSE,
                                    ...
                                    ){
 

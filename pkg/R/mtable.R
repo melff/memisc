@@ -381,7 +381,7 @@ prefmt1 <- function(parm,template,float.style,digits,signif.symbols){
         })
         dim(ans) <- newdims
         dimnames(ans) <- newdimnames
-    } else rownames(ans) <- names(ctemplate)
+    } else rownames(ans) <- names(template)
     ans[ans=="()"] <- ""
     return(ans)
 }

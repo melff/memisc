@@ -24,20 +24,17 @@ mtable_format_delim <- function(x,
                                 colsep="\t",
                                 rowsep="\n",
                                 interaction.sep = " x ",
-                                force.names = FALSE,
                                 ...)
     pf_mtable_format_delim(preformat_mtable(x),
                                 colsep=colsep,
                                 rowsep=rowsep,
                                 interaction.sep = interaction.sep,
-                                force.names = force.names,
                                 ...)
 
 pf_mtable_format_delim <- function(x,
                                 colsep="\t",
                                 rowsep="\n",
                                 interaction.sep = " x ",
-                                force.names = FALSE,
                                 ...
                                 ){
 

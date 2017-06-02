@@ -14,7 +14,6 @@ mtable_format_html(x,
                     split.dec=TRUE,
                     style=mtable_format_stdstyle,
                     margin="2ex auto", 
-                    force.names=FALSE,
                     \dots
   )
 \method{format_html}{mtable}(x,
@@ -23,7 +22,6 @@ mtable_format_html(x,
                     split.dec=TRUE,
                     style=mtable_format_stdstyle,
                     margin="2ex auto", 
-                    force.names=FALSE,
                     \dots
   )
 }
@@ -43,8 +41,6 @@ mtable_format_html(x,
     \item{style}{string containing default the CSS styling.}
     \item{margin}{character string, determines the margin and thus
       the position of the HTML table.}
-    \item{force.names}{logical; should model names be shown even
-     if estimates of only one model are displayed?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{
