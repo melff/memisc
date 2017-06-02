@@ -24,8 +24,20 @@ format_html.mtable <- function(x,
   as.character(res)
 }
 
-mtable_format_html <- function(x,...)
-    pf_mtable_format_html(preformat_mtable(x),...)
+mtable_format_html <- function(x,
+                               interaction.sep = NULL,
+                               toprule=2,midrule=1,bottomrule=2,
+                               split.dec=TRUE,
+                               style=mtable_format_stdstyle,
+                               margin="2ex auto",...)
+    pf_mtable_format_html(preformat_mtable(x),
+                          interaction.sep=interaction.sep,
+                          toprule=toprule,
+                          midrule=midrule,
+                          bottomrule=bottomrule,
+                          split.dec=split.dec,
+                          style=style,
+                          margin=martin,...)
 
 pf_mtable_format_html <- function(x,
                                interaction.sep = NULL,

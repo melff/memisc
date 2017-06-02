@@ -22,27 +22,6 @@ cols_folded <- function(x,n,sep){
 }
 
 
-
-ldxp1 <- function(x) {
-    span <- attr(x,"span")
-    y <- matrix(rep("",span),nrow=span,ncol=1)
-    y[1,] <- x
-    y
-}
-ldxp <- function(x)do.call(rbind,lapply(x,ldxp1))
-
-hdxp1 <- function(x) {
-    span <- attr(x,"span")
-    y <- matrix(rep("",span),nrow=1,ncol=span)
-    y[,1] <- x
-    y
-}
-hdxp <- function(x)do.call(cbind,lapply(x,hdxp1))
-
-mtable_format_print <- function(x,...)
-    pf_mtable_format_print(preformat_mtable(x),...)
-
-
 mkGrpSpan <- function(hspan){
 
     hspan.out <- hspan
@@ -70,6 +49,26 @@ mkGrpSpan <- function(hspan){
     hspan.out
 }
 
+mtable_format_print <- function(x,
+                                topsep="=",
+                                bottomsep="=",
+                                sectionsep="-",
+                                interaction.sep = " x ",
+                                center.at=getOption("OutDec"),
+                                align.integers=c("dot","right","left"),
+                                padding="  ",
+                                force.names = FALSE,
+                                ...)
+    pf_mtable_format_print(preformat_mtable(x),
+                                   topsep=topsep,
+                                   bottomsep=bottomsep,
+                                   sectionsep=sectionsep,
+                                   interaction.sep =interaction.sep,
+                                   center.at=center.at,
+                                   align.integers=align.integers,
+                                   padding=padding,
+                                   force.names = force.names,
+                                   ...)
 pf_mtable_format_print <- function(x,
                                    topsep="=",
                                    bottomsep="=",

@@ -1,5 +1,35 @@
-mtable_format_latex <- function(x,...)
-    pf_mtable_format_latex(preformat_mtable(x),...)
+mtable_format_latex <- function(x,
+          useDcolumn=TRUE,
+          colspec=if(useDcolumn) paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") else "r",
+          LaTeXdec=".",
+          ddigits=min(3,getOption("digits")),
+          useBooktabs=TRUE,
+          toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
+          midrule=if(useBooktabs) "\\midrule" else "\\hline",
+          cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
+          bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
+          interaction.sep = " $\\times$ ",
+          sdigits=min(1,ddigits),
+          force.names = FALSE,
+          compact=FALSE,
+          sumry.multicol=FALSE,
+          ...)
+    pf_mtable_format_latex(preformat_mtable(x),
+          useDcolumn=useDcolumn,
+          colspec=colspec,
+          LaTeXdec=LaTeXdec,
+          ddigits=ddigits,
+          useBooktabs=useBooktabs,
+          toprule=toprule,
+          midrule=midrule,
+          cmidrule=cmidrule,
+          bottomrule=bottomrule,
+          interaction.sep = interaction.sep,
+          sdigits=sdigits,
+          force.names = force.names,
+          compact=compact,
+          sumry.multicol=sumry.multicol,
+          ...)
 
 
 pf_mtable_format_latex <- function(x,
