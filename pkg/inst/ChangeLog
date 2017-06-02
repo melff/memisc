@@ -1,13 +1,31 @@
+2017-06-02:
+  - Completed support for output as print, LaTeX, and HTML for new mtable
+		architecture.
+
+2017-05-30:
+  - Introduced support for multi-line headers.
+
+2017-05-26:
+  - Architectural change for objects produced by `mtable()`. This allows
+	  several types of parameters, such as coefficients and variances.
+
+2017-05-26:
+	- Adapted `show_html()` to use within Jupyter Notebooks
+
+2017-05-19:
+  - Created methods for `repr_html()` to support HTML output in Jupyter
+	  notebooks
+
 2017-03-05:
   - Fixed handling of empty summaries in `mtable()`
   - Better "splash screen" section of LaTeX formatted mtable objects.
 
 2017-02-03:
-  - Fixed a bug in `relabel` method for `item' objects. `relabel(x,...,gsub=TRUE)` should
-    now work as expected.
-  - Fixed a bug in `readLabPorStream`, coming from wrong assumptions about the encoding
-    of value labels of character string variables in "portable" files. Some more SPSS "portable"
-    files should now read into R.
+  - Fixed a bug in `relabel` method for `item'
+    objects. `relabel(x,...,gsub=TRUE)` should now work as expected.
+  - Fixed a bug in `readLabPorStream`, coming from wrong assumptions about the
+    encoding of value labels of character string variables in "portable"
+    files. Some more SPSS "portable" files should now read into R.
 
 2016-12-24:
   - New `withVCov` and `withSE` generic functions to more

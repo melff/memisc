@@ -16,9 +16,17 @@
           using \code{rbind()} or \code{cbind()}.
     \item There is now an object class for survey items containing dates (without
           times), called \code{"Date.item"}.
-    \item Support for includingn sandwich estimates of sampling variances and
+    \item Support for including sandwich estimates of sampling variances and
           standard errors into the output of \code{summary} and \code{mtable},
-          by the new generic functions \code{withVCov} and \code{withSE}.
+          by the new generic functions \code{withVCov} and
+					\code{withSE}.
+		\item Support for different parameter sections is added to
+		      \code{mtable}. This is intended to allow output of mixed
+					effects  models to distinguish between ("fixed effects")
+					coefficients and variance parameters.
+		\item Objects created by \code{mtable()} also can have several
+		      header lines. Facilities to add additional header lines will
+					be added soon.
   }
   }
   \subsection{IMPROVEMENTS}{
