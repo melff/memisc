@@ -3,19 +3,11 @@ language: r
   # - release
   # - devel
 
-sudo: required
+cache: packages
 
 warnings_are_errors: true
 
 before_install: cd pkg
-
-r_binary_packages:
-  - SparseM
-  - AER
-  - eha
-  - lme4
-  - ordinal
-  - simex
 
 notifications:
   email:
