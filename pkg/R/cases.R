@@ -36,7 +36,7 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
       else if(any(done>0)) msg("conditions are not mutually exclusive")
     }
     never <- colSums(conditions[!na.cond,,drop=FALSE]) == 0
-    if(any(never)){
+    if(any(never) && check.xor!="ignore"){
       neverlab <- deflabels[never]
       if(length(neverlab)==1)
         warning("condition ",neverlab," is never satisfied")
