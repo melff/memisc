@@ -1,6 +1,16 @@
 useDynLib(memisc)
 import(stats,grid,lattice,methods,MASS)
-importFrom(utils,ls.str,str,toLatex,head,tail,capture.output,getFromNamespace,View,browseURL,getS3method)
+importFrom(utils,
+           ls.str,
+           str,
+           toLatex,
+           head,
+           tail,
+           capture.output,
+           getFromNamespace,
+           View,
+           browseURL,
+           getS3method)
 export(
       contr,
       contr.treatment,
@@ -362,9 +372,13 @@ S3method(vcov,withVCov)
 S3method(summary,withVCov)
 S3method(summary,withVCov.lm)
 
-importFrom(repr,repr_html)
+importFrom(repr,
+           repr_html,
+           repr_latex)
 S3method(repr_html,mtable)
 S3method(repr_html,ftable)
 S3method(repr_html,ftable_matrix)
 S3method(repr_html,html_elem)
 S3method(repr_html,html_group)
+
+S3method(repr_latex,mtable)
