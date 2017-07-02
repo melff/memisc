@@ -1,9 +1,11 @@
 mtable_format_latex <- function(x,
-          useDcolumn=TRUE,
-          colspec=if(useDcolumn) paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") else "r",
+          useDcolumn=getOption("mtable.latex.dcolumn",TRUE),
+          colspec=if(useDcolumn)
+                      paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
+                  else "l",
           LaTeXdec=".",
           ddigits=min(3,getOption("digits")),
-          useBooktabs=TRUE,
+          useBooktabs=getOption("mtable.latex.booktabs",TRUE),
           toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
           midrule=if(useBooktabs) "\\midrule" else "\\hline",
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
@@ -31,11 +33,13 @@ mtable_format_latex <- function(x,
 
 
 pf_mtable_format_latex <- function(x,
-          useDcolumn=TRUE,
-          colspec=if(useDcolumn) paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") else "r",
+          useDcolumn=getOption("mtable.latex.dcolumn",TRUE),
+          colspec=if(useDcolumn)
+                      paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
+                  else "l",
           LaTeXdec=".",
           ddigits=min(3,getOption("digits")),
-          useBooktabs=TRUE,
+          useBooktabs=getOption("mtable.latex.booktabs",TRUE),
           toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
           midrule=if(useBooktabs) "\\midrule" else "\\hline",
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
@@ -121,6 +125,7 @@ pf_mtable_format_latex <- function(x,
                               else "r"
                 sst.j <- paste0("\\multicolumn{1}{",sumry.spec,"}{",sst.j,"}")
             }
+            sst.j <- as.matrix(sst.j)
             sst.j <- centerAt(sst.j,at=".",integers="dot")
             sst.j <- colexpand(sst.j,ncol.j)
             sst.j <- apply(sst.j,1,paste,collapse=colsep)

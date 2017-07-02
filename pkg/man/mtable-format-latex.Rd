@@ -7,13 +7,13 @@
   }
 \usage{
   mtable_format_latex(x,
-            useDcolumn=TRUE,
+            useDcolumn=getOption("mtable.latex.dcolumn",TRUE),
             colspec=if(useDcolumn) 
                       paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") 
-                    else "r",
+                    else "l",
             LaTeXdec=".",
             ddigits=min(3,getOption("digits")),
-            useBooktabs=TRUE,
+            useBooktabs=getOption("mtable.latex.booktabs",TRUE),
             toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
             midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
             cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
