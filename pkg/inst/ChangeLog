@@ -1,3 +1,6 @@
+2017-07-02:
+  - Support for output in Jupyter notebooks.
+
 2017-06-02:
   - Completed support for output as print, LaTeX, and HTML for new mtable
 		architecture.

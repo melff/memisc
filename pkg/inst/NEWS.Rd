@@ -27,6 +27,8 @@
 		\item Objects created by \code{mtable()} also can have several
 		      header lines. Facilities to add additional header lines will
 					be added soon.
+		\item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
+		      created by \code{mtable} and \code{ftable} etc.			
   }
   }
   \subsection{IMPROVEMENTS}{
