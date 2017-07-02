@@ -84,6 +84,8 @@ pf_mtable_format_html <- function(x,
     if(length(sst))
         need.sh <- c(need.sh,FALSE)
     res <- NULL
+
+
     
     for(j in 1:ncol(pt)){
         
@@ -115,10 +117,13 @@ pf_mtable_format_html <- function(x,
             dim(pt.ij) <- dm.ij
             
             if(need.sh[[i]]){
-                hstyle <- upd_vect(style,align.center,midrule)
                 sh.ij <- sh.j[[i]]
-                if(!length(sh.ij))
+                if(!length(sh.ij)){
                     sh.ij <- ""
+                    hstyle <- upd_vect(style,align.center)
+                }
+                else
+                    hstyle <- upd_vect(style,align.center,midrule_above)
                 colspan <- span.j
                 if(split.dec)
                     colspan <- 3*colspan
@@ -177,15 +182,18 @@ pf_mtable_format_html <- function(x,
         for(k in 1:l.headers){
             headers.k <- headers[[k]]
             hspan.k <- sapply(headers.k,attr,"span")
-            
-            hstyle <- upd_vect(style,align.center,midrule)
+            if(k == l.headers)
+                hstyle <- upd_vect(style,align.center)
+            else
+                hstyle <- upd_vect(style,align.center,midrule)
             if(split.dec)
                 hspan.k <- hspan.k*3
-            if(l.leaders){
-                headers.k <- c(list(""),headers.k)
-                hspan.k <- c(1,hspan.k)
-            }
             headers.k <- Map(html_td,headers.k,colspan=hspan.k,MoreArgs=list(style=css(hstyle)))
+            if(l.leaders){
+                hlstyle <- upd_vect(style,align.left)
+                lheader.k <- html_td("",colspan=1,style=css(hlstyle))
+                headers.k <- c(list(lheader.k),headers.k)
+            }
             headers[[k]] <- headers.k
         }
         headers <- lapply(headers,as.html_group)
@@ -199,19 +207,20 @@ pf_mtable_format_html <- function(x,
 
 
     sect.at <- integer()
-    csum <- 0
+    csum <- 1
     for(i in 1:nrow(pt)){
         if(need.sh[i]){
             csum <- csum + 1
-            sect.at <- c(sect.at,csum)
         }
-        csum <- csum + nrow(pt[[i,1]])
         sect.at <- c(sect.at,csum)
+        csum <- csum + nrow(pt[[i,1]])
     }
+    if(length(sst))
+        sect.at <- c(sect.at,csum)
     if(l.headers)
-        sect.at <- c(l.headers,sect.at + l.headers)
+        sect.at <- c(sect.at + l.headers)
     for(i in sect.at)
-        res[[i]] <- lapply(res[[i]],setStyle,midrule)
+        res[[i]] <- lapply(res[[i]],setStyle,midrule_above)
 
     
     res <- html_tr(res,vectorize=TRUE,style=as.css(row_style))

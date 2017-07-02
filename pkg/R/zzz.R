@@ -26,6 +26,9 @@ memisc_env <- environment()
     ))
   options(labelled.factor.coerce.NA = FALSE)
   options(html.use.ampersand=FALSE)
+
+  options(memisc.repr_html=TRUE)
+  options(memisc.repr_latex=TRUE)
 }
 
 
