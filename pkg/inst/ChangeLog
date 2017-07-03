@@ -1,19 +1,23 @@
+2017-07-03:
+  - Change class of objects created by `mtable()` from "mtable" to "memisc_mtable"
+    to avoid name clash with objects created by `model.table()` from package
+    "stats".
 2017-07-02:
   - Support for output in Jupyter notebooks.
 
 2017-06-02:
   - Completed support for output as print, LaTeX, and HTML for new mtable
-		architecture.
+    architecture.
 
 2017-05-30:
   - Introduced support for multi-line headers.
 
 2017-05-26:
   - Architectural change for objects produced by `mtable()`. This allows
-	  several types of parameters, such as coefficients and variances.
+    several types of parameters, such as coefficients and variances.
 
 2017-05-26:
-	- Adapted `show_html()` to use within Jupyter Notebooks
+  - Adapted `show_html()` to use within Jupyter Notebooks
 
 2017-05-19:
   - Created methods for `repr_html()` to support HTML output in Jupyter

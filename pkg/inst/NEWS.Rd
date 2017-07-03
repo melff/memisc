@@ -55,7 +55,11 @@
           out by MartinMaechler.)
     \item A bug concerning missing values in SPSS files is fixed.
     \item Headlines in vignettes are now coherent.
-    \item \code{mtable} with empty summary sections can be created (again).
+    \item \code{mtable} with empty summary sections can be created
+		(again).
+		\item Objects returned by \code{mtable} return objects with class
+  "memisc_mtable" to avoid name clash with objects created by the
+  \code{model.table} in package "stats".
     }
   }
   \subsection{USER-VISIBLE CHANGES}{
