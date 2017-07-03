@@ -1,9 +1,9 @@
-dim.mtable <- function(x){
+dim.memisc_mtable <- function(x){
 
     sapply(dimnames(x),length)
 }
 
-dimnames.mtable <- function(x){
+dimnames.memisc_mtable <- function(x){
 
     coln <- names(x)
 
@@ -31,7 +31,7 @@ dimnames.mtable <- function(x){
     )
 }
 
-"[.mtable" <- function(x, i, j, drop = FALSE){
+"[.memisc_mtable" <- function(x, i, j, drop = FALSE){
 
     
     dn.x <- dimnames(x)
@@ -171,4 +171,4 @@ combine_mtables <- function(...){
             )
 }
 
-c.mtable <- function(...) combine_mtables(...)
+c.memisc_mtable <- function(...) combine_mtables(...)

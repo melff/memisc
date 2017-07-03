@@ -1,4 +1,4 @@
-repr_html.mtable <- function(obj) {
+repr_html.memisc_mtable <- function(obj) {
     if(getOption("memisc.repr_html",FALSE))
         format_html(obj)
     else
@@ -23,7 +23,7 @@ repr_html.html_elem <- function(obj) as.character.html_elem(obj)
 
 repr_html.html_group <- function(obj) as.character.html_group(obj)
 
-repr_latex.mtable <- function(obj) {
+repr_latex.memisc_mtable <- function(obj) {
 
     if(getOption("memisc.repr_latex",FALSE)){
         res <- mtable_format_latex(obj,

@@ -1,6 +1,6 @@
 \name{mtable_format_html}
 \alias{mtable_format_html}
-\alias{format_html.mtable}
+\alias{format_html.memisc_mtable}
 \alias{mtable_format_html}
 \alias{mtable_format_stdstyle}
 \title{HTML Formatting for 'mtable' Results}
@@ -16,7 +16,7 @@ mtable_format_html(x,
                     margin="2ex auto", 
                     \dots
   )
-\method{format_html}{mtable}(x,
+\method{format_html}{memisc_mtable}(x,
                     interaction.sep = NULL,
                     toprule=2,midrule=1,bottomrule=2,
                     split.dec=TRUE,

@@ -1,14 +1,14 @@
 \name{mtable}
 \alias{mtable}
-\alias{relabel.mtable}
-\alias{format.mtable}
-\alias{print.mtable}
+\alias{relabel.memisc_mtable}
+\alias{format.memisc_mtable}
+\alias{print.memisc_mtable}
 \alias{write.mtable}
-\alias{toLatex.mtable}
-\alias{dim.mtable}
-\alias{dimnames.mtable}
-\alias{[.mtable}
-\alias{c.mtable}
+\alias{toLatex.memisc_mtable}
+\alias{dim.memisc_mtable}
+\alias{dimnames.memisc_mtable}
+\alias{[.memisc_mtable}
+\alias{c.memisc_mtable}
 
 \title{Comparative Table of Model Estimates}
 \description{
@@ -27,28 +27,28 @@ mtable(\dots,coef.style=getOption("coef.style"),
     sdigits=min(1,digits),
     gs.options=NULL
   )
-\method{relabel}{mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
+\method{relabel}{memisc_mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
 
-\method{format}{mtable}(x,target=c("print","LaTeX","HTML","delim"),
+\method{format}{memisc_mtable}(x,target=c("print","LaTeX","HTML","delim"),
     \dots
     )
 
-\method{print}{mtable}(x,
+\method{print}{memisc_mtable}(x,
     center.at=getOption("OutDec"),
     topsep="=",bottomsep="=",sectionsep="-",\dots)
 
 write.mtable(object,file="",
              format=c("delim","LaTeX","HTML"),\dots)
 
-\method{toLatex}{mtable}(object,...)
+\method{toLatex}{memisc_mtable}(object,...)
 }
 \arguments{
      \item{\dots}{as argument to \code{mtable}: several model objects, e.g. of class 
-     \code{\link{lm}}; as argument to \code{print.mtable},
-     \code{toLatex.mtable}, \code{write.mtable}: further arguments
-     passed to \code{format.mtable}; as argument to \code{format.mtable}:
+     \code{\link{lm}}; as argument to \code{print.memisc_mtable},
+     \code{toLatex.memisc_mtable}, \code{write.memisc_mtable}: further arguments
+     passed to \code{format.memisc_mtable}; as argument to \code{format.memisc_mtable}:
      further arguments passed to \code{format.default};
-     as argument to \code{relabel.mtable}: further arguments
+     as argument to \code{relabel.memisc_mtable}: further arguments
      passed to \code{\link{dimrename}}.
      }
      \item{coef.style}{a character string which specifies the style of
@@ -102,8 +102,8 @@ write.mtable(object,file="",
 }
 \details{
   \code{mtable} constructs a table of estimates for regression-type models.
-  \code{format.mtable} formats suitable for use with output or conversion functions
-  such as \code{print.mtable}, \code{toLatex.mtable}, or \code{write.mtable}.
+  \code{format.memisc_mtable} formats suitable for use with output or conversion functions
+  such as \code{print.memisc_mtable}, \code{toLatex.memisc_mtable}, or \code{write.memisc_mtable}.
 }
 \value{
     A call to \code{mtable} results in an object of class \code{"mtable"}

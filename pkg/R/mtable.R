@@ -349,7 +349,7 @@ mtable <- function(...,
   
   structure(summaries,
             names=argnames,
-            class="mtable",
+            class="memisc_mtable",
             coef.style=coef.style,
             summary.stats=summary.stats,
             signif.symbols=signif.symbols,
@@ -425,7 +425,7 @@ getRows <- function(x,r){
     y
 }
 
-relabel.mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
+relabel.memisc_mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
 
     relab.req <- list(...,
                       gsub=gsub,fixed=fixed,warn=warn)
@@ -615,11 +615,11 @@ preformat_mtable <- function(x){
                    headers=headers,
                    sect.headers=sect.headers,
                    summary.stats = summary.stats),
-              class="preformatted.mtable")
+              class="preformatted.memisc_mtable")
     }
 
 
-format.mtable <- function(x,
+format.memisc_mtable <- function(x,
                           target=c("print","LaTeX","HTML","delim"),
                           ...){
     target <- match.arg(target)
@@ -632,7 +632,7 @@ format.mtable <- function(x,
            )
 }
 
-print.mtable <- function(x,center.at=getOption("OutDec"),
+print.memisc_mtable <- function(x,center.at=getOption("OutDec"),
       topsep="=",bottomsep="=",sectionsep="-",...){
 
     calls <- sapply(x,"[[","call")
@@ -642,7 +642,7 @@ print.mtable <- function(x,center.at=getOption("OutDec"),
         print(calls[[i]])
     }
     cat("\n")
-    cat(format.mtable(x,target="print",
+    cat(format.memisc_mtable(x,target="print",
                       center.at=center.at,
                       topsep=topsep,
                       bottomsep=bottomsep,
@@ -650,8 +650,8 @@ print.mtable <- function(x,center.at=getOption("OutDec"),
         sep="")
 }
 
-toLatex.mtable <- function(object,...){
-  structure(format.mtable(x=object,target="LaTeX",...),
+toLatex.memisc_mtable <- function(object,...){
+  structure(format.memisc_mtable(x=object,target="LaTeX",...),
   class="Latex")
 }
 
@@ -664,7 +664,7 @@ write.mtable <- function(object,file="",
   else
     target <- match.arg(format)
     
-  f <- format.mtable(object,target=target,...)
+  f <- format.memisc_mtable(object,target=target,...)
   if(target %in% c("LaTeX","HTML"))
     f <- paste(f,"\n",sep="")
   cat(f,file=file,sep="")

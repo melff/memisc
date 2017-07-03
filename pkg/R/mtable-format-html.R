@@ -9,7 +9,7 @@ mtable_format_stdstyle <- c(
   "border-width"="0px"
 )
 
-format_html.mtable <- function(x,
+format_html.memisc_mtable <- function(x,
                                interaction.sep = NULL,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
