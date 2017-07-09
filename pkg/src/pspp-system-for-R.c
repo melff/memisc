@@ -193,9 +193,10 @@ SEXP NewSysFile (SEXP name){
   else {
     init_sys_file(s);
     SEXP ans = R_MakeExternalPtr(s, install("sys_file"), R_NilValue);
+		PROTECT(ans);
     R_RegisterCFinalizer(ans, (R_CFinalizer_t) closeSysFile);
     setAttrib(ans,install("file.name"),name);
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
   }
 }

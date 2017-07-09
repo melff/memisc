@@ -57,8 +57,10 @@ SEXP dta_file_open (SEXP name){
       error("cannot open file");
       }
   SEXP ans = R_MakeExternalPtr(dtaf, install("dta_file"), R_NilValue);
+	PROTECT(ans);
   R_RegisterCFinalizer(ans, (R_CFinalizer_t) dta_file_finalize);
   setAttrib(ans,install("file.name"),name);
+	UNPROTECT(1);
   return ans;
 }
 
@@ -175,7 +177,10 @@ SEXP dta_fseek (SEXP s_file, SEXP s_pos, SEXP s_whence){
   PROTECT(s_whence = AS_INTEGER(s_whence));
   long pos = INTEGER(s_pos)[0];
   int whence = INTEGER(s_whence)[0]-1;
-  if(whence > 2) return ScalarLogical(FALSE);
+  if(whence > 2){
+		UNPROTECT(2);
+		return ScalarLogical(FALSE);
+	}
   int retcode = fseek(dtaf->f,pos,seek_code[whence]);
   UNPROTECT(2);
   if (retcode == 0) return ScalarLogical(TRUE);

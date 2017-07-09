@@ -685,9 +685,10 @@ SEXP NewPorStream (SEXP name){
   else {
     fillPorStreamBuf(b);
     SEXP ans = R_MakeExternalPtr(b, install("porStreamBuf"), R_NilValue);
+		PROTECT(ans);
     R_RegisterCFinalizer(ans, (R_CFinalizer_t) closePorStream);
     setAttrib(ans,install("file.name"),name);
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
   }
 }
