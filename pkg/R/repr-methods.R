@@ -1,8 +1,7 @@
 repr_html.memisc_mtable <- function(obj) {
     if(getOption("memisc.repr_html",FALSE))
         format_html(obj)
-    else
-    {
+    else {
         fmt <- mtable_format_print(obj)
         as.character(html_pre(fmt))
     }
@@ -11,17 +10,19 @@ repr_html.memisc_mtable <- function(obj) {
 repr_html.ftable <- function(obj) {
     if(getOption("memisc.repr_html",FALSE))
         format_html.ftable(obj)
-    else{
+    else {
         fmt <- format(obj)
+        as.character(html_pre(fmt))
     }
 }
 
 repr_html.ftable_matrix <- function(obj) {
     if(getOption("memisc.repr_html",FALSE))
         format_html.ftable_matrix(obj)
-    else
-        format.ftable_matrix(obj)
+    else {
+        fmt <- format.ftable_matrix(obj)
         as.character(html_pre(fmt))
+    }
 }
 
 repr_html.html_elem <- function(obj) as.character.html_elem(obj)
