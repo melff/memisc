@@ -260,6 +260,7 @@ html_td_spltDec <- function(x,style=character(),...,linebreak=FALSE){
 html_table <- function(x,...,linebreak=c(TRUE,TRUE)) html(tag="table",...,.content=x,linebreak=linebreak)
 html_p <- function(x,...,linebreak=TRUE) html(tag="p",...,.content=x,linebreak=linebreak)
 html_div <- function(x,...,linebreak=c(TRUE,TRUE)) html(tag="div",...,.content=x,linebreak=linebreak)
+html_pre <- function(x,...,linebreak=c(TRUE,TRUE)) html(tag="pre",...,.content=x,linebreak=linebreak)
 
 
 format_html.html_elem <- function(x,...) as.character.html_elem(x)

@@ -1,3 +1,6 @@
+2017-07-09:
+  - Bugfixes for `repr_html()` methods
+
 2017-07-03:
   - Change class of objects created by `mtable()` from "mtable" to "memisc_mtable"
     to avoid name clash with objects created by `model.table()` from package

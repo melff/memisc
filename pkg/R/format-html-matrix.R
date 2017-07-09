@@ -10,7 +10,7 @@ mat_format_stdstyle <- c(
 )
 
 
-
+# Don't use this!
 format_html.matrix <- function(x,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
@@ -37,11 +37,12 @@ format_html.matrix <- function(x,
   colsep <- ""
   rowsep <- "\n"
   
-  n <- nrow(x)
-  m <- ncol(x)
+    n <- nrow(x)
+    m <- ncol(x)
+    dim.x <- dim(x)
 
   colspan <- integer(m)
-  body <- matrix(nrow=nrow(x),ncol=ncol(x))
+  #body <- matrix(nrow=nrow(x),ncol=ncol(x))
   if(is.integer(x)){
     tmp <- formatC(x,format="d")
     body <- html_td(tmp,vectorize=TRUE)
@@ -55,12 +56,10 @@ format_html.matrix <- function(x,
     if(split.dec){
       tmp <- spltDec(tmp)
       body <- html_td_spltDec(tmp,style=css(style))
-      dim(body) <- dim(x)
       colspan <- 3L
     }
     else{
       body <- html_td(tmp,vectorize=TRUE,style=css(style))
-      dim(body) <- dim(x)
       colspan <- 1L
     }
   }
@@ -69,19 +68,20 @@ format_html.matrix <- function(x,
     body <- html_td(tmp,vectorize=TRUE,style=css(style))
     colspan <- 1L
   }
-
+  dim(body) <- dim.x
+    
   if(length(rownames(x))){
     tmp <- rownames(x)
     ldr <- html_td(tmp,vectorize=TRUE,style=css(c(style,firstcol,align.right)))
     body <- cbind(ldr,body)
   }
-   
+    
   body[1,] <- lapply(body[1,],setStyle,toprule)
   body[n,] <- lapply(body[n,],setStyle,bottomrule)
   
   body <- apply(body,1,html_tr,style=as.css(row_style))
   
-  if(length(colnames(x))){
+  if(length(colnames(x)) && FALSE){
     
     hdr <- colnames(x)
     if(length(rownames(x))){
