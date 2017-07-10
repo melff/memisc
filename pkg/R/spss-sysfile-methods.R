@@ -147,10 +147,10 @@ setMethod("readSlice","spss.system.importer",
       types=x@data.spec$types
 )})
 
-setMethod("readSubset","spss.system.importer",
+setMethod("readChunk","spss.system.importer",
   function(x,nrows,cols){
     if(!.Call("check_pointer",x@ptr)) stop("pointer is NULL, you need to recreate the object")
-    .Call("read_sysfile_subset",x@ptr,
+    .Call("read_sysfile_chunk",x@ptr,
       what=x,
       vars=cols,n=nrows,
       types=x@data.spec$types

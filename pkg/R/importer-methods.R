@@ -159,7 +159,7 @@ setMethod("subset","importer",
 
     seekData(x)
     if(missing(subset)){
-        res <- readSubset(x,nrows=nobs,cols=cols)
+        res <- readChunk(x,nrows=nobs,cols=cols)
         names(res) <- names(x)[cols]
         res <- res[select.vars]
         attr(res,"row.names") <- 1:nobs
@@ -175,7 +175,7 @@ setMethod("subset","importer",
         res <- x@.Data[select.cols]
         res.nobs <- 0
         for(i in 1:m){
-            chunk <- readSubset(x,nrows=cs,cols=cols)
+            chunk <- readChunk(x,nrows=cs,cols=cols)
             names(chunk) <- chunk.names
             use.obs <- eval(e,chunk,parent.frame())
             if(!is.logical(use.obs)) stop("non-logical subset arg")
@@ -187,7 +187,7 @@ setMethod("subset","importer",
             }
         }
         if(r > 0){
-            chunk <- readSubset(x,nrows=r,cols=cols)
+            chunk <- readChunk(x,nrows=r,cols=cols)
             names(chunk) <- chunk.names
             use.obs <- eval(e,chunk,parent.frame())
             if(!is.logical(use.obs)) stop("non-logical subset arg")

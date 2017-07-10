@@ -11,8 +11,6 @@ readIntPorStream <- function(pstream) .Call("readIntPorStream",pstream)
 readDoublePorStream <- function(pstream) .Call("readDoublePorStream",pstream)
 readStringPorStream <- function(pstream) .Call("readStringPorStream",pstream)
 setTranslationPorStream <- function(pstream,translation) .Call("setTranslationPorStream",pstream,translation)
-readDataPorStream <- function(pstream,n,types) .Call("readDataPorStream",pstream,n,types)
-readSlicePorStream <- function(pstream,types,use.vars,use.cases) .Call("readSlicePorStream",pstream,types,use.vars,use.cases)
 
 readPorStream <- function(pstream,n=1,start=NULL){
   if(missing(start))

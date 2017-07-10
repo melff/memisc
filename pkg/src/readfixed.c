@@ -123,7 +123,7 @@ SEXP countlines(SEXP s_file, SEXP s_maxlenline){
   return ScalarInteger(n);
 }
 
-SEXP readfixedsubset(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_start, SEXP s_stop){
+SEXP readfixedchunk(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_start, SEXP s_stop){
   FILE *f = rofile_FILE(s_file);
   PROTECT(s_vars = coerceVector(s_vars,LGLSXP));
   PROTECT(s_cases = coerceVector(s_cases,LGLSXP));

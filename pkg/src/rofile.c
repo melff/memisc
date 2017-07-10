@@ -1,9 +1,3 @@
-#include <R.h>
-#include <Rdefines.h>
-#include <string.h>
-#include <Rmath.h>
-#include <stdio.h>
-#include <Rinternals.h>
 #include "memisc.h"
 
 int ftell32 (FILE *f){

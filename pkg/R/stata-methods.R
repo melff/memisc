@@ -59,9 +59,9 @@ setMethod("readSlice","Stata.importer",
       types=x@data.spec$types
 ))
 
-setMethod("readSubset","Stata.importer",
+setMethod("readChunk","Stata.importer",
   function(x,nrows,cols)
-    .Call("dta_read_subset",x@ptr,
+    .Call("dta_read_chunk",x@ptr,
       what=x,
       cols=cols,n=nrows,
       types=x@data.spec$types

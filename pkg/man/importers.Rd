@@ -156,7 +156,7 @@ precedence and are \emph{not} coerced to lower case.
     The \code{as.data.set} and \code{subset} methods
     for \code{"importer"} objects internally use the
     generic functions \code{seekData}, \code{readData}, \code{readSlice},
-    and \code{readSubset}, which have methods for the
+    and \code{readChunk}, which have methods for the
     subclasses of \code{"importer"}.
     These functions are not callable
     from outside the package, however.

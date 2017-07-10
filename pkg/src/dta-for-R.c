@@ -702,7 +702,7 @@ SEXP dta_read_slice(SEXP s_dta_file, SEXP what, SEXP vars, SEXP obs, SEXP s_type
 
 
 
-SEXP dta_read_subset(SEXP s_dta_file, SEXP what, SEXP vars, SEXP s_nobs, SEXP s_types){
+SEXP dta_read_chunk(SEXP s_dta_file, SEXP what, SEXP vars, SEXP s_nobs, SEXP s_types){
   dta_file *dtaf = get_dta_file(s_dta_file);
   PROTECT(vars = coerceVector(vars,LGLSXP));
   PROTECT(s_nobs = coerceVector(s_nobs,INTSXP));

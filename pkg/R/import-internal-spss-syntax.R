@@ -3,8 +3,8 @@ rofile <- function(filename) .Call("rofile",as.character(filename))
 readfixed <- function(file,what,nlines,start,stop)
   .Call("readfixed",file,what,nlines,start,stop)
 
-readfixedsubset <- function(file,what,j,i,start,stop)
-  .Call("readfixedsubset",file,what,j,i,start,stop)
+readfixedchunk <- function(file,what,j,i,start,stop)
+  .Call("readfixedchunk",file,what,j,i,start,stop)
 
 roreadline <- function(file)
   .Call("rofreadline",file)
@@ -14,8 +14,6 @@ roreadline <- function(file)
 
 roftell <- function(f) .Call("roftell",f)
 rofseek <- function(f,pos=0,whence=0) .Call("rofseek",f,pos=pos,whence=whence)
-roeof <- function(f) .Call("roeof",f)
-roreset <- function(f) .Call("roreset",f)
 
 spss.parse.data.spec <- function(file){
   

@@ -124,9 +124,9 @@ setMethod("readSlice","spss.portable.importer",
       types=x@data.spec$types
 ))
 
-setMethod("readSubset","spss.portable.importer",
+setMethod("readChunk","spss.portable.importer",
   function(x,nrows,cols)
-    .Call("readSubsetPorStream",x@ptr,
+    .Call("readChunkPorStream",x@ptr,
       what=x,
       vars=cols,n=nrows,
       types=x@data.spec$types
