@@ -1,3 +1,11 @@
+2017-07-11:
+  - Restrict visibility of object code symbols to package initialisation routine
+
+2017-07-10:
+  - Deal with PROJECT issues reported by Tomas Kalibera: Add PROTECT to objects
+    for which attributes are set
+  - Provide Call method registration for functions called from C-code
+
 2017-07-09:
   - Bugfixes for `repr_html()` methods
   - Eliminate dependence on IRdisplay package
@@ -6,6 +14,7 @@
   - Change class of objects created by `mtable()` from "mtable" to "memisc_mtable"
     to avoid name clash with objects created by `model.table()` from package
     "stats".
+
 2017-07-02:
   - Support for output in Jupyter notebooks.
 
@@ -25,7 +34,7 @@
 
 2017-05-19:
   - Created methods for `repr_html()` to support HTML output in Jupyter
-	  notebooks
+    notebooks
 
 2017-03-05:
   - Fixed handling of empty summaries in `mtable()`

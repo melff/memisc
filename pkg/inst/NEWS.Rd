@@ -51,15 +51,16 @@
           showing non-existent variable names, better application of
           \code{extracolsep}.
     \item Duplicate value labels now produce an error if item object is
-          coerced into a factor. (This addresses a 'felicity' issue pointed
-          out by MartinMaechler.)
+          coerced into a factor.
     \item A bug concerning missing values in SPSS files is fixed.
     \item Headlines in vignettes are now coherent.
     \item \code{mtable} with empty summary sections can be created
 		(again).
 		\item Objects returned by \code{mtable} return objects with class
-  "memisc_mtable" to avoid name clash with objects created by the
-  \code{model.table} in package "stats".
+          "memisc_mtable" to avoid name clash with objects created by the
+          \code{model.table} in package "stats".
+		\item Calls to PROTECTION are added to the C-source to prevent protection
+		      errors.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{
