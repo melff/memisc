@@ -2,6 +2,7 @@
 \alias{toLatex.default}
 \alias{toLatex.ftable}
 \alias{toLatex.matrix}
+\alias{toLatex.data.frame}
 \alias{toLatex.ftable_matrix}
 \title{Additional Methods for LaTeX Representations for R objects}
 \description{
@@ -14,24 +15,6 @@
 \usage{
 \method{toLatex}{default}(object,\dots)
 
-\method{toLatex}{ftable}(object,
-    show.titles=TRUE,
-    digits=0,
-    format="f",
-    useDcolumn=TRUE,
-    colspec=if(useDcolumn)
-                paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
-             else "r",
-    LaTeXdec=".",
-    ddigits=digits,
-    useBooktabs=TRUE,
-    toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
-    midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline\n",
-    cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
-    bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
-    extrarowsep = NULL,
-    \dots)
-
 \method{toLatex}{matrix}(object,
     show.titles=TRUE,
     show.vars=FALSE,
@@ -39,30 +22,68 @@
     show.yvar=show.vars,
     digits=if(is.table(object)) 0 else getOption("digits"),
     format="f",
-    useDcolumn=TRUE,
+    useDcolumn=getOption("useDcolumn",TRUE),
     colspec=if(useDcolumn)
                 paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
              else "r",
     LaTeXdec=".",
     ddigits=digits,
-    useBooktabs=TRUE,
+    useBooktabs=getOption("useBooktabs",TRUE),
     toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
     midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
     cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
     bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
     \dots)
 
-\method{toLatex}{ftable_matrix}(object,
-    show.titles=TRUE,
-    digits=0,
+
+\method{toLatex}{data.frame}(object,
+    digits=getOption("digits"),
     format="f",
-    useDcolumn=TRUE,
+    useDcolumn=getOption("useDcolumn",TRUE),
+    numeric.colspec=if(useDcolumn)
+                       paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
+                    else "r",
+    factor.colspec="l",
+    LaTeXdec=".",
+    ddigits=digits,
+    useBooktabs=getOption("useBooktabs",TRUE),
+    toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
+    midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
+    cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
+    bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
+    row.names=is.character(attr(object,"row.names")),
+    NAas="",
+    \dots)
+
+\method{toLatex}{ftable}(object,
+    show.titles=TRUE,
+    digits=if(is.integer(object)) 0 else getOption("digits"),
+    format=if(is.integer(object)) "d" else "f",
+    useDcolumn=getOption("useDcolumn",TRUE),
     colspec=if(useDcolumn)
                 paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
              else "r",
     LaTeXdec=".",
     ddigits=digits,
-    useBooktabs=TRUE,
+    useBooktabs=getOption("useBooktabs",TRUE),
+    toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
+    midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline\n",
+    cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
+    bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
+    extrarowsep = NULL,
+    \dots)
+
+\method{toLatex}{ftable_matrix}(object,
+    show.titles=TRUE,
+    digits=getOption("digits"),
+    format="f",
+    useDcolumn=getOption("useDcolumn",TRUE),
+    colspec=if(useDcolumn)
+                paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
+             else "r",
+    LaTeXdec=".",
+    ddigits=digits,
+    useBooktabs=getOption("useBooktabs",TRUE),
     toprule=if(useBooktabs) "\\\\toprule" else "\\\\hline\\\\hline",
     midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
     cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
@@ -91,6 +112,10 @@
           Note that, if TRUE, you will need to include \code{\\usepackage{dcolumn}}
           in the preamble of your LaTeX document.}
      \item{colspec}{character, LaTeX table column format specifyer(s).}
+     \item{numeric.colspec}{character, LaTeX table column format
+          specifyer(s) for numeric vectors in the data frame.}
+     \item{factor.colspec}{character, LaTeX table column format
+          specifyer(s) for factors in the data frame.}
      \item{LaTeXdec}{character, the decimal point in the final LaTeX output.}
      \item{ddigits}{integer, digits after the decimal point.}
      \item{useBooktabs}{logical, should the facilities of the \code{booktabs} LaTeX package be used?
@@ -110,7 +135,10 @@
      \item{groupsep}{character string, containing a TeX length; extra 
       vertical space inserted between sub-tables, unless \code{compact} is \code{TRUE}.}
      \item{grouprule}{character string, TeX code that determines how
-           sub-table headings are embellished.}
+       sub-table headings are embellished.}
+		 \item{row.names}{logical, whether row names should be included in
+			 exported LaTeX code.}
+		 \item{NAas}{character string, how missing values should be represented.}
      \item{\dots}{further argument, currently ignored.}
 }
 \examples{

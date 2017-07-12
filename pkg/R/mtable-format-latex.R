@@ -1,11 +1,11 @@
 mtable_format_latex <- function(x,
-          useDcolumn=getOption("mtable.latex.dcolumn",TRUE),
+          useDcolumn=getOption("useDcolumn",TRUE),
           colspec=if(useDcolumn)
                       paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
                   else "l",
           LaTeXdec=".",
           ddigits=min(3,getOption("digits")),
-          useBooktabs=getOption("mtable.latex.booktabs",TRUE),
+          useBooktabs=getOption("useBooktabs",TRUE),
           toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
           midrule=if(useBooktabs) "\\midrule" else "\\hline",
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
@@ -33,13 +33,13 @@ mtable_format_latex <- function(x,
 
 
 pf_mtable_format_latex <- function(x,
-          useDcolumn=getOption("mtable.latex.dcolumn",TRUE),
+          useDcolumn=getOption("useDcolumn",TRUE),
           colspec=if(useDcolumn)
                       paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
                   else "l",
           LaTeXdec=".",
           ddigits=min(3,getOption("digits")),
-          useBooktabs=getOption("mtable.latex.booktabs",TRUE),
+          useBooktabs=getOption("useBooktabs",TRUE),
           toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
           midrule=if(useBooktabs) "\\midrule" else "\\hline",
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",

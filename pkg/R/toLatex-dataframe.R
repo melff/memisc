@@ -1,22 +1,26 @@
 toLatex.data.frame <- function(object,
                            digits=getOption("digits"),
                            format="f",
-                           useDcolumn=TRUE,
-                           numeric.colspec=if(useDcolumn) paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") else "l",
+                           useDcolumn=getOption("useDcolumn",TRUE),
+                           numeric.colspec=if(useDcolumn)
+                                               paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
+                                           else "r",
                            factor.colspec="l",
                            LaTeXdec=".",
                            ddigits=digits,
-                           useBooktabs=TRUE,
+                           useBooktabs=getOption("useBooktabs",TRUE),
                            toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
                            midrule=if(useBooktabs) "\\midrule" else "\\hline",
                            cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
                            bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
-                           row.names=TRUE,
+                           row.names=is.character(attr(object,"row.names")),
+                           NAas="",
                            ...){
   n <- nrow(object)
   m <- ncol(object)
   d <- digits
   is.num <- sapply(object,is.numeric)
+  is.mat <- sapply(object,is.matrix)
   m.num <- sum(is.num)
   digits <- integer(m.num)
   digits[] <- d

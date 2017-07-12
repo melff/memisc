@@ -3,13 +3,15 @@
 
 toLatex.ftable_matrix <- function(object,
                                   show.titles=TRUE,
-                                  digits=0,
+                                  digits=getOption("digits"),
                                   format="f",
-                                  useDcolumn=TRUE,
-                                  colspec=if(useDcolumn) paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="") else "r",
+                                  useDcolumn=getOption("useDcolumn",TRUE),
+                                  colspec=if(useDcolumn)
+                                              paste("D{.}{",LaTeXdec,"}{",ddigits,"}",sep="")
+                                          else "r",
                                   LaTeXdec=".",
                                   ddigits=digits,
-                                  useBooktabs=TRUE,
+                                  useBooktabs=getOption("useBooktabs",TRUE),
                                   toprule=if(useBooktabs) "\\toprule" else "\\hline\\hline",
                                   midrule=if(useBooktabs) "\\midrule" else "\\hline",
                                   cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",

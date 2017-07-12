@@ -1,8 +1,8 @@
 Package: memisc
 Type: Package
 Title: Tools for Management of Survey Data and the Presentation of Analysis Results
-Version: 0.99.12
-Date: 2017-07-11
+Version: 0.99.13
+Date: 2017-07-13
 Author: Martin Elff (with contributions from Christopher N. Lawrence, Dave Atkins, Jason W. Morgan, Achim Zeileis)
 Maintainer: Martin Elff <memisc@elff.eu>
 Description: One of the aims of this package is to make life easier for

@@ -35,6 +35,8 @@
     \itemize{
       \item Subset methods for importer objects are much more memory
           efficient and now can handle files of size larger than 1GB.
+      \item \code{useDcolumn} and \code{useBooktabs} arguments of
+			    \code{toLatex()} methods now have global options as defaults
     }
   }
   \subsection{BUGFIXES}{
@@ -60,7 +62,8 @@
           "memisc_mtable" to avoid name clash with objects created by the
           \code{model.table} in package "stats".
 		\item Calls to PROTECTION are added to the C-source to prevent protection
-		      errors.
+		errors.
+		\item \code{toLatex()} now handles matrices in data frames.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

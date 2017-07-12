@@ -54,32 +54,36 @@ format_html.data.frame <- function(x,
   colspan <- integer(0)
   body <- matrix(nrow=nrow(x),ncol=0)
   for(i in 1:m) {
-    if(is.int[i]){
-      tmp <- formatC(x[,i],format="d")
-      col <- html_td(tmp,vectorize=TRUE,style=css(style))
-      colspan <- c(colspan,1L)
+      tmp <- x[[i]]
+      dim.x.i <- dim(tmp)
+      ncol.tmp <- if(length(dim.x.i)) ncol(tmp) else 1
+      if(is.int[i]){
+          tmp <- formatC(tmp,format="d")
+          col <- html_td(tmp,vectorize=TRUE,style=css(style))
+          colspan <- c(colspan,ncol.tmp)
       }
-    else if(is.num[i]){
-      tmp <- formatC(x[,i],digits=fdigits[i],format=format[i])
-      if(split.dec){
-        tmp <- spltDec(tmp)
-        col <- html_td_spltDec(tmp,style=css(style))
-        colspan <- c(colspan,3L)
+      else if(is.num[i]){
+          tmp <- formatC(tmp,digits=fdigits[i],format=format[i])
+          if(split.dec){
+              tmp <- spltDec(tmp)
+              col <- html_td_spltDec(tmp,style=css(style))
+              colspan <- c(colspan,3L*ncol.tmp)
+          }
+          else{
+              col <- html_td(tmp,vectorize=TRUE,style=css(style))
+              colspan <- c(colspan,ncol.tmp)
+          }
       }
-      else{
-        col <- html_td(tmp,vectorize=TRUE,style=css(style))
-        colspan <- c(colspan,1L)
+      else {
+          tmp <- as.character(tmp)
+          col <- html_td(tmp,vectorize=TRUE,style=css(style))
+          col <- setStyle(col,align.left)
+          colspan <- c(colspan,ncol.tmp)
       }
-    }
-    else {
-      tmp <- as.character(x[,i])
-      col <- html_td(tmp,vectorize=TRUE,style=css(style))
-      col <- setStyle(col,align.left)
-      colspan <- c(colspan,1L)
-    }
-    body <- cbind(body,col)
+      dim(col) <- dim.x.i
+      body <- cbind(body,col)
   }
-  
+    #browser()
   if(row.names){
     tmp <- rownames(x)
     ldr <- html_td(tmp,vectorize=TRUE,style=css(c(style,firstcol,align.right)))

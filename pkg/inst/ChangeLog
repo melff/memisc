@@ -1,3 +1,8 @@
+2017-07-13:
+  - Fix handling of matrices contained in data frames by `toLatex()`
+  - `useDcolumn` and `useBooktabs` arguments of `toLatex()` methods now have
+    global options as defaults
+
 2017-07-11:
   - Restrict visibility of object code symbols to package initialisation routine
 
