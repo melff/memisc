@@ -1,3 +1,7 @@
+2017-07-29:
+  - Fix refactoring: `c.memisc_mtable` and `[.memisc_mtable` now return objects
+    with the correct class attribute.
+
 2017-07-13:
   - Fix handling of matrices contained in data frames by `toLatex()`
   - `useDcolumn` and `useBooktabs` arguments of `toLatex()` methods now have

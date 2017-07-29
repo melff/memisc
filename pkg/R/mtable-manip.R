@@ -102,7 +102,7 @@ dimnames.memisc_mtable <- function(x){
     }
 
     attributes(y) <- attr.x
-    return(structure(y,class="mtable"))
+    return(structure(y,class="memisc_mtable"))
 }
 
 
@@ -156,7 +156,7 @@ combine_mtables <- function(...){
     res <- do.call(c,args)
 
     structure(res,
-            class="mtable",
+            class="memisc_mtable",
             coef.style=coef.style,
             summary.stats=summary.stats,
             signif.symbols=signif.symbols,
