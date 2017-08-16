@@ -492,18 +492,19 @@ preformat_mtable <- function(x){
     for(n in 1:length(parms)){
 
         parms.n <- parms[[n]]
-        for(r in relab.attr){
-            for(j in 1:length(parms.n)){
-                pmj <- parms.n[[j]]
-                rownames(pmj)  <- prettyNames(rownames(pmj),
-                                              contrasts=contrasts[[n]],
-                                              xlevels=xlevels[[n]],
-                                              factor.style=factor.style,
-                                              show.baselevel=show.baselevel,
-                                              baselevel.sep=baselevel.sep)
+        for(j in 1:length(parms.n)){
+            pmj <- parms.n[[j]]
+            rownames(pmj)  <- prettyNames(rownames(pmj),
+                                          contrasts=contrasts[[n]],
+                                          xlevels=xlevels[[n]],
+                                          factor.style=factor.style,
+                                          show.baselevel=show.baselevel,
+                                          baselevel.sep=baselevel.sep)
+            
+            for(r in relab.attr){
                 pmj  <- do.call("dimrename",c(list(x=pmj),r))
-                parms.n[[j]] <- pmj
             }
+            parms.n[[j]] <- pmj
         }
         
         parms[[n]] <- lapply(parms.n,
