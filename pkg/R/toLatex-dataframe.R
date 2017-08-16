@@ -40,7 +40,7 @@ toLatex.data.frame <- function(object,
       body[[i]] <- format(body.i,justify="right")
   }
   body <- do.call(cbind,body)
-  ans <- sub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",body)
+  ans <- gsub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",body)
   
   if(row.names){
     ans <- cbind(format(rownames(object),justify="right"),ans)
@@ -53,7 +53,6 @@ toLatex.data.frame <- function(object,
   if(row.names) header <- paste("&",header)
   header <- paste(header,"\\\\")
 
-
   ans <- apply(ans,1,paste,collapse=" & ")
   ans <- paste(ans,"\\\\")
   ans <- c(
@@ -63,6 +62,8 @@ toLatex.data.frame <- function(object,
       ans,
       bottomrule
     )
+
+  ans <- LaTeXcape(ans)
 
   body.spec <- rep(factor.colspec,m)
   dd <- integer(m.num)

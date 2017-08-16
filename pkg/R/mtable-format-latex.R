@@ -148,8 +148,8 @@ pf_mtable_format_latex <- function(x,
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
         leaders <- gsub(" x ",interaction.sep,leaders,fixed=TRUE)
+        leaders <- LaTeXcape(leaders)
         leaders <- format(leaders,justify="left")
-        leaders <- gsub("$\\"," $\\",leaders,fixed=TRUE)
         res <- cbind(leaders,res)
     }
     
@@ -181,6 +181,7 @@ pf_mtable_format_latex <- function(x,
         for(k in 1:l.headers){
 
             header.k <- unlist(headers[[k]])
+            header.k <- LaTeXcape(header.k)
             hspan.k <- hspan[[k]]
             ghspan.k <- (ghspan[[k]]-1)*multip
             hspan.k <- hspan.k + ghspan.k 
