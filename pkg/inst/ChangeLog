@@ -1,3 +1,8 @@
+2017-08-16:
+   - Make sure that 'PrettyNames' is always applied when an 'mtable' object is
+     formatted.
+   - Escape TeX active chars '$', '_', '^' in toLatex methods etc.
+
 2017-07-29:
   - Fix refactoring: `c.memisc_mtable` and `[.memisc_mtable` now return objects
     with the correct class attribute.
