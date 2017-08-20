@@ -8,6 +8,14 @@ getSummary.ivreg <- function(obj, alpha = 0.05, ...) {
   cf <- cbind(s$coefficients, confint(obj, level = 1 - alpha))
   colnames(cf) <- c("est", "se", "stat", "p", "lwr", "upr")
 
+  # Patch ME 20.08.2017
+  dn <- c(
+      dimnames(cf),
+      names(obj$model)[1]
+  )
+  dim(cf) <- c(dim(cf)[1],dim(cf)[2],1)
+  dimnames(cf) <- dn
+  
   ## further summary statistics
   sstat <- c("sigma" = s$sigma,
     "r.squared" = s$r.squared, "adj.r.squared" = s$adj.r.squared,
@@ -50,7 +58,15 @@ getSummary.tobit <- function(obj, alpha = 0.05, ...) {
   sp.row <- match("Log(scale)",rownames(cf))
   sp <- cf[sp.row,,drop=FALSE]
   cf <- cf[-sp.row,,drop=FALSE]
-  
+
+  # Patch ME 20.08.2017
+  dn <- c(
+      dimnames(cf),
+      rownames(attr(obj$terms,"factors"))[1]
+  )
+  dim(cf) <- c(dim(cf)[1],dim(cf)[2],1)
+  dimnames(cf) <- dn
+
   ## further summary statistics
   sstat <- c(
     "scale" = s$scale,
@@ -64,11 +80,12 @@ getSummary.tobit <- function(obj, alpha = 0.05, ...) {
 
   ## return everything
   return(list(
-    estimates = list(coef=cf,scale=sp),
-    sumstat = sstat,
-    contrasts = obj$contrasts,
-    xlevels = obj$xlevels,
-    call = obj$call
+      coef=cf,
+      scale=sp,
+      sumstat = sstat,
+      contrasts = obj$contrasts,
+      xlevels = obj$xlevels,
+      call = obj$call
   ))
 }
 
@@ -97,7 +114,7 @@ getSummary.hurdle <- getSummary.zeroinfl <- function(obj, alpha = 0.05, ...) {
   acf <- array(dim = c(length(nam), 6, length(cf)),
     dimnames = list(nam, c("est", "se", "stat", "p", "lwr", "upr"), names(cf)))
   for(i in seq_along(cf)) acf[rownames(cf[[i]]), , i] <- cf[[i]]
-  
+
   ## return everything
   return(list(
     coef = acf,
