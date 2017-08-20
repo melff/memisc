@@ -1,3 +1,15 @@
+2017-08-18:
+   - Improved array semantics of 'mtable' objects. Reordering
+     of coefficients should work as expected  after regression introduced
+     by last refactoring.
+   - Standard getsummary methods now report name of dependent variables
+   - 'mtable' now reports dependent variables of single equation models,
+     if they differ (and the 'getSummary' methods support this)
+   - Fixed relabeling of 'mtable' results after regression introduced
+     by last refactoring.
+   - 'mtable' optionally shows dependent variables even if they
+     are the same in all models.
+
 2017-08-16:
    - Make sure that 'PrettyNames' is always applied when an 'mtable' object is
      formatted.

@@ -93,7 +93,6 @@ pf_mtable_format_print <- function(x,
         need.sh <- c(need.sh,FALSE)
     res <- NULL
     ncols <- NULL
-    sec.hrule <- array(list(),dim=dim(sh))
 
     for(j in 1:ncol(pt)){
         
@@ -127,12 +126,6 @@ pf_mtable_format_print <- function(x,
             max.width <- max(max.width,nchar(pt.ij[1]))
             pt.j[[i]] <- pt.ij
             
-            if(need.sh[[i]]){
-                if(length(sh.ij))
-                    sec.hrule[i,j] <- mkRule(sectionsep,nchar(pt.ij[1]))
-                else
-                    sec.hrule[i,j] <- mkRule(" ",nchar(pt.ij[1]))
-            }
         }
 
         pt.j <- lapply(pt.j,format,width=max.width+1)
@@ -191,6 +184,21 @@ pf_mtable_format_print <- function(x,
             res <- res.grpd
         }
     }
+    res <- apply(res,2,function(x)paste0(" ",x))
+
+    sec.hrule <- array(list(),dim=dim(sh))
+
+    for(i in 1:nrow(pt)){
+        if(need.sh[[i]]){
+            for(j in 1:ncol(pt)){
+                if(length(sh.ij))
+                    sec.hrule[i,j] <- mkRule(sectionsep,nchar(res[1,j]))
+                else
+                    sec.hrule[i,j] <- mkRule(" ",nchar(res[1,j]))
+            }
+        }
+    }
+    
 
     l.leaders <- length(leaders)
     if(l.leaders){
