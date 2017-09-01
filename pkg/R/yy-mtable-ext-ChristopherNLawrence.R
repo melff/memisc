@@ -5,7 +5,7 @@
 ## 313 LBVSC, 5201 University Blvd
 ## Laredo, Texas 78041-1920
 
-## Some patches were applied by ME in July 2012
+## Some patches were applied by ME in July 2012, August 2017
 
 getSummary.polr <- function(obj,
             alpha=.05,
@@ -89,9 +89,9 @@ getSummary.clm <- function(obj,
   else smry$nobs
   
   cf <- coef(smry)
-  
+
   ## Move threshold parameters to end
-  thresholds <- names(obj$xi)
+  thresholds <- names(smry$alpha)
   parameters <- rownames(cf)
   cf <- rbind(cf[setdiff(parameters, thresholds),], cf[thresholds,])
   
@@ -149,9 +149,6 @@ getSummary.clm <- function(obj,
     N             = N
   )
   
-  #cf <- apply(cf,1,applyTemplate,template=coef.template)
-  
-  #sumstat <- drop(applyTemplate(sumstat,template=sumstat.template))
   list(coef=cf,sumstat=sumstat,contrasts=obj$contrasts,xlevels=smry$xlevels,call=obj$call)
 }
 
@@ -176,22 +173,11 @@ getSummary.simex <- function(obj,
   coef <- cbind(coef,lower,upper)
 
   colnames(coef) <- c("est","se","stat","p","lwr","upr")
-  sumstat <- c(N=N,
-               LR=NA,
-               df=NA,
-               p=NA,
-               Aldrich.Nelson=NA,
-               McFadden=NA,
-               Cox.Snell=NA,
-               Nagelkerke=NA,
-               logLik=NA,
-               deviance=NA,
-               AIC=NA,
-               BIC=NA)
+  sumstat <- c(N=N)
 
-  #coef <- apply(coef,1,applyTemplate,template=coef.template)
-
-  #sumstat <- drop(applyTemplate(sumstat,template=sumstat.template))
   list(coef=coef,sumstat=sumstat,contrasts=obj$contrasts,xlevels=smry$xlevels,call=obj$call)
 }
 
+setSummaryTemplate("simex" = c(
+  "N" = "($N:d)"
+))
