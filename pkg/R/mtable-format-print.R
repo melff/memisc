@@ -103,39 +103,44 @@ pf_mtable_format_print <- function(x,
         stopifnot(length(ncol.j)==1)
         ncols <- c(ncols,ncol.j)
 
-        span.j <- unique(sapply(sh.j,attr,"span"))
-
-        if(is.numeric(span.j))
-            pt.j <- lapply(pt.j,cols_folded,span.j,sep=colsep)
-
+        skip.j <- logical(0)
         max.width <- 0
+
+        maxncols.j <- max(unlist(lapply(pt.j,ncol)))
+        
         for(i in 1:length(pt.j)){
             pt.ij <- pt.j[[i]]
-            pt.ij <- centerAt(pt.ij,at=center.at,integers=align.integers)
+            skip.ij <- rep(FALSE,nrow(pt.ij))
+
             if(need.sh[[i]]){
                 sh.ij <- sh.j[[i]]
                 if(length(sh.ij)){
-                    sh.ij <- set_length(sh.ij,ncol.j/span.j)
+                    span.ij <- attr(sh.ij,"span")
+                    sh.ij <- set_length(sh.ij,ncol.j/span.ij)
                     pt.ij <- rbind(sh.ij,pt.ij)
                 }
                 else
                     pt.ij <- rbind("",pt.ij)
+                skip.ij <- c(TRUE,skip.ij)
             }
-            pt.ij <- apply(pt.ij,2,format,justify="centre")
-            pt.ij <- apply(pt.ij,1,paste,collapse=colsep)
-            max.width <- max(max.width,nchar(pt.ij[1]))
+            tmp <- matrix("",nrow=nrow(pt.ij),ncol=maxncols.j)
+            ii <- 1:ncol(pt.ij)
+            tmp[,ii] <- pt.ij
             pt.j[[i]] <- pt.ij
-            
+            skip.j <- c(skip.j,skip.ij)
         }
-
-        pt.j <- lapply(pt.j,format,width=max.width+1)
-        pt.j <- unlist(pt.j)
+        pt.j <- do.call(rbind,pt.j)
+        
         if(length(sst)){
-            sst.j <- sst[[j]]
-            sst.j <- centerAt(sst.j,at=center.at,integers=align.integers)
-            pt.j <- c(pt.j,sst.j)
+            tmp <- sst[[j]]
+            sst.j <- matrix("",nrow=length(tmp),ncol=maxncols.j)
+            sst.j[,1] <- tmp
+            pt.j <- rbind(pt.j,sst.j)
+            skip.j <- c(skip.j,rep(FALSE,length(tmp)))
         }
-
+        pt.j <- apply(pt.j,2,centerAt,skip=skip.j)
+        pt.j <- apply(pt.j,2,format,justify="centre")
+        pt.j <- apply(pt.j,1,paste,collapse=colsep)
         pt.j <- format(pt.j,justify="centre")
         res <- cbind(res,pt.j)
     }
@@ -199,7 +204,6 @@ pf_mtable_format_print <- function(x,
         }
     }
     
-
     l.leaders <- length(leaders)
     if(l.leaders){
 
