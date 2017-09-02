@@ -200,7 +200,7 @@ mtable <- function(...,
                     getSummary=eval.parent(quote(getSummary)),
                     float.style=getOption("float.style"),
                     digits=min(3,getOption("digits")),
-                    sdigits=min(1,digits),
+                    sdigits=digits,
                     gs.options=NULL
                     ){
   args <- list(...)
@@ -216,7 +216,7 @@ mtable <- function(...,
   arg.classes <- lapply(args,class)
   if(any(sapply(arg.classes,length))==0) stop("don\'t know how to handle these arguments")
   
-  if(length(options)){
+  if(length(gs.options)){
     summaries.call <- as.call(
       c(list(as.name("lapply"),
              as.name("args"),
@@ -227,7 +227,7 @@ mtable <- function(...,
   }
   else
     summaries <- lapply(args,getSummary)
-
+  
   parameter.types <- unique(unlist(lapply(summaries,names)))
   parameter.types <- parameter.types[parameter.types %nin% c("sumstat","contrats","call")]
   parmnames <- list()
@@ -383,6 +383,37 @@ do_1sub <- function(x,r){
     return(y)
 }
 
+do_prettyfy <- function(pn,
+                        contrasts,     
+                        xlevels,         
+                        factor.style,    
+                        show.baselevel,
+                        baselevel.sep){
+
+    if(!length(contrasts)) return(pn)
+    
+    res <- pn
+
+    done <- res != pn
+
+    for(m in names(contrasts)){
+        contrasts.m <- contrasts[[m]]
+        xlevels.m <- xlevels[[m]]
+
+        pn.tmp <- pn[!done]
+        pn.tmp  <- prettyNames(pn.tmp,
+                               contrasts=contrasts.m,
+                               xlevels=xlevels.m,
+                               factor.style=factor.style,
+                               show.baselevel=show.baselevel,
+                               baselevel.sep=baselevel.sep)
+        res[!done] <- pn.tmp
+        done <- res != pn
+    }
+    
+    return(res)
+}    
+
 preformat_mtable <- function(x){
 
     x <- unclass(x)
@@ -419,100 +450,93 @@ preformat_mtable <- function(x){
     
     modelnames <- names(x)
     modelgroups <- attr(x,"model.groups")
-    
-    for(n in 1:length(parms)){
 
-        parms.n <- parms[[n]]
-        for(j in 1:length(parms.n)){
-            pmj <- parms.n[[j]]
-            if(length(pmj)){
-                rownames(pmj)  <- prettyNames(rownames(pmj),
-                                              contrasts=contrasts[[n]],
-                                              xlevels=xlevels[[n]],
-                                              factor.style=factor.style,
-                                              show.baselevel=show.baselevel,
-                                              baselevel.sep=baselevel.sep)
-                parms.n[[j]] <- pmj
+    parmtab <- NULL
+    sect.headers <- NULL
+    if(length(partypes)){
+
+        for(n in 1:length(parms)){
+
+            parms.n <- parms[[n]]
+            parms[[n]] <- lapply(parms.n,
+                                 prefmt1,
+                                 template=ctemplate,
+                                 float.style=float.style,
+                                 digits=digits,
+                                 signif.symbols=signif.symbols)
+        }
+        
+        sect.headers <- parmtab <-
+            array(list(),
+                  dim=c(length(partypes),length(parms)),
+                  dimnames=list(partypes,names(parms)))
+
+        for(n in 1:length(parms)){
+            mod <- parms[[n]]
+            modnames <- names(mod)
+            for(m in modnames){
+                mod.m <- mod[[m]]
+                if(length(mod.m))
+                    parmtab[[m,n]] <- mod.m
             }
+            
         }
-        
-        parms[[n]] <- lapply(parms.n,
-                             prefmt1,
-                             template=ctemplate,
-                             float.style=float.style,
-                             digits=digits,
-                             signif.symbols=signif.symbols)
-    }
-    
-    sect.headers <- parmtab <-
-        array(list(),
-              dim=c(length(partypes),length(parms)),
-              dimnames=list(partypes,names(parms)))
 
-    for(n in 1:length(parms)){
-        mod <- parms[[n]]
-        m <- names(mod)
-        for(m. in m){
-            mod.m <- mod[[m]]
-            if(length(mod.m))
-                parmtab[[m,n]] <- mod.m
-        }
-        
-    }
-
-    parameter.names <- attr(x,"parameter.names")
-    parmnames <- list()
-    for(m in rownames(parmtab)){
-        tmp.pn <- lapply(parmtab[m,],dimnames3)
-        tmp.pn <- unique(unlist(tmp.pn))
-        tmp.pn <- parameter.names[parameter.names %in% tmp.pn]
-        parmnames[[m]] <- tmp.pn
-    }
-    
-    
-    for(n in 1:ncol(parmtab)){
-        mod <- parms[[n]]
+        parameter.names <- attr(x,"parameter.names")
+        parmnames <- list()
         for(m in rownames(parmtab)){
-            parmtab.mn <- parmtab[[m,n]]
-            parmtab.mn <- coefxpand(parmtab.mn,parmnames[[m]])
-            parmtab.mn <- prefmt2(parmtab.mn)
-            parmtab[[m,n]] <- parmtab.mn
-            modm <- mod[[m]]
-            if(length(dim(modm))>3){
-                nc.mn <- max(ncol(parmtab.mn),1)
-                d4 <- dim(modm)[4]
-                dn4 <- dimnames(modm)[[4]]
-                dn4 <- do_subs(dn4,relab.attr)
-                sect.headers[[m,n]] <- structure(dn4,span=nc.mn/d4)
+            tmp.pn <- lapply(parmtab[m,],dimnames3)
+            tmp.pn <- unique(unlist(tmp.pn))
+            tmp.pn <- parameter.names[parameter.names %in% tmp.pn]
+            parmnames[[m]] <- tmp.pn
+        }
+        
+        
+        for(n in 1:ncol(parmtab)){
+            mod <- parms[[n]]
+            for(m in rownames(parmtab)){
+                parmtab.mn <- parmtab[[m,n]]
+            #browser()
+                parmtab.mn <- coefxpand(parmtab.mn,parmnames[[m]])
+                parmtab.mn <- prefmt2(parmtab.mn)
+                parmtab[[m,n]] <- parmtab.mn
+                modm <- mod[[m]]
+                if(length(dim(modm))>3){
+                    nc.mn <- max(ncol(parmtab.mn),1)
+                    d4 <- dim(modm)[4]
+                    dn4 <- dimnames(modm)[[4]]
+                    dn4 <- do_subs(dn4,relab.attr)
+                    sect.headers[[m,n]] <- structure(dn4,span=nc.mn/d4)
+                }
             }
-        }
-        maxncol <- max(unlist(lapply(parmtab[,n],ncol)) )
-        parmtab[,n] <- lapply(parmtab[,n],colexpand,maxncol)
+            maxncol <- max(unlist(lapply(parmtab[,n],ncol)) )
+            parmtab[,n] <- lapply(parmtab[,n],colexpand,maxncol)
 
-        sh <- sect.headers[,n]
-        maxl <- max(unlist(lapply(sh,length)))
-        sh <- lapply(sh,`length<-`,maxl)
-    }
-    
-    for(m in 1:nrow(parmtab)){
-        maxnrow <- max(unlist(lapply(parmtab[m,],nrow)) )
-        parmtab[m,] <- lapply(parmtab[m,],rowexpand,maxnrow)
-    }
-    
-    
-    for(m in rownames(sect.headers)){
-        sh <- sect.headers[m,]
-        if(!getOption("mtable.always.eqnames",FALSE) && length(unique(unlist(sh)))==1){
-            sh <- list(NULL)
+            sh <- sect.headers[,n]
+            maxl <- max(unlist(lapply(sh,length)))
+            sh <- lapply(sh,`length<-`,maxl)
         }
-        sect.headers[m,] <- sh
+        
+        for(m in 1:nrow(parmtab)){
+            maxnrow <- max(unlist(lapply(parmtab[m,],nrow)) )
+            parmtab[m,] <- lapply(parmtab[m,],rowexpand,maxnrow)
+        }
+    
+    
+        for(m in rownames(sect.headers)){
+            sh <- sect.headers[m,]
+            if(!getOption("mtable.always.eqnames",FALSE) && length(unique(unlist(sh)))==1){
+                sh <- list(NULL)
+            }
+            sect.headers[m,] <- sh
+        }
     }
 
     headers <- list()
     force.header <- getOption("mtable.force.header",default=FALSE)
     if(length(modelnames) > 1 || length(modelnames) == 1 && force.header) {
         modelnames <- do_subs(modelnames,relab.attr)
-        headers[[1]] <- Map(structure,modelnames,span=lapply(parmtab,ncol))
+        headers[[1]] <- Map(structure,modelnames,span=lapply(parmtab[1,],ncol))
         if(length(modelgroups)){
             ncols <- sapply(parmtab[1,],ncol)
             sp <- lapply(modelgroups,function(mg)sum(ncols[mg]))
@@ -520,17 +544,23 @@ preformat_mtable <- function(x){
             headers <- c(list(h),headers)
         }
     }
-    
-    leaders <- structure(lapply(rownames(parmtab),
+
+    leaders <- character(0)
+    if(length(partypes))
+        leaders <- structure(lapply(rownames(parmtab),
                                 function(m){
                                     pn <- parmnames[[m]]
+                                    pn <- do_prettyfy(pn,
+                                                      contrasts=contrasts,     
+                                                      xlevels=xlevels,         
+                                                      factor.style=factor.style,    
+                                                      show.baselevel=show.baselevel,
+                                                      baselevel.sep=baselevel.sep)  
                                     pn <- do_subs(pn,relab.attr)
                                     span <- nrow(parmtab[[m,1]])/length(pn)
                                     lapply(pn,structure,span=span)
                                 }),
                              names=rownames(parmtab))
-    maxl <- max(unlist(lapply(leaders,length)))
-    leaders <- lapply(leaders,`length<-`,maxl)
 
     if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
         sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
