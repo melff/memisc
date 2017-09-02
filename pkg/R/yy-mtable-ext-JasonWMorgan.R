@@ -47,19 +47,19 @@
 ## ----------------------------------------------------------------------------
 
 setSummaryTemplate(coxph = c("Log-likelihood" = "($logLik:f#)",
-                     "AIC" = "($AIC:f#)",
-                     "BIC" = "($BIC:f#)",
-                     "N" = "($N:d)"))
+                             "AIC" = "($AIC:f#)",
+                             "BIC" = "($BIC:f#)",
+                             "N" = "($N:d)"))
 
 setSummaryTemplate(survreg = c("Log-likelihood" = "($logLik:f#)",
-                     "AIC" = "($AIC:f#)",
-                     "BIC" = "($BIC:f#)",
-                     "N" = "($N:d)"))
+                               "AIC" = "($AIC:f#)",
+                               "BIC" = "($BIC:f#)",
+                               "N" = "($N:d)"))
 
-setSummaryTemplate(aftreg = c("Log-likelihood" = "($logLik:f#)",
-                     "AIC" = "($AIC:f#)",
-                     "BIC" = "($BIC:f#)",
-                     "N" = "($N:d)"))
+setSummaryTemplate(phreg = c("Log-likelihood" = "($logLik:f#)",
+                             "AIC" = "($AIC:f#)",
+                             "BIC" = "($BIC:f#)",
+                             "N" = "($N:d)"))
 
 getSummary.coxph <- function(obj, alpha = 0.05, ...) {
     N <- obj$n
@@ -69,55 +69,115 @@ getSummary.coxph <- function(obj, alpha = 0.05, ...) {
     b <- coef(obj)
     se <- sqrt(diag(vcov(obj)))
     coef <- cbind(b, se, b / se, 1-pnorm(abs(b/se)))
+
     lower <- qnorm(p = alpha/2, mean = coef[, 1], sd = coef[,2])
     upper <- qnorm(p = 1 - alpha/2, mean = coef[, 1], sd = coef[,2])
+
     coef <- cbind(coef, lower, upper)
-    colnames(coef) <- c("est", "se", "stat", "p", "lwr", "upr")
+
+# Patched by ME 2017-09-02
+    dn <- list(
+        rownames(coef),
+        c("est","se","stat","p","lwr","upr"),
+        rownames(attr(obj$terms,"factors"))[1]
+    )
+    dim(coef) <- c(dim(coef)[1],dim(coef)[2],1)
+    dimnames(coef) <- dn
+
     ll <- obj$loglik[2]
-    K <- length(coef[,1])
+    K <- length(b)
+    
     AIC <- -2*ll + 2*K
     BIC <- -2*ll + K*log(N) 
+
     sumstat <- c(logLik = ll, AIC = AIC, BIC = BIC, N = N)
-    list(coef = coef, sumstat = sumstat, contrasts = obj$contrasts, 
-        xlevels = obj$xlevels, call = obj$call)
+    
+    list(coef = coef,
+         sumstat = sumstat,
+         contrasts = obj$contrasts, 
+         xlevels = obj$xlevels,
+         call = obj$call)
 }
 
 getSummary.survreg <- function(obj, alpha = 0.05, ...) {
-    coef <- cbind(c(coef(obj), obj$scale), sqrt(diag(obj$var)))
-    N <- obj$df.residual + length(coef)
+
+    coef <- cbind(c(coef(obj), obj$scale), c(sqrt(diag(obj$var)),NA))
+    K <- length(coef) - 1
+    N <- obj$df.residual + K
     stat  <- coef[, 1] / coef[, 2]
     pval  <- 1-pnorm(abs(stat))
+
     lower <- qnorm(p = alpha/2, mean = coef[, 1], sd = coef[,2])
     upper <- qnorm(p = 1 - alpha/2, mean = coef[, 1], sd = coef[,2])
     coef  <- cbind(coef, stat, pval, lower, upper)
-    colnames(coef) <- c("est", "se", "stat", "p", "lwr", "upr")
+
+# Patched by ME 2017-09-02
+    dn <- list(
+        rownames(coef),
+        c("est","se","stat","p","lwr","upr"),
+        rownames(attr(obj$terms,"factors"))[1]
+    )
+    dim(coef) <- c(dim(coef)[1],dim(coef)[2],1)
+    dimnames(coef) <- dn
     rownames(coef)[nrow(coef)] <- "scale"
+
+    pv <- c("(Intercept)",colnames(attr(obj$terms,"factors")))
+    pv <- match(pv,rownames(coef),nomatch=0)
+    distparms <- coef[-pv,,,drop=FALSE]
+    coef <- coef[pv,,,drop=FALSE]
+    
     ll <- obj$loglik[2]
-    K <- length(coef[,1])
     AIC <- -2*ll + 2*K
     BIC <- -2*ll + K*log(N) 
     sumstat <- c(logLik = ll, AIC = AIC, BIC = BIC, N = N)
-    list(coef = coef, sumstat = sumstat, contrasts = obj$contrasts, 
-        xlevels = obj$xlevels, call = obj$call)
+
+    list(coef = coef,
+         distparms = distparms,
+         sumstat = sumstat,
+         contrasts = obj$contrasts, 
+         xlevels = obj$xlevels,
+         call = obj$call)
 }
 
 ## aftreg(), phreg(), weibreg() are part of the eha package.
 getSummary.aftreg <- function(obj, alpha = 0.05, ...) {
+
     N <- obj$n
+
     coef  <- cbind(coef(obj), sqrt(diag(obj$var)))
     stat  <- coef[, 1] / coef[, 2]
     pval  <- 1-pnorm(abs(stat))
     lower <- qnorm(p = alpha/2, mean = coef[, 1], sd = coef[, 2])
     upper <- qnorm(p = 1 - alpha/2, mean = coef[, 1], sd = coef[, 2])
+
     coef  <- cbind(coef, stat, pval, lower, upper)
-    colnames(coef) <- c("est", "se", "stat", "p", "lwr", "upr")
+
+# Patched by ME 2017-09-02
+    dn <- list(
+        rownames(coef),
+        c("est","se","stat","p","lwr","upr"),
+        rownames(attr(obj$terms,"factors"))[1]
+    )
+    dim(coef) <- c(dim(coef)[1],dim(coef)[2],1)
+    dimnames(coef) <- dn
+
+    pv <- colnames(attr(obj$terms,"factors"))
+    pv <- match(pv,rownames(coef))
+    distparms <- coef[-pv,,,drop=FALSE]
+    coef <- coef[pv,,,drop=FALSE]
+    
     ll <- obj$loglik[2]
-    K <- length(coef[,1])
+    K <- length(coef[,1,])
     AIC <- -2*ll + 2*K
     BIC <- -2*ll + K*log(N) 
     sumstat <- c(logLik = ll, AIC = AIC, BIC = BIC, N = N)
-    list(coef = coef, sumstat = sumstat, contrasts = obj$contrasts, 
-         xlevels = obj$xlevels, call = obj$call)
+
+    list(coef = coef,
+         distparms = distparms,
+         sumstat = sumstat,
+         contrasts = obj$contrasts, 
+         xlevels = obj$xlevels,
+         call = obj$call)
 }
 
 getSummary.phreg <- function(obj, alpha = 0.05, ...) {
