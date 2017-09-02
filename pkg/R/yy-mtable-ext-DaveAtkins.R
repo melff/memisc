@@ -10,22 +10,34 @@ getSummary_expcoef <- function(obj, alpha = 0.05, ...) UseMethod("getSummary_exp
 getSummary_expcoef.glm <- function (obj, alpha = 0.05, ...)
 {
     smry <- summary(obj)
-    N <- if (length(weights(obj)))
-        sum(weights(obj))
-    else sum(smry$df[1:2])
-    coef <- cbind(exp(smry$coef[,1]), smry$coef[,2:4]) # NOTE: exponentiated coefficients
-    lower <- exp(qnorm(p = alpha/2, mean = smry$coef[, 1], sd = coef[,
-        2]))
-    upper <- exp(qnorm(p = 1 - alpha/2, mean = smry$coef[, 1], sd = coef[,
-        2]))
+    N <- if(length(weights(obj)))
+             sum(weights(obj),na.rm=TRUE)
+         else sum(smry$df[1:2])
+    
+    coef <- cbind(exp(smry$coef[,1]), smry$coef[,2:4,drop=FALSE])
+    # NOTE: exponentiated coefficients
+
+    lower <- exp(qnorm(p = alpha/2, mean = smry$coef[, 1], sd = coef[,2]))
+    upper <- exp(qnorm(p = 1 - alpha/2, mean = smry$coef[, 1], sd = coef[,2]))
     # NOTE: exponentiated CI
+
     coef <- cbind(coef, lower, upper)
-    colnames(coef) <- c("est", "se", "stat", "p", "lwr", "upr")
+
+    dn <- list(
+        rownames(coef),
+        c("est","se","stat","p","lwr","upr"),
+        names(obj$model)[1]
+    )
+    dim(coef) <- c(dim(coef)[1],dim(coef)[2],1)
+    dimnames(coef) <- dn
+
     phi <- smry$dispersion
     LR <- smry$null.deviance - smry$deviance
     df <- smry$df.null - smry$df.residual
+
     ll <- logLik(obj)
     deviance <- deviance(obj)
+
     if (df > 0) {
         p <- pchisq(LR, df, lower.tail = FALSE)
         L0.pwr <- exp(-smry$null.deviance/N)
@@ -43,12 +55,28 @@ getSummary_expcoef.glm <- function (obj, alpha = 0.05, ...)
         Cox.Snell <- NA
         Nagelkerke <- NA
     }
+    
     AIC <- AIC(obj)
-    BIC <- AIC(obj, k = log(N))
-    sumstat <- c(phi = phi, LR = LR, df = df, p = p, logLik = ll,
-        deviance = deviance, McFadden = McFadden, Cox.Snell = Cox.Snell,
+    BIC <- AIC(obj,k=log(N))
+    sumstat <- c(
+        phi            = phi,
+        LR             = LR,
+        df             = df,
+        p              = p,
+        logLik         = ll,
+        deviance       = deviance,
         Aldrich.Nelson = Aldrich.Nelson,
-        Nagelkerke = Nagelkerke, AIC = AIC, BIC = BIC, N = N)
-    list(coef = coef, sumstat = sumstat, contrasts = obj$contrasts,
-        xlevels = obj$xlevels, call = obj$call)
+        McFadden       = McFadden,
+        Cox.Snell      = Cox.Snell,
+        Nagelkerke     = Nagelkerke,
+        AIC            = AIC,
+        BIC            = BIC,
+        N              = N
+    )
+
+    list(coef=coef,
+         sumstat=sumstat,
+         contrasts=obj$contrasts,
+         xlevels=obj$xlevels,
+         call=obj$call)
 }
