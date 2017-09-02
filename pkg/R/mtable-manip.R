@@ -86,31 +86,47 @@ safe.charidx <- function(nms,i){
     i <- safe.charidx(parn,i)
     j <- safe.charidx(resp,j)
     k <- safe.charidx(modn,k)
+    kk <- match(k,names(x))
     
     y <- unclass(x)[k]
     attr.y <- attributes(x)
     attr.y$names <- k
-    attr.y$stemplates <- attr.y$stemplates[k]
+    attr.y$stemplates <- attr.y$stemplates[kk]
     attr.y$parameter.names <- i
+
+    l.y <- length(y)
+    l.pt <- length(partypes)
+
+    lt <- matrix(0,l.pt,l.y)
     
-    for(pt in partypes){
-        for(m in 1:length(y)){
+    for(k in 1:l.pt){
+        pt <- partypes[k]
+        for(m in 1:l.y){
             tmp <- y[[m]][[pt]]
             i.tmp <- intersect(i,rownames(tmp))
             j.tmp <- intersect(j,dimnames3(tmp))
             if(length(i.tmp) && length(j.tmp))
-                y[[m]][[pt]] <- tmp[i.tmp,,j.tmp,drop=FALSE]
+                tmp <- tmp[i.tmp,,j.tmp,drop=FALSE]
             else if(length(i.tmp))
-                y[[m]][[pt]] <- tmp[i.tmp,,0,drop=FALSE]
+                tmp <- tmp[i.tmp,,0,drop=FALSE]
             else if(length(j.tmp))
-                y[[m]][[pt]] <- tmp[0,,j.tmp,drop=FALSE]
+                tmp <- tmp[0,,j.tmp,drop=FALSE]
             else
-                y[[m]][[pt]] <- tmp[0,,0,drop=FALSE]
+                tmp <- tmp[0,,0,drop=FALSE]
+            y[[m]][[pt]] <- tmp
+            lt[k,m] <- length(tmp)
+        }
+        if(!any(lt>0)){
+            for(m in 1:l.y)
+                y[[m]][[pt]] <- NULL
         }
     }
-
-    attributes(y) <- attr.y
-    return(structure(y,class="memisc_mtable"))
+    if(all(lt==0))
+        return(NULL)
+    else{
+        attributes(y) <- attr.y
+        return(structure(y,class="memisc_mtable"))
+    }
 }
 
 
