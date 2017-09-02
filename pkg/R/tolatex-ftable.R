@@ -157,7 +157,8 @@ toLatex.ftable <- function(object,
   }
 
   ans <- c(toprule,header,midrule,body,bottomrule)
-  ans <- LaTeXcape(ans)
+  if(getOption("toLatex.escape.tex",TRUE))
+      ans <- LaTeXcape(ans)
   
   leader.spec <- paste(rep("l",length(row.vars)+1),collapse="")
   body.spec <- character(m)

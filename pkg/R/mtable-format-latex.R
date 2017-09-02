@@ -89,6 +89,8 @@ pf_mtable_format_latex <- function(x,
 
         for(i in 1:length(pt.j)){
             pt.ij <- pt.j[[i]]
+            pt.ij <- sub("(\\*+)","^{\\1}",pt.ij)
+            pt.ij <- sub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",pt.ij)
             pt.ij <- centerAt(pt.ij,at=".",integers="dot")
             if(!useDcolumn)
                 pt.ij[] <- paste0("$",pt.ij,"$")
@@ -105,6 +107,8 @@ pf_mtable_format_latex <- function(x,
                 sh.ij <- set_length(sh.ij,ncol.j/span.j)
                 sh.ij <- if(span.j==1 && !nzchar(sh.ij)) ""
                          else paste0("\n\\multicolumn{",span.j,"}{c}{",sh.ij,"}")
+                if(getOption("toLatex.escape.tex",TRUE))
+                    sh.ij <- LaTeXcape(sh.ij)
                 pt.ij <- rbind(sh.ij,pt.ij)
             }
             pt.ij <- apply(pt.ij,1,paste,collapse=colsep)
@@ -148,7 +152,8 @@ pf_mtable_format_latex <- function(x,
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
         leaders <- gsub(" x ",interaction.sep,leaders,fixed=TRUE)
-        leaders <- LaTeXcape(leaders)
+        if(getOption("toLatex.escape.tex",TRUE))
+            leaders <- LaTeXcape(leaders)
         leaders <- format(leaders,justify="left")
         res <- cbind(leaders,res)
     }
@@ -181,7 +186,8 @@ pf_mtable_format_latex <- function(x,
         for(k in 1:l.headers){
 
             header.k <- unlist(headers[[k]])
-            header.k <- LaTeXcape(header.k)
+            if(getOption("toLatex.escape.tex",TRUE))
+                header.k <- LaTeXcape(header.k)
             hspan.k <- hspan[[k]]
             ghspan.k <- (ghspan[[k]]-1)*multip
             hspan.k <- hspan.k + ghspan.k 

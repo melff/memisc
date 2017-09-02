@@ -83,7 +83,8 @@ toLatex.matrix <- function(object,
         bottomrule
         )
   }
-  ans <- LaTeXcape(ans)
+  if(getOption("toLatex.escape.tex",TRUE))
+      ans <- LaTeXcape(ans)
   body.spec <- character(ncol(object))
   body.spec[] <- colspec
   if(show.titles && length(rownames(object)))

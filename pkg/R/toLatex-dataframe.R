@@ -32,11 +32,13 @@ toLatex.data.frame <- function(object,
 
   body <- list()
   for(i in 1:m) {
-      if(is.numeric(object[,i]))
-          body.i <- formatC(object[[i]],digits=fdigits[i],format=format[i])
+      object.i <- object[,i]
+      is.na.object.i <- is.na(object.i)
+      if(is.numeric(object.i))
+          body.i <- formatC(object.i,digits=fdigits[i],format=format[i])
       else
-        body.i <- as.character(object[[i]])
-      body.i[is.na(body.i)] <- NAas
+        body.i <- as.character(object.i)
+      body.i[is.na.object.i] <- NAas
       body[[i]] <- format(body.i,justify="right")
   }
   body <- do.call(cbind,body)
@@ -61,9 +63,10 @@ toLatex.data.frame <- function(object,
       midrule,
       ans,
       bottomrule
-    )
-
-  ans <- LaTeXcape(ans)
+  )
+  
+  if(getOption("toLatex.escape.tex",TRUE))
+      ans <- LaTeXcape(ans)
 
   body.spec <- rep(factor.colspec,m)
   dd <- integer(m.num)
