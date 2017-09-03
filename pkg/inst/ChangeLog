@@ -1,5 +1,18 @@
 2017-09-03:
    - Complete list of exported C functions in 'CallMethods'
+   - Removed getSummary support for long obsolete class 'mer'
+	 - Adapted getSummary support for class 'merMod'
+	 
+2017-09-02:
+   - Moved basic getSummary methods into specific file
+	 - Made excaping of '$', '_', '^' optional when exporting to LaTeX
+   - Adapted getSummary methods contributed by Christopher Lawrence (polr, clm, simex) to new version of 'mtable'
+   - Adapted getSummary methods contributed by Jason W Morgan to new version of 'mtable'
+   - Adapted getSummary methods contributed by Dave Atkins to new version of 'mtable'
+
+2017-09-02:
+   - Adapted getSummary methods contributed by Achim Zeileis (ivreg, tobit, hurdle, zeroinfl,
+	   betareg, multinom) to new version of 'mtable'
 
 2017-08-18:
    - Improved array semantics of 'mtable' objects. Reordering

@@ -37,7 +37,7 @@
           efficient and now can handle files of size larger than 1GB.
       \item \code{useDcolumn} and \code{useBooktabs} arguments of
 			    \code{toLatex()} methods now have global options as defaults
-			\item \code{toLatex()} methods escape dollar, subscript and
+			\item \code{toLatex()} methods optionally escape dollar, subscript and
           superscript symbols.
     }
   }
