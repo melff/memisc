@@ -2,6 +2,7 @@
    - Complete list of exported C functions in 'CallMethods'
    - Removed getSummary support for long obsolete class 'mer'
 	 - Adapted getSummary support for class 'merMod'
+	 - Removed 'varPar.as.coef' argument from 'getSummary.merMod'
 	 
 2017-09-02:
    - Moved basic getSummary methods into specific file

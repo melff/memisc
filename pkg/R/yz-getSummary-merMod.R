@@ -10,7 +10,7 @@ setSummaryTemplate(glmerMod = c("Log-likelihood" = "($logLik:f#)",
                                "BIC" = "($BIC:f#)",
                                "N" = "($N:d)"))
 
-getSummary.merMod <- function (obj, alpha = 0.05, varPar.as.coef=TRUE, ...) {
+getSummary.merMod <- function (obj, alpha = 0.05, ...) {
 
   smry <- summary(obj)
   coef <- smry$coefficients

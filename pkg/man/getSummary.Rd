@@ -29,7 +29,7 @@
   
   \method{getSummary}{lm}(obj, alpha=.05,\dots)
   \method{getSummary}{glm}(obj, alpha=.05,\dots)
-  \method{getSummary}{merMod}(obj, alpha=.05, varPar.as.coef = TRUE, \dots)
+  \method{getSummary}{merMod}(obj, alpha=.05, \dots)
 
   # These are contributed by Christopher N. Lawrence
   \method{getSummary}{clm}(obj, alpha=.05,\dots)
@@ -61,8 +61,6 @@
   \item{obj}{a model object, e.g. of class \code{lm} or \code{glm}}
   \item{alpha}{level of the confidence intervals; their coverage should
     be 1-alpha/2 }
-  \item{varPar.as.coef}{logical; should variance parameters included into the
-    table of coefficients?}
   \item{\dots}{further arguments; ignored.}
 }
 \details{
