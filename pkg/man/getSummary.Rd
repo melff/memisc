@@ -12,7 +12,6 @@
 \alias{getSummary.phreg}
 \alias{getSummary.survreg}
 \alias{getSummary.weibreg}
-\alias{getSummary.mer}
 \alias{getSummary.merMod}
 \alias{getSummary.ivreg}
 \alias{getSummary.tobit}
@@ -43,7 +42,6 @@
   \method{getSummary}{phreg}(obj, alpha=.05,\dots)
   \method{getSummary}{survreg}(obj, alpha=.05,\dots)
   \method{getSummary}{weibreg}(obj, alpha=.05,\dots)
-  \method{getSummary}{mer}(obj, alpha=.05, varPar.as.coef = TRUE, \dots)
 
   # These are contributed by Achim Zeileis
   \method{getSummary}{ivreg}(obj, alpha=.05,\dots)
