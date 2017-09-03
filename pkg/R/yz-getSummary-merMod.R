@@ -52,10 +52,23 @@ getSummary.merMod <- function (obj, alpha = 0.05, varPar.as.coef=TRUE, ...) {
     VarPar <- rbind(VarPar,vp.i)
     VarPar.rnames <- c(VarPar.rnames,"Var(residual)")
   }
-  
-  colnames(coef) <- colnames(VarPar) <- c("est", "se", "stat", "p", "lwr", "upr")
-  rownames(VarPar) <- format(VarPar.rnames,justify="right")
-  
+
+  dn.cf <- list(
+      rownames(coef),
+      c("est","se","stat","p","lwr","upr"),
+      names(obj@frame)[1]
+  )
+  dim(coef) <- c(dim(coef)[1],dim(coef)[2],1)
+  dimnames(coef) <- dn.cf
+
+  dn.vp <- list(
+      VarPar.rnames,
+      c("est","se","stat","p","lwr","upr"),
+      names(obj@frame)[1]
+  )
+  dim(VarPar) <- c(dim(VarPar)[1],dim(VarPar)[2],1)
+  dimnames(VarPar) <- dn.vp
+    
   ## Factor levels.
   xlevels <- list()
   Contr <- names(attr(model.matrix(obj), "contrasts"))
@@ -79,11 +92,11 @@ getSummary.merMod <- function (obj, alpha = 0.05, varPar.as.coef=TRUE, ...) {
                BIC = BIC, N = N)
   ## Return model summary.
   
-  if(varPar.as.coef)
-    coef <- rbind(coef,VarPar)
-  
-  list(coef= coef,
-       sumstat = sumstat, extra.stats= G,
-       contrasts = Contr, ## Reuse 'Contr'
-       xlevels = xlevels, call = obj@call)
+    list(coef= coef,
+         varPar = VarPar,
+         sumstat = sumstat,
+         #extra.stats= G,
+         contrasts = Contr, ## Reuse 'Contr'
+         xlevels = xlevels,
+         call = obj@call)
 }
