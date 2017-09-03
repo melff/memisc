@@ -24,7 +24,7 @@ mtable(\dots,coef.style=getOption("coef.style"),
     getSummary=eval.parent(quote(getSummary)),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
-    sdigits=min(1,digits),
+    sdigits=digits,
     gs.options=NULL
   )
 \method{relabel}{memisc_mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
