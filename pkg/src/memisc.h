@@ -15,6 +15,8 @@ SEXP rewind_sysfile(SEXP SysFile);
 SEXP count_cases_sysfile (SEXP SysFile);
 SEXP read_sysfile_data (SEXP SysFile, SEXP what,
                         SEXP s_ncases, SEXP s_types);
+SEXP read_sysfile_chunk (SEXP SysFile, SEXP what,
+												 SEXP s_vars, SEXP s_ncases, SEXP s_types);
 SEXP check_pointer(SEXP ptr);
 SEXP restore_sysfile(SEXP SysFile);
 SEXP read_sysfile_header(SEXP SysFile);
@@ -60,6 +62,8 @@ SEXP rofseek (SEXP s_file, SEXP s_pos,
 SEXP countlines(SEXP s_file, SEXP s_maxlenline);
 SEXP numeric_if_possible(SEXP x);
 
+SEXP dta_file_open (SEXP name);
+SEXP dta_read_version(SEXP s_dta_file);
 SEXP dta_make_prototype(SEXP s_types);
 SEXP dta_seek_data(SEXP s_dta_file);
 SEXP dta_read_data(SEXP s_dta_file, SEXP what,
@@ -93,6 +97,7 @@ static const R_CallMethodDef CallMethods[]  = {
   {"rewind_sysfile", (DL_FUNC) &rewind_sysfile, 1},
   {"count_cases_sysfile", (DL_FUNC) &count_cases_sysfile, 1},
   {"read_sysfile_data", (DL_FUNC) &read_sysfile_data, 4},
+  {"read_sysfile_chunk", (DL_FUNC) &read_sysfile_chunk, 5},
   {"check_pointer", (DL_FUNC) &check_pointer, 1},
   {"restore_sysfile", (DL_FUNC) &restore_sysfile, 1},
 	{"read_sysfile_header", (DL_FUNC) &read_sysfile_header, 1},
@@ -129,6 +134,8 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"rofseek", (DL_FUNC) &rofseek, 3},
 	{"countlines", (DL_FUNC) &countlines, 2},
 	{"numeric_if_possible", (DL_FUNC) &numeric_if_possible, 1},
+	{"dta_file_open", (DL_FUNC) &dta_file_open, 2},
+	{"dta_read_version", (DL_FUNC) &dta_read_version, 1},
 	{"dta_make_prototype", (DL_FUNC) &dta_make_prototype, 1},
 	{"dta_seek_data", (DL_FUNC) &dta_seek_data, 1},
 	{"dta_read_data", (DL_FUNC) &dta_read_data, 4},

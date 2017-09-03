@@ -1,3 +1,6 @@
+2017-09-03:
+   - Complete list of exported C functions in 'CallMethods'
+
 2017-08-18:
    - Improved array semantics of 'mtable' objects. Reordering
      of coefficients should work as expected  after regression introduced
@@ -18,7 +21,7 @@
 2017-07-29:
   - Fix refactoring: `c.memisc_mtable` and `[.memisc_mtable` now return objects
     with the correct class attribute.
-  - Make package depend on versio 3.4
+  - Make package depend on R version 3.4
 
 2017-07-13:
   - Fix handling of matrices contained in data frames by `toLatex()`
