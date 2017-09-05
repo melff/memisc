@@ -190,6 +190,11 @@ bind_arrays <- function(args,along=1){
   structure(aperm(res,perm.to),groups=groups)
 }
 
+names.or.rownames <- function(x){
+    if(is.array(x)) rownames(x)
+    else names(x)
+}
+
 mtable <- function(...,
                     coef.style=getOption("coef.style"),
                     summary.stats=TRUE,
@@ -234,7 +239,7 @@ mtable <- function(...,
   for(pt in parameter.types){
 
       tmp.pn <- lapply(summaries,`[[`,pt)
-      tmp.pn <- lapply(tmp.pn,rownames)
+      tmp.pn <- lapply(tmp.pn,names.or.rownames)
       parmnames[[pt]] <- unique(unlist(tmp.pn))
   }
   parameter.names <- unique(unlist(parmnames))
@@ -261,12 +266,26 @@ mtable <- function(...,
 
 prefmt1 <- function(parm,template,float.style,digits,signif.symbols){
     adims <- if(length(dim(parm))==2) 1 else c(1,3)
-    if(length(parm))
-        ans <- apply(parm,adims,applyTemplate,
-                     template=template,
-                     float.style=float.style,
-                     digits=digits,
-                     signif.symbols=signif.symbols)
+    if(length(parm)){
+        
+        if(is.array(parm)){
+            ans <- apply(parm,adims,applyTemplate,
+                         template=template,
+                         float.style=float.style,
+                         digits=digits,
+                         signif.symbols=signif.symbols)
+        }
+        else {
+            ans <- array(formatC(parm,
+                                 digits=digits,
+                                 ifelse(is.integer(parm),
+                                        "d","f"),
+                                 width=1),
+                         dim=c(1,1,length(parm),1),
+                         dimnames=list("1","2",names(parm),"3"))
+            return(ans)
+        }
+    }
     else {
         ans <- array(character(0),
                      dim=c(0,dim(parm)[adims]),
@@ -328,10 +347,9 @@ dimnames3 <- function(x)dimnames(x)[[3]]
 
 getRows <- function(x,r){
     r <- intersect(r,rownames(x))
-    y <- try(x[r,,drop=FALSE])
-    if(inherits(y,"try-error")) browser()
-    y
+    x[r,,drop=FALSE]
 }
+get_rows <- function(x,i)try(x[i,,drop=FALSE])
 
 relabel.memisc_mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
 
@@ -414,6 +432,11 @@ do_prettyfy <- function(pn,
     return(res)
 }    
 
+nzchar_row <- function(x){
+    nzch <- array(nzchar(x),dim=dim(x))
+    apply(nzch,1,any)
+}
+
 preformat_mtable <- function(x){
 
     x <- unclass(x)
@@ -484,6 +507,7 @@ preformat_mtable <- function(x){
 
         parameter.names <- attr(x,"parameter.names")
         parmnames <- list()
+        
         for(m in rownames(parmtab)){
             tmp.pn <- lapply(parmtab[m,],dimnames3)
             tmp.pn <- unique(unlist(tmp.pn))
@@ -496,9 +520,10 @@ preformat_mtable <- function(x){
             mod <- parms[[n]]
             for(m in rownames(parmtab)){
                 parmtab.mn <- parmtab[[m,n]]
-            #browser()
-                parmtab.mn <- coefxpand(parmtab.mn,parmnames[[m]])
-                parmtab.mn <- prefmt2(parmtab.mn)
+                if(length(parmnames[[m]])){
+                    parmtab.mn <- coefxpand(parmtab.mn,parmnames[[m]])
+                    parmtab.mn <- prefmt2(parmtab.mn)
+                }
                 parmtab[[m,n]] <- parmtab.mn
                 modm <- mod[[m]]
                 if(length(dim(modm))>3){
@@ -518,10 +543,14 @@ preformat_mtable <- function(x){
         }
         
         for(m in 1:nrow(parmtab)){
-            maxnrow <- max(unlist(lapply(parmtab[m,],nrow)) )
-            parmtab[m,] <- lapply(parmtab[m,],rowexpand,maxnrow)
+            parmtab.m <- parmtab[m,,drop=FALSE]
+            maxnrow <- max(unlist(lapply(parmtab.m,nrow)) )
+            parmtab.n <- lapply(parmtab.m,rowexpand,maxnrow)
+            nzch <- Sapply(parmtab.m,nzchar_row)
+            nzch <- apply(nzch,1,any)
+            parmtab.m <- lapply(parmtab.m,get_rows,i=nzch)
+            parmtab[m,] <- parmtab.m
         }
-    
     
         for(m in rownames(sect.headers)){
             sh <- sect.headers[m,]
@@ -558,6 +587,7 @@ preformat_mtable <- function(x){
                                                       baselevel.sep=baselevel.sep)  
                                     pn <- do_subs(pn,relab.attr)
                                     span <- nrow(parmtab[[m,1]])/length(pn)
+                                    if(span < 1) browser()
                                     lapply(pn,structure,span=span)
                                 }),
                              names=rownames(parmtab))
