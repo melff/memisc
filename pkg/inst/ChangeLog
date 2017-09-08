@@ -1,7 +1,11 @@
-2071-09-6:
-	 - Lines without contents from 'mtable()' results are now automatically dropped
+2017-09-08:
+   - Empty cells in HTML tables (which break their formatting by 'pandoc' if included
+	   in markdown format files) are now avoided
+	
+2017-09-06:
+   - Lines without contents from 'mtable()' results are now automatically dropped
    - Added support for additional statitics without standard errors in 'mtable()'
-	 - Improved mtable support for merMod objects (created by package "lme4")
+   - Improved mtable support for merMod objects (created by package "lme4")
 
 2017-09-03:
    - Completed list of exported C functions in 'CallMethods'

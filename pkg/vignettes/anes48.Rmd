@@ -32,12 +32,12 @@ Unlike the 1948 ANES data,
 their size as well as, in some cases, legal restrictions prohibit the
 inclusion of such a data set into the package, however.
 
-This vignette starts with a demontration how a data file can be
+This vignette starts with a demonstration how a data file can be
 examined before loading it and how a subset of the data can be loaded
 into memory.
-After loading this subset into memory, some desciptive analyses are
+After loading this subset into memory, some descriptive analyses are
 conducted that showcase the construction of contingency tables and of
-general tables of desriptive statistics using the
+general tables of descriptive statistics using the
 `genTable` function. In addition, a logit analysis
 is demonstrated and the collection of several logit coefficients into
 a comprehensive table by the `mtable` function.

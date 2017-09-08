@@ -170,7 +170,6 @@ pf_mtable_format_html <- function(x,
         leaders <- do.call(rbind,leaders)
 
         lstyle <- upd_vect(style,align.left,firstcol)
-        leaders <- format(leaders,justify="left")
         leaders <- html_td(leaders,vectorize=TRUE,style=css(lstyle))
         
         res <- cbind(leaders,res)
