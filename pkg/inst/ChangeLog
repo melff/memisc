@@ -1,5 +1,6 @@
 2017-09-30:
 	 - Included 'read_sysfile_slice' in 'CallMethods'
+	 - Removed some potentially stale links from vignette 'mtable-html'
 
 2017-09-08:
    - Empty cells in HTML tables (which break their formatting by 'pandoc' if included

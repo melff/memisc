@@ -39,7 +39,7 @@ Finally we view the results in HTML format.
 show_html(mtable123)
 ```
 The results can be written into an HTML file using
-`write_html(mtable123,file="mtable123.html")` or the like. MS Word or LibreOffice can import such a file. An example HTML file can be found [here](http://www.martin-elff.net/uploads/memisc/mtable123.html). The file in docx format can be found [here](http://www.martin-elff.net/uploads/memisc/mtable123.docx) and [here](http://www.martin-elff.net/uploads/memisc/mtable123.odt) in open document format (odt).[^1]
+`write_html(mtable123,file="mtable123.html")` or the like. MS Word or LibreOffice can import such a file. 
 
 [^1]: Unfortunately, LibreOffice currently seems to do a less than perfect job in importing HTML tables. The columns are a bit too wide and need to be adjusted by hand as do the skips after paragraphs. The example you find at the link mentioned above is thus manually adjusted.
 
