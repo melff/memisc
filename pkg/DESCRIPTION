@@ -1,16 +1,14 @@
 Package: memisc
 Type: Package
-Title: Tools for Management of Survey Data and for the Presentation of Analysis Results
-Version: 0.99.14.3
-Date: 2017-09-30
+Title: Management of Survey Data and for the Presentation of Analysis Results
+Version: 0.99.14.4
+Date: 2017-10-02
 Author: Martin Elff (with contributions from Christopher N. Lawrence, Dave Atkins, Jason W. Morgan, Achim Zeileis)
 Maintainer: Martin Elff <memisc@elff.eu>
-Description: One of the aims of this package is to make life easier for
-        R users who deal with survey data sets. It provides an
-        infrastructure for the management of survey data including
+Description: An infrastructure for the management of survey data including
         value labels, definable missing values, recoding of variables,
         production of code books, and import of (subsets of) 'SPSS' and
-        'Stata' files. Further, it provides functionality to produce
+        'Stata' files is provided. Further, the package allows to produce
         tables and data frames of arbitrary descriptive statistics and
         (almost) publication-ready tables of regression model
         estimates, which can be exported to 'LaTeX' and HTML.
