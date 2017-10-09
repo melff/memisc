@@ -107,7 +107,7 @@
      }
      \item{digits}{number of significant digits.
         }
-     \item{format}{chracter containing a format specifier, see \code{\link{format}}. }
+     \item{format}{character containing a format specifier, see \code{\link{format}}. }
      \item{useDcolumn}{logical, should the facilities of the \code{dcolumn} LaTeX package be used?
           Note that, if TRUE, you will need to include \code{\\usepackage{dcolumn}}
           in the preamble of your LaTeX document.}
