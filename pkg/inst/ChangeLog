@@ -1,6 +1,10 @@
+2017-10-11:
+   - Made 'toLatex.escape.tex' an explicit option for 'toLatex' methods
+	   provided by the package
+
 2017-09-30:
-	 - Included 'read_sysfile_slice' in 'CallMethods'
-	 - Removed some potentially stale links from vignette 'mtable-html'
+   - Included 'read_sysfile_slice' in 'CallMethods'
+   - Removed some potentially stale links from vignette 'mtable-html'
 
 2017-09-08:
    - Empty cells in HTML tables (which break their formatting by 'pandoc' if included

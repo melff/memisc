@@ -14,6 +14,7 @@ mtable_format_latex <- function(x,
           sdigits=min(1,ddigits),
           compact=FALSE,
           sumry.multicol=FALSE,
+          toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
           ...)
     pf_mtable_format_latex(preformat_mtable(x),
           useDcolumn=useDcolumn,
@@ -29,6 +30,7 @@ mtable_format_latex <- function(x,
           sdigits=sdigits,
           compact=compact,
           sumry.multicol=sumry.multicol,
+          toLatex.escape.tex=toLatex.escape.tex,
           ...)
 
 
@@ -48,6 +50,7 @@ pf_mtable_format_latex <- function(x,
           sdigits=min(1,ddigits),
           compact=FALSE,
           sumry.multicol=FALSE,
+          toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
           ...
           ){
 
@@ -107,7 +110,7 @@ pf_mtable_format_latex <- function(x,
                 sh.ij <- set_length(sh.ij,ncol.j/span.j)
                 sh.ij <- if(span.j==1 && !nzchar(sh.ij)) ""
                          else paste0("\n\\multicolumn{",span.j,"}{c}{",sh.ij,"}")
-                if(getOption("toLatex.escape.tex",TRUE))
+                if(toLatex.escape.tex)
                     sh.ij <- LaTeXcape(sh.ij)
                 pt.ij <- rbind(sh.ij,pt.ij)
             }
@@ -152,7 +155,7 @@ pf_mtable_format_latex <- function(x,
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
         leaders <- gsub(" x ",interaction.sep,leaders,fixed=TRUE)
-        if(getOption("toLatex.escape.tex",TRUE))
+        if(toLatex.escape.tex)
             leaders <- LaTeXcape(leaders)
         leaders <- format(leaders,justify="left")
         res <- cbind(leaders,res)
@@ -186,7 +189,7 @@ pf_mtable_format_latex <- function(x,
         for(k in 1:l.headers){
 
             header.k <- unlist(headers[[k]])
-            if(getOption("toLatex.escape.tex",TRUE))
+            if(toLatex.escape.tex)
                 header.k <- LaTeXcape(header.k)
             hspan.k <- hspan[[k]]
             ghspan.k <- (ghspan[[k]]-1)*multip

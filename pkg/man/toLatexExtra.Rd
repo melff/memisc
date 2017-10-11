@@ -33,6 +33,7 @@
     midrule=if(useBooktabs) "\\\\midrule" else "\\\\hline",
     cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
     bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
+    toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
     \dots)
 
 
@@ -53,6 +54,7 @@
     bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
     row.names=is.character(attr(object,"row.names")),
     NAas="",
+    toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
     \dots)
 
 \method{toLatex}{ftable}(object,
@@ -71,6 +73,7 @@
     cmidrule=if(useBooktabs) "\\\\cmidrule" else "\\\\cline",
     bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
     extrarowsep = NULL,
+    toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
     \dots)
 
 \method{toLatex}{ftable_matrix}(object,
@@ -92,6 +95,7 @@
     varontop,varinfront,
     groupsep="3pt",
     grouprule=midrule,
+    toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
     \dots)
 }
 \arguments{
@@ -139,6 +143,8 @@
 		 \item{row.names}{logical, whether row names should be included in
 			 exported LaTeX code.}
 		 \item{NAas}{character string, how missing values should be represented.}
+		\item{toLatex.escape.tex}{logical, should symbols \$, \_, and \^ be
+			escaped with backslashes?}
      \item{\dots}{further argument, currently ignored.}
 }
 \examples{

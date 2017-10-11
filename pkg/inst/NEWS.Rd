@@ -34,11 +34,13 @@
   \subsection{IMPROVEMENTS}{
     \itemize{
       \item Subset methods for importer objects are much more memory
-          efficient and now can handle files of size larger than 1GB.
+            efficient and now can handle files of size larger than 1GB.
       \item \code{useDcolumn} and \code{useBooktabs} arguments of
-			    \code{toLatex()} methods now have global options as defaults
+			      \code{toLatex()} methods now have global options as defaults
 			\item \code{toLatex()} methods optionally escape dollar, subscript and
-          superscript symbols.
+            superscript symbols. This can be set either by an explicit
+			      (new) argument \code{toLatex.escape.tex} or by a global option
+			      with the same name.
     }
   }
   \subsection{BUGFIXES}{

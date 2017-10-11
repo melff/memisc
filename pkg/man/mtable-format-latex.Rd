@@ -22,6 +22,7 @@
             sdigits=min(1,ddigits),
             compact=FALSE,
             sumry.multicol=FALSE,
+            toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
             \dots
   )
 }
@@ -47,7 +48,9 @@
     \item{compact}{logical; should the table be compact, without extra columns
     between multi-equation models?}
     \item{sumry.multicol}{logical, should summaries enclosed into
-         \code{\\multicol} commands?}
+      \code{\\multicol} commands?}
+		\item{toLatex.escape.tex}{logical, should symbols \$, \_, and \^ be
+			escaped with backslashes?}
     \item{\dots}{further arguments, ignored. }
 }
 \value{

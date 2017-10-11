@@ -20,6 +20,7 @@ toLatex.ftable_matrix <- function(object,
                                   varontop,varinfront,
                                   groupsep="3pt",
                                   grouprule=midrule,
+                                  toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
                                   ...)
 {
   
@@ -236,8 +237,8 @@ toLatex.ftable_matrix <- function(object,
   ans <- unlist(ans)
   
   ans <- c(toprule,header,midrule,ans,bottomrule)
-  if(getOption("toLatex.escape.tex",TRUE))
-      ans <- LaTeXcape(ans)
+  if(toLatex.escape.tex)
+    ans <- LaTeXcape(ans)
   
   tabspec <- mapply(ltfm_mkTabspec,colspec,ii,m,USE.NAMES=FALSE)
   

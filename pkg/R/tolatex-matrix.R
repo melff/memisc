@@ -14,6 +14,7 @@ toLatex.matrix <- function(object,
           midrule=if(useBooktabs) "\\midrule" else "\\hline",
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
           bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
+          toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
           ...){
   n <- nrow(object)
   m <- ncol(object)
@@ -83,8 +84,8 @@ toLatex.matrix <- function(object,
         bottomrule
         )
   }
-  if(getOption("toLatex.escape.tex",TRUE))
-      ans <- LaTeXcape(ans)
+  if(toLatex.escape.tex)
+    ans <- LaTeXcape(ans)
   body.spec <- character(ncol(object))
   body.spec[] <- colspec
   if(show.titles && length(rownames(object)))

@@ -12,6 +12,7 @@ toLatex.ftable <- function(object,
           cmidrule=if(useBooktabs) "\\cmidrule" else "\\cline",
           bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
           extrarowsep = NULL,
+          toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
           ...){
   row.vars <- attr(object,"row.vars")
   col.vars <- attr(object,"col.vars")
@@ -157,8 +158,8 @@ toLatex.ftable <- function(object,
   }
 
   ans <- c(toprule,header,midrule,body,bottomrule)
-  if(getOption("toLatex.escape.tex",TRUE))
-      ans <- LaTeXcape(ans)
+  if(toLatex.escape.tex)
+    ans <- LaTeXcape(ans)
   
   leader.spec <- paste(rep("l",length(row.vars)+1),collapse="")
   body.spec <- character(m)

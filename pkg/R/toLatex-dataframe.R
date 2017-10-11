@@ -15,6 +15,7 @@ toLatex.data.frame <- function(object,
                            bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
                            row.names=is.character(attr(object,"row.names")),
                            NAas="",
+                           toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
                            ...){
   n <- nrow(object)
   m <- ncol(object)
@@ -65,7 +66,7 @@ toLatex.data.frame <- function(object,
       bottomrule
   )
   
-  if(getOption("toLatex.escape.tex",TRUE))
+  if(toLatex.escape.tex)
       ans <- LaTeXcape(ans)
 
   body.spec <- rep(factor.colspec,m)
