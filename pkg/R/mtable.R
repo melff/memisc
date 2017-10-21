@@ -196,18 +196,19 @@ names.or.rownames <- function(x){
 }
 
 mtable <- function(...,
-                    coef.style=getOption("coef.style"),
-                    summary.stats=TRUE,
-                    signif.symbols=getOption("signif.symbols"),
-                    factor.style=getOption("factor.style"),
-                    show.baselevel=getOption("show.baselevel"),
-                    baselevel.sep=getOption("baselevel.sep"),
-                    getSummary=eval.parent(quote(getSummary)),
-                    float.style=getOption("float.style"),
-                    digits=min(3,getOption("digits")),
-                    sdigits=digits,
-                    gs.options=NULL
-                    ){
+                   coef.style=getOption("coef.style"),
+                   summary.stats=TRUE,
+                   signif.symbols=getOption("signif.symbols"),
+                   factor.style=getOption("factor.style"),
+                   show.baselevel=getOption("show.baselevel"),
+                   baselevel.sep=getOption("baselevel.sep"),
+                   getSummary=eval.parent(quote(getSummary)),
+                   float.style=getOption("float.style"),
+                   digits=min(3,getOption("digits")),
+                   sdigits=digits,
+                   show.eqnames=getOption("mtable.always.eqnames",FALSE),
+                   gs.options=NULL
+                   ){
   args <- list(...)
   if(length(args)==1 && inherits(args[[1]],"by"))
     args <- args[[1]]
@@ -259,7 +260,8 @@ mtable <- function(...,
             float.style=float.style,
             digits=digits,
             stemplates=stemplates,
-            sdigits=sdigits
+            sdigits=sdigits,
+            show.eqnames=show.eqnames
             )
   
 }
@@ -451,7 +453,8 @@ preformat_mtable <- function(x){
     digits <- attr(x,"digits")
     stemplates <- attr(x,"stemplates")
     sdigits <- attr(x,"sdigits")
-
+    show.eqnames <- attr(x,"show.eqnames")
+    
     allcompo <- unique(unlist(lapply(x,names)))
     nonparnames <- c("sumstat","contrasts","xlevels","call")
     partypes <- setdiff(allcompo,nonparnames)
@@ -554,7 +557,7 @@ preformat_mtable <- function(x){
     
         for(m in rownames(sect.headers)){
             sh <- sect.headers[m,]
-            if(!getOption("mtable.always.eqnames",FALSE) && length(unique(unlist(sh)))==1){
+            if(!show.eqnames && length(unique(unlist(sh)))==1){
                 sh <- list(NULL)
             }
             sect.headers[m,] <- sh

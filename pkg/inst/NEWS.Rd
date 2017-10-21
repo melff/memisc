@@ -28,7 +28,11 @@
 		      header lines. Facilities to add additional header lines will
 					be added soon.
 		\item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
-		      created by \code{mtable} and \code{ftable} etc.			
+		      created by \code{mtable} and \code{ftable} etc.
+		\item \code{mtable} reports names of dependent variables or equation
+		      names if they differ between models or if an optional argument
+          or a global option is set.
+		 
   }
   }
   \subsection{IMPROVEMENTS}{

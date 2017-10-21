@@ -177,7 +177,8 @@ combine_mtables <- function(...){
     digits <- attr(args[[1]],"digits")
     stemplates <- do.call(c,lapply(args,attr,"stemplates"))
     sdigits <- attr(args[[1]],"sdigits")
-
+    show.eqnames <- attr(args[[1]],"show.eqnames")
+    
     args <- lapply(args,unclass)
 
     res <- do.call(c,args)

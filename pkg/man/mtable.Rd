@@ -25,6 +25,7 @@ mtable(\dots,coef.style=getOption("coef.style"),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
     sdigits=digits,
+    show.eqnames=getOption("mtable.always.eqnames",FALSE),
     gs.options=NULL
   )
 \method{relabel}{memisc_mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
@@ -77,7 +78,13 @@ write.mtable(object,file="",
         the template returned from \code{\link{getCoefTemplate}}
         \code{\link{getSummaryTemplate}}
         }
-     \item{sdigits}{integer; number of digits after decimal dot for summary statistics.}
+     \item{sdigits}{integer; number of digits after decimal dot for
+			 summary statistics.}
+		 \item{show.eqnames}{logical;
+		       if \code{TRUE}, dependent variables (or other equation
+					 titles) are always shown,
+					 if \code{FALSE}, the dependent variables (or other equation
+					 titles) are shown only if they vary across models.}
      \item{gs.options}{an optional list of arguments passed on to
            \code{getSummary}}
      \item{x, object}{an object of class \code{mtable}}
