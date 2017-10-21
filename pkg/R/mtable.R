@@ -612,13 +612,41 @@ preformat_mtable <- function(x){
     }
     else summary.stats <- NULL
 
+    needs.signif <- any(grepl("$p",ctemplate,fixed=TRUE))
+    if(needs.signif){
+        signif.symbol.template <- getOption("signif.symbol.template",
+                                            c("p-values: ","$sym: p < $val","; "))
+        signif.legend <- format_signif(signif.symbols,
+                                        signif.symbol.template)
+    }
+    else
+        signif.legend <- NULL
+    
     structure(list(parmtab=parmtab,
                    leaders=leaders,
                    headers=headers,
                    sect.headers=sect.headers,
-                   summary.stats = summary.stats),
+                   summary.stats = summary.stats,
+                   signif.legend=signif.legend),
               class="preformatted.memisc_mtable")
     }
+
+
+format_signif <- function(syms,tmpl){
+    title <- tmpl[1]
+    clps <- tmpl[3]
+    tmpl <- tmpl[2]
+    res <- c()
+    for(i in seq_along(syms)){
+        sym <- names(syms)[i]
+        thrsh <- unname(syms[i])
+        res.i <- sub("$sym",sym,tmpl,fixed=TRUE)
+        res.i <- sub("$val",thrsh,res.i,fixed=TRUE)
+        res <- c(res,res.i)
+    }
+    res <- paste(res,collapse=clps)
+    paste0(title,res)
+}
 
 
 format.memisc_mtable <- function(x,
