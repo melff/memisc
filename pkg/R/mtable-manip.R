@@ -196,6 +196,7 @@ combine_mtables <- function(...){
             digits=digits,
             stemplates=stemplates,
             sdigits=sdigits,
+            show.eqnames=show.eqnames,
             model.groups=model.groups
             )
 }
