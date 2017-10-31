@@ -3,8 +3,11 @@ rofile <- function(filename) .Call("rofile",as.character(filename))
 readfixed <- function(file,what,nlines,start,stop)
   .Call("readfixed",file,what,nlines,start,stop)
 
-readfixedchunk <- function(file,what,j,i,start,stop)
-  .Call("readfixedchunk",file,what,j,i,start,stop)
+readfixedslice <- function(file,what,j,i,start,stop)
+  .Call("readfixedslice",file,what,j,i,start,stop)
+
+readfixedchunk <- function(file,what,j,n,start,stop)
+  .Call("readfixedchunk",file,what,j,n,start,stop)
 
 roreadline <- function(file)
   .Call("rofreadline",file)

@@ -121,9 +121,18 @@ setMethod("readData","spss.fixed.importer",
 
 setMethod("readSlice","spss.fixed.importer",
   function(x,rows,cols)
-    readfixedchunk(x@ptr,
+    readfixedslice(x@ptr,
     what=x,
     j=cols,i=rows,
+    start=x@data.spec$start,
+    stop=x@data.spec$stop
+))
+
+setMethod("readChunk","spss.fixed.importer",
+  function(x,nrows,cols)
+    readfixedchunk(x@ptr,
+    what=x,
+    j=cols,n=nrows,
     start=x@data.spec$start,
     stop=x@data.spec$stop
 ))
