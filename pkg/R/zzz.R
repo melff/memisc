@@ -31,7 +31,7 @@ memisc_env <- environment()
           memisc.repr_latex=TRUE,
           mtable.always.eqnames=FALSE,
 
-          signif.symbol.template=c("p-values: ","$sym: p < $val","; "))
+          signif.symbol.print.template=signif.symbol.print.default.template)
 }
 
 

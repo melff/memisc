@@ -276,6 +276,17 @@ pf_mtable_format_print <- function(x,
     }
     
     res <- c(toprule,res,bottomrule)
+
+    signif.symbols <- x$signif.symbols
+    if(length(signif.symbols)){
+        signif.template <- getOption("signif.symbol.print.template",
+                                     signif.symbol.print.default.template)
+        signif.symbols <- format_signif_print(signif.symbols,
+                                              signif.template,
+                                              width=nchar(bottomrule)-2*nchar(padding))
+        signif.symbols <- paste0(padding,signif.symbols,padding)
+        res <- c(res,signif.symbols)
+    }
     res <- paste0(res,rowsep)
     return(res)
 }
@@ -299,3 +310,31 @@ pf_mtable_format_print <- function(x,
     l <- length(x)
     x[[l]]
 }
+
+format_signif_print <- function(syms,tmpl,width){
+    title <- tmpl[1]
+    clps <- tmpl[3]
+    tmpl <- tmpl[2]
+    res <- title
+    empty.title <- paste(rep(" ",nchar(title)),collapse="")
+    
+    ns <- length(syms)
+    for(i in 1:ns){
+        sym <- names(syms)[i]
+        thrsh <- unname(syms[i])
+        res.i <- sub("$sym",sym,tmpl,fixed=TRUE)
+        res.i <- sub("$val",thrsh,res.i,fixed=TRUE)
+        if(i < ns)
+            res.i <- paste0(res.i,clps)
+        len <- length(res)
+        res.l <- res[len]
+        n.res.l <- nchar(res.l)
+        n.res.i <- nchar(res.i)
+        if(n.res.l+n.res.i <= width)
+            res[len] <- paste0(res.l,res.i)
+        else
+            res <- c(res,paste0(empty.title,res.i))
+    }
+    res
+}
+signif.symbol.print.default.template <- c("Significance: ","$sym = p < $val","; ")

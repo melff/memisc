@@ -1,5 +1,8 @@
+2017-11-11:
+   - 'print' method for 'mtable' objects now shows a legend for significance symbols.
+
 2017-10-31:
-   - Fixed (internal) `readChunk` method for fixed-format files with SPSS meta data.
+   - Fixed (internal) 'readChunk' method for fixed-format files with SPSS meta data.
 
 2017-10-21:
    - Implemented explicit option to control whether equation titles

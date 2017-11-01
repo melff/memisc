@@ -614,20 +614,17 @@ preformat_mtable <- function(x){
 
     needs.signif <- any(grepl("$p",ctemplate,fixed=TRUE))
     if(needs.signif){
-        signif.symbol.template <- getOption("signif.symbol.template",
-                                            c("p-values: ","$sym: p < $val","; "))
-        signif.legend <- format_signif(signif.symbols,
-                                        signif.symbol.template)
+        signif.symbols <- signif.symbols
     }
     else
-        signif.legend <- NULL
+        signif.symbols <- NULL
     
     structure(list(parmtab=parmtab,
                    leaders=leaders,
                    headers=headers,
                    sect.headers=sect.headers,
                    summary.stats = summary.stats,
-                   signif.legend=signif.legend),
+                   signif.symbols=signif.symbols),
               class="preformatted.memisc_mtable")
     }
 
