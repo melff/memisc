@@ -1,3 +1,10 @@
+2017-10-31:
+   - Fixed (internal) `readChunk` method for fixed-format files with SPSS meta data.
+
+2017-10-21:
+   - Implemented explicit option to control whether equation titles
+	   (or names of dept. variables) are printed from `mtable'.
+
 2017-10-11:
    - Made 'toLatex.escape.tex' an explicit option for 'toLatex' methods
 	   provided by the package
