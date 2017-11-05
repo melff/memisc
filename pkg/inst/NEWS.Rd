@@ -19,16 +19,19 @@
     \item Support for including sandwich estimates of sampling variances and
           standard errors into the output of \code{summary} and \code{mtable},
           by the new generic functions \code{withVCov} and
-					\code{withSE}.
-		\item Support for different parameter sections is added to
-		      \code{mtable}. This is intended to allow output of mixed
-					effects  models to distinguish between ("fixed effects")
-					coefficients and variance parameters.
-		\item Objects created by \code{mtable()} also can have several
-		      header lines. Facilities to add additional header lines will
-					be added soon.
-		\item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
-		      created by \code{mtable} and \code{ftable} etc.			
+          \code{withSE}.
+    \item Support for different parameter sections is added to
+          \code{mtable}. This is intended to allow output of mixed
+          effects  models to distinguish between ("fixed effects")
+          coefficients and variance parameters.
+    \item Objects created by \code{mtable()} also can have several
+          header lines. Facilities to add additional header lines will
+          be added soon.
+    \item Optionally, \code{mtable()} shows the left-hand sides of
+          model equations. This can be controlled by the optional
+          argument \code{show.eqnames} and by the global option \code{"mtable.show.eqnames"}.
+    \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
+          created by \code{mtable} and \code{ftable} etc.       
   }
   }
   \subsection{IMPROVEMENTS}{
@@ -36,11 +39,11 @@
       \item Subset methods for importer objects are much more memory
             efficient and now can handle files of size larger than 1GB.
       \item \code{useDcolumn} and \code{useBooktabs} arguments of
-			      \code{toLatex()} methods now have global options as defaults
-			\item \code{toLatex()} methods optionally escape dollar, subscript and
+            \code{toLatex()} methods now have global options as defaults
+      \item \code{toLatex()} methods optionally escape dollar, subscript and
             superscript symbols. This can be set either by an explicit
-			      (new) argument \code{toLatex.escape.tex} or by a global option
-			      with the same name.
+            (new) argument \code{toLatex.escape.tex} or by a global option
+            with the same name.
     }
   }
   \subsection{BUGFIXES}{
@@ -61,13 +64,13 @@
     \item A bug concerning missing values in SPSS files is fixed.
     \item Headlines in vignettes are now coherent.
     \item \code{mtable} with empty summary sections can be created
-		(again).
-		\item Objects returned by \code{mtable} return objects with class
+    (again).
+    \item Objects returned by \code{mtable} return objects with class
           "memisc_mtable" to avoid name clash with objects created by the
           \code{model.table} in package "stats".
-		\item Calls to PROTECTION are added to the C-source to prevent protection
-		errors.
-		\item \code{toLatex()} now handles matrices in data frames.
+    \item Calls to PROTECTION are added to the C-source to prevent protection
+    errors.
+    \item \code{toLatex()} now handles matrices in data frames.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{
