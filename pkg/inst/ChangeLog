@@ -1,8 +1,12 @@
+2017-11-19:
+   - Fixed obscure bug affecting import of spss system files under 32bit Windows.
+	 	 This bug was caused by excessive optimisation of for loops by the C compiler.
+
 2017-11-05:
    - Made the display of left-hand sides of model equations optional in the
 	   output of `mtable()` by providing an optional argument "show.eqnames"
 		 and a global option "mtable.show.eqnames".
-	
+
 2017-10-31:
    - Fixed (internal) `readChunk` method for fixed-format files with SPSS meta data.
 

@@ -109,11 +109,8 @@ int sys_read_case(sys_file *s){
   else{
     int j,k = s->byte_pos;
     for(j = 0; j < s->case_size; j++){
-      for(;s->bytes[k]==0 && k < 8; k++){ /* Ignore "0" bytes */
-//         continue;
-#ifdef DEBUG
-        Rprintf("\n0-byte ignored");
-#endif
+      for(; k < 8; k++){ /* Ignore "0" bytes */
+          if (s->bytes[k]!=0) break;
       }
       if(k >= 8) /* Read new command bytes */{
         read_len = (int)fread(s->bytes,1,8,s->f);
@@ -166,6 +163,7 @@ int sys_read_case(sys_file *s){
     return j;
   }
   return 0; /* -Wall */
+#undef DEBUG
 }
 
 
@@ -872,6 +870,7 @@ SEXP read_sysfile_dict_term (SEXP SysFile){
 }
 
 SEXP rewind_sysfile(SEXP SysFile){
+	int ret;
 #ifdef DEBUG
   Rprintf("\nrewind_sysfile");
 #endif
@@ -880,12 +879,21 @@ SEXP rewind_sysfile(SEXP SysFile){
   Rprintf("\ns address: %x",s);
   Rprintf("\nFile: %x",s->f);
   Rprintf("\nData pos: %d",s->data_pos);
+  int a;
+  ret = fseek(s->f,0,SEEK_SET);
+  a = getc(s->f);
+  Rprintf("\nRead num at 0: %d",a);
 #endif
-  int ret = fseek(s->f,s->data_pos,SEEK_SET);
+  ret = fseek(s->f,s->data_pos,SEEK_SET);
 #ifdef DEBUG
   Rprintf("\ns address: %x",s);
   Rprintf("\nFile after rewind: %x",s->f);
   Rprintf("\nFile pos: %d",ftell(s->f));
+	a = getc(s->f);
+	Rprintf("\nRead num: %d",a);
+	a = getc(s->f);
+	Rprintf("\nRead num: %d",a);
+  ret = fseek(s->f,s->data_pos,SEEK_SET);
 #endif
 #undef DEBUG
   if(ret) error("error in sys_rewind");
@@ -1044,8 +1052,6 @@ SEXP count_cases_sysfile (SEXP SysFile){
     sys_file *s = get_sys_file(SysFile);
 #ifdef DEBUG
     Rprintf("\ncount_cases_sysfile");
-    PrintValue(s_types);
-    PrintValue(s_vars);
 #endif
     if(s->case_size == 0) error("case size is zero -- why??");
     int ncases = 0;

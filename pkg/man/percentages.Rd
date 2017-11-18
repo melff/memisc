@@ -40,7 +40,7 @@ percentages(obj, \dots)
   are computed.}
   \item{se}{a logical value; determines whether standard
   errors are computed.}
-  \item{ci}{a logicla value; determines whether confidence
+  \item{ci}{a logical value; determines whether confidence
   intervals are computed. Note that the confidence intervals
   are for infinite (or very large) populations.}
   \item{ci.level}{a numerical value, the required confidence level of
