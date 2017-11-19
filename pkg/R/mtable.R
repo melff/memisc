@@ -206,7 +206,7 @@ mtable <- function(...,
                    float.style=getOption("float.style"),
                    digits=min(3,getOption("digits")),
                    sdigits=digits,
-                   show.eqnames=getOption("mtable.always.eqnames",FALSE),
+                   show.eqnames=getOption("mtable.show.eqnames",FALSE),
                    gs.options=NULL
                    ){
   args <- list(...)
@@ -477,6 +477,9 @@ preformat_mtable <- function(x){
     modelnames <- names(x)
     modelgroups <- attr(x,"model.groups")
 
+    force.header <- isTRUE(attr(x,"force.header")) # Document that later ...
+    show.eqnames <- attr(x,"show.eqnames")
+    
     parmtab <- NULL
     sect.headers <- NULL
     if(length(partypes)){
@@ -557,7 +560,9 @@ preformat_mtable <- function(x){
     
         for(m in rownames(sect.headers)){
             sh <- sect.headers[m,]
-            if(!show.eqnames && length(unique(unlist(sh)))==1){
+            if(is.na(show.eqnames))
+                show.eqnames <- (length(unique(unlist(sh))) > 1)
+            if(!show.eqnames ){
                 sh <- list(NULL)
             }
             sect.headers[m,] <- sh
@@ -565,7 +570,6 @@ preformat_mtable <- function(x){
     }
 
     headers <- list()
-    force.header <- getOption("mtable.force.header",default=FALSE)
     if(length(modelnames) > 1 || length(modelnames) == 1 && force.header) {
         modelnames <- do_subs(modelnames,relab.attr)
         headers[[1]] <- Map(structure,modelnames,span=lapply(parmtab[1,],ncol))

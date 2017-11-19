@@ -25,7 +25,7 @@ mtable(\dots,coef.style=getOption("coef.style"),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
     sdigits=digits,
-    show.eqnames=getOption("mtable.always.eqnames",FALSE),
+    show.eqnames=getOption("mtable.show.eqnames",FALSE),
     gs.options=NULL
   )
 \method{relabel}{memisc_mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
@@ -80,11 +80,14 @@ write.mtable(object,file="",
         }
      \item{sdigits}{integer; number of digits after decimal dot for
 			 summary statistics.}
-		 \item{show.eqnames}{logical;
-		       if \code{TRUE}, dependent variables (or other equation
-					 titles) are always shown,
-					 if \code{FALSE}, the dependent variables (or other equation
-					 titles) are shown only if they vary across models.}
+		 \item{show.eqnames}{logical; if \code{TRUE}, left-hand sides
+		   of equations are (always) shown in the table header;
+			 if \code{FALSE}, left-hand sides
+		   of equations are not shown;
+			 if \code{NA}, left-hand sides
+		   of equations are shown only if left-hand sides differ
+			 among models.
+		 }
      \item{gs.options}{an optional list of arguments passed on to
            \code{getSummary}}
      \item{x, object}{an object of class \code{mtable}}

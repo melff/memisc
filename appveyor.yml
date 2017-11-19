@@ -55,10 +55,6 @@ version: 0.99-{build}
 
 skip_non_tags: true
 
-branches:
-  only:
-  - master
-
 notifications:
   - provider: Email
     to: memisc@elff.eu
@@ -74,6 +70,5 @@ deploy:
   draft: true
   prerelease: true
   on:
-    branch: master                 # release from master branch only
     appveyor_repo_tag: true        # deploy on tag push only
   
