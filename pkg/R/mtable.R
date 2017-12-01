@@ -206,7 +206,7 @@ mtable <- function(...,
                    float.style=getOption("float.style"),
                    digits=min(3,getOption("digits")),
                    sdigits=digits,
-                   show.eqnames=getOption("mtable.show.eqnames",FALSE),
+                   show.eqnames=getOption("mtable.show.eqnames",NA),
                    gs.options=NULL
                    ){
   args <- list(...)
