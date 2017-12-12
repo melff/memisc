@@ -206,7 +206,7 @@ mtable <- function(...,
                    float.style=getOption("float.style"),
                    digits=min(3,getOption("digits")),
                    sdigits=digits,
-                   show.eqnames=getOption("mtable.show.eqnames",FALSE),
+                   show.eqnames=getOption("mtable.show.eqnames",NA),
                    gs.options=NULL
                    ){
   args <- list(...)
@@ -505,8 +505,7 @@ preformat_mtable <- function(x){
             modnames <- names(mod)
             for(m in modnames){
                 mod.m <- mod[[m]]
-                if(length(mod.m))
-                    parmtab[[m,n]] <- mod.m
+                parmtab[[m,n]] <- mod.m
             }
             
         }
@@ -547,17 +546,7 @@ preformat_mtable <- function(x){
             maxl <- max(unlist(lapply(sh,length)))
             sh <- lapply(sh,`length<-`,maxl)
         }
-        
-        for(m in 1:nrow(parmtab)){
-            parmtab.m <- parmtab[m,,drop=FALSE]
-            maxnrow <- max(unlist(lapply(parmtab.m,nrow)) )
-            parmtab.n <- lapply(parmtab.m,rowexpand,maxnrow)
-            nzch <- Sapply(parmtab.m,nzchar_row)
-            nzch <- apply(nzch,1,any)
-            parmtab.m <- lapply(parmtab.m,get_rows,i=nzch)
-            parmtab[m,] <- parmtab.m
-        }
-    
+
         for(m in rownames(sect.headers)){
             sh <- sect.headers[m,]
             if(is.na(show.eqnames))
@@ -594,8 +583,9 @@ preformat_mtable <- function(x){
                                                       baselevel.sep=baselevel.sep)  
                                     pn <- do_subs(pn,relab.attr)
                                     span <- nrow(parmtab[[m,1]])/length(pn)
-                                    if(span < 1) browser()
-                                    lapply(pn,structure,span=span)
+                                    if(span < 1) NULL
+                                    else
+                                        lapply(pn,structure,span=span)
                                 }),
                              names=rownames(parmtab))
 

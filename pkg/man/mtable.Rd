@@ -25,7 +25,7 @@ mtable(\dots,coef.style=getOption("coef.style"),
     float.style=getOption("float.style"),
     digits=min(3,getOption("digits")),
     sdigits=digits,
-    show.eqnames=getOption("mtable.show.eqnames",FALSE),
+    show.eqnames=getOption("mtable.show.eqnames",NA),
     gs.options=NULL
   )
 \method{relabel}{memisc_mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
@@ -86,7 +86,7 @@ write.mtable(object,file="",
 		   of equations are not shown;
 			 if \code{NA}, left-hand sides
 		   of equations are shown only if left-hand sides differ
-			 among models.
+			 among models or one of the models has multiple equations.
 		 }
      \item{gs.options}{an optional list of arguments passed on to
            \code{getSummary}}

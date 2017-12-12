@@ -5,10 +5,6 @@ memisc_env <- environment()
 
 
 .onLoad <- function(lib,pkg){
-  options(codebook.chunk.size=1000,
-          Simulation.chunk.size=1000,
-          print.use.value.labels=TRUE,
-          show.max.obs=25)
 
   if(requireNamespace("car",quietly = TRUE)){
     assign("car_recode",car::recode,envir=memisc_env)
@@ -29,9 +25,11 @@ memisc_env <- environment()
 
           memisc.repr_html=TRUE,
           memisc.repr_latex=TRUE,
-          mtable.always.eqnames=FALSE,
-
-          signif.symbol.print.template=signif.symbol.print.default.template)
+          mtable.show.eqnames=NA,
+          codebook.chunk.size=1000,
+          Simulation.chunk.size=1000,
+          print.use.value.labels=TRUE,
+          show.max.obs=25)
 }
 
 

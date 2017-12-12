@@ -103,8 +103,8 @@ safe.charidx <- function(nms,i){
         pt <- partypes[k]
         for(m in 1:l.y){
             tmp <- y[[m]][[pt]]
-            i.tmp <- intersect(i,rownames(tmp))
-            j.tmp <- intersect(j,dimnames3(tmp))
+            i.tmp <- i[i %in% rownames(tmp)]
+            j.tmp <- j[j %in% dimnames3(tmp)]
             if(length(i.tmp) && length(j.tmp))
                 tmp <- tmp[i.tmp,,j.tmp,drop=FALSE]
             else if(length(i.tmp))
