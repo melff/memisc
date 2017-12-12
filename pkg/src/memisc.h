@@ -4,7 +4,7 @@
 #include <Rmath.h>
 #include <stdio.h>
 #include <Rinternals.h>
-
+#include <Rversion.h>
 
 FILE *get_FILE(SEXP);
 void trim (char *, int);
@@ -93,7 +93,7 @@ SEXP dta_skip_records(SEXP s_dta_file, SEXP s_n);
 SEXP ord_union(SEXP x, SEXP y);
 
 
-
+#if R_VERSION >= R_Version(3,4,0)
 static const R_CallMethodDef CallMethods[]  = {
   {"NewSysFile", (DL_FUNC) &NewSysFile, 1},
   {"rewind_sysfile", (DL_FUNC) &rewind_sysfile, 1},
@@ -158,3 +158,4 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"ord_union", (DL_FUNC) &ord_union, 2},
   {NULL, NULL, 0}
 };
+#endif

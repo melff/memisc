@@ -1,6 +1,9 @@
+2017-12-10:
+   - Allow package to be installed and run with R versions < to 3.4
+
 2017-12-01:
-	 - Set a more sensible default for optional argument "show.eqnames" and
-	   global option "mtable.show.eqnames".
+   - Set a more sensible default for optional argument "show.eqnames" and
+     global option "mtable.show.eqnames".
 	
 2017-11-19:
    - Fixed obscure bug affecting import of spss system files under 32bit Windows.
