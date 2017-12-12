@@ -66,9 +66,10 @@ coefxpand <- function(x,names){
         do.call("[<-",call.arg)
     }
     else {
-        d3 <- length(names)
-        d <- c(0,0,d3)
-        dd <- list(NULL,NULL,names)
+        d <- dim(x)
+        dd <- dimnames(x)
+        d[3] <- length(names)
+        dd[[3]] <- names
         array("",dim=d,dimnames=dd)
     }
 }

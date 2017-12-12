@@ -1,3 +1,6 @@
+2017-12-11:
+   - Made bracket subsetting of mtable results safer and more coherent.
+
 2017-12-10:
    - Allow package to be installed and run with R versions < to 3.4
 
