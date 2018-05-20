@@ -1,3 +1,11 @@
+2017-12-20:
+   - Explicitly allow installation with R versions from 3.3.0
+   - Fixed warning about tautological comparisons shown by check with
+     flavor 'r-devel-linux-x86_64-fedora-clang'.
+
+2017-12-19:
+   - Fix compilation problems with R version < 3.4
+
 2017-12-11:
    - Made bracket subsetting of mtable results safer and more coherent.
 
@@ -7,7 +15,7 @@
 2017-12-01:
    - Set a more sensible default for optional argument "show.eqnames" and
      global option "mtable.show.eqnames".
-	
+
 2017-11-19:
    - Fixed obscure bug affecting import of spss system files under 32bit Windows.
      This bug was caused by excessive optimisation of for loops by the C compiler.
@@ -37,7 +45,7 @@
 
 2017-09-08:
    - Empty cells in HTML tables (which break their formatting by 'pandoc' if included
-	   in markdown format files) are now avoided
+     in markdown format files) are now avoided
 
 2017-09-06:
    - Lines without contents from 'mtable()' results are now automatically dropped

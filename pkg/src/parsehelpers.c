@@ -118,14 +118,14 @@ SEXP has_digits(SEXP s_text){
 SEXP get_digits(SEXP s_text){
   PROTECT(s_text = AS_CHARACTER(s_text));
   const char *text = CHAR(STRING_ELT(s_text,0));
-  size_t pos, startpos = -1, stoppos = -1, sl = strlen(text);
+  size_t pos, sl = strlen(text), startpos = sl, stoppos = sl;
   for(pos = 0; pos < sl; pos++){
     if(isdigit(text[pos])){
       startpos = pos;
       break;
     }
   }
-  if(startpos < 0) {
+  if(startpos == sl) {
     UNPROTECT(1);
     return mkString("");
   }
@@ -135,8 +135,7 @@ SEXP get_digits(SEXP s_text){
       break;
     }
   }
-  if(stoppos < 0) stoppos = sl;
-  size_t reslen = stoppos-startpos;
+  ssize_t reslen = stoppos-startpos;
   char *result = R_alloc(reslen+1,1);
   memset(result,0,reslen+1);
   memcpy(result,text+startpos,reslen);
