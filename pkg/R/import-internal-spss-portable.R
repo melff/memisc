@@ -163,7 +163,7 @@ parseHeaderPorStream <- function(stream){
   header$creation.date <- readStringPorStream(stream)
   header$creation.time <- readStringPorStream(stream)
   dictionary <- list()
-  valid.tags <- c("1","2","3","4","7","D","E")
+  valid.tags <- c("1","2","3","4","6","7","D","E")
   nvlab <- 1
   value.labels <- list()
   document <- NULL
@@ -193,6 +193,11 @@ parseHeaderPorStream <- function(stream){
             header$nvar[1] <- readIntPorStream(stream)
             header$nvar[2] <- readIntPorStream(stream)
             types <- integer()
+            }
+    if(tag.code=="6") {
+            #cat("Found weighting variable tag\n")
+            header$weight <- readStringPorStream(stream)
+            #cat("Weighting variable is:", header$weight)
             }
     if(tag.code=="7") {
             #cat("Found variable record tag\n")
