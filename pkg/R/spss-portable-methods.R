@@ -17,8 +17,10 @@ spss.portable.file <- function(
     variables[types>0] <- list(new("character.item"))
     names(variables) <- names(types)
     
-    varlabs <- sapply(data.spec$dictionary,"[[",i="label")
-    varlabs <- varlabs[nzchar(varlabs)]
+    varlabs <- lapply(data.spec$dictionary,"[[",i="label")
+    varlabs <- unlist(varlabs)
+    if(length(varlabs))
+        varlabs <- varlabs[nzchar(varlabs)]
 
     vallabs <- data.spec$value.labels
     vallabs.vars <- lapply(vallabs,"[[",i="vars")
@@ -43,7 +45,7 @@ spss.portable.file <- function(
       message("using ",missval.file)
       missings <- spss.parse.missing.values(missval.file)
       }
-    
+
     if(length(varlabs))
       variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
     if(length(vallabs))
