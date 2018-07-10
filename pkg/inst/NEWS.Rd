@@ -71,6 +71,8 @@
     \item Calls to PROTECTION are added to the C-source to prevent protection
     errors.
     \item \code{toLatex()} now handles matrices in data frames.
+    \item \code{spss.portable.file()} now handles files with weighting
+    variables and empty variable labels.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

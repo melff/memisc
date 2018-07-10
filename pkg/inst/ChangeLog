@@ -1,3 +1,6 @@
+2018-07-10:
+   - Handle SPSS "Portable files" with weights and empty value labels
+
 2017-12-20:
    - Explicitly allow installation with R versions from 3.3.0
    - Fixed warning about tautological comparisons shown by check with
