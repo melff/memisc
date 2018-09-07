@@ -185,7 +185,6 @@ exportClasses(
   missing.values,
   annotation,
   item,
-  double,
   integer.item,
   double.item,
   character.item,
@@ -203,6 +202,8 @@ exportClasses(
   datetime.item,
   Date.item
   )
+
+if(getRversion() < "3.6.0") exportClasses(double)
 
 exportMethods(
     as.item,
