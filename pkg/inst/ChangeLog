@@ -1,3 +1,11 @@
+2018-09-07:
+   - Define double() only if R version is < 3.6.0
+   - Remove crossrefs to 'car' package to escape the depency hell created by
+     that package
+
+2018-07-10:
+   - Handle SPSS "Portable files" with weights and empty value labels
+
 2017-12-20:
    - Explicitly allow installation with R versions from 3.3.0
    - Fixed warning about tautological comparisons shown by check with
