@@ -63,11 +63,11 @@ if given to \code{recode} as an argument. However, a call of the
 form \code{recode(x,1=1:4)}, would be a syntax error.
 
 If John Fox' package "car" is installed, \code{recode} will also be callable
-with the syntax of the \code{\link[car]{recode}} function of that package.
+with the syntax of the \code{recode} function of that package.
 }
 
 \seealso{
-  \code{\link[car]{recode}} of package \code{car}.
+  \code{recode} of package "car".
 }
 
 \examples{
