@@ -36,11 +36,12 @@ setClass("item",
   )
 )
 
-setClass("double",
-  contains="numeric",
-  prototype=double()
-)
-
+if(getRversion() < "3.6.0")
+    setClass("double",
+             contains="numeric",
+             prototype=double()
+             )
+# methods package in R version >= 3.6.0 defines 'double'
 
 setClassUnion("numeric.item")
 setClassUnion("item.vector","numeric.item")
