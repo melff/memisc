@@ -7,7 +7,6 @@
 #include <Rinternals.h>
 #include "memisc.h"
 #include "rofile.h"
-#include <stdlib.h>
 
 int _R_atoi(char *text){
   char *end_ptr;
@@ -25,6 +24,55 @@ double _R_atof(char *text){
   else return result;
 }
 
+size_t Rgetline(char **lineptr, size_t *lenptr, FILE *file){
+
+  char *line = *lineptr;
+  size_t len = *lenptr;
+  
+  if (file == NULL) {
+        error("File pointer is null.");
+  }
+  int chunk_size = 128;
+  if(len < chunk_size) len = chunk_size;
+    
+  if(line == NULL){
+    line = (char *)R_alloc(len,sizeof(char));
+    if(line == NULL)
+      error("Could not allocate line pointer");
+    /* Rprintf("Initial buffer size: %d\n",len); */
+  }
+    
+  char ch = getc(file);
+  size_t n = 0;
+    
+  while((ch != '\n') && (ch != '\r') && (ch != EOF)){
+    /* Rprintf("Current char: %c\n",ch);
+     * Rprintf("Current buffer: %s\n",line); */
+    if(n == len){
+      /* Rprintf("Increasing buffer size\n"); */
+      char *tmp = (char *)R_alloc(len+chunk_size,sizeof(char));
+      if(tmp == NULL)
+        error("Could not extend buffer size");
+      memcpy(tmp,line,len);
+      line = tmp;
+      len += chunk_size;
+      /* Rprintf("New buffer size: %d\n",len); */
+    }
+    line[n] = ch;
+    n++;
+
+    ch = getc(file);
+  }
+  while((ch == '\n') || (ch == '\r')) ch = getc(file);
+  if((ch != '\n') && (ch != '\r') && (ch != EOF)) ungetc(ch,file);
+  
+  line[n] = '\0';
+  *lineptr = line;
+  *lenptr = len;
+  return n;
+}
+
+
 SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop){
   PROTECT(s_start = coerceVector(s_start,INTSXP));
   PROTECT(s_stop = coerceVector(s_stop,INTSXP));
@@ -35,7 +83,7 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
   int *start = INTEGER(s_start);
   int *stop = INTEGER(s_stop);
   size_t max_lenline = 0;
-  ssize_t cur_len;
+  size_t cur_len;
   char *buffer = NULL;
   char *item, *currdata;
   SEXP data;
@@ -55,7 +103,7 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
   Rprintf("Requested number of lines: %d\n",n);
 #endif  
   for(i = 0; i < n; i++){
-    cur_len = getline(&buffer,&max_lenline,f);
+    cur_len = Rgetline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Requested line length: %d\n",max_lenline);
     Rprintf("Actual line length: %d\n",strlen(buffer));
@@ -90,12 +138,12 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
 SEXP countlines(SEXP s_file){
   FILE *f = rofile_FILE(s_file);
   size_t max_lenline = 0;
-  ssize_t cur_len;
+  size_t cur_len;
   char *buffer = NULL;
   int i, n;
 
   for(i = 0;; i++){
-    cur_len = getline(&buffer,&max_lenline,f);
+    cur_len = Rgetline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Line: %d\n",i);
 #endif    
@@ -109,7 +157,6 @@ SEXP countlines(SEXP s_file){
       break;
     }
   }
-  free(buffer);
   return ScalarInteger(n);
 }
 
@@ -130,7 +177,7 @@ SEXP readfixedslice(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_st
   int *start = INTEGER(s_start);
   int *stop = INTEGER(s_stop);
   size_t max_lenline = 0;
-  ssize_t cur_len;
+  size_t cur_len;
   char *buffer = NULL;
   char *item, *currdata;
 
@@ -152,7 +199,7 @@ SEXP readfixedslice(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_st
   item = R_alloc(maxlen+1,1);
   ii = 0;
   for(i = 0; i < ncases; i++){
-    cur_len = getline(&buffer,&max_lenline,f);
+    cur_len = Rgetline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Requested line length: %d\n",max_lenline);
     Rprintf("Actual line length: %d\n",strlen(buffer));
@@ -213,7 +260,7 @@ SEXP readfixedchunk(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_nlines, SEXP s_s
   int *start = INTEGER(s_start);
   int *stop = INTEGER(s_stop);
   size_t max_lenline = 0;
-  ssize_t cur_len;
+  size_t cur_len;
   char *buffer = NULL;
   char *item, *currdata;
   SEXP data;
@@ -237,7 +284,7 @@ SEXP readfixedchunk(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_nlines, SEXP s_s
   Rprintf("Requested number of lines: %d\n",n);
 #endif  
   for(i = 0; i < n; i++){
-    cur_len = getline(&buffer,&max_lenline,f);
+    cur_len = Rgetline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Requested line length: %d\n",max_lenline);
     Rprintf("Actual line length: %d\n",strlen(buffer));
