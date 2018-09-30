@@ -7,7 +7,7 @@
 #include <Rinternals.h>
 #include "memisc.h"
 #include "rofile.h"
-
+#include <stdlib.h>
 
 int _R_atoi(char *text){
   char *end_ptr;
@@ -34,8 +34,9 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
   int nvar = LENGTH(s_start);
   int *start = INTEGER(s_start);
   int *stop = INTEGER(s_stop);
-  int max_lenline = stop[nvar-1];
-  char *buffer = R_alloc(max_lenline+3,1);
+  size_t max_lenline = 0;
+  ssize_t cur_len;
+  char *buffer = NULL;
   char *item, *currdata;
   SEXP data;
   PROTECT(data=allocVector(VECSXP,nvar));
@@ -50,28 +51,17 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
     SET_VECTOR_ELT(data,j,lengthgets(x,n));
   }
   item = R_alloc(maxlen+1,1);
-#undef DEBUG
 #ifdef DEBUG
   Rprintf("Requested number of lines: %d\n",n);
 #endif  
   for(i = 0; i < n; i++){
-    memset(buffer,0,max_lenline+3);
-    buffer = fgets(buffer,max_lenline+3,f);
+    cur_len = getline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Requested line length: %d\n",max_lenline);
     Rprintf("Actual line length: %d\n",strlen(buffer));
-    if(i == 0)
+    if(i < 3)
       Rprintf("Buffer: >>%s<<\n",buffer);
 #endif    
-    if(strlen(buffer)< max_lenline) {
-      int new_length = i;
-      for(j = 0; j < nvar; j++){
-        x = VECTOR_ELT(data,j);
-        SET_VECTOR_ELT(data,j,lengthgets(x,new_length));
-      }
-      n = new_length;
-      break;
-    }
     currdata = buffer;
     for(j = 0; j < nvar; j++){
       x = VECTOR_ELT(data,j);
@@ -97,20 +87,19 @@ SEXP readfixed(SEXP s_file, SEXP what, SEXP s_nlines, SEXP s_start, SEXP s_stop)
   return data;
 }
 
-SEXP countlines(SEXP s_file, SEXP s_maxlenline){
+SEXP countlines(SEXP s_file){
   FILE *f = rofile_FILE(s_file);
-  int max_lenline = asInteger(s_maxlenline);
-  char *buffer = R_alloc(max_lenline+3,1);
-  char *ret;
+  size_t max_lenline = 0;
+  ssize_t cur_len;
+  char *buffer = NULL;
   int i, n;
 
   for(i = 0;; i++){
-    memset(buffer,0,max_lenline+3);
-    ret = fgets(buffer,max_lenline+3,f);
+    cur_len = getline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Line: %d\n",i);
 #endif    
-    if(ret == NULL || feof(f)) {
+    if(feof(f)) {
 #ifdef DEBUG
       Rprintf("Requested line length: %d\n",max_lenline);
       Rprintf("Actual line length: %d\n",strlen(buffer));
@@ -120,6 +109,7 @@ SEXP countlines(SEXP s_file, SEXP s_maxlenline){
       break;
     }
   }
+  free(buffer);
   return ScalarInteger(n);
 }
 
@@ -139,8 +129,9 @@ SEXP readfixedslice(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_st
   for(j = 0; j < LENGTH(s_vars); j++) m += LOGICAL(s_vars)[j];
   int *start = INTEGER(s_start);
   int *stop = INTEGER(s_stop);
-  int max_lenline = stop[nvar-1];
-  char *buffer = R_alloc(max_lenline+3,1);
+  size_t max_lenline = 0;
+  ssize_t cur_len;
+  char *buffer = NULL;
   char *item, *currdata;
 
   SEXP data;
@@ -161,22 +152,12 @@ SEXP readfixedslice(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_cases, SEXP s_st
   item = R_alloc(maxlen+1,1);
   ii = 0;
   for(i = 0; i < ncases; i++){
-    memset(buffer,0,max_lenline+3);
-    buffer = fgets(buffer,max_lenline+3,f);
+    cur_len = getline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Requested line length: %d\n",max_lenline);
     Rprintf("Actual line length: %d\n",strlen(buffer));
     Rprintf("Buffer: >>%s<<\n",buffer);
 #endif
-    if(strlen(buffer)< max_lenline) {
-      int new_length = i;
-      for(j = 0; j < m; j++){
-        x = VECTOR_ELT(data,j);
-        SET_VECTOR_ELT(data,j,lengthgets(x,new_length));
-      }
-      n = new_length;
-      break;
-    }
     if(LOGICAL(s_cases)[i]){
       currdata = buffer;
       k = 0;
@@ -231,8 +212,9 @@ SEXP readfixedchunk(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_nlines, SEXP s_s
   for(j = 0; j < LENGTH(s_vars); j++) m += LOGICAL(s_vars)[j];
   int *start = INTEGER(s_start);
   int *stop = INTEGER(s_stop);
-  int max_lenline = stop[nvar-1];
-  char *buffer = R_alloc(max_lenline+3,1);
+  size_t max_lenline = 0;
+  ssize_t cur_len;
+  char *buffer = NULL;
   char *item, *currdata;
   SEXP data;
   PROTECT(data=allocVector(VECSXP,m));
@@ -255,23 +237,13 @@ SEXP readfixedchunk(SEXP s_file, SEXP what, SEXP s_vars, SEXP s_nlines, SEXP s_s
   Rprintf("Requested number of lines: %d\n",n);
 #endif  
   for(i = 0; i < n; i++){
-    memset(buffer,0,max_lenline+3);
-    buffer = fgets(buffer,max_lenline+3,f);
+    cur_len = getline(&buffer,&max_lenline,f);
 #ifdef DEBUG
     Rprintf("Requested line length: %d\n",max_lenline);
     Rprintf("Actual line length: %d\n",strlen(buffer));
     if(i == 0)
       Rprintf("Buffer: >>%s<<\n",buffer);
 #endif    
-    if(strlen(buffer)< max_lenline) {
-      int new_length = i;
-      for(j = 0; j < m; j++){
-        x = VECTOR_ELT(data,j);
-        SET_VECTOR_ELT(data,j,lengthgets(x,new_length));
-      }
-      n = new_length;
-      break;
-    }
     currdata = buffer;
 		k = 0;
     for(j = 0; j < nvar; j++){

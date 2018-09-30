@@ -73,6 +73,12 @@
     \item \code{toLatex()} now handles matrices in data frames.
     \item \code{spss.portable.file()} now handles files with weighting
     variables and empty variable labels.
+    Importer objects created with this function also are supported by
+    bracket operators, since the C-function \code{readfixedslice} is now
+    poperly exported.
+    \item \code{spss.fixed.file()} now handles files with lines that are
+    longer than the number of columns specified in the columns
+    definition file.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

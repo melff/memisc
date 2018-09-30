@@ -1,3 +1,7 @@
+2018-09-30:
+   - Adapt 'spss.fixed.file' to data files with lines that are "too long".
+   - Export C-function 'readfixedslice'.
+
 2018-09-07:
    - Define double() only if R version is < 3.6.0
    - Remove crossrefs to 'car' package to escape the depency hell created by

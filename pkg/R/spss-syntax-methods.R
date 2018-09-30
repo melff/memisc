@@ -50,10 +50,9 @@ spss.fixed.file <- function(
     } 
 
     nlines <- if(count.cases) {
-        maxlenline <- data.spec$stop[length(data.spec$stop)]
         rofseek(fptr,pos=0)
         for(i in seq_len(data.spec$skip)) roreadline(fptr)
-        nlines <- .Call("countlines",fptr,maxlenline)
+        nlines <- .Call("countlines",fptr)
      } else NA_integer_
      attr(fptr,"nlines") <- nlines
 
@@ -96,10 +95,9 @@ setMethod("initialize","spss.fixed.importer",function(.Object,
 setMethod("getNobs","spss.fixed.importer",function(x){
   nlines <- attr(x@ptr,"nlines")
   if(!length(nlines)) {
-        maxlenline <- x@data.spec$stop[length(x@data.spec$stop)]
         rofseek(x@ptr,pos=0)
         for(i in seq_len(x@data.spec$skip)) roreadline(x@ptr)
-        attr(x@ptr,"nlines") <- nlines <- .Call("countlines",x@ptr,maxlenline)
+        attr(x@ptr,"nlines") <- nlines <- .Call("countlines",x@ptr)
   }
   nlines
 })
