@@ -132,6 +132,7 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"rofile", (DL_FUNC) &rofile, 1},
 	{"readfixed", (DL_FUNC) &readfixed, 5},
 	{"readfixedchunk", (DL_FUNC) &readfixedchunk, 6},
+	{"readfixedslice", (DL_FUNC) &readfixedslice, 6},
 	{"rofreadline", (DL_FUNC) &rofreadline, 1},
 	{"roftell", (DL_FUNC) &roftell, 1},
 	{"rofseek", (DL_FUNC) &rofseek, 3},
