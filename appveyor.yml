@@ -69,6 +69,6 @@ deploy:
 
   draft: true
   prerelease: true
-  on:
-    appveyor_repo_tag: true        # deploy on tag push only
+  # on:
+  #  appveyor_repo_tag: true        # deploy on tag push only
   
