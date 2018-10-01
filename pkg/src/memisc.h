@@ -58,11 +58,14 @@ SEXP readfixed(SEXP s_file, SEXP what,
 SEXP readfixedchunk(SEXP s_file, SEXP what,
 										 SEXP s_vars, SEXP s_cases,
 										 SEXP s_start, SEXP s_stop);
+SEXP readfixedslice(SEXP s_file, SEXP what,
+                    SEXP s_vars, SEXP s_cases,
+                    SEXP s_start, SEXP s_stop);
 SEXP rofreadline(SEXP s_file);
 SEXP roftell (SEXP s_file);
 SEXP rofseek (SEXP s_file, SEXP s_pos,
 							SEXP s_whence);
-SEXP countlines(SEXP s_file, SEXP s_maxlenline);
+SEXP countlines(SEXP s_file);
 SEXP numeric_if_possible(SEXP x);
 
 SEXP dta_file_open (SEXP name);
@@ -132,10 +135,11 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"rofile", (DL_FUNC) &rofile, 1},
 	{"readfixed", (DL_FUNC) &readfixed, 5},
 	{"readfixedchunk", (DL_FUNC) &readfixedchunk, 6},
+	{"readfixedslice", (DL_FUNC) &readfixedslice, 6},
 	{"rofreadline", (DL_FUNC) &rofreadline, 1},
 	{"roftell", (DL_FUNC) &roftell, 1},
 	{"rofseek", (DL_FUNC) &rofseek, 3},
-	{"countlines", (DL_FUNC) &countlines, 2},
+	{"countlines", (DL_FUNC) &countlines, 1},
 	{"numeric_if_possible", (DL_FUNC) &numeric_if_possible, 1},
 	{"dta_file_open", (DL_FUNC) &dta_file_open, 2},
 	{"dta_read_version", (DL_FUNC) &dta_read_version, 1},
