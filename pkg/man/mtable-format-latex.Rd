@@ -23,6 +23,8 @@
             compact=FALSE,
             sumry.multicol=FALSE,
             toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
+            toLatex.signif.notes.type=getOption("toLatex.signif.notes.type","append"),
+            toLatex.signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
             \dots
   )
 }
@@ -51,6 +53,20 @@
       \code{\\multicol} commands?}
 		\item{toLatex.escape.tex}{logical, should symbols \$, \_, and \^ be
 			escaped with backslashes?}
+    \item{toLatex.signif.notes.type}{character string; should be either
+      \code{"append"}, \code{"include"}, or \code{"tnotes"}. If
+      \code{"append"}, (very simple) LaTeX code is appended that contains
+      notes that relate significance symbols to p-values. If
+      \code{"include"}, the LaTeX table will include a (multi-column)
+      cell with these notes. If \code{"tnotes"}, the exported LaTeX
+      table is wrapped in a \code{threeparttable} environment and the
+      p-value notes are wrapped in a \code{tablenotes} environment. This
+      requires the LaTeX package \code{threeparttable} in order to work.
+    }
+    \item{toLatex.signif.notes.spec}{character string; specifies format
+      of cells that include notes about p-values; relevant only if
+      \code{toLatex.signif.notes.type="include"}
+    }
     \item{\dots}{further arguments, ignored. }
 }
 \value{
