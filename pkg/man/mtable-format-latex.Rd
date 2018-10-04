@@ -24,7 +24,7 @@
             sumry.multicol=FALSE,
             toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
             toLatex.signif.notes.type=getOption("toLatex.signif.notes.type","append"),
-            toLatex.signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
+            toLatex.signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\\\linewidth}"),
             \dots
   )
 }
