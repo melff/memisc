@@ -15,11 +15,13 @@ format_html.memisc_mtable <- function(x,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,
                                margin="2ex auto",
+                               sig.notes.style=c(width="inherit"),
                                ...){
   x <- preformat_mtable(x)
   res <- pf_mtable_format_html(x,interaction.sep=interaction.sep,
                         toprule=toprule,midrule=midrule,bottomrule=bottomrule,
-                        split.dec=split.dec,style=style,margin=margin,...)
+                        split.dec=split.dec,style=style,margin=margin,
+                        sig.notes.style=sig.notes.style,...)
   as.character(res)
 }
 
@@ -28,7 +30,9 @@ mtable_format_html <- function(x,
                                toprule=2,midrule=1,bottomrule=2,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,
-                               margin="2ex auto",...)
+                               margin="2ex auto",
+                               sig.notes.style=c(width="inherit"),
+                               ...)
     pf_mtable_format_html(preformat_mtable(x),
                           interaction.sep=interaction.sep,
                           toprule=toprule,
@@ -36,7 +40,9 @@ mtable_format_html <- function(x,
                           bottomrule=bottomrule,
                           split.dec=split.dec,
                           style=style,
-                          margin=margin,...)
+                          margin=margin,
+                          sig.notes.style=sig.notes.style,
+                          ...)
 
 pf_mtable_format_html <- function(x,
                                interaction.sep = NULL,
@@ -44,6 +50,7 @@ pf_mtable_format_html <- function(x,
                                split.dec=TRUE,
                                style=mtable_format_stdstyle,
                                margin="2ex auto",
+                               sig.notes.style=c(width="inherit"),
                                ...
 ){
   
@@ -221,6 +228,19 @@ pf_mtable_format_html <- function(x,
     for(i in sect.at)
         res[[i]] <- lapply(res[[i]],setStyle,midrule_above)
 
+    signif.symbols <- x$signif.symbols
+    if(length(signif.symbols)){
+        signif.template <- getOption("signif.symbol.print.template",
+                                     signif.symbol.print.default.template)
+        signif.symbols <- format_signif_print(signif.symbols,
+                                              signif.template,
+                                              width=72)
+
+        totspan <- sum(sapply(res[[1]],get_colspan))
+        signif.symbols <- html_p(signif.symbols,style=css(sig.notes.style))
+        signif.symbols <- html_td(signif.symbols,style=css(style),colspan=totspan)
+        res <- c(res,list(signif.symbols))
+    }
     
     res <- html_tr(res,vectorize=TRUE,style=as.css(row_style))
     
@@ -232,3 +252,4 @@ pf_mtable_format_html <- function(x,
 
 }
 
+get_colspan <- function(x)x$attributes$colspan

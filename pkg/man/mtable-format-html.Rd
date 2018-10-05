@@ -14,6 +14,7 @@ mtable_format_html(x,
                     split.dec=TRUE,
                     style=mtable_format_stdstyle,
                     margin="2ex auto", 
+                    sig.notes.style=c(width="inherit"),
                     \dots
   )
 \method{format_html}{memisc_mtable}(x,
@@ -22,6 +23,7 @@ mtable_format_html(x,
                     split.dec=TRUE,
                     style=mtable_format_stdstyle,
                     margin="2ex auto", 
+                    sig.notes.style=c(width="inherit"),
                     \dots
   )
 }
@@ -41,6 +43,9 @@ mtable_format_html(x,
     \item{style}{string containing default the CSS styling.}
     \item{margin}{character string, determines the margin and thus
       the position of the HTML table.}
+    \item{sig.notes.style}{a character vector with named elements,
+           allows extra styling of the p-values notes at the bottom of
+           the table.}
     \item{\dots}{further arguments, ignored. }
 }
 \value{
@@ -63,5 +68,7 @@ mtable123 <- mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2,
 ))
 
 show_html(mtable123)
+show_html(mtable123[1:2],
+          sig.notes.style=c(width="30ex"))
 }
 

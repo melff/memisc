@@ -14,9 +14,9 @@ mtable_format_latex <- function(x,
           sdigits=min(1,ddigits),
           compact=FALSE,
           sumry.multicol=FALSE,
-          toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
-          toLatex.signif.notes.type=getOption("toLatex.signif.notes.type","append"),
-          toLatex.signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
+          escape.tex=getOption("toLatex.escape.tex",FALSE),
+          signif.notes.type=getOption("toLatex.signif.notes.type","append"),
+          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
           ...)
     pf_mtable_format_latex(preformat_mtable(x),
           useDcolumn=useDcolumn,
@@ -32,9 +32,9 @@ mtable_format_latex <- function(x,
           sdigits=sdigits,
           compact=compact,
           sumry.multicol=sumry.multicol,
-          toLatex.escape.tex=toLatex.escape.tex,
-          toLatex.signif.notes.type=toLatex.signif.notes.type,
-          toLatex.signif.notes.spec=toLatex.signif.notes.spec,
+          escape.tex=escape.tex,
+          signif.notes.type=signif.notes.type,
+          signif.notes.spec=signif.notes.spec,
           ...)
 
 
@@ -54,13 +54,13 @@ pf_mtable_format_latex <- function(x,
           sdigits=min(1,ddigits),
           compact=FALSE,
           sumry.multicol=FALSE,
-          toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
-          toLatex.signif.notes.type=getOption("toLatex.signif.notes.type","append"),
-          toLatex.signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
+          escape.tex=getOption("toLatex.escape.tex",FALSE),
+          signif.notes.type=getOption("toLatex.signif.notes.type","append"),
+          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
           ...
           ){
 
-    toLatex.signif.notes.type <- match.arg(toLatex.signif.notes.type,
+    signif.notes.type <- match.arg(signif.notes.type,
                                            c("append","include","tnotes"))
     
     colsep <- " & "
@@ -119,7 +119,7 @@ pf_mtable_format_latex <- function(x,
                 sh.ij <- set_length(sh.ij,ncol.j/span.j)
                 sh.ij <- if(span.j==1 && !nzchar(sh.ij)) ""
                          else paste0("\n\\multicolumn{",span.j,"}{c}{",sh.ij,"}")
-                if(toLatex.escape.tex)
+                if(escape.tex)
                     sh.ij <- LaTeXcape(sh.ij)
                 pt.ij <- rbind(sh.ij,pt.ij)
             }
@@ -164,7 +164,7 @@ pf_mtable_format_latex <- function(x,
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
         leaders <- gsub(" x ",interaction.sep,leaders,fixed=TRUE)
-        if(toLatex.escape.tex)
+        if(escape.tex)
             leaders <- LaTeXcape(leaders)
         leaders <- format(leaders,justify="left")
         res <- cbind(leaders,res)
@@ -198,7 +198,7 @@ pf_mtable_format_latex <- function(x,
         for(k in 1:l.headers){
 
             header.k <- unlist(headers[[k]])
-            if(toLatex.escape.tex)
+            if(escape.tex)
                 header.k <- LaTeXcape(header.k)
             hspan.k <- hspan[[k]]
             ghspan.k <- (ghspan[[k]]-1)*multip
@@ -294,9 +294,9 @@ pf_mtable_format_latex <- function(x,
         signif.symbols <- format_signif_print(signif.symbols,
                                               signif.template,
                                               width=nchar(bottomrule))
-        if(toLatex.signif.notes.type=="include"){
+        if(signif.notes.type=="include"){
             signif.symbols <- paste0("\\multicolumn{",total.ncol,"}{",
-                                     toLatex.signif.notes.spec,"}{",
+                                     signif.notes.spec,"}{",
                                      paste0(signif.symbols,collapse="\n"),
                                  "}\\\\")
             res <- c(res, signif.symbols)
@@ -308,11 +308,11 @@ pf_mtable_format_latex <- function(x,
 
     res <- c(tabbegin,res,tabend)
     if(length(signif.symbols)){
-        if(toLatex.signif.notes.type=="append"){
+        if(signif.notes.type=="append"){
             signif.symbols <- paste0(signif.symbols,collapse="\n")
             res <- c(res,signif.symbols)
         }
-        else if(toLatex.signif.notes.type=="tnotes"){
+        else if(signif.notes.type=="tnotes"){
             signif.symbols <- c(
                 "\\begin{tablenotes}",
                 paste0(c("\\item",signif.symbols),collapse="\n"),

@@ -22,9 +22,9 @@
             sdigits=min(1,ddigits),
             compact=FALSE,
             sumry.multicol=FALSE,
-            toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
-            toLatex.signif.notes.type=getOption("toLatex.signif.notes.type","append"),
-            toLatex.signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\\\linewidth}"),
+            escape.tex=getOption("toLatex.escape.tex",FALSE),
+            signif.notes.type=getOption("toLatex.signif.notes.type","append"),
+            signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\\\linewidth}"),
             \dots
   )
 }
@@ -51,9 +51,9 @@
     between multi-equation models?}
     \item{sumry.multicol}{logical, should summaries enclosed into
       \code{\\multicol} commands?}
-		\item{toLatex.escape.tex}{logical, should symbols \$, \_, and \^ be
+		\item{escape.tex}{logical, should symbols \$, \_, and \^ be
 			escaped with backslashes?}
-    \item{toLatex.signif.notes.type}{character string; should be either
+    \item{signif.notes.type}{character string; should be either
       \code{"append"}, \code{"include"}, or \code{"tnotes"}. If
       \code{"append"}, (very simple) LaTeX code is appended that contains
       notes that relate significance symbols to p-values. If
@@ -63,9 +63,9 @@
       p-value notes are wrapped in a \code{tablenotes} environment. This
       requires the LaTeX package \code{threeparttable} in order to work.
     }
-    \item{toLatex.signif.notes.spec}{character string; specifies format
+    \item{signif.notes.spec}{character string; specifies format
       of cells that include notes about p-values; relevant only if
-      \code{toLatex.signif.notes.type="include"}
+      \code{signif.notes.type="include"}
     }
     \item{\dots}{further arguments, ignored. }
 }
