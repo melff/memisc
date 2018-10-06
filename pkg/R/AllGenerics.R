@@ -63,3 +63,6 @@ Write <- function(x,...) UseMethod("Write")
 # setGeneric("Write",
 #            function(object,...)
 #              standardGeneric("Write"))
+
+setGeneric("describe_structure",
+           function(x) standardGeneric("describe_structure"))

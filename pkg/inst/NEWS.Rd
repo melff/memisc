@@ -29,10 +29,15 @@
           be added soon.
     \item Optionally, \code{mtable()} shows the left-hand sides of
           model equations. This can be controlled by the optional
-          argument \code{show.eqnames} and by the global option \code{"mtable.show.eqnames"}.
+          argument \code{show.eqnames} and by the global option
+          \code{"mtable.show.eqnames"}.
+    \item Output of \code{mtable()} objects also include, if applicable,
+          a note that explains the "significance stars" for p-values.
     \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
-          created by \code{mtable} and \code{ftable} etc.       
-  }
+          created by \code{mtable} and \code{ftable} etc.
+    \item A function \code{describe_structure()}  creates a data frame
+          describing the structure of an "importer" or "data.set" object.
+        }
   }
   \subsection{IMPROVEMENTS}{
     \itemize{
