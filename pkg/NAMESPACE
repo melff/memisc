@@ -258,8 +258,7 @@ exportMethods(
     codebook,
     wild.codes,
     sample,
-    query,
-    codeplan
+    query
     )
 S3method(as.data.frame,character.item)
 S3method(as.data.frame,double.item)
@@ -382,4 +381,9 @@ S3method(repr_html,html_group)
 
 S3method(repr_latex,memisc_mtable)
 
+export(codeplan,
+       setCodeplan,
+       "codeplan<-")
 S3method(print,codeplan)
+
+exportMethods(codeplan,setCodeplan)

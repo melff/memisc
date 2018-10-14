@@ -70,3 +70,65 @@ depr_vfilter <- function(x){
     }
     else ""
 }
+
+setMethod("setCodeplan",signature(x="data.frame",value="codeplan"),
+function(x,value){
+    vn <- value$name
+    n <- intersect(names(x),vn)
+    if(length(n))
+        for(nn in n){
+            i <- match(nn,vn)              
+            x[[n]] <- setCodeplan1(x[[n]],value[i,])
+        }
+    x
+})
+
+"codeplan<-" <- function(x,value) {
+    x <- setCodeplan(x,value)
+    invisible(x)
+}
+
+setCodeplan1 <- function(x,val){
+
+    if(is.null(x)){
+        x <- vector(mode=val$mode)
+    }
+    else if(mode(x) != val$mode)
+        stop(sprintf("mode conflict: '%s' != '%s'",
+                     x$mode,val$mode))
+    l <- val$labels
+    if(nzchar(l)){
+        l <- eval(parse(text=l))
+        labels(x) <- l
+    }
+    m <- val$measurement
+    measurement(x) <- m
+    a <- val$annotation
+    if(nzchar(a)){
+        annotation(x) <- a
+    }
+    d <- val$description
+    if(nzchar(d)){
+        description(x) <- d
+    }
+    vf <- val$value.filter
+    if(nzchar(vf)){
+        vf <- paste0("list(",vf,")")
+        vf <- eval(parse(text=vf))
+        cl <- names(vf)
+        vf <- vf[[1]]
+        if(cl=="missing")
+            vf <- new("missing.values",
+                      filter=vf$values,
+                      range=vf$range
+                      )
+        else if(cl=="valid"){
+            if(length(vf$values))
+                vf <- new("valid.values",filter=vf$values)
+            else if(length(vf$range))
+                vf <- new("valid.range",filter=vf$range)
+        }
+        x@value.filter <- vf
+    }
+    x
+}

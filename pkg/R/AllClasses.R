@@ -140,3 +140,5 @@ setClass("codebookEntry",
     annotation = "character or NULL"
   )
 )
+
+setOldClass("codeplan")
