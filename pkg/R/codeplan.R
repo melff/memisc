@@ -1,4 +1,4 @@
-setMethod("describe_structure",
+setMethod("codeplan",
           signature(x="item.list"),
           function(x){
     dat <- x@.Data
@@ -11,10 +11,10 @@ setMethod("describe_structure",
                mode=sapply(dat,mode),
                measurement=sapply(dat,measurement),
                stringsAsFactors=FALSE)
-    structure(df,class=c("ds_des_df","data.frame"))
+    structure(df,class=c("codeplan","data.frame"))
 })
 
-print.ds_des_df <- function(x,...,width=getOption("width")%/%5){
+print.codeplan <- function(x,...,width=getOption("width")%/%5){
     for(i in 1:length(x))
         x[[i]] <- formatw(x[[i]],width)
     to.keep <- sapply(x,any.nzchar)

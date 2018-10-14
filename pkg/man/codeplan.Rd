@@ -1,6 +1,6 @@
-\name{describe_structure}
-\alias{describe_structure}
-\alias{describe_structure,item.list-method}
+\name{codeplan}
+\alias{codeplan}
+\alias{codeplan,item.list-method}
 \title{Describe structure of Data Sets and Importers}
 \description{
 The function \code{decribe_structure} creates a data frame that
@@ -10,8 +10,8 @@ The function \code{decribe_structure} creates a data frame that
   that delimits the output to one line per variable.
 }
 \usage{
-describe_structure(x)
-\S4method{describe_structure}{item.list}(x)
+codeplan(x)
+\S4method{codeplan}{item.list}(x)
 }
 \arguments{
   \item{x}{an object that inherits from class \code{"item.list"},
@@ -25,5 +25,5 @@ nes1948.por <- unzip(system.file("anes/NES1948.ZIP",package="memisc"),
 # Get information about the variables contained.
 nes1948 <- spss.portable.file(nes1948.por)
 
-head(describe_structure(nes1948))
+head(codeplan(nes1948))
 }

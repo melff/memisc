@@ -259,7 +259,7 @@ exportMethods(
     wild.codes,
     sample,
     query,
-    describe_structure
+    codeplan
     )
 S3method(as.data.frame,character.item)
 S3method(as.data.frame,double.item)
@@ -382,4 +382,4 @@ S3method(repr_html,html_group)
 
 S3method(repr_latex,memisc_mtable)
 
-S3method(print,ds_des_df)
+S3method(print,codeplan)
