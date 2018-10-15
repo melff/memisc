@@ -228,7 +228,6 @@ setMethod("format","codebookEntry",
       if(nzchar(nm.i)){
         annot.i <- c(
           paste("   ",nm.i,":",sep=""),
-          "",
           annot.i
           )
       }
