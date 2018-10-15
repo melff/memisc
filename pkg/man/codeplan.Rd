@@ -4,21 +4,25 @@
 \alias{codeplan<-}
 \alias{setCodeplan}
 \alias{setCodeplan,data.frame,codeplan-method}
+\alias{setCodeplan,data.set,codeplan-method}
 \title{Describe structure of Data Sets and Importers}
 \description{
-The function \code{codeplan} creates a data frame that
+  The function \code{codeplan()} creates a data frame that
   describes the structure of an item list (a \code{data.set} object or
   an \code{importer} object), so that this structure can be stored and
   and recovered. The resulting data frame has a particular print method
   that delimits the output to one line per variable.
 
-  With \code{setCodeplan} can 
+  With \code{setCodeplan} an item list structure (as returned by \code{codeplan()})
+  can be applied to a data frame or data set. It is also possible to use an
+  assignment like \code{codeplan(x) <- value} to a similar effect.
 }
 \usage{
 codeplan(x)
 \S4method{codeplan}{item.list}(x)
 setCodeplan(x,value)
 \S4method{setCodeplan}{data.frame,codeplan}(x,value)
+\S4method{setCodeplan}{data.set,codeplan}(x,value)
 codeplan(x) <- value
 }
 \arguments{
@@ -43,12 +47,47 @@ Such a data frame has the following variables:
   }
 }
 \examples{
-# Extract American National Election Study of 1948
-nes1948.por <- unzip(system.file("anes/NES1948.ZIP",package="memisc"),
-                     "NES1948.POR",exdir=tempfile())
+Data1 <- data.set(
+          vote = sample(c(1,2,3,8,9,97,99),size=300,replace=TRUE),
+          region = sample(c(rep(1,3),rep(2,2),3,99),size=300,replace=TRUE),
+          income = exp(rnorm(300,sd=.7))*2000
+          )
 
-# Get information about the variables contained.
-nes1948 <- spss.portable.file(nes1948.por)
+Data1 <- within(Data1,{
+  description(vote) <- "Vote intention"
+  description(region) <- "Region of residence"
+  description(income) <- "Household income"
+  foreach(x=c(vote,region),{
+    measurement(x) <- "nominal"
+    })
+  measurement(income) <- "ratio"
+  labels(vote) <- c(
+                    Conservatives         =  1,
+                    Labour                =  2,
+                    "Liberal Democrats"   =  3,
+                    "Don't know"          =  8,
+                    "Answer refused"      =  9,
+                    "Not applicable"      = 97,
+                    "Not asked in survey" = 99)
+  labels(region) <- c(
+                    England               =  1,
+                    Scotland              =  2,
+                    Wales                 =  3,
+                    "Not applicable"      = 97,
+                    "Not asked in survey" = 99)
+  foreach(x=c(vote,region,income),{
+    annotation(x)["Remark"] <- "This is not a real survey item, of course ..."
+    })
+  missing.values(vote) <- c(8,9,97,99)
+  missing.values(region) <- c(97,99)
+})
+cpData1 <- codeplan(Data1)
 
-head(codeplan(nes1948))
+Data2 <- data.frame(
+          vote = sample(c(1,2,3,8,9,97,99),size=300,replace=TRUE),
+          region = sample(c(rep(1,3),rep(2,2),3,99),size=300,replace=TRUE),
+          income = exp(rnorm(300,sd=.7))*2000
+          )
+codeplan(Data2) <- cpData1
+codebook(Data2)
 }

@@ -35,8 +35,10 @@
           a note that explains the "significance stars" for p-values.
     \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
           created by \code{mtable} and \code{ftable} etc.
-    \item A function \code{describe_structure()}  creates a data frame
-          describing the structure of an "importer" or "data.set" object.
+    \item A function \code{codeplan()}  creates a data frame
+          describing the structure of an "importer" or "data.set"
+          object. It is possible to copy this so described structure 
+          from one "data.set" object to another or to a data frame.
         }
   }
   \subsection{IMPROVEMENTS}{
@@ -53,8 +55,6 @@
   }
   \subsection{BUGFIXES}{
   \itemize{
-    \item Set dependency to R version >= 3.0 for this is needed for \emph{knitr} 
-    vignettes.
     \item \code{str} and \code{ls.str} are imported from the 
           \code{utils} package to prevent a NOTE in R CMD check
     \item HTML tables and lists are no loger wrapped in HTML paragraphs in \code{format_html.CodebookEntry}.
@@ -78,9 +78,6 @@
     \item \code{toLatex()} now handles matrices in data frames.
     \item \code{spss.portable.file()} now handles files with weighting
     variables and empty variable labels.
-    Importer objects created with this function also are supported by
-    bracket operators, since the C-function \code{readfixedslice} is now
-    poperly exported.
     \item \code{spss.fixed.file()} now handles files with lines that are
     longer than the number of columns specified in the columns
     definition file.

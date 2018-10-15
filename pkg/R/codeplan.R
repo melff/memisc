@@ -73,12 +73,18 @@ depr_vfilter <- function(x){
 
 setMethod("setCodeplan",signature(x="data.frame",value="codeplan"),
 function(x,value){
+    x <- as.data.set(x)
+    setCodeplan(x,value)
+})
+
+setMethod("setCodeplan",signature(x="data.set",value="codeplan"),
+function(x,value){
     vn <- value$name
     n <- intersect(names(x),vn)
     if(length(n))
         for(nn in n){
             i <- match(nn,vn)              
-            x[[n]] <- setCodeplan1(x[[n]],value[i,])
+            x[[nn]] <- setCodeplan1(x[[nn]],value[i,])
         }
     x
 })
@@ -105,7 +111,7 @@ setCodeplan1 <- function(x,val){
     measurement(x) <- m
     a <- val$annotation
     if(nzchar(a)){
-        annotation(x) <- a
+        annotation(x) <- eval(parse(text=a))
     }
     d <- val$description
     if(nzchar(d)){

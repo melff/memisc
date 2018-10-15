@@ -1,5 +1,10 @@
-2018-10-06:
-   - A 'describe_structure' function creates a data frame that
+2018-10-15:
+   - A 'setCodeplan' and 'codeplan<-' assignment function is created that
+     can be used to copy the "item structure" or code plan from one object
+     to another.
+
+2018-10-14:
+   - A 'codeplan' function creates a data frame that
      describes the structure of an "importer" or "data.set" object.
 	
 2018-10-05:
