@@ -173,11 +173,3 @@ setMethod("show","spss.system.importer",
     if(length(missval.file)) cat("\twith missing value definitions from file",sQuote(missval.file),"\n")
 })
 
-# restore_sysfile_pointer <- function(ptr){
-#     file.name <- attr(ptr,"file.name")
-#     ptr.attr <- attributes(ptr)
-#     ptr <- .Call("NewSysFile",file.name)
-#     attributes(ptr) <- ptr.attr
-#     warning("restoring ",sQuote(file.name))
-#     .Call("restore_sysfile",ptr)
-# }

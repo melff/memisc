@@ -21,7 +21,6 @@ SEXP read_sysfile_chunk (SEXP SysFile, SEXP what,
 SEXP read_sysfile_slice(SEXP SysFile, SEXP what,
                           SEXP s_vars, SEXP s_cases, SEXP s_types);
 SEXP check_pointer(SEXP ptr);
-SEXP restore_sysfile(SEXP SysFile);
 SEXP read_sysfile_header(SEXP SysFile);
 SEXP read_sysfile_var(SEXP SysFile);
 SEXP test_sysfile_int32(SEXP SysFile);
@@ -105,7 +104,6 @@ static const R_CallMethodDef CallMethods[]  = {
   {"read_sysfile_chunk", (DL_FUNC) &read_sysfile_chunk, 5},
   {"read_sysfile_slice", (DL_FUNC) &read_sysfile_slice, 5},
   {"check_pointer", (DL_FUNC) &check_pointer, 1},
-  {"restore_sysfile", (DL_FUNC) &restore_sysfile, 1},
 	{"read_sysfile_header", (DL_FUNC) &read_sysfile_header, 1},
 	{"read_sysfile_var", (DL_FUNC) &read_sysfile_var, 1},
 	{"test_sysfile_int32", (DL_FUNC) &test_sysfile_int32, 1},

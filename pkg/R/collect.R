@@ -247,8 +247,6 @@ namedlists.pairwise.identical <- function(x){
   res
 }
 
-ord.union <- function(x,y) .Call("ord_union",x,y)
-
 fill_dimnames <- function(x){
   d <- length(dim(x))
   dd <- dim(x)

@@ -1226,30 +1226,6 @@ SEXP check_pointer(SEXP ptr){
   return ScalarLogical(1);
 }
 
-SEXP restore_sysfile(SEXP SysFile){
-    PROTECT(SysFile);
-    if(TYPEOF(SysFile) != EXTPTRSXP || R_ExternalPtrTag(SysFile) != install("sys_file"))
-      error("not a SysFile");
-    sys_file *s = R_ExternalPtrAddr(SysFile);
-    SEXP tmp;
-    tmp = sys_file_restore_from_attrib(SysFile,s,"bias");
-    s->bias = (R_flt64) asReal(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"swap_code");
-    s->swap_code = asInteger(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"case_size");
-    s->case_size = asInteger(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"data_pos");
-    s->data_pos = asInteger(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"sysmis");
-    s->sysmis = (R_flt64) asReal(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"compressed");
-    s->compressed = asInteger(tmp);
-    s->buf = Calloc(s->case_size,R_flt64);
-    UNPROTECT(1);
-    return SysFile;
-}
-
-
 #define FPREP_IEEE754 754
 #define FPREP FPREP_IEEE754
 /*
