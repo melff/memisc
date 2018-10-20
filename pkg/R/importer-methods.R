@@ -149,8 +149,13 @@ setMethod("subset","importer",
         nl <- as.list(1:nvars)
         names(nl) <- names
         cols <- logical(nvars)
-        cols[eval(substitute(select), nl, parent.frame())] <- TRUE
-        select.vars <- sapply(substitute(select)[-1],as.character)
+        if (class(substitute(select)) == 'call') {
+            cols[eval(substitute(select), nl, parent.frame())] <- TRUE
+            select.vars <- sapply(substitute(select)[-1],as.character)
+        } else { # As suggested by Diogo Ferrari (https://dioferrari.com/)
+            select.vars <- select
+            cols[which(names(nl) %in% select.vars )] <- TRUE
+        }
 
     }
     if(nobs < cs) cs <- nobs

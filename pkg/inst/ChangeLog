@@ -1,3 +1,7 @@
+2018-10-20:
+   - The 'subset' method for 'importer' objects now accepts the names of
+     variables to be selected also as a character vector.
+
 2018-10-15:
    - A 'setCodeplan' and 'codeplan<-' assignment function is created that
      can be used to copy the "item structure" or code plan from one object
