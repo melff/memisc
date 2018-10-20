@@ -58,10 +58,8 @@ format_html.codebookEntry <- function(x,name="",
     counts_html <- formatC(tab[,1],format="d")
     counts_html <- html_td(counts_html,vectorize=TRUE,style=css(align.right,lrpad))
     
-    perc_html <- cbind(
-      formatC(tab[,2],format="f",digits=1),
-      formatC(tab[,3],format="f",digits=1)
-    )
+    perc_html <- formatC(tab[,-1,drop=FALSE],
+                         format="f",digits=1)
     perc_html[perc_html=="NA"] <- ""
     
     perc_html <- spltDec(perc_html)
