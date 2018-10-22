@@ -221,9 +221,22 @@ setMethod("subset","importer",
 })
 
 
+setMethod("$",signature(x="importer"),
+function(x,name){
+  x[name]              
+})
+
+setMethod("[[",signature(x="importer"),
+function(x,i,...){
+  x[i]         
+})
+
+
 setMethod("description","importer",function(x){
-  res <- lapply(x,description)
-  structure(res,class="descriptions")
+    res <- lapply(structure(x@.Data,
+                            names=x@names),
+                  description)
+    structure(res,class="descriptions")
 })
 
 setMethod("codebook","importer",function(x){
@@ -233,7 +246,9 @@ setMethod("codebook","importer",function(x){
   m <- nobs %/% cs
   r <- nobs %% cs
   nvar <- ncol(x)
-  res <- lapply(x,initcodebookEntry)
+  res <- lapply(structure(x@.Data,
+                          names=x@names),
+                initcodebookEntry)
   seekData(x)
   for(i in 1:m)
     res <- mapply(updatecodebookEntry,res,readData(x,n=cs))

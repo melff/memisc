@@ -258,7 +258,9 @@ exportMethods(
     codebook,
     wild.codes,
     sample,
-    query
+    query,
+    "[[",
+    "$"
     )
 S3method(as.data.frame,character.item)
 S3method(as.data.frame,double.item)

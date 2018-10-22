@@ -39,7 +39,10 @@
           describing the structure of an "importer" or "data.set"
           object. It is possible to copy this so described structure 
           from one "data.set" object to another or to a data frame.
-        }
+    \item New \code{$} and \code{[[} operators for "importer" objects
+          allow to create codebooks for single items/variables in 
+          imported data files.
+    }
   }
   \subsection{IMPROVEMENTS}{
     \itemize{

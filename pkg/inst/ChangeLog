@@ -1,3 +1,7 @@
+2018-10-22:
+   - Defined dollar and double-bracket operators for 'importer' objects to facilitate
+     creating codebooks for individual variables.
+
 2018-10-20:
    - The 'subset' method for 'importer' objects now accepts the names of
      variables to be selected also as a character vector.

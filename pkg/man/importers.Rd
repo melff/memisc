@@ -21,6 +21,8 @@
 \alias{[,importer,atomic,missing,ANY-method}
 \alias{[,importer,missing,atomic,ANY-method}
 \alias{[,importer,missing,missing,ANY-method}
+\alias{[[,importer-method}
+\alias{$,importer-method}
 \alias{initialize,spss.portable.importer-method}
 \alias{initialize,spss.system.importer-method}
 \alias{initialize,spss.fixed.importer-method}
