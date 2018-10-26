@@ -92,6 +92,7 @@ safe.charidx <- function(nms,i){
     attr.y <- attributes(x)
     attr.y$names <- k
     attr.y$stemplates <- attr.y$stemplates[kk]
+    attr.y$summary.stats <- attr.y$summary.stats[kk]
     attr.y$parameter.names <- i
 
     l.y <- length(y)

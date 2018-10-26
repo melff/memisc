@@ -77,6 +77,21 @@ setSummaryTemplate <- function(...){
   return(invisible(OldSummaryTemplates))
 }
 
+selectSummaryStats <- function(x,n) {
+    cls <- class(x)
+    sumstats.name <- paste0("summary.stats.",cls)
+    sumstats <- getOption(sumstats.name,TRUE)
+    if(is.character(sumstats)){
+        if(is.character(n))
+            n <- intersect(names(sumstats),n)
+        if(length(n))
+            sumstats[n]
+    }
+    else if(isTRUE(sumstats) && is.character(n))
+        n
+    else FALSE
+}
+
 prettyNames <- function(coefnames,
                         contrasts,
                         xlevels,
@@ -246,7 +261,20 @@ mtable <- function(...,
   parameter.names <- unique(unlist(parmnames))
   
   stemplates <- lapply(args,getSummaryTemplate)
-  
+  if(isTRUE(summary.stats))
+      summary.stats <- lapply(args,selectSummaryStats,TRUE)
+  else if(is.character(summary.stats))
+      summary.stats <- lapply(args,selectSummaryStats,summary.stats)
+  else if(is.list(summary.stats)){
+      tmp.summary.stats <- summary.stats
+      summary.stats <- vector(mode="list",length=length(args))
+      summary.stats[] <- tmp.summary.stats
+  } else {
+      summary.stats <- vector(mode="list",length=length(args))
+      summary.stats[] <- list(FALSE)
+  }
+      
+      
   structure(summaries,
             names=argnames,
             class="memisc_mtable",
@@ -453,6 +481,7 @@ preformat_mtable <- function(x){
     digits <- attr(x,"digits")
     stemplates <- attr(x,"stemplates")
     sdigits <- attr(x,"sdigits")
+    sumstat.selection <- attr(x,"sumstats")
     show.eqnames <- attr(x,"show.eqnames")
     
     allcompo <- unique(unlist(lapply(x,names)))
@@ -589,12 +618,9 @@ preformat_mtable <- function(x){
                                 }),
                              names=rownames(parmtab))
 
-    if(isTRUE(summary.stats) || is.character(summary.stats) && length(summary.stats)) {
+    if(length(summary.stats)) {
         sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
-        if(is.character(summary.stats))
-            sst <- lapply(sumstats,getRows,summary.stats)
-        else
-            sst <- sumstats
+        sst <- Map(getRows,sumstats,summary.stats)
 
         snames <- unique(unlist(lapply(sst,rownames)))
         nc <- lapply(parmtab[1,],ncol)

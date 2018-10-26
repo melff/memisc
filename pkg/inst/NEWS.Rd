@@ -33,6 +33,9 @@
           \code{"mtable.show.eqnames"}.
     \item Output of \code{mtable()} objects also include, if applicable,
           a note that explains the "significance stars" for p-values.
+    \item Summary statistics reported by \code{mtable()} can now be
+          selected for each object or object class (via calls to \code{opitons})
+          separately.
     \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
           created by \code{mtable} and \code{ftable} etc.
     \item A function \code{codeplan()}  creates a data frame

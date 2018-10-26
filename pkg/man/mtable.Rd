@@ -56,10 +56,16 @@ write.mtable(object,file="",
         coefficient values, whether standard errors, Wald/t-statistics,
          or significance levels are reported, etc. See \code{\link{coef.style}}.}
      \item{summary.stats}{if \code{FALSE}, no summary statistics
-        are repored. If \code{TRUE}, all summary statistics
-        produced by \code{getSummary} are reported.
-        This argument may also contain a character vector with
-        the names of the summary statistics to report}
+       are repored. If \code{TRUE} then for each object in \code{\dots}
+       either all summary statistics are reported, or those specified by
+       the option \code{"summary.stats.<cls>"}, where \code{<cls>} is
+       the class of the respective object.
+       
+       This argument may also contain a character vector with
+       the names of the summary statistics to report, or a list of
+       character vectors with names of summary statistics for each
+       object passed as argument in \code{\dots}.
+     }
      \item{signif.symbols}{a named numeric vector to specify
           the "significance levels" and corresponding symbols. 
           The numeric elements define the significance levels,
@@ -113,7 +119,8 @@ write.mtable(object,file="",
 \details{
   \code{mtable} constructs a table of estimates for regression-type models.
   \code{format.memisc_mtable} formats suitable for use with output or conversion functions
-  such as \code{print.memisc_mtable}, \code{toLatex.memisc_mtable}, or \code{write.memisc_mtable}.
+  such as \code{print.memisc_mtable}, \code{toLatex.memisc_mtable}, or
+  \code{write.memisc_mtable}.
 }
 \value{
     A call to \code{mtable} results in an object of class \code{"mtable"}
@@ -131,6 +138,14 @@ write.mtable(object,file="",
 lm0 <- lm(sr ~ pop15 + pop75,              data = LifeCycleSavings)
 lm1 <- lm(sr ~                 dpi + ddpi, data = LifeCycleSavings)
 lm2 <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+
+options(summary.stats.lm=c("R-squared","N"))
+mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2)
+
+options(summary.stats.lm=c("sigma","R-squared","N"))
+mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2)
+
+options(summary.stats.lm=NULL)
 
 mtable123 <- mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2,
     summary.stats=c("sigma","R-squared","F","p","N"))
