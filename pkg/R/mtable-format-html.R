@@ -84,7 +84,7 @@ pf_mtable_format_html <- function(x,
     l.headers <- length(headers)
     l.leaders <- length(leaders)
 
-    ncols <- sapply(pt[1,],ncol)
+    ncols <- sapply(pt[1,,drop=FALSE],ncol)
 
     sh.nonnull <- !Sapply(sh,is.null)
     need.sh <- apply(sh.nonnull,1,any)
@@ -236,7 +236,13 @@ pf_mtable_format_html <- function(x,
                                               signif.template,
                                               width=72)
 
-        totspan <- sum(sapply(res[[1]],get_colspan))
+        if(split.dec)
+            totspan <- ncols * 3
+        else
+            totspan <- ncols
+        if(l.leaders)
+            totspan <- totspan + 1
+        
         signif.symbols <- html_p(signif.symbols,style=css(sig.notes.style))
         signif.symbols <- html_td(signif.symbols,style=css(style),colspan=totspan)
         res <- c(res,list(signif.symbols))
