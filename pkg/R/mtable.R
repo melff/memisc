@@ -84,9 +84,12 @@ selectSummaryStats <- function(x,n) {
     else if(isTRUE(n)){
         cls <- class(x)
         sumstats.name <- paste0("summary.stats.",cls)
-        sumstats <- getOption(sumstats.name)
-
-        if(!length(sumstats))
+        sumstats <- lapply(sumstats.name,getOption)
+        if(length(sumstats)){
+            sumstats <- unlist(sumstats)
+            sumstats[1]
+        }
+        else
             sumstats <- getOption("summary.stats.default")
         sumstats
     }
@@ -402,7 +405,7 @@ relabel.memisc_mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
 
 pt_getrow <- function(x,i){
     y <- x[i,]
-    yisn <- sapply(y,is.null)
+    isn <- sapply(y,is.null)
     if(any(isn)) return(y[!isn])
     else return(y)
 }
