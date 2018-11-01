@@ -121,6 +121,8 @@ pf_mtable_format_latex <- function(x,
                          else paste0("\n\\multicolumn{",span.j,"}{c}{",sh.ij,"}")
                 if(escape.tex)
                     sh.ij <- LaTeXcape(sh.ij)
+                else
+                    checkLaTeXcape(sh.ij,"group headings")
                 pt.ij <- rbind(sh.ij,pt.ij)
             }
             pt.ij <- apply(pt.ij,1,paste,collapse=colsep)
@@ -166,6 +168,8 @@ pf_mtable_format_latex <- function(x,
         leaders <- gsub(" x ",interaction.sep,leaders,fixed=TRUE)
         if(escape.tex)
             leaders <- LaTeXcape(leaders)
+        else
+            checkLaTeXcape(leaders,"row leaders")
         leaders <- format(leaders,justify="left")
         res <- cbind(leaders,res)
     }
@@ -200,6 +204,8 @@ pf_mtable_format_latex <- function(x,
             header.k <- unlist(headers[[k]])
             if(escape.tex)
                 header.k <- LaTeXcape(header.k)
+            else
+                checkLaTeXcape(header.k,"column headings")
             hspan.k <- hspan[[k]]
             ghspan.k <- (ghspan[[k]]-1)*multip
             hspan.k <- hspan.k + ghspan.k 
