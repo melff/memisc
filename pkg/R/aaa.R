@@ -1,6 +1,8 @@
 
 .memiscEnv <- new.env()
 .SummaryTemplates <- list()
+.SummaryStats <- list()
+
 .CoefTemplates <- list()
 .CoefTemplates$default <- c(est="($est:#)($p:*)",
                                           se="(($se:#))")
@@ -84,6 +86,7 @@
           BIC           = "($BIC:f#)",
           N             = "($N:d)"
   )
+.SummaryStats$lm <- c("adj. R-squared","N")
 
 .SummaryTemplates$glm <-
   c(
@@ -100,6 +103,7 @@
           BIC           = "($BIC:f#)",
           N             = "($N:d)"
   )
+.SummaryStats$glm <- c("Log-likelihood","N")
 
 .SummaryTemplates$default <-
   c(
@@ -116,6 +120,7 @@
           N             = "($N:d)"
   )
 
+.SummaryStats$default <- c("Log-likelihood","N")
 
 .SummaryTemplates$mer <- .SummaryTemplates$lmer
   c(

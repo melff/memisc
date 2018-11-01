@@ -30,6 +30,9 @@ memisc_env <- environment()
           Simulation.chunk.size=1000,
           print.use.value.labels=TRUE,
           show.max.obs=25)
+
+    names(.SummaryStats) <- paste0("summary.stats.",names(.SummaryStats))
+    do.call(options,.SummaryStats)
 }
 
 

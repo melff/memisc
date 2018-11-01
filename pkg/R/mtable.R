@@ -78,20 +78,17 @@ setSummaryTemplate <- function(...){
 }
 
 selectSummaryStats <- function(x,n) {
-    cls <- class(x)
-    sumstats.name <- paste0("summary.stats.",cls)
-    sumstats <- getOption(sumstats.name,TRUE)
-    if(is.character(sumstats)){
-        if(is.character(n))
-            n <- intersect(names(sumstats),n)
-        if(length(n))
-            sumstats[n]
+    if(is.character(n)){
+        n
     }
-    else if(isTRUE(sumstats)){
-        if (is.character(n))
-            n
-        else
-            TRUE
+    else if(isTRUE(n)){
+        cls <- class(x)
+        sumstats.name <- paste0("summary.stats.",cls)
+        sumstats <- getOption(sumstats.name)
+
+        if(!length(sumstats))
+            sumstats <- getOption("summary.stats.default")
+        sumstats
     }
     else FALSE
 }
@@ -233,7 +230,7 @@ mtable <- function(...,
     args <- args[[1]]
   argnames <- names(args)
   if(!length(argnames)) {
-    m<-match.call(expand.dots=FALSE)
+    m <- match.call(expand.dots=FALSE)
     argnames <- sapply(m$...,paste)
   }
   n.args <- length(args)

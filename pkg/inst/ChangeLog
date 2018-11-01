@@ -1,6 +1,7 @@
 2018-11-01:
    - Fix formatting of results of 'mtable' without summary statistics
-   - Warn if 'toLatex' output of 'mtable' results creates 
+   - Warn if 'toLatex' output of 'mtable' results creates
+   - Define sensible defaults for the selection of summary statistics in 'mtable'
 
 2018-10-26:
    - Allow to select summary statistics for models in 'mtable' via options or

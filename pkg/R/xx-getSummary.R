@@ -53,6 +53,7 @@ getSummary.lm <- function(obj,
        call=obj$call)
 }
 
+.SummaryStats$lm <- c("R-squared","N")
 
 getSummary.glm <- function(obj,alpha=.05,...){
 

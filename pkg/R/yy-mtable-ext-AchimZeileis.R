@@ -40,6 +40,7 @@ setSummaryTemplate("ivreg" = c(
   "p" = "($p:f#)",
   "N" = "($N:d)"
 ))
+.SummaryStats$ivreg <- c("adj. R-squared","N")
 
 ## AER::tobit
 
