@@ -254,11 +254,13 @@ pf_mtable_format_print <- function(x,
         sectsep.at <- c(sectsep.at, csum)
         csum <- csum + nrow(pt[[i,1]])
     }
-    if(length(sst)){
+    if(length(sst) && any(sapply(sst,length)>0)){
         sectseps   <- c(sectseps,   sectionrule)
         sectsep.at <- c(sectsep.at, csum)
     }
 
+
+    
     res <- .insert(res,
                    c(sec.hrules.at,sectsep.at),
                    c(sec.hrules,   sectseps)

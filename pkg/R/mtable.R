@@ -87,8 +87,12 @@ selectSummaryStats <- function(x,n) {
         if(length(n))
             sumstats[n]
     }
-    else if(isTRUE(sumstats) && is.character(n))
-        n
+    else if(isTRUE(sumstats)){
+        if (is.character(n))
+            n
+        else
+            TRUE
+    }
     else FALSE
 }
 
@@ -376,7 +380,8 @@ rowexpand <- function(x,nr){
 dimnames3 <- function(x)dimnames(x)[[3]]
 
 getRows <- function(x,r){
-    r <- intersect(r,rownames(x))
+    if(is.character(r))
+        r <- intersect(r,rownames(x))
     x[r,,drop=FALSE]
 }
 get_rows <- function(x,i)try(x[i,,drop=FALSE])
@@ -400,7 +405,7 @@ relabel.memisc_mtable <- function(x,...,gsub=FALSE,fixed=!gsub,warn=FALSE){
 
 pt_getrow <- function(x,i){
     y <- x[i,]
-    isn <- sapply(y,is.null)
+    yisn <- sapply(y,is.null)
     if(any(isn)) return(y[!isn])
     else return(y)
 }
@@ -481,7 +486,6 @@ preformat_mtable <- function(x){
     digits <- attr(x,"digits")
     stemplates <- attr(x,"stemplates")
     sdigits <- attr(x,"sdigits")
-    sumstat.selection <- attr(x,"sumstats")
     show.eqnames <- attr(x,"show.eqnames")
     
     allcompo <- unique(unlist(lapply(x,names)))
@@ -549,7 +553,6 @@ preformat_mtable <- function(x){
             parmnames[[m]] <- tmp.pn
         }
         
-        
         for(n in 1:ncol(parmtab)){
             mod <- parms[[n]]
             for(m in rownames(parmtab)){
@@ -570,10 +573,6 @@ preformat_mtable <- function(x){
             }
             maxncol <- max(unlist(lapply(parmtab[,n],ncol)) )
             parmtab[,n] <- lapply(parmtab[,n],colexpand,maxncol)
-
-            sh <- sect.headers[,n]
-            maxl <- max(unlist(lapply(sh,length)))
-            sh <- lapply(sh,`length<-`,maxl)
         }
 
         for(m in rownames(sect.headers)){

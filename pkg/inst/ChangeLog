@@ -1,7 +1,10 @@
+2018-11-01:
+   - Fix formatting of results of 'mtable' without summary statistics
+
 2018-10-26:
-	 - Allow to select summary statistics for models in 'mtable' via options or
+   - Allow to select summary statistics for models in 'mtable' via options or
      list arguments.
-	
+
 2018-10-23:
    - Handle visibility of binary code symbols correctly for R releases 3.3.0 through 3.3.3
 

@@ -221,10 +221,11 @@ pf_mtable_format_html <- function(x,
         sect.at <- c(sect.at,csum)
         csum <- csum + nrow(pt[[i,1]])
     }
-    if(length(sst))
+    if(length(sst) && any(sapply(sst,length)>0))
         sect.at <- c(sect.at,csum)
     if(l.headers)
         sect.at <- c(sect.at + l.headers)
+    browser()
     for(i in sect.at)
         res[[i]] <- lapply(res[[i]],setStyle,midrule_above)
 
