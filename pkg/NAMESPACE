@@ -389,3 +389,8 @@ export(codeplan,
 S3method(print,codeplan)
 
 exportMethods(codeplan,setCodeplan)
+
+S3method(as.list,item.list)
+export(duplicated_labels)
+S3method(duplicated_labels,item)
+S3method(duplicated_labels,item.list)

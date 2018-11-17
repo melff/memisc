@@ -1,6 +1,9 @@
+2018-11-17:
+   - Added 'dublicated_labels()' function to show and and describe duplicated labels
+
 2018-11-01:
    - Fix formatting of results of 'mtable' without summary statistics
-   - Warn if 'toLatex' output of 'mtable' results creates
+   - Warn if 'toLatex' output of 'mtable' results creates unescaped TeX specials
    - Define sensible defaults for the selection of summary statistics in 'mtable'
 
 2018-10-26:

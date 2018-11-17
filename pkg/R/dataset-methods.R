@@ -647,3 +647,6 @@ setMethod("summary","data.set",
     attr(z, "class") <- c("table")
     z
 })
+
+## as.list() method
+as.list.item.list <- function(x,...)structure(x@.Data,names=x@names)

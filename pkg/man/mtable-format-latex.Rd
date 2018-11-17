@@ -51,7 +51,7 @@
     between multi-equation models?}
     \item{sumry.multicol}{logical, should summaries enclosed into
       \code{\\multicol} commands?}
-		\item{escape.tex}{logical, should symbols \$, \_, and \^ be
+		\item{escape.tex}{logical, should symbols \code{$}, \code{_}, and \code{^} be
 			escaped with backslashes?}
     \item{signif.notes.type}{character string; should be either
       \code{"append"}, \code{"include"}, or \code{"tnotes"}. If
