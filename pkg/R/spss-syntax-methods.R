@@ -40,7 +40,7 @@ spss.fixed.file <- function(
       nn <- names(vallabs)
       if(!all(nn %in% var.names)) stop("undefined variables in 'codes.file'")
       for(n in nn)
-        labels(variables[[n]]) <- vallabs[[n]]
+        suppressWarnings(labels(variables[[n]]) <- vallabs[[n]])
     } 
     if(length(missings)){
       nn <- names(missings)
@@ -60,7 +60,9 @@ spss.fixed.file <- function(
       names(variables) <- tolower(names(variables))
     }
 
-     new("spss.fixed.importer",
+    warn_if_duplicate_labels(variables)
+    
+    new("spss.fixed.importer",
       variables,
       ptr=fptr,
       columns.file=columns.file,

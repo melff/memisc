@@ -1,5 +1,7 @@
 2018-11-17:
-   - Added 'dublicated_labels()' function to show and and describe duplicated labels
+   - Added 'dublicated_labels()' function to show and and describe duplicated
+     labels
+   - Let importers give more useful warnings about duplicated labels  
 
 2018-11-01:
    - Fix formatting of results of 'mtable' without summary statistics

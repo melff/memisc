@@ -49,7 +49,7 @@ spss.portable.file <- function(
     if(length(varlabs))
       variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
     if(length(vallabs))
-      variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs)
+      suppressWarnings(variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs))
     if(length(missings))
       variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
     
@@ -63,7 +63,9 @@ spss.portable.file <- function(
     if(to.lower){
       names(variables) <- tolower(names(variables))
     }
-    
+
+    warn_if_duplicate_labels(variables)
+        
     document <- data.spec$document
     data.spec$document <- NULL
     new("spss.portable.importer",

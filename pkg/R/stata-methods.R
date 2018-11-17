@@ -15,7 +15,7 @@ Stata.file <- function(file){
     if(length(varlabs))
       variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
     if(length(vallabs))
-      variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs)
+      suppressWarnings(variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs))
     if(length(missings))
       variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
 

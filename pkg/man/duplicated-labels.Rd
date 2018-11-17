@@ -58,4 +58,9 @@ duplicated_labels(x1)
 ds <- data.set(x1,x2,x3)
 duplicated_labels(ds)
 codebook(ds)
+
+nes1948.por <- unzip(system.file("anes/NES1948.ZIP",package="memisc"),
+                     "NES1948.POR",exdir=tempfile())
+nes1948 <- spss.portable.file(nes1948.por)
+duplicated_labels(nes1948)             
 }

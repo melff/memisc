@@ -1,4 +1,4 @@
-any_dup_lab <- function(x) any(duplicated(x@.Data))
+any_dup <- function(x) length(x) && any(duplicated(x@.Data))
 
 which_dup_lab <- function(x){
     ii <- duplicated(x@.Data)
@@ -39,7 +39,7 @@ print.dupLabelsReport1 <- function(x,...){
 
 duplicated_labels.item.list <- function(x){
     ll <- lapply(as.list(x),labels)
-    ii <- sapply(ll,any_dup_lab)
+    ii <- sapply(ll,any_dup)
     ll <- ll[ii]
     d <- description(x)
     d <- d[ii]
@@ -70,5 +70,20 @@ print.dupLabelsReport <- function(x,...){
         r.i <- cbind(" ",format(n.i),format(l.i))
         r.i <- apply(r.i,1,paste,collapse=" ")
         writeLines(r.i)
+    }
+}
+
+warn_if_duplicate_labels <- function(variables){
+    ll <- lapply(variables,labels)
+    ii <- sapply(ll,any_dup)
+    if(any(ii)){
+        n <- names(variables)[ii]
+        nn <- paste(n,collapse=", ")
+        nn <- strwrap(nn,prefix="  ")
+        nn <- paste(nn,collapse="\n")
+        warning(sprintf("%d variables have duplicated labels:\n%s",
+                        length(n),
+                        nn),
+             call.=FALSE)
     }
 }
