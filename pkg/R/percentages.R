@@ -145,7 +145,7 @@ as.data.frame.xpercentage.table <- function(x,...){
   ld <- length(dx)
   lst.d <- dx[ld]
   xm <- array(x,dim=c(prod(dx[-ld]),dx[ld]))
-  tabs <- lapply(1:ld,mcol2df,
+  tabs <- lapply(1:dx[ld],mcol2df,
                  x=xm,
                  dim=dx[-ld],
                  dimnames=dn[-ld],
