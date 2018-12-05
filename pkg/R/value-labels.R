@@ -11,13 +11,18 @@ setMethod("initialize","value.labels",function(.Object,...){
   labels <- labels[ii]
   .Object@.Data <- labels
   .Object@values <- values
-  .Object
+  if(validObject(.Object)) return(.Object)
 })
 
 setValidity("value.labels",function(object){
-  if(length(object@.Data)==length(object@values)) TRUE
-  else paste("There are",length(object@values),"values, but",
-        length(object@.Data),"labels")
+    if(length(object@.Data)==length(object@values)){
+        if(length(unique(object@.Data))<=length(unique(object@values))) TRUE
+        else paste("More labels than labelled values:\n",
+                 "   ",length(unique(object@.Data)),"unique labels\n",
+                 "   ",length(unique(object@values)),"labelled values")
+    }
+    else paste("There are",length(object@values),"values, but",
+               length(object@.Data),"labels")
 })
 
 setMethod("labels","item",function(object,...)object@value.labels)
