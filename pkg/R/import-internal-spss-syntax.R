@@ -88,9 +88,11 @@ spss.parse.data.spec <- function(file){
 
 spss.parse.variable.labels <- function(file){
   text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  text <- gsub("\"\"","'",text)
+  text <- gsub("''","\"",text)
   res <- character()
+
   repeat{
-    
     keyword <- .pattern("variable\\s+labels\\s+",text,ignore.case=TRUE)
     if(!length(keyword)) break
     text <- .remainder(keyword)
@@ -111,7 +113,6 @@ spss.parse1.variable.labels <- function(text){
   # Remove leading slash stuff
   text <- sub("^\\s*/\\s*","",text)
   repeat {
-    
     if(grepl("^[ \t\r\n]*[.]",text)){
       #message("found closing dot")
       break
@@ -134,9 +135,10 @@ spss.parse1.variable.labels <- function(text){
 
 spss.parse.value.labels <- function(file){
   text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  text <- gsub("\"\"","'",text)
+  text <- gsub("''","\"",text)
   res <- list()
   repeat{
-    
     keyword <- .pattern("value\\s+labels\\s+",text,ignore.case=TRUE)
     if(!length(keyword)) break
     text <- .remainder(keyword)
