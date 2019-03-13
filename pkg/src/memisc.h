@@ -93,7 +93,6 @@ SEXP dta_ftell (SEXP s_file);
 SEXP dta_fseek (SEXP s_file, SEXP s_pos, SEXP s_whence);
 SEXP dta_feof (SEXP s_file);
 SEXP dta_skip_records(SEXP s_dta_file, SEXP s_n);
-SEXP ord_union(SEXP x, SEXP y);
 
 
 static const R_CallMethodDef CallMethods[]  = {
@@ -157,6 +156,5 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"dta_fseek", (DL_FUNC) &dta_fseek, 3},
 	{"dta_feof", (DL_FUNC) &dta_feof, 1},
 	{"dta_skip_records", (DL_FUNC) &dta_skip_records, 2},
-	{"ord_union", (DL_FUNC) &ord_union, 2},
   {NULL, NULL, 0}
 };

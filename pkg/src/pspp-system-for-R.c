@@ -747,13 +747,13 @@ SEXP read_sysfile_aux(SEXP SysFile){
       };
       PROTECT(auxdata = allocVector(INTSXP,3));
       PROTECT(auxnames = allocVector(STRSXP,3));
-      protectcounter+=2;
       for(j = 0; j < 3; j++){
         sys_read_int(INTEGER(auxdata)+j,s);
         SET_STRING_ELT(auxnames,j,mkChar(_auxnames[j]));
       }
       SET_NAMES(auxdata,auxnames);
       SET_VECTOR_ELT(data,i,auxdata);
+      UNPROTECT(2);
     }
     SET_VECTOR_ELT(ans,1,data);
     SET_STRING_ELT(names,1,mkChar("data"));

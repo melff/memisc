@@ -58,8 +58,8 @@ SEXP update_data_frame (SEXP data, SEXP with, SEXP s_hh, SEXP s_ii, SEXP s_jj, S
         x = VECTOR_ELT(data,ii);
         y = VECTOR_ELT(with,jj);
         PROTECT(y = coerceVector(y,TYPEOF(x)));
-        protectcounter++;
         SET_VECTOR_ELT(with,jj,y);
+        UNPROTECT(1);
     }
     for(i = 0; i < M; i++) INTEGER(match)[i] = -1;
     for(j = 0; j < N; j++){
@@ -168,8 +168,8 @@ SEXP update_data_frame (SEXP data, SEXP with, SEXP s_hh, SEXP s_ii, SEXP s_jj, S
       for(k = 0; k < LENGTH(res); k++){
         x = VECTOR_ELT(res,k);
         PROTECT(x = lengthgets(x,M+n_unmatched));
-        protectcounter++;
         SET_VECTOR_ELT(res,k,x);
+        UNPROTECT(1);
 #ifdef DEBUG
         Rprintf("\nx\n");            
         PrintValue(x);
