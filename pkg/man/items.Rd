@@ -24,6 +24,8 @@
 \alias{as.item,Date.item-method}
 \alias{[,item.vector,numeric,missing,missing-method}
 \alias{[,item.vector,logical,missing,missing-method}
+\alias{[,datetime.item,numeric,missing,missing-method}
+\alias{[,datetime.item,logical,missing,missing-method}
 \alias{str.double.item}
 \alias{str.integer.item}
 \alias{str.character.item}

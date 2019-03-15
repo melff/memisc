@@ -57,6 +57,8 @@
             superscript symbols. This can be set either by an explicit
             (new) argument \code{toLatex.escape.tex} or by a global option
             with the same name.
+      \item \code{spss.system.file} now translates numeric variables with any SPSS
+            date format into a "datetime.item"
     }
   }
   \subsection{BUGFIXES}{

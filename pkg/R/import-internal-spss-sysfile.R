@@ -141,3 +141,7 @@ parseSysHeader <- function(file){
 # seekSysData <- function(p)
 #   .Call("rewind_sysfile",p$file)
 
+spss_numeric_to_POSIXct <- function(x){
+    x <- as.numeric(x)
+    as.POSIXct(x, origin = "1582-10-14", tz = "GMT")
+}

@@ -37,6 +37,10 @@ spss.system.file <- function(
                           
     missings <- lapply(missings,function(x)if(!length(x$values) & !length(x$range))NULL else x)
     missings <- missings[sapply(missings,length)>0]
+
+    varprintfmt <- lapply(data.spec$variables,"[[",i="print")
+    varprintfmt <- sapply(varprintfmt,"[",i=3)
+    vardatetime <- varprintfmt %in% c(20,22:24,26:30)
     
     variables <- vector(length(types),mode="list")
     names(variables) <- names(types)
@@ -44,6 +48,10 @@ spss.system.file <- function(
     variables[types>0] <- list(new("character.item"))
     variables[types<0] <- NULL
 
+    variables[vardatetime] <- list(new("datetime.item",
+                                       tzone="GMT",
+                                       origin="1582-10-14"))
+    
     if(length(varlab.file) && check.file(varlab.file,error=TRUE)){
       message("using ",varlab.file)
       varlabs <- spss.parse.variable.labels(varlab.file)
