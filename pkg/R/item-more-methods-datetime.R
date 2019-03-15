@@ -31,6 +31,27 @@ setMethod("as.item","POSIXct",function(x,...){
 setMethod("as.item","datetime.item",as_item_item)
 
 
+setMethod("[",signature(x="datetime.item",i="numeric",j="missing",drop="missing"),function(x,i){
+    new("datetime.item",x@.Data[i],
+        origin=x@origin,
+        tzone=x@tzone,
+        value.labels=labels(x),
+        value.filter=value.filter(x),
+        measurement=measurement(x),
+        annotation=annotation(x)
+        )
+})
+
+setMethod("[",signature(x="datetime.item",i="logical",j="missing",drop="missing"),function(x,i){
+    new("datetime.item",x@.Data[i],
+        origin=x@origin,
+        tzone=x@tzone,
+        value.labels=labels(x),
+        value.filter=value.filter(x),
+        measurement=measurement(x),
+        annotation=annotation(x)
+        )
+})
 
 
 
@@ -82,7 +103,7 @@ print.datetime.item <- function(x,
       l <- length(x)
       if(compress) {
         x <- x[seq_len(min(width,l))]
-        x <- format(x,usetz=usetz,...)
+        x <- format.datetime.item(x,usetz=usetz,...)
         x <- trimws(x)
         xw <- cumsum(nchar(x,"w")+1)
         hdr <- paste(" [","1:",length(x),"]",sep="")
@@ -98,7 +119,7 @@ print.datetime.item <- function(x,
       }
       else
         print.default(
-              format(x,usetz=usetz,...),
+              format.datetime.item(x,usetz=usetz,...),
               quote=FALSE,print.gap=print.gap)
     }
     else
