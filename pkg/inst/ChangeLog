@@ -1,8 +1,12 @@
 2019-03-16:
-   - Support for date or datetime import added to 'spss.system.file' 	
-	 - Minor bugfix in printing of 'datetime.item's - added bracket method for
+   - Fixed import of value labels for string variables in 'spss.system.file'
+   - Fixed codebook representation of datetime items in SPSS system files
+
+2019-03-15:
+   - Support for date or datetime import added to 'spss.system.file' 
+   - Minor bugfix in printing of 'datetime.item's - added bracket method for
      this class of objects
-	
+
 2018-11-17:
    - Added 'dublicated_labels()' function to show and and describe duplicated
      labels

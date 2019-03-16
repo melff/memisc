@@ -152,7 +152,8 @@ setMethod("codebookEntry","datetime.item",function(x){
   filter <- x@value.filter
   spec <- c(
             "Storage mode:"=storage.mode(x),
-            "Measurement:"="Date/time"
+            "Measurement:"="Date/time",
+            "Origin:"=x@origin
             )
   if(length(filter)) spec <- c(spec,
                               switch(class(filter),
