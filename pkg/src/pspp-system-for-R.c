@@ -582,7 +582,24 @@ SEXP read_sysfile_value_labels (SEXP SysFile){
   return ans;
 }
 
-
+#define DEBUG
+SEXP num_to_string8(SEXP num_values){
+  char tmp_char[9];
+  int nlabels = length(num_values);
+  R_flt64 tmp_real;
+  int i;
+  SEXP ans;
+  PROTECT(ans = allocVector(STRSXP,nlabels));
+  memset(tmp_char,0,9);
+  for(i = 0; i < nlabels; i++){
+    tmp_real = REAL(num_values)[i];
+    memcpy(tmp_char,&tmp_real,8);
+    SET_STRING_ELT(ans,i,mkChar(tmp_char));
+  }
+  UNPROTECT(1);
+  return ans;
+}
+#undef DEBUG
 
 SEXP read_sysfile_document(SEXP SysFile){
 #ifdef DEBUG

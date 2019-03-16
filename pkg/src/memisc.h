@@ -25,6 +25,7 @@ SEXP read_sysfile_header(SEXP SysFile);
 SEXP read_sysfile_var(SEXP SysFile);
 SEXP test_sysfile_int32(SEXP SysFile);
 SEXP read_sysfile_value_labels (SEXP SysFile);
+SEXP num_to_string8(SEXP num_values);
 SEXP read_sysfile_document(SEXP SysFile);
 SEXP read_sysfile_aux(SEXP SysFile);
 SEXP read_sysfile_dict_term (SEXP SysFile);
@@ -107,6 +108,7 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"read_sysfile_var", (DL_FUNC) &read_sysfile_var, 1},
 	{"test_sysfile_int32", (DL_FUNC) &test_sysfile_int32, 1},
 	{"read_sysfile_value_labels", (DL_FUNC) &read_sysfile_value_labels, 1},
+	{"num_to_string8", (DL_FUNC) &num_to_string8, 1},
 	{"read_sysfile_document", (DL_FUNC) &read_sysfile_document, 1},
 	{"read_sysfile_aux", (DL_FUNC) &read_sysfile_aux, 1},
 	{"read_sysfile_dict_term", (DL_FUNC) &read_sysfile_dict_term, 1},

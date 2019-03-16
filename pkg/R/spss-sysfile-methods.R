@@ -26,6 +26,9 @@ spss.system.file <- function(
                         ans
                       })
     vallabs <- unlist(vallab.tmp,recursive=FALSE)
+    names.vallabs <- names(vallabs)
+    string.vallabs <- types[names.vallabs] > 0
+    vallabs[string.vallabs] <- lapply(vallabs[string.vallabs],spss.string.vallabs)
     
     missings <- mapply(function(v,r)list(values=v,range=r),
                           data.spec$missings$values,
@@ -51,7 +54,7 @@ spss.system.file <- function(
     variables[vardatetime] <- list(new("datetime.item",
                                        tzone="GMT",
                                        origin="1582-10-14"))
-    
+
     if(length(varlab.file) && check.file(varlab.file,error=TRUE)){
       message("using ",varlab.file)
       varlabs <- spss.parse.variable.labels(varlab.file)

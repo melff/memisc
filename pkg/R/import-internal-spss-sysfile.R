@@ -141,7 +141,13 @@ parseSysHeader <- function(file){
 # seekSysData <- function(p)
 #   .Call("rewind_sysfile",p$file)
 
-spss_numeric_to_POSIXct <- function(x){
-    x <- as.numeric(x)
-    as.POSIXct(x, origin = "1582-10-14", tz = "GMT")
-}
+# spss_numeric_to_POSIXct <- function(x){
+#     x <- as.numeric(x)
+#     as.POSIXct(x, origin = "1582-10-14", tz = "GMT")
+# }
+
+spss.string.vallabs <- function(vallab)
+    structure(
+        trimws(.Call("num_to_string8",vallab)),
+        names=names(vallab)
+    )
