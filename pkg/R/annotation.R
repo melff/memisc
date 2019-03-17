@@ -43,8 +43,9 @@ setMethod("annotation<-",signature(x="vector",value="annotation"),function(x,val
 # })
 
 description <- function(x){
-  d <- annotation(x)["description"]
-  if(is.na(d)) NULL else unname(d)
+    d <- annotation(x)["description"]
+    if(!length(d)) return(NULL)
+    if(is.na(d)) NULL else unname(d)
 }
 setGeneric("description",function(x)standardGeneric("description"))
 

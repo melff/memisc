@@ -45,6 +45,8 @@
     \item New \code{$} and \code{[[} operators for "importer" objects
           allow to create codebooks for single items/variables in 
           imported data files.
+    \item New operators \code{\%#\%}, \code{\%##\%}, and \code{\%@\%} to
+          manipulate annotations and other attributes.
     }
   }
   \subsection{IMPROVEMENTS}{
@@ -89,6 +91,8 @@
     \item \code{spss.fixed.file()} now handles files with lines that are
     longer than the number of columns specified in the columns
     definition file.
+    \item \code{spss.system.file()} now correctly imports value labels
+           of string variables.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

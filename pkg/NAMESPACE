@@ -397,3 +397,10 @@ S3method(duplicated_labels,item.list)
 
 S3method(print,dupLabelsReport)
 S3method(print,dupLabelsReport1)
+
+export(
+    "%#%",
+    "%##%",
+    "%@%",
+    "%@%<-"
+)

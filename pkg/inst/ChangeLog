@@ -1,4 +1,7 @@
 2019-03-16:
+   - Added syntactical sugar to manipulate annotations and attributes.
+
+2019-03-16:
    - Fixed import of value labels for string variables in 'spss.system.file'
    - Fixed codebook representation of datetime items in SPSS system and portable files
    - Support for date or datetime import added to 'spss.portable.file' 
