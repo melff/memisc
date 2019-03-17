@@ -15,6 +15,14 @@ spss.portable.file <- function(
     variables <- vector(length(types),mode="list")
     variables[types==0] <- list(new("double.item"))
     variables[types>0] <- list(new("character.item"))
+
+    varprintfmt <- lapply(data.spec$dictionary,"[[",i="printformat")
+    varprintfmt <- sapply(varprintfmt,"[",i=1)
+    vardatetime <- varprintfmt %in% c(20,22:24,26:30,38,39)
+    variables[vardatetime] <- list(new("datetime.item",
+                                       tzone="GMT",
+                                       origin="1582-10-14"))
+
     names(variables) <- names(types)
     
     varlabs <- lapply(data.spec$dictionary,"[[",i="label")

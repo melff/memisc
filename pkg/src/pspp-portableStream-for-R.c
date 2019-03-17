@@ -108,13 +108,18 @@ static const unsigned char Por2int_tab[256] =
     255,255,255,255,255,255
   };
 
-// #define DEBUG
-int Por2int(int len, char* text){
-  int i, curr, target, stop, sign;
+/* #define DEBUG */
+double Por2int(int len, char* text){
+  int i, stop, sign;
+  double curr, target;
   sign = 1;
   curr = 1;
   target = 0;
   stop = 0;
+#ifdef DEBUG
+  Rprintf("\nPor2int ----------------------------");
+  Rprintf("\n input = %s\n",text);
+#endif
   if(*text=='-'){
     sign = -1;
     stop = 1;
@@ -123,8 +128,13 @@ int Por2int(int len, char* text){
 #ifdef DEBUG
     Rprintf("Source: %c\t",text[i]);
     Rprintf("Digit: %d\n",Por2int_tab[(int)text[i]]);
+    Rprintf("Current: %f\n",curr);
+    Rprintf("Update: %f\n",curr*(int)Por2int_tab[(int)text[i]]);
 #endif
     target += curr*(int)Por2int_tab[(int)text[i]];
+#ifdef DEBUG
+    Rprintf("Target: %f\t",target);
+#endif
     curr *= 30;
   }
   return sign*target;
@@ -134,6 +144,10 @@ double Por2mantissa(int len, char* text){
   int i;
   double curr = 1./30., target;
   target = 0;
+#ifdef DEBUG
+  Rprintf("\nPor2mantissa ----------------------------");
+  Rprintf("\n input = %s\n",text);
+#endif
   for(i = 0; i < len ; i++){
 #ifdef DEBUG
     Rprintf("Source: %c\t",text[i]);
@@ -163,7 +177,7 @@ double Por2double(int len, char* text){
   double result = 0;
 #ifdef DEBUG
   Rprintf("\nPor2double ----------------------------");
-  Rprintf("\n input = %s",text);
+  Rprintf("\n input = %s\n",text);
 #endif
   if(*text == '*') return NA_REAL;
   if(*text == '+') {
@@ -236,6 +250,7 @@ double Por2double(int len, char* text){
     return result;
 }
 /** porStreamBuf **/
+#undef DEBUG
 
 #define BUFSIZE 85
 
@@ -599,10 +614,10 @@ int readIntPorStream1 (porStreamBuf *b){
 #endif
     int len = (int)strlen(ans);
 #ifdef DEBUG
-    Rprintf("\nresult =  %d",Por2int(len,ans));
+    Rprintf("\nresult =  %d",(int)Por2int(len,ans));
 #endif
 
-    return Por2int(len,ans);
+    return (int)Por2int(len,ans);
 }
 
 

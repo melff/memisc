@@ -43,7 +43,7 @@ spss.system.file <- function(
 
     varprintfmt <- lapply(data.spec$variables,"[[",i="print")
     varprintfmt <- sapply(varprintfmt,"[",i=3)
-    vardatetime <- varprintfmt %in% c(20,22:24,26:30)
+    vardatetime <- varprintfmt %in% c(20,22:24,26:30,38,39)
     
     variables <- vector(length(types),mode="list")
     names(variables) <- names(types)
