@@ -53,7 +53,7 @@ writeLines(as.character(codebook(ZA5302)),
 
 # Write out the description of the varialbes (their 'variable labels')
 writeLines(as.character(description(ZA5302)),
-           con="ZA5302-description.txt")
+            con="ZA5302-description.txt")
 }
 }
 \keyword{misc}

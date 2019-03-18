@@ -149,7 +149,6 @@ str(Data)
 summary(Data)
 
 \dontrun{
-
 # If we want to 'View' a data set we can use 'dsView'
 dsView(Data)
 # Works also, but changes the data set into a data frame first:

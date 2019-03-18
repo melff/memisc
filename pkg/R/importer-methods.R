@@ -291,7 +291,7 @@ updatecodebookEntry <- function(cbe,x){
     interval=,ratio=updatecodebookStatsMetric(cbe,x),
     `Date/time`=updatecodebookStatsDatetime(cbe,x)
   )
-  if(!length(res)) browser()
+  #if(!length(res)) browser()
   res
 }
 

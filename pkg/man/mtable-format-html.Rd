@@ -67,8 +67,14 @@ mtable123 <- mtable("Model 1"=lm0,"Model 2"=lm1,"Model 3"=lm2,
                       ddpi = "Growth rate of real per-capita disp. income"
 ))
 
+# Use HTML entity '&minus;' for minus sign
+options(html.use.ampersand=TRUE)
 show_html(mtable123)
 show_html(mtable123[1:2],
           sig.notes.style=c(width="30ex"))
+
+# Use unicode for minus sign (default)
+options(html.use.ampersand=FALSE)
+show_html(mtable123)
 }
 

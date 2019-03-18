@@ -5,9 +5,9 @@ LaTeXcape <- function(x){
 }
 
 checkLaTeXcape <- function(x,where){
-    do.warn <- grepl("$",x,fixed=TRUE)
-    do.warn <- do.warn || grepl("_",x,fixed=TRUE)
-    do.warn <- do.warn || grepl("^",x,fixed=TRUE)
+    do.warn <- any(grepl("$",x,fixed=TRUE))
+    do.warn <- do.warn || any(grepl("_",x,fixed=TRUE))
+    do.warn <- do.warn || any(grepl("^",x,fixed=TRUE))
     if(do.warn)
         warning("Unescaped TeX special in ",where)
 }

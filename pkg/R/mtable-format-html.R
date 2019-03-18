@@ -225,7 +225,7 @@ pf_mtable_format_html <- function(x,
         sect.at <- c(sect.at,csum)
     if(l.headers)
         sect.at <- c(sect.at + l.headers)
-    browser()
+    #browser()
     for(i in sect.at)
         res[[i]] <- lapply(res[[i]],setStyle,midrule_above)
 

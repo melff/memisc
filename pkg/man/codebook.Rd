@@ -79,7 +79,7 @@ description(Data)
 codebook(Data)
 
 \dontrun{
-Write(descrition(Data),
+Write(description(Data),
            file="Data-desc.txt")
 Write(codebook(Data),
            file="Data-cdbk.txt")
