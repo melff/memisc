@@ -11,6 +11,9 @@
    - Minor bugfix in printing of 'datetime.item's - added bracket method for
      this class of objects
 
+2019-03-14:
+   - Fixed issues flagged by Tomas Kalibera's rchk utility
+
 2018-11-17:
    - Added 'dublicated_labels()' function to show and and describe duplicated
      labels

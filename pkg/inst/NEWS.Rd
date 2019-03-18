@@ -92,7 +92,9 @@
     longer than the number of columns specified in the columns
     definition file.
     \item \code{spss.system.file()} now correctly imports value labels
-           of string variables.
+    of string variables.
+    \item Some PROTECTION issus in the C-source flagged by Tomas
+    Kalibera's \code{rchk} utility are fixed.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{
