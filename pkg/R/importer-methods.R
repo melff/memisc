@@ -258,28 +258,32 @@ setMethod("codebook","importer",function(x){
   new("codebook",res)
 })
 
-# initcodebookEntry <- function(x){
-#   annotation <- annotation(x)
-#   filter <- x@value.filter
-#   spec <- c(
-#     "Storage mode:"=storage.mode(x),
-#     "Measurement:"=measurement(x)
-#   )
-#   if(length(filter)) spec <- c(spec,
-#                                switch(class(filter),
-#                                       missing.values = c("Missing values:" = format(filter)),
-#                                       valid.values   = c("Valid values:"   = format(filter)),
-#                                       valid.range    = c("Valid range:"    = format(filter))
-#                                ))
-#   new("codebookEntry",
-#       spec = spec,
-#       stats = list(),
-#       annotation = annotation
-#   )
-# }
-
 initcodebookEntry <- function(x){
-    codebookEntry(x)
+  annotation <- annotation(x)
+  filter <- x@value.filter
+  spec <- c(
+    "Storage mode:"=storage.mode(x),
+    "Measurement:"=measurement(x)
+  )
+  if(length(filter)) spec <- c(spec,
+                               switch(class(filter),
+                                      missing.values = c("Missing values:" = format(filter)),
+                                      valid.values   = c("Valid values:"   = format(filter)),
+                                      valid.range    = c("Valid range:"    = format(filter))
+                               ))
+  if(spec["Storage mode:"] == "character")
+      stats <- initcodebookStatsChar(x)
+  else
+      stats <- switch(spec["Measurement:"],
+                     nominal=,ordinal=initcodebookStatsCateg(x),
+                     interval=,ratio=initcodebookStatsMetric(x),
+                     `Date/time`=initcodebookStatsDatetime(x)
+  )
+  new("codebookEntry",
+      spec = spec,
+      stats = stats,
+      annotation = annotation
+  )
 }
 
 
@@ -295,6 +299,8 @@ updatecodebookEntry <- function(cbe,x){
   res
 }
 
+
+initcodebookStatsCateg <- function(x) list(tab=integer(0))
 
 updatecodebookStatsCateg <- function(cbe,x){
   tab <- Table(x,style="codebook")
@@ -315,6 +321,16 @@ updatecodebookStatsCateg <- function(cbe,x){
              else tab
   cbe@stats <- stats
   cbe
+}
+
+initcodebookStatsMetric <- function(x){
+    stats <- list()
+    if(length(x@value.labels))
+        stats$tab <- integer(0)
+    stats$moments <- numeric(0)
+    stats$range <- numeric(0)
+    stats$missings <- integer(0)
+    stats
 }
 
 updatecodebookStatsMetric <- function(cbe,x){
@@ -364,6 +380,15 @@ updatecodebookStatsMetric <- function(cbe,x){
   cbe
 }
 
+initcodebookStatsDatetime <- function(x){
+    stats <- list()
+    stats$moments <- numeric(0)
+    stats$range <- numeric(0)
+    stats$missings <- integer(0)
+    stats
+}
+
+
 updatecodebookStatsDatetime <- function(cbe,x){
   stats <- cbe@stats
   miss <- is.missing(x)
@@ -379,6 +404,16 @@ updatecodebookStatsDatetime <- function(cbe,x){
                     else c(miss,NAs)
   cbe@stats <- stats
   cbe
+}
+
+initcodebookStatsChar <- function(x){
+    stats <- list()
+    if(length(x@value.labels))
+        stats$tab <- integer(0)
+    stats$moments <- numeric(0)
+    stats$range <- numeric(0)
+    stats$missings <- integer(0)
+    stats
 }
 
 
