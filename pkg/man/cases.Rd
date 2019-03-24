@@ -2,9 +2,10 @@
 \alias{cases}
 \title{Distinguish between Cases Specified by Logical Conditions}
 \description{
-  \code{cases} allows to simultaneously several cases determined
-  by logical conditions. It can be used to code these case into
-  a factor or as a multi-condition generalization of \code{\link{ifelse}}
+  \code{cases} allows to distinguish several cases defined logical
+  conditions. It can be used to code these cases into a vector. The
+  function can be considered as a multi-condition generalization of
+  \code{\link{ifelse}}.
   }
 \usage{
 cases(\dots,check.xor)
