@@ -110,10 +110,11 @@ percentages.formula <- function(obj,data=parent.frame(),weights=NULL,...){
     else 
       allv.formula <- obj
     
-    if(length(weights))
-      allv.formula <- reformulate(all.vars(allv.formula),
-                                  response=weights)
-    
+    if(!missing(weights)){
+          weights <- deparse(substitute(weights))
+          allv.formula <- reformulate(all.vars(allv.formula),
+                                      response=weights)
+    }
     my.call <- match.call()
     xtc <- my.call
     ii <- match(names(formals(stats::xtabs)),names(xtc),0L)
