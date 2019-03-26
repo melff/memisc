@@ -47,8 +47,8 @@ percentages(obj, \dots)
   the confidence intervals.}
   \item{data}{a contingency table (an object that inherits from "table")
    or a data frame or an object coercable into a data frame.}
-  \item{weights}{an optional character string with the name 
-  of a variable containing weights.}
+  \item{weights}{an optional vector of weights. Should be NULL or a
+    numeric vector.}
   \item{x}{an object coerced into a data frame.}
   \item{\dots}{Further arguments, ignored.}
 }
@@ -79,7 +79,7 @@ percentages(Admit~Gender,data=UCBAdmissions)
 100*prop.table(margin.table(UCBAdmissions,c(1,3)),2)
 percentages(Admit~Dept,data=UCBAdmissions)
 percentages(Admit~Dept,data=as.data.frame(UCBAdmissions),
-            weights="Freq")
+            weights=Freq)
 
 # Standard errors and confidence intervals
 percentages(Admit~Dept,data=UCBAdmissions,se=TRUE)
