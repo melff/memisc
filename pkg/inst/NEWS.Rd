@@ -95,6 +95,9 @@
     of string variables.
     \item Some PROTECTION issus in the C-source flagged by Tomas
     Kalibera's \code{rchk} utility are fixed.
+    \item If "data.set" objects are combined and succeeding objects contain
+    "items" not contained in the preceding ones, the result now will
+    still be a valid "data.set" object.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

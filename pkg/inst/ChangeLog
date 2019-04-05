@@ -1,3 +1,9 @@
+
+2019-04-05:
+   - Fixed handling of S4 objects in collect(): If the first couple of
+     elements are NA and the non-NA element is an S4 object (e.g. of class
+     "item"), the result is now made sure to be an S4 object.
+	
 2019-03-16:
    - Added syntactical sugar to manipulate annotations and attributes.
 

@@ -117,6 +117,11 @@ f1 <- gl(3,5,labels=letters[1:3])
 f2 <- gl(3,6,labels=letters[1:3])
 collect(f1=table(f1),f2=table(f2))
 
+ds1 <- data.set(x = 1:3)
+ds2 <- data.set(x = 4:9,
+                y = 1:6)
+collect(ds1,ds2)
+
 }
 \keyword{utilities}
 \keyword{manip}
