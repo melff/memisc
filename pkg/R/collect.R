@@ -223,6 +223,8 @@ collOne <- function(vecs,source,nrow.items,varname,fussy=FALSE,warn=TRUE){
                   )
   res <- unsplit(res,source)
   attributes(res) <- attributes(vecs[[first.nonempty]])
+  if(isS4(vecs[[first.nonempty]]))
+      res <- asS4(res)
   res
 }
 
