@@ -111,7 +111,7 @@ The tools in this package can be grouped into four major categories:
   can be reported conditional on levels of factors. Also conditional
   percentages of a factor can be obtained using this function.
 
-  In addition an \code{Aggragate} 
+  In addition an \code{Aggregate} 
   function is provided, which has the same syntax as \code{genTable}, but
   gives a data frame of descriptive statistics instead of a \code{table}
   object. 
