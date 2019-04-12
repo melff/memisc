@@ -1,4 +1,9 @@
 to.data.frame <- function(X,as.vars=1,name="Freq"){
+  if(is.character(as.vars)){
+      nms <- names(dimnames(X))
+      if(!(as.vars %in% nms)) stop("'",as.vars,"' is not a known dim extent")
+      as.vars <- match(as.vars,nms)
+  }
   if(is.atomic(X)){
     as.vars <- as.vars[1]
     if(as.vars==0){

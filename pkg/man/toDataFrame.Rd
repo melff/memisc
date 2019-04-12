@@ -12,8 +12,13 @@ to.data.frame(X,as.vars=1,name="Freq")
 }
 \arguments{
   \item{X}{an array.}
-  \item{as.vars}{a numeric value; indicates the dimensional extend
-    which defines the variables. Takes effect only if \code{X} is 
+  \item{as.vars}{a numeric value or a character string.
+    If it is a numeric value then it indicates the dimensional extend
+    which defines the variables. If it is a character string then it is
+    matched against the names of the dimenstional extents. This is
+    applicable e.g. if \code{X} is a contingency table and the
+    dimensional extents are named after the cross-classified factors.
+    Takes effect only if \code{X} is 
     an atomic array. If \code{as.vars} equals zero, a new variable
     is created that contains the values of the array, that is,
     \code{to.data.frame} acts on the array \code{X}
@@ -42,5 +47,7 @@ Stest2.1 <- Lapply(berktest1,function(x)predict(x,,se.fit=TRUE)[c("fit","se.fit"
 to.data.frame(Stest1)
 to.data.frame(Stest2,as.vars=2)
 to.data.frame(Stest2.1)
+# Recasting a contingency table
+to.data.frame(UCBAdmissions,as.vars="Admit")
 }
 \keyword{manip}
