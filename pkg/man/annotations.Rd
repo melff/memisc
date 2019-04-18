@@ -5,6 +5,7 @@
 \alias{annotation,data.set-method}
 \alias{annotation<-}
 \alias{annotation<-,ANY,character-method}
+\alias{annotation<-,ANY,annotation-method}
 \alias{annotation<-,item,annotation-method}
 \alias{annotation<-,vector,annotation-method}
 \alias{description}
@@ -45,6 +46,7 @@ annotation(x)
 \S4method{annotation}{data.set}(x)
 annotation(x)<-value
 \S4method{annotation}{ANY,character}(x)<-value
+\S4method{annotation}{ANY,annotation}(x)<-value
 \S4method{annotation}{item,annotation}(x)<-value
 \S4method{annotation}{vector,annotation}(x)<-value
 

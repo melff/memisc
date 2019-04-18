@@ -14,33 +14,10 @@ setMethod("annotation<-",signature(x="item",value="annotation"),function(x,value
   x
 })
 
-setMethod("annotation<-",signature(x="vector",value="annotation"),function(x,value){
+setMethod("annotation<-",signature(x="ANY",value="annotation"),function(x,value){
   attr(x,"annotation") <- value
   x
 })
-
-# 
-# setMethod("description","ANY",function(x)NULL)
-# setMethod("description","item",function(x){
-#   annot <- x@annotation
-#   if("description" %in% names(annot)) annot["description"]
-#   else NULL
-# })
-# 
-# 
-# setMethod("description<-",signature(x="vector",value="character"),function(x,value){
-#   annotation(x) <- c(description=value)
-#   x
-# })
-# 
-# 
-# setMethod("description<-",signature(x="item",value="character"),function(x,value){
-#   if(!length(x@annotation))
-#     x@annotation <- new("annotation",structure(as.character(value),names=names(value)))
-#   else
-#     x@annotation["description"] <- as.character(value)
-#   x
-# })
 
 description <- function(x){
     d <- annotation(x)["description"]
