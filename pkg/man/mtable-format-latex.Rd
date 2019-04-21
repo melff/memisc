@@ -23,8 +23,8 @@
             compact=FALSE,
             sumry.multicol=FALSE,
             escape.tex=getOption("toLatex.escape.tex",FALSE),
-            signif.notes.type=getOption("toLatex.signif.notes.type","append"),
-            signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\\\linewidth}"),
+            signif.notes.type=getOption("toLatex.signif.notes.type","include"),
+            signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.5\\\\linewidth}"),
             \dots
   )
 }
@@ -54,11 +54,12 @@
 		\item{escape.tex}{logical, should symbols \code{$}, \code{_}, and \code{^} be
 			escaped with backslashes?}
     \item{signif.notes.type}{character string; should be either
-      \code{"append"}, \code{"include"}, or \code{"tnotes"}. If
+      \code{"include"},\code{"append"}, \code{"drop"},  or \code{"tnotes"}. If
       \code{"append"}, (very simple) LaTeX code is appended that contains
       notes that relate significance symbols to p-values. If
       \code{"include"}, the LaTeX table will include a (multi-column)
-      cell with these notes. If \code{"tnotes"}, the exported LaTeX
+      cell with these notes. If \code{"drop"}, notes will not be added.
+      If \code{"tnotes"}, the exported LaTeX
       table is wrapped in a \code{threeparttable} environment and the
       p-value notes are wrapped in a \code{tablenotes} environment. This
       requires the LaTeX package \code{threeparttable} in order to work.

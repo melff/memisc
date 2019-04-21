@@ -16,7 +16,7 @@ mtable_format_latex <- function(x,
           sumry.multicol=FALSE,
           escape.tex=getOption("toLatex.escape.tex",FALSE),
           signif.notes.type=getOption("toLatex.signif.notes.type","include"),
-          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
+          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.5\\linewidth}"),
           ...)
     pf_mtable_format_latex(preformat_mtable(x),
           useDcolumn=useDcolumn,
@@ -56,7 +56,7 @@ pf_mtable_format_latex <- function(x,
           sumry.multicol=FALSE,
           escape.tex=getOption("toLatex.escape.tex",FALSE),
           signif.notes.type=getOption("toLatex.signif.notes.type","include"),
-          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
+          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.5\\linewidth}"),
           ...
           ){
 
