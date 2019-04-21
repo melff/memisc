@@ -15,7 +15,7 @@ mtable_format_latex <- function(x,
           compact=FALSE,
           sumry.multicol=FALSE,
           escape.tex=getOption("toLatex.escape.tex",FALSE),
-          signif.notes.type=getOption("toLatex.signif.notes.type","append"),
+          signif.notes.type=getOption("toLatex.signif.notes.type","include"),
           signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
           ...)
     pf_mtable_format_latex(preformat_mtable(x),
@@ -55,13 +55,13 @@ pf_mtable_format_latex <- function(x,
           compact=FALSE,
           sumry.multicol=FALSE,
           escape.tex=getOption("toLatex.escape.tex",FALSE),
-          signif.notes.type=getOption("toLatex.signif.notes.type","append"),
+          signif.notes.type=getOption("toLatex.signif.notes.type","include"),
           signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.35\\linewidth}"),
           ...
           ){
 
     signif.notes.type <- match.arg(signif.notes.type,
-                                           c("append","include","tnotes"))
+                                           c("include","drop","append","tnotes","drop"))
     
     colsep <- " & "
     rowsep <- "\n"
@@ -316,7 +316,7 @@ pf_mtable_format_latex <- function(x,
     if(length(signif.symbols)){
         if(signif.notes.type=="append"){
             signif.symbols <- paste0(signif.symbols,collapse="\n")
-            res <- c(res,signif.symbols)
+            res <- c(res,"\\par",signif.symbols,"\\par")
         }
         else if(signif.notes.type=="tnotes"){
             signif.symbols <- c(
