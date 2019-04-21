@@ -62,6 +62,7 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
       res[conditions[,i]] <- values[conditions[,i],i]
     }
     res[na.cond] <- as.vector(NA,mode=storage.mode(values))
+    res[done==0] <- as.vector(NA,mode=storage.mode(values))
     if(length(cond.names) && all(nzchar(cond.names))){
         uq.values <- drop(unique(values))
         if(length(uq.values)==length(cond.names))
@@ -106,6 +107,7 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
       res[conditions[,i]] <- i
     }
     res[na.cond] <- NA_integer_
+    res[done==0] <- NA_integer_
     factor(res,levels=codes,labels=labels)
   }
   else stop("inconsistent arguments to 'cases'")
