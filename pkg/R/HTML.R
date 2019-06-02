@@ -30,7 +30,7 @@ html <- function(tag,...,.content=NULL,linebreak=FALSE){
 }
 
 print.html_elem <- function(x,...) 
-  cat(as.character(x),...)
+  cat(as.character(x),"\n",...)
 
 as.character.html_elem <- function(x,...){
   out <- paste0("<",x$tag)
@@ -76,8 +76,12 @@ content <- function(x) x$content
   x
 }
 
-attribs <- function(x) 
-  structure(x$attributes,class="html_attributes")
+attribs <- function(x){
+    a <- x$attributes
+    if(!length(a))
+        a <- list()
+    structure(a,class="html_attributes")
+}
 
 "attribs<-" <- function(x,value){
   x$attributes <- value
@@ -121,7 +125,7 @@ as.character.css <- function(x,...){
   paste0(n,": ",x,";")
 }
 print.css <- function(x,...)
-  cat(as.character(x),...)
+  cat(as.character(x),"\n",...)
 
 
 style <- function(x){
