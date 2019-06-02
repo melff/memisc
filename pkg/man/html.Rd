@@ -41,26 +41,25 @@ The functions described here form building blocks for
 the \code{\link{format_html}} methods functions for \code{codebook},
 \code{ftable}, \code{ftable_matrix}, and \code{mtable} objects, etc.
 
-The most basic of these functions is \code{html} which constructs
-an object that represents a minimal piece of HTML code, an object
-that is member of class \code{"html_elem"}. Yet unlike a 
-character string containing HTML code, the resulting code element can 
-relatively easily modified using the other functions presented here.
-The actual code is created, once \code{as.character} is applied to
-objects representing HTML code.
+The most basic of these functions is \code{html}, which constructs an
+object that represents a minimal piece of HTML code and is member of the
+class \code{"html_elem"}. Unlike a character string containing HTML
+code, the resulting code element can relatively easily modified using
+other functions presented here. The actual code is created when the
+function \code{as.character} is applied to these objects.
 
-Larger sequences of HTML code can be prepared just by 
+Longer sequences of HTML code can be prepared by 
 concatenating them with \code{c}, or by \code{html_group},
 or by applying \code{as.html_group} to a list of 
 \code{"html_elem"} objects. All these result in objects
 of class \code{"html_group"}.
 
-Attributes (such as class, id etc.) of HTML elements can be added to
-the call to \code{html}, but can also later recalled or modified with 
-\code{attribs} or \code{setAttribs}. 
-A potentially important attribute is of course the style
-attribute, which can contain CSS styling. It can be recalled or modified with \code{style} or \code{setStyle}. Styling strings can also 
-be created with \code{hmtl_style} or \code{as.css}
+Attributes (such as class, id etc.) of HTML elements can be added to the
+call to \code{html}, but can also later recalled or modified with
+\code{attribs} or \code{setAttribs}. An important attribute
+is the style attribute, which can contain CSS styling. It can
+be recalled or modified with \code{style} or \code{setStyle}. Styling
+strings can also be created with \code{hmtl_style} or \code{as.css}
 
 }
 \usage{
@@ -202,23 +201,25 @@ as.css(c("background-color"="black",
 
 
 Hello <- "Hello World!"
-Hello <- html("p",Hello)
+Hello <- html("p",Hello,linebreak=c(TRUE,TRUE))
 style(Hello) <- c(color="white",
                   "font-size"="40px",
                   "text-align"="center")
-
+     
 Link <- html("a","More examples here ...",
-              href="http://elff.eu/software/memisc",
-              title="More examples here ...",
-              style=css(color="white"))
-Link <- html("p"," (",Link,")")
+             href="http://elff.eu/software/memisc",
+             title="More examples here ...",
+             style=css(color="white"),
+             linebreak=c(TRUE,FALSE))
+Link <- html("p"," (",Link,")",linebreak=c(TRUE,TRUE))
 style(Link) <- c(color="white",
                  "font-size"="15px",
                  "text-align"="center")
-                  
-Hello <- html("div",c(Hello,Link))
+
+Hello <- html("div",c(Hello,Link),linebreak=c(TRUE,TRUE))
 style(Hello) <- c("background-color"="#160666",
                   padding="20px")
+Hello
 
 show_html(Hello)
 

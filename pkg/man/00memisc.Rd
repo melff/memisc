@@ -2,7 +2,7 @@
 \docType{package}
 \alias{memisc-package}
 \alias{memisc}
-\title{Introduction to the `memisc' Package}
+\title{Introduction to the 'memisc' Package}
 \description{This package collects an assortment of tools that are intended to make
 work with \code{R} easier for the author of this package
 and are submitted to the public in the hope that they will be also be useful to others.
@@ -16,8 +16,7 @@ The tools in this package can be grouped into four major categories:
 }
 }
 \section{Data preparation and management}{
-\strong{Survey Items}
-
+\subsection{Survey Items}{
   \code{memisc} provides facilities to work with what users from other
   packages like SPSS, SAS, or Stata know as `variable labels', `value labels'
   and `user-defined missing values'. In the context of this package these
@@ -61,9 +60,8 @@ The tools in this package can be grouped into four major categories:
   value labels, missing values etc. Using \code{as.data.frame} sets the data up for
   \emph{R}'s statistical functions, but doing this explicitely is seldom necessary.
   See \code{\link{data.set}}.
-
-  \strong{More Convenient Import of External Data}
-
+  }
+  \subsection{More Convenient Import of External Data}{
   Survey data sets are often relative large and contain up to a few thousand variables.
   For specific analyses one needs however only a relatively small subset of these variables.
   Although modern computers have enough RAM to load such data sets completely into an R session,
@@ -79,9 +77,8 @@ The tools in this package can be grouped into four major categories:
   the information about the variables in the external data set but not the data.
   The data itself is loaded into memory when the functions \code{subset} or \code{\link{as.data.set}}
   are used.
-
-  \strong{Recoding}
-  
+  }
+  \subsection{Recoding}{
   \code{memisc} also contains facilities for recoding
   survey items. Simple recodings, for example collapsing answer
   categories, can be done using the function \code{\link{recode}}. More
@@ -90,9 +87,8 @@ The tools in this package can be grouped into four major categories:
   using the function \code{\link{cases}}. This function may also
   be useful for programming, in so far as it is a generalization of
   \code{\link{ifelse}}.
-
-  \strong{Code Books}
-
+  }
+  \subsection{Code Books}{
   There is a function \code{\link{codebook}} which produces a code book of an
   external data set or an internal "data.set" object. A codebook contains in a
   conveniently formatted way concise information about every variable in a data set,
@@ -100,12 +96,11 @@ The tools in this package can be grouped into four major categories:
 
   An extended example of all these facilities is contained in the vignette "anes48",
   and in \code{demo(anes48)}
-  
   }
+}
 
 \section{Data Analysis}{
-\strong{Tables and Data Frames of Descriptive Statistics}
-
+\subsection{Tables and Data Frames of Descriptive Statistics}{
   \code{\link{genTable}} is a generalization of \code{\link{xtabs}}:
   Instead of counts, also descriptive statistics like means or variances
   can be reported conditional on levels of factors. Also conditional
@@ -115,19 +110,18 @@ The tools in this package can be grouped into four major categories:
   function is provided, which has the same syntax as \code{genTable}, but
   gives a data frame of descriptive statistics instead of a \code{table}
   object. 
-
-\strong{Per-Subset Analysis}
-
+  }
+  \subsection{Per-Subset Analysis}{
   \code{\link{By}} is a variant of the
   standard function \code{\link[base]{by}}: Conditioning factors
   are specified by a formula and are
   obtained from the data frame the subsets of which are to be analysed.
   Therefore there is no need to \code{\link{attach}} the data frame
   or to use the dollar operator.
-  
+  }
 }
 \section{Presentation of Results of Statistical Analysis}{
-\strong{Publication-Ready Tables of Coefficients}
+  \subsection{Publication-Ready Tables of Coefficients}{
 
 Journals of the Political and Social Sciences usually require
 that estimates of regression models are presented in the following
@@ -158,10 +152,8 @@ form:
 Such tables of coefficient estimates can be produced
 by \code{\link{mtable}}. To see some of the possibilities of
 this function, use \code{example(mtable)}.
-
-
-\strong{LaTeX Representation of R Objects}
-
+}
+\subsection{LaTeX Representation of R Objects}{
 Output produced by \code{\link{mtable}} can be transformed into
 LaTeX tables by an appropriate method of the generic function
 \code{\link[utils]{toLatex}} which is defined in the package
@@ -172,10 +164,9 @@ results produced by \code{\link{genTable}} can be coerced into
 for the \code{toLatex} function is defined which coerces its
 argument to a matrix and applies the matrix method of \code{toLatex}.
 }
-
+}
 \section{Programming}{
-\strong{Looping over Variables}
-
+\subsection{Looping over Variables}{
   Sometimes users want to contruct loops that run over variables rather than values.
   For example, if one wants to set the missing values of a battery of items.
   For this purpose, the package contains the function \code{\link{foreach}}.
@@ -185,9 +176,8 @@ argument to a matrix and applies the matrix method of \code{toLatex}.
     foreach(x=c(knowledge1,knowledge2,knowledge3),
         missing.values(x) <- 8:9)
   }
-
-\strong{Changing Names of Objects and Labels of Factors}
-
+}
+\subsection{Changing Names of Objects and Labels of Factors}{
   \code{R} already makes it possible to change the names of an object.
   Substituting the \code{\link[base]{names}} or \code{\link[base]{dimnames}}
   can be done with some programming tricks. This package defines
@@ -196,45 +186,42 @@ argument to a matrix and applies the matrix method of \code{toLatex}.
   that implement these tricks in a convenient way, so that programmers
   (like the author of this package) need not reinvent the weel in
   every instance of changing names of an object.
-
-\strong{Dimension-Preserving Versions of \code{lapply} and \code{sapply}}
-
-If a function that is involved in a call to 
-\code{\link[base]{sapply}} returns a result an array or a matrix, the
-dimensional information gets lost. Also, if a list object to which
-\code{\link[base]{lapply}} or \code{\link[base]{sapply}} are applied
-have a dimension attribute, the result looses this information.
-The functions \code{\link{Lapply}} and
-\code{\link{Sapply}} defined in this package preserve such
-dimensional information.
-
-\strong{Combining Vectors and Arrays by Names}
-
-The generic function \code{\link{collect}} collects several objects of the
-same mode into one object, using their names, \code{rownames},
-\code{colnames} and/or \code{dimnames}. There are methods for
-atomic vectors, arrays (including matrices), and data frames.
-For example
-\preformatted{
-a <- c(a=1,b=2)
-b <- c(a=10,c=30)
-collect(a,b)
 }
-leads to
-\preformatted{
-   x  y
-a  1 10
-b  2 NA
-c NA 30
+\subsection{Dimension-Preserving Versions of \code{lapply} and \code{sapply}}{
+  If a function that is involved in a call to 
+  \code{\link[base]{sapply}} returns a result an array or a matrix, the
+  dimensional information gets lost. Also, if a list object to which
+  \code{\link[base]{lapply}} or \code{\link[base]{sapply}} are applied
+  have a dimension attribute, the result looses this information.
+  The functions \code{\link{Lapply}} and
+  \code{\link{Sapply}} defined in this package preserve such
+  dimensional information.
 }
-
-\strong{Reordering of Matrices and Arrays}
-
+\subsection{Combining Vectors and Arrays by Names}{
+  The generic function \code{\link{collect}} collects several objects of the
+  same mode into one object, using their names, \code{rownames},
+  \code{colnames} and/or \code{dimnames}. There are methods for
+  atomic vectors, arrays (including matrices), and data frames.
+  For example
+  \preformatted{
+  a <- c(a=1,b=2)
+  b <- c(a=10,c=30)
+  collect(a,b)
+  }
+  leads to
+  \preformatted{
+     x  y
+  a  1 10
+  b  2 NA
+  c NA 30
+  }
+}
+\subsection{Reordering of Matrices and Arrays}{
   The \code{memisc} package includes a \code{\link{reorder}}
   method for arrays and matrices. For example, the matrix
   method by default reorders the rows of a matrix according the results
   of a function.
+  }
 }
-
 
 \keyword{misc}
