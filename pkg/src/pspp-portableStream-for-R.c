@@ -320,7 +320,7 @@ int fillPorStreamBuf(porStreamBuf *b) {
   char *dummy = fgets((char *)b->buf,BUFSIZE,b->f);
   if(!dummy) {
       fseek(b->f,fpos,SEEK_SET);
-      fread((char *)b->buf,1,BUFSIZE,b->f);
+      int ret = fread((char *)b->buf,1,BUFSIZE,b->f);
 
       error("cannot read from file at pos %d (fread result = <%s>)",fpos,b->buf);
   }
