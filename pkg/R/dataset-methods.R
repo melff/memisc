@@ -484,45 +484,45 @@ setMethod("merge",signature(x="data.set","data.set"),function(x,y,...){
 setMethod("merge",signature(x="data.set","data.frame"),function(x,y,...){
   x <- new("data.frame",as.list(x),row.names=x@row_names)
   z <- merge(x,y,...)
-  data.set(z)
+  new("data.set",z)
 })
 
 setMethod("merge",signature(x="data.frame","data.set"),function(x,y,...){
   y <- new("data.frame",as.list(y),row.names=y@row_names)
   z <- merge(x,y,...)
-  data.set(z)
+  new("data.set",z)
 })
 
 setMethod("rbind2",signature(x="data.set",y="data.set"),function(x,y){
   x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
   y <- asS4(new("data.frame",as.list(y),row.names=y@row_names),FALSE)
   z <- rbind(x,y)
-  data.set(z)
+  new("data.set",z)
 })
 
 setMethod("rbind2",signature(x="data.set",y="data.frame"),function(x,y){
   x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
   z <- cbind(x,y)
-  data.set(z)
+  new("data.set",z)
 })
 
 setMethod("cbind2",signature(x="data.set",y="data.set"),function(x,y){
   x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
   y <- asS4(new("data.frame",as.list(y),row.names=y@row_names),FALSE)
   z <- cbind(x,y)
-  data.set(z)
+  new("data.set",z)
 })
 
 setMethod("cbind2",signature(x="data.frame",y="data.set"),function(x,y){
   y <- asS4(new("data.frame",as.list(y),row.names=y@row_names),FALSE)
   z <- cbind(x,y)
-  data.set(z)
+  new("data.set",z)
 })
 
 setMethod("cbind2",signature(x="data.set",y="data.frame"),function(x,y){
   x <- asS4(new("data.frame",as.list(x),row.names=x@row_names),FALSE)
   z <- cbind(x,y)
-  data.set(z)
+  new("data.set",z)
 })
 
 rbind.data.set <- function(...,deparse.level=1){
