@@ -33,18 +33,16 @@ codeplan(x) <- value
 }
 \value{\code{codeplan} returns a data frame with additional S3 class attribute \code{"codeplan"}.
 Such a data frame has the following variables:
-\itemize{
-  \item \code{name}: The name of the item/variable in the item list or data set.
-  \item \code{description}: The description/variable label string of the item/variable.
-  \item \code{annotation}: code to recreate the annotation attribute,
-  \item \code{labels}: code to recreate the value labels,
-  \item \code{value.filter}: code to recreate the value filter attribute (declaration of
-          missing values, range of valid values, or an enumeration of valid values.)
-  \item \code{mode}: a character string that describes storage mode, such as \code{"character"},
-        \code{"integer"}, or \code{"numeric"}.
-  \item \code{measurement}: a character string with the measurement level,
-        \code{"nominal"}, \code{"ordinal"}, \code{"interval"}, or \code{"ratio"}.
-  }
+  \item{\code{name}}{The name of the item/variable in the item list or data set.}
+  \item{\code{description}}{The description/variable label string of the item/variable.}
+  \item{\code{annotation}}{code to recreate the annotation attribute,}
+  \item{\code{labels}}{code to recreate the value labels,}
+  \item{\code{value.filter}}{code to recreate the value filter attribute (declaration of
+          missing values, range of valid values, or an enumeration of valid values.)}
+  \item{\code{mode}}{a character string that describes storage mode, such as \code{"character"},
+        \code{"integer"}, or \code{"numeric"}.}
+  \item{\code{measurement}}{a character string with the measurement level,
+        \code{"nominal"}, \code{"ordinal"}, \code{"interval"}, or \code{"ratio"}.}
 }
 \examples{
 Data1 <- data.set(

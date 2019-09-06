@@ -86,14 +86,6 @@
     \code{lwr} \tab  \tab lower confidence limits, \cr
     \code{upr} \tab  \tab upper confidence limits. \cr
     }
-%     \describe{
-%       \item{\code{est}}{the coefficient estimates,}
-%       \item{\code{se}}{the estimated standard errors,}
-%       \item{\code{stat}}{t- or Wald-z statistics,}
-%       \item{\code{p}}{significance levels of the statistics,}
-%       \item{\code{lwr}}{lower confidence limits,}
-%       \item{\code{upr}}{upper confidence limits.}
-%     }
     The higher dimensions of the array correspond to
     the individual coefficients and, in multi-equation models,
     to the model equations.
