@@ -1,4 +1,7 @@
 setMethod("codeplan",
+          signature(x="ANY"),function(x) NULL)
+
+setMethod("codeplan",
           signature(x="item.list"),
           function(x){
     dat <- x@.Data
@@ -101,7 +104,7 @@ setCodeplan1 <- function(x,val){
     }
     else if(mode(x) != val$mode)
         stop(sprintf("mode conflict: '%s' != '%s'",
-                     x$mode,val$mode))
+                     mode(x),val$mode))
     l <- val$labels
     if(nzchar(l)){
         l <- eval(parse(text=l))
