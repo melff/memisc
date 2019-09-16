@@ -85,7 +85,7 @@ selectSummaryStats <- function(x,n) {
         cls <- class(x)
         sumstats.name <- paste0("summary.stats.",cls)
         sumstats <- lapply(sumstats.name,getOption)
-        if(length(sumstats)){
+        if(any(!vapply(sumstats, is.null, TRUE))){
             sumstats <- unlist(sumstats)
             sumstats[1]
         }
