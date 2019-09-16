@@ -1,5 +1,6 @@
 \name{codeplan}
 \alias{codeplan}
+\alias{codeplan,ANY-method}
 \alias{codeplan,item.list-method}
 \alias{codeplan<-}
 \alias{setCodeplan}
@@ -31,7 +32,9 @@ codeplan(x) <- value
   for \code{codeplan(x) <- value} or \code{setCodeplan(x,value)} a data frame.}
   \item{value}{an object as it would be returned by \code{codeplan(x)}}
 }
-\value{\code{codeplan} returns a data frame with additional S3 class attribute \code{"codeplan"}.
+\value{If applicable \code{codeplan} returns a data frame with
+  additional S3 class attribute \code{"codeplan"}. For arguments for
+  which the relevant information does not exist, the function returns \code{NULL}.
 Such a data frame has the following variables:
   \item{\code{name}}{The name of the item/variable in the item list or data set.}
   \item{\code{description}}{The description/variable label string of the item/variable.}
