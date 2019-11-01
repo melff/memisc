@@ -406,3 +406,14 @@ export(
 )
 export(List)
 
+export(Groups)
+exportMethods(Groups)
+
+S3method(with,grouped.data)
+S3method(within,grouped.data)
+S3method(names,grouped.data)
+S3method(print,grouped.result)
+export(recombine)
+S3method(recombine,grouped.data)
+export(withGroups,withinGroups)
+

@@ -70,3 +70,4 @@ setGeneric("codeplan",
 setGeneric("setCodeplan",function(x,value)
   standardGeneric("setCodeplan"))
 
+setGeneric("Groups",function(data,by,...)standardGeneric("Groups"))

@@ -1,3 +1,7 @@
+2019-10-27:
+   - Implemented classes and methods for data manipulation within groups
+     of rows of data frames and data sets.
+
 2019-10-12:
    - Implemented 'List' function that names element like 'data.frame()'
    
