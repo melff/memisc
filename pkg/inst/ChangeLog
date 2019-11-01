@@ -1,3 +1,6 @@
+2019-10-31:
+   - Created and documented a 'Reshape' function as convenience wrapper for 'reshape'.
+
 2019-10-27:
    - Implemented classes and methods for data manipulation within groups
      of rows of data frames and data sets.
