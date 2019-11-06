@@ -358,7 +358,7 @@ SEXP dta117_read_header(SEXP s_dta_file){
   dtaf->release = release;
 
   if(release != 117 && release != 118 && release != 119)
-    error("Unknown relase code or unsuppored release %d",release);
+    error("Unknown relase code or unsupported release %d",release);
   
   char *byteorder = dta117_read_range(dtaf->f,byteorder_start,byteorder_end);
 
