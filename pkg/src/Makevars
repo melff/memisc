@@ -1,1 +1,2 @@
-PKG_CFLAGS=$(C_VISIBILITY)
+# Supress overly fussy warnings
+PKG_CFLAGS=$(C_VISIBILITY) -Wno-unused-variable -Wno-unused-but-set-variable -D_FILE_OFFSET_BITS=64
