@@ -8,7 +8,7 @@ Stata.file <- function(file){
     #variables <- lapply(variables,as.item)
     names(variables) <- data.spec$names
     varlabs <- data.spec$varlabs
-    varlabs <- varlabs[nchar(varlabs)>0]
+    varlabs <- varlabs[nzchar(varlabs)]
     vallabs <- data.spec$value.labels
     missings <- data.spec$missing.values
     
