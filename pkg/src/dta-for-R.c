@@ -7,6 +7,7 @@
 #include <Rinternals.h>
 #include "memisc.h"
 #include "dumbswap.h"
+#include "dta-for-R.h"
 
 #define asString(x) CHAR(asChar(x))
 
@@ -17,30 +18,6 @@
 #else
 #define MY_DTA_ENDIAN dta_LOHI
 #endif
-
-#define DTA_MAXSTR    244
-#define DTA_BYTE      251
-#define DTA_SHORT     252
-#define DTA_LONG      253
-#define DTA_FLOAT     254
-#define DTA_DOUBLE    255
-
-#define DTA_NA_BYTE   0x7f
-#define DTA_NA_SHORT  0x7fff
-#define DTA_NA_LONG   0x7fffffff
-#define DTA_NA_FLOAT  dta_na_float
-#define DTA_NA_DOUBLE dta_na_double
-
-typedef struct {
-  FILE *f;
-  int start_data;
-  int l_record;
-  int n_records;
-  int swap;
-} dta_file;
-
-static double dta_na_float;
-static double dta_na_double;
 
 char headbuf[109];
 
@@ -68,7 +45,7 @@ SEXP dta_file_finalize(SEXP s_file)
 {
     if(TYPEOF(s_file) != EXTPTRSXP || R_ExternalPtrTag(s_file) != install("dta_file")) error("not a Stata file");
     dta_file *dtaf = R_ExternalPtrAddr(s_file);
-    Rprintf("closing file %s\n",asString(getAttrib(s_file,install("filename"))));
+    Rprintf("closing file %s\n",asString(getAttrib(s_file,install("file.name"))));
     if (dtaf->f != NULL)
         fclose(dtaf->f);
     R_ClearExternalPtr(s_file);
@@ -82,7 +59,7 @@ dta_file *get_dta_file(SEXP s_file){
     dta_file *dtaf = Calloc(1,dta_file);
     dtaf->swap = 0;
     R_SetExternalPtrAddr(s_file,dtaf);
-    SEXP name = getAttrib(s_file,install("filename"));
+    SEXP name = getAttrib(s_file,install("file.name"));
     if(name == R_NilValue || name == NULL){
       Free(dtaf);
       error("need filename to reopen file");
@@ -527,6 +504,7 @@ SEXP dta_read_labels (SEXP s_dta_file, SEXP s_lbl_len, SEXP s_padding){
   return ans;
 }
 
+/* Old test version */
 SEXP _dta_read_labels (SEXP s_dta_file, SEXP s_lbl_len, SEXP s_padding){
   dta_file *dtaf = get_dta_file(s_dta_file);
   int l_lbl = asInteger(s_lbl_len) + 1 + asInteger(s_padding);

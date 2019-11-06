@@ -95,6 +95,30 @@ SEXP dta_fseek (SEXP s_file, SEXP s_pos, SEXP s_whence);
 SEXP dta_feof (SEXP s_file);
 SEXP dta_skip_records(SEXP s_dta_file, SEXP s_n);
 
+SEXP dta117_file_open (SEXP name);
+SEXP dta117_find_in_file(SEXP s_dta_file, SEXP s_pattern);
+SEXP dta117_check_magic(SEXP s_dta_file);
+/* SEXP dta_read_character(SEXP s_dta_file, SEXP s_n); */
+/* SEXP dta_read_int16(SEXP s_dta_file, SEXP s_big_endian); */
+SEXP dta117_read_header(SEXP s_dta_file);
+SEXP dta117_read_map(SEXP s_dta_file);
+SEXP dta117_read_vtypes(SEXP s_dta_file);
+SEXP dta117_read_vnames(SEXP s_dta_file);
+SEXP dta117_read_sortlist(SEXP s_dta_file);
+SEXP dta117_read_formats(SEXP s_dta_file);
+SEXP dta117_read_vlab_names(SEXP s_dta_file);
+SEXP dta117_read_varlabs(SEXP s_dta_file);
+SEXP dta117_read_vallabs(SEXP s_dta_file);
+SEXP dta117_make_prototype(SEXP s_types);
+SEXP dta117_dim(SEXP s_dta_file);
+SEXP dta117_seek_data(SEXP s_dta_file);
+SEXP dta117_read_data(SEXP s_dta_file, SEXP what, SEXP s_nobs, SEXP s_types);
+SEXP dta117_skip_records(SEXP s_dta_file, SEXP s_n);
+SEXP dta117_ftell (SEXP s_file);
+SEXP dta117_feof (SEXP s_file);
+SEXP dta117_fseek (SEXP s_file, SEXP s_pos, SEXP s_whence);
+SEXP dta117_read_slice(SEXP s_dta_file, SEXP what, SEXP vars, SEXP obs, SEXP s_types);
+SEXP dta117_read_chunk(SEXP s_dta_file, SEXP what, SEXP vars, SEXP s_nobs, SEXP s_types);
 
 static const R_CallMethodDef CallMethods[]  = {
   {"NewSysFile", (DL_FUNC) &NewSysFile, 1},
@@ -158,5 +182,28 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"dta_fseek", (DL_FUNC) &dta_fseek, 3},
 	{"dta_feof", (DL_FUNC) &dta_feof, 1},
 	{"dta_skip_records", (DL_FUNC) &dta_skip_records, 2},
+  {"dta117_file_open", (DL_FUNC) &dta117_file_open, 2},
+  {"dta117_find_in_file", (DL_FUNC) &dta117_find_in_file, 2},
+  {"dta117_check_magic", (DL_FUNC) &dta117_check_magic, 1},
+  /* {"dta117_read_character", (DL_FUNC) &dta_read_character, 2}, */
+  {"dta117_read_header", (DL_FUNC) &dta117_read_header, 1},
+  {"dta117_read_map", (DL_FUNC) &dta117_read_map, 1},
+  {"dta117_read_vtypes", (DL_FUNC) &dta117_read_vtypes, 1},
+  {"dta117_read_vnames", (DL_FUNC) &dta117_read_vnames, 1},
+  {"dta117_read_sortlist", (DL_FUNC) &dta117_read_sortlist, 1},
+  {"dta117_read_formats", (DL_FUNC) &dta117_read_formats, 1},
+  {"dta117_read_vlab_names", (DL_FUNC) &dta117_read_vlab_names, 1},
+  {"dta117_read_varlabs", (DL_FUNC) &dta117_read_varlabs, 1},
+  {"dta117_read_vallabs", (DL_FUNC) &dta117_read_vallabs, 1},
+  {"dta117_make_prototype", (DL_FUNC) &dta117_make_prototype, 1},
+  {"dta117_dim", (DL_FUNC) &dta117_dim, 1},
+  {"dta117_seek_data", (DL_FUNC) &dta117_seek_data, 1},
+  {"dta117_read_data", (DL_FUNC) &dta117_read_data, 4},
+  {"dta117_skip_records", (DL_FUNC) &dta117_skip_records, 2},
+  {"dta117_ftell", (DL_FUNC) &dta117_ftell, 1},
+  {"dta117_feof", (DL_FUNC) &dta117_feof, 1},
+  {"dta117_fseek", (DL_FUNC) &dta117_fseek, 3},
+  {"dta117_read_slice", (DL_FUNC) &dta117_read_slice, 5},
+  {"dta117_read_chunk", (DL_FUNC) &dta117_read_chunk, 5},
   {NULL, NULL, 0}
 };
