@@ -21,7 +21,7 @@
 
 char headbuf[109];
 
-SEXP dta_file_finalize(SEXP);
+SEXP dta_file_close(SEXP);
 SEXP dta_file_open (SEXP name){
   dta_file *dtaf = Calloc(1,dta_file);
   dtaf->swap = 0;
@@ -35,20 +35,22 @@ SEXP dta_file_open (SEXP name){
       }
   SEXP ans = R_MakeExternalPtr(dtaf, install("dta_file"), R_NilValue);
 	PROTECT(ans);
-  R_RegisterCFinalizer(ans, (R_CFinalizer_t) dta_file_finalize);
+  R_RegisterCFinalizer(ans, (R_CFinalizer_t) dta_file_close);
   setAttrib(ans,install("file.name"),name);
 	UNPROTECT(1);
   return ans;
 }
 
-SEXP dta_file_finalize(SEXP s_file)
+SEXP dta_file_close(SEXP s_file)
 {
     if(TYPEOF(s_file) != EXTPTRSXP || R_ExternalPtrTag(s_file) != install("dta_file")) error("not a Stata file");
     dta_file *dtaf = R_ExternalPtrAddr(s_file);
-    Rprintf("closing file %s\n",asString(getAttrib(s_file,install("file.name"))));
-    if (dtaf->f != NULL)
+    if(dtaf != NULL){
+      /* Rprintf("closing file %s\n",asString(getAttrib(s_file,install("file.name")))); */
+      if (dtaf->f != NULL)
         fclose(dtaf->f);
-    R_ClearExternalPtr(s_file);
+      R_ClearExternalPtr(s_file);
+    }
     return R_NilValue;
 }
 

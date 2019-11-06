@@ -1,4 +1,6 @@
-new.dta117 <- function(file) .Call("dta117_file_open",file,"rb")
+dta117_file_open <- function(file) .Call("dta117_file_open",file,"rb")
+dta117_file_close <- function(file) .Call("dta117_file_close",file)
+dta117_check_magic <- function(ptr) .Call("dta117_check_magic",ptr)
 dta117_read_header <- function(ptr) .Call("dta117_read_header",ptr)
 dta117_read_map <- function(ptr) .Call("dta117_read_map",ptr)
 dta117_read_vtypes <- function(ptr) .Call("dta117_read_vtypes",ptr)

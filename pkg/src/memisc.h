@@ -68,7 +68,7 @@ SEXP rofseek (SEXP s_file, SEXP s_pos,
 SEXP countlines(SEXP s_file);
 SEXP numeric_if_possible(SEXP x);
 
-SEXP dta_file_open (SEXP name);
+SEXP dta_file_open(SEXP name);
 SEXP dta_read_version(SEXP s_dta_file);
 SEXP dta_make_prototype(SEXP s_types);
 SEXP dta_seek_data(SEXP s_dta_file);
@@ -96,6 +96,7 @@ SEXP dta_feof (SEXP s_file);
 SEXP dta_skip_records(SEXP s_dta_file, SEXP s_n);
 
 SEXP dta117_file_open (SEXP name);
+SEXP dta117_file_close(SEXP name);
 SEXP dta117_find_in_file(SEXP s_dta_file, SEXP s_pattern);
 SEXP dta117_check_magic(SEXP s_dta_file);
 /* SEXP dta_read_character(SEXP s_dta_file, SEXP s_n); */
@@ -183,6 +184,7 @@ static const R_CallMethodDef CallMethods[]  = {
 	{"dta_feof", (DL_FUNC) &dta_feof, 1},
 	{"dta_skip_records", (DL_FUNC) &dta_skip_records, 2},
   {"dta117_file_open", (DL_FUNC) &dta117_file_open, 2},
+  {"dta117_file_close", (DL_FUNC) &dta117_file_close, 1},
   {"dta117_find_in_file", (DL_FUNC) &dta117_find_in_file, 2},
   {"dta117_check_magic", (DL_FUNC) &dta117_check_magic, 1},
   /* {"dta117_read_character", (DL_FUNC) &dta_read_character, 2}, */
