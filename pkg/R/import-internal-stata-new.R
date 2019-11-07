@@ -18,3 +18,33 @@ dta117_read_slice <- function(ptr,what,vars,obs,types) .Call("dta117_read_slice"
                                                              ptr,what,vars,obs,types)
 dta117_read_chunk <- function(ptr,what,vars,n,types) .Call("dta117_read_chunk",
                                                            ptr,what,vars,n,types)
+
+dta117.byte   <- 65530
+dta117.short  <- 65529
+dta117.long   <- 65528
+dta117.float  <- 65527
+dta117.double <- 65526
+
+dta117_missing.values <- function(types){
+    nvar <- length(length)
+    missing.values <- vector(nvar,mode="list")
+    missing.values[types==dta117.byte]   <- list(list(range=byte.missrange))
+    missing.values[types==dta117.short]  <- list(list(range=short.missrange)) 
+    missing.values[types==dta117.long]   <- list(list(range=long.missrange))
+    missing.values[types==dta117.float]  <- list(list(range=float.missrange)) 
+    missing.values[types==dta117.double] <- list(list(range=double.missrange))
+    names(missing.values) <- names(types)
+    missing.values
+}
+
+dta117_missval_labels <- function(types){
+    nvar <- length(length)
+    missval_labels <- vector(nvar,mode="list")
+    missval_labels[types==dta117.byte]   <- list(byte.misslab)
+    missval_labels[types==dta117.short]  <- list(short.misslab) 
+    missval_labels[types==dta117.long]   <- list(long.misslab)
+    missval_labels[types==dta117.float]  <- list(float.misslab)
+    missval_labels[types==dta117.double] <- list(double.misslab)
+    names(missval_labels) <- names(types)
+    missval_labels
+}

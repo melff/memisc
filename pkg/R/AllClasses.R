@@ -129,6 +129,13 @@ setClass("Stata.importer",
   )
 )
 
+setClass("Stata_new.importer",
+         contains="importer",
+         representation(
+             types = "integer"
+         )
+)
+
 setClass("codebook",
   contains="list"
 )

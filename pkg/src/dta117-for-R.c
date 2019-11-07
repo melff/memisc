@@ -285,16 +285,16 @@ off_t find_in_file(FILE *f, const char* pattern, int before, off_t limit){
 
 int assert_in_file(FILE *f, const char* pattern){
 
-  Rprintf("Pattern = '%s'\n", pattern);
+  /* Rprintf("Pattern = '%s'\n", pattern); */
 
   int n = strlen(pattern);
   char *buf = calloc(n + 1, sizeof(char));
   int ret = fread(buf,1,n,f);
-  Rprintf("Buffer content = '%s'\n",buf);
+  /* Rprintf("Buffer content = '%s'\n",buf); */
 
   int rc = memcmp(pattern,buf,n);
 
-  Rprintf("Comparison = %d\n",rc);
+  /* Rprintf("Comparison = %d\n",rc); */
 
   if(rc != 0)
     fseek(f,-n,SEEK_CUR);

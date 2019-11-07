@@ -144,3 +144,10 @@ setMethod("is.labelled",signature(x="item.vector"),function(x){
   x %in% cl@values
 })
 
+add_value_labels <- function(x,v){
+    if(length(labels(x)))
+        labels(x) <- labels(x) + v
+    else
+        labels(x) <- v
+    x
+}
