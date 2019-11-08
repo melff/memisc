@@ -67,12 +67,14 @@ Stata.file <- function(file){
         data.spec <- get.dictionary.dta(ptr)
         types <- data.spec$types
         variables <- .Call("dta_make_prototype",types)
-    #variables <- lapply(variables,as.item)
         names(variables) <- data.spec$names
         varlabs <- data.spec$varlabs
         varlabs <- varlabs[nzchar(varlabs)]
         vallabs <- data.spec$value.labels
         missings <- data.spec$missing.values
+        missings <- missings[sapply(missings,length) > 0]
+        missval_labels <- data.spec$missval_labels
+        missval_labels <- missval_labels[sapply(missval_labels,length) > 0]
         
         if(length(varlabs))
             variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
@@ -81,6 +83,17 @@ Stata.file <- function(file){
         if(length(missings))
             variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
 
+        if(length(missval_labels)){
+            missval_labels <- lapply(missval_labels,as,"value.labels")
+            meas <- lapply(variables[names(missval_labels)],"measurement")
+            suppressWarnings(variables[names(missval_labels)] <- mapply(add_value_labels,
+                                                                 variables[names(missval_labels)],
+                                                                 missval_labels))
+            variables[names(missval_labels)] <- mapply("measurement<-",
+                                                       variables[names(missval_labels)],
+                                                       meas)
+        }
+        
         new("Stata.importer",
             variables,
             ptr=ptr,

@@ -4,18 +4,18 @@ dta.long   <- 253
 dta.float  <- 254
 dta.double <- 255
 
-byte.missrange   <- c(0x64,0x7f)
-short.missrange  <- c(0x7fe5,0x7fff)
-long.missrange   <- c(0x7fffffe5L,0x7fffffffL)
-float.missrange  <- c(2.0^0x7f,Inf)
-double.missrange <- c(2.0^0x3ff,Inf)
+dta.byte.missrange   <- c(0x64,0x7f)
+dta.short.missrange  <- c(0x7fe5,0x7fff)
+dta.long.missrange   <- c(0x7fffffe5L,0x7fffffffL)
+dta.float.missrange  <- c(2.0^0x7f,Inf)
+dta.double.missrange <- c(2.0^0x3ff,Inf)
 
 missnames <- paste(".",c("",letters),sep="")
-byte.misslab <- structure(0x64 + 1:27,names=missnames)
-short.misslab <- structure(0x7fe4 + 1:27,names=missnames)
-long.misslab <- structure(0x7fffffe4L + 1:27,names=missnames)
-float.misslab <- structure((1+(0:26)/16^3)*2.0^0x7f,names=missnames)
-double.misslab <- structure((1+(0:26)/16^3)*2.0^0x3ff,names=missnames)
+dta.byte.misslab <- structure(0x64 + 1:27,names=missnames)
+dta.short.misslab <- structure(0x7fe4 + 1:27,names=missnames)
+dta.long.misslab <- structure(0x7fffffe4L + 1:27,names=missnames)
+dta.float.misslab <- structure((1+(0:26)/16^3)*2.0^0x7f,names=missnames)
+dta.double.misslab <- structure((1+(0:26)/16^3)*2.0^0x3ff,names=missnames)
 
 new.dta <- function(file) .Call("dta_file_open",file,"rb")
 dta.read.version <- function(bf) .Call("dta_read_version",bf)
@@ -107,10 +107,11 @@ get.dictionary.dta <- function(bf){
           len.varn=len.varn,
           len.fmt=len.fmt,
           len.lbl=len.lbl)
+  varnames <- descriptors$varlist
   types <- if(conv.types) dta.trans.types(descriptors$typelist)
            else descriptors$typelist
+  names(types) <- varnames
   obs_size <- dta.calc.obssize(bf,types)
-  varnames <- descriptors$varlist
   varlab <- dta.read.varlabs(bf,
           nvar=nvar,
           len.varlab=len.varlab)
@@ -133,15 +134,13 @@ get.dictionary.dta <- function(bf){
     vallabs[] <- vallab.patterns[vallabs]
   }
   if(version >= 113){
-    missing.values <- vector(nvar,mode="list")
-    missing.values[types==dta.byte]   <- list(list(range=byte.missrange))
-    missing.values[types==dta.short]  <- list(list(range=short.missrange)) 
-    missing.values[types==dta.long]   <- list(list(range=long.missrange))
-    missing.values[types==dta.float]  <- list(list(range=float.missrange)) 
-    missing.values[types==dta.double] <- list(list(range=double.missrange))
-    names(missing.values) <- varnames
+      missing.values <- dta_missing.values(types)
+      missval_labels <- dta_missval_labels(types)
   }
-  else missing.values <- NULL  
+  else {
+      missing.values <- NULL
+      missval_labels <- NULL
+  }
     
   list(names=varnames,
        types=types,
@@ -150,6 +149,31 @@ get.dictionary.dta <- function(bf){
        varlabs=varlab,
        value.labels=vallabs,
        missing.values=missing.values,
+       missval_labels=missval_labels,
        version.string=version.string
       )
+}
+
+dta_missing.values <- function(types){
+    nvar <- length(length)
+    missing.values <- vector(nvar,mode="list")
+    missing.values[types==dta.byte]   <- list(list(range=dta.byte.missrange))
+    missing.values[types==dta.short]  <- list(list(range=dta.short.missrange)) 
+    missing.values[types==dta.long]   <- list(list(range=dta.long.missrange))
+    missing.values[types==dta.float]  <- list(list(range=dta.float.missrange)) 
+    missing.values[types==dta.double] <- list(list(range=dta.double.missrange))
+    names(missing.values) <- names(types)
+    missing.values
+}
+
+dta_missval_labels <- function(types){
+    nvar <- length(length)
+    missval_labels <- vector(nvar,mode="list")
+    missval_labels[types==dta.byte]   <- list(dta.byte.misslab)
+    missval_labels[types==dta.short]  <- list(dta.short.misslab) 
+    missval_labels[types==dta.long]   <- list(dta.long.misslab)
+    missval_labels[types==dta.float]  <- list(dta.float.misslab)
+    missval_labels[types==dta.double] <- list(dta.double.misslab)
+    names(missval_labels) <- names(types)
+    missval_labels
 }
