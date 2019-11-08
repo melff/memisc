@@ -20,6 +20,7 @@ typedef struct {
   int l_record;
   int n_records;
   int swap;
+  char version;
 } dta_file;
 
 dta_file *get_dta_file(SEXP);

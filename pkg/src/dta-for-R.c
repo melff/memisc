@@ -28,6 +28,7 @@ SEXP dta_file_open (SEXP name){
   dtaf->start_data = 0;
   dtaf->l_record = 0;
   dtaf->n_records = 0;
+  dtaf->version = 0;
   dtaf->f = fopen(asString(name),"r+b");
   if (dtaf->f == NULL){
       Free(dtaf);
@@ -72,7 +73,8 @@ int dta_read_byte(dta_file *dtaf){
   char target;
   size_t read_len = fread(&target,1,1,dtaf->f);
   if(!read_len) return NA_INTEGER;
-  if(target == DTA_NA_BYTE) return NA_INTEGER;
+  if(target == DTA_NA_BYTE && dtaf->version < 113 && dtaf->version > 0)
+    return NA_INTEGER;
   else return (int)target;
 }
 
@@ -81,7 +83,8 @@ int dta_read_short(dta_file *dtaf){
   size_t read_len = fread(&target,2,1,dtaf->f);
   if(!read_len) return NA_INTEGER;
   sswap_if(target,dtaf->swap);
-  if(target == DTA_NA_SHORT) return NA_INTEGER;
+  if(target == DTA_NA_SHORT && dtaf->version < 113 && dtaf->version > 0)
+    return NA_INTEGER;
   return (int)target;
 }
 
@@ -90,7 +93,8 @@ int dta_read_int(dta_file *dtaf){
   size_t read_len = fread(&target,4,1,dtaf->f);
   if(!read_len) return NA_INTEGER;
   iswap_if(target,dtaf->swap);
-  if(target == DTA_NA_LONG) return NA_INTEGER;
+  if(target == DTA_NA_LONG && dtaf->version < 113 && dtaf->version > 0)
+    return NA_INTEGER;
   return (int)target;
 }
 
@@ -99,7 +103,8 @@ double dta_read_float(dta_file *dtaf){
   size_t read_len = fread(&target,4,1,dtaf->f);
   if(!read_len) return NA_REAL;
   fswap_if(target,dtaf->swap);
-  if(target == DTA_NA_FLOAT) return NA_REAL;
+  if(target == DTA_NA_FLOAT && dtaf->version < 113 && dtaf->version > 0)
+    return NA_REAL;
   return (double)target;
 }
 
@@ -108,7 +113,8 @@ double dta_read_double(dta_file *dtaf){
   size_t read_len = fread(&target,8,1,dtaf->f);
   if(!read_len) return NA_REAL;
   dswap_if(target,dtaf->swap);
-  if(target == DTA_NA_DOUBLE) return NA_REAL;
+  if(target == DTA_NA_DOUBLE && dtaf->version < 113 && dtaf->version > 0)
+    return NA_REAL;
   return target;
 }
 
@@ -163,6 +169,7 @@ SEXP dta_read_version(SEXP s_dta_file){
   dta_file *dtaf = get_dta_file(s_dta_file);
   rewind(dtaf->f);
   int ret = fread(&ds_format,1,1,dtaf->f);
+  dtaf->version = ds_format;
   return ScalarInteger(ds_format);
 }
 
