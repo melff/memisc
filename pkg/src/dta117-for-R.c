@@ -107,21 +107,12 @@ SEXP dta117_file_close(SEXP s_file)
 dta117_file *get_dta117_file(SEXP s_file){
   if(TYPEOF(s_file) != EXTPTRSXP || R_ExternalPtrTag(s_file) != install("dta117_file")) error("not an Stata file");
   dta117_file *dtaf = R_ExternalPtrAddr(s_file);
-  if (dtaf == NULL){
-    dta117_file *dtaf = Calloc(1,dta117_file);
-    dtaf->swap = 0;
-    R_SetExternalPtrAddr(s_file,dtaf);
+  if (dtaf == NULL || dtaf->f == NULL){
     SEXP name = getAttrib(s_file,install("file.name"));
-    if(name == R_NilValue || name == NULL){
+    if(dtaf != NULL){
       Free(dtaf);
-      error("need filename to reopen file");
-      }
-    dtaf->f = fopen(CHAR(STRING_ELT(name, 0)),"r+b");
-    if(dtaf->f == NULL){
-      Free(dtaf);
-      error("cannot reopen file -- does it still exist?");
     }
-    Rprintf("File '%s' reopened\n\n",asString(name));
+    error("external pointer is NULL, you need to recreate this object");
   }
   return dtaf;
 }

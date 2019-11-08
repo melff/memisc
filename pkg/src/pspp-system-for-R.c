@@ -217,33 +217,33 @@ sys_file *get_sys_file(SEXP SysFile){
   sys_file *s = R_ExternalPtrAddr(SysFile);
   if (s == NULL){
     error("external pointer is NULL, you need to recreate this object");
-    sys_file *s = Calloc(1,sys_file);
-    R_SetExternalPtrAddr(SysFile,s);
-    SEXP name;
-    PROTECT(name = getAttrib(SysFile,install("file.name")));
-    if(name == R_NilValue || name == NULL) error("need filename to reopen file");
-    s->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
-    if(s->f == NULL){
-      R_SetExternalPtrAddr(SysFile,NULL);
-      Free(s);
-      error("cannot reopen file -- does it still exist?");
-    }
-    init_sys_file(s);
-    SEXP tmp;
-    tmp = sys_file_restore_from_attrib(SysFile,s,"bias");
-    s->bias = (R_flt64) asReal(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"swap_code");
-    s->swap_code = asInteger(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"case_size");
-    s->case_size = asInteger(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"data_pos");
-    s->data_pos = asInteger(tmp);
-    tmp = sys_file_restore_from_attrib(SysFile,s,"sysmis");
-    s->sysmis = (R_flt64) asReal(tmp);
-    s->buf = Calloc(s->case_size,R_flt64);
-    Rprintf("File '%s' reopened\n\n",CHAR(STRING_ELT(name, 0)));
-    Rprintf("\ns= %llx",s);
-    UNPROTECT(1);
+    /* sys_file *s = Calloc(1,sys_file);
+     * R_SetExternalPtrAddr(SysFile,s);
+     * SEXP name;
+     * PROTECT(name = getAttrib(SysFile,install("file.name")));
+     * if(name == R_NilValue || name == NULL) error("need filename to reopen file");
+     * s->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
+     * if(s->f == NULL){
+     *   R_SetExternalPtrAddr(SysFile,NULL);
+     *   Free(s);
+     *   error("cannot reopen file -- does it still exist?");
+     * }
+     * init_sys_file(s);
+     * SEXP tmp;
+     * tmp = sys_file_restore_from_attrib(SysFile,s,"bias");
+     * s->bias = (R_flt64) asReal(tmp);
+     * tmp = sys_file_restore_from_attrib(SysFile,s,"swap_code");
+     * s->swap_code = asInteger(tmp);
+     * tmp = sys_file_restore_from_attrib(SysFile,s,"case_size");
+     * s->case_size = asInteger(tmp);
+     * tmp = sys_file_restore_from_attrib(SysFile,s,"data_pos");
+     * s->data_pos = asInteger(tmp);
+     * tmp = sys_file_restore_from_attrib(SysFile,s,"sysmis");
+     * s->sysmis = (R_flt64) asReal(tmp);
+     * s->buf = Calloc(s->case_size,R_flt64);
+     * Rprintf("File '%s' reopened\n\n",CHAR(STRING_ELT(name, 0)));
+     * Rprintf("\ns= %llx",s);
+     * UNPROTECT(1); */
   }
   if(s== NULL || s->f == NULL)
         error("file pointer is NULL");

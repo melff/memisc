@@ -57,23 +57,14 @@ SEXP dta_file_close(SEXP s_file)
 dta_file *get_dta_file(SEXP s_file){
   if(TYPEOF(s_file) != EXTPTRSXP || R_ExternalPtrTag(s_file) != install("dta_file")) error("not an Stata file");
   dta_file *dtaf = R_ExternalPtrAddr(s_file);
-  if (dtaf == NULL){
-    dta_file *dtaf = Calloc(1,dta_file);
-    dtaf->swap = 0;
-    R_SetExternalPtrAddr(s_file,dtaf);
+  if (dtaf == NULL || dtaf->f == NULL){
     SEXP name = getAttrib(s_file,install("file.name"));
-    if(name == R_NilValue || name == NULL){
+    if(dtaf != NULL){
       Free(dtaf);
-      error("need filename to reopen file");
-      }
-    dtaf->f = fopen(CHAR(STRING_ELT(name, 0)),"r+b");
-    if(dtaf->f == NULL){
-      Free(dtaf);
-      error("cannot reopen file -- does it still exist?");
     }
-    Rprintf("File '%s' reopened\n\n",asString(name));
+   error("external pointer is NULL, you need to recreate this object");
   }
-  return(dtaf);
+  return dtaf;
 }
 
 

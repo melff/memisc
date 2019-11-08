@@ -713,24 +713,25 @@ porStreamBuf *get_porStreamBuf(SEXP porStream){
     error("not a porStream");
   porStreamBuf *b = R_ExternalPtrAddr(porStream);
   if (b == NULL){
-    b = Calloc(1,porStreamBuf);
-    R_SetExternalPtrAddr(porStream,b);
-    initPorStreamBuf(b);
-    SEXP name = getAttrib(porStream,install("file.name"));
-    if(name == R_NilValue || name == NULL){
-      R_SetExternalPtrAddr(porStream,NULL);
-      Free(b);
-      error("need filename to reopen file");
-      }
-    b->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
-    if(b->f == NULL){
-      R_SetExternalPtrAddr(porStream,NULL);
-      Free(b);
-      error("cannot reopen file -- does it still exist?");
-    }
-    Rprintf("File '%s' reopened\n",CHAR(STRING_ELT(name, 0)));
+    error("external pointer is NULL, you need to recreate this object");
+    /* b = Calloc(1,porStreamBuf);
+     * R_SetExternalPtrAddr(porStream,b);
+     * initPorStreamBuf(b);
+     * SEXP name = getAttrib(porStream,install("file.name"));
+     * if(name == R_NilValue || name == NULL){
+     *   R_SetExternalPtrAddr(porStream,NULL);
+     *   Free(b);
+     *   error("need filename to reopen file");
+     *   }
+     * b->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
+     * if(b->f == NULL){
+     *   R_SetExternalPtrAddr(porStream,NULL);
+     *   Free(b);
+     *   error("cannot reopen file -- does it still exist?");
+     * }
+     * Rprintf("File '%s' reopened\n",CHAR(STRING_ELT(name, 0))); */
   }
-  if (b == NULL) error("something strange happened here!?");
+  /* if (b == NULL) error("something strange happened here!?"); */
   return(b);
 }
 
