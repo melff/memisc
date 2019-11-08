@@ -212,22 +212,22 @@ is.valid <- function(x) !is.missing(x) & !is.na(x)
 nvalid <- function(x) sum(is.valid(x))
 
 
-format.valid.values <- function(x,...){
-  paste(as.character(x@filter),collapse=", ")
+format.valid.values <- function(x,digits=3,...){
+  paste(trimws(format(x@filter,digits=digits,...)),collapse=", ")
 }
-format.valid.range <- function(x,...){
-  paste(as.character(x@filter[1:2]),collapse="-")
+format.valid.range <- function(x,digits=3,...){
+  paste(trimws(format(x@filter[1:2],digits=digits,...)),collapse=" - ")
 }
-format.missing.values <- function(x,...){
+format.missing.values <- function(x,digits=3,...){
   if(length(x@filter) && length(x@range))
     paste(
-      paste(as.character(x@filter),collapse=", "),
-      paste(as.character(x@range[1:2]),collapse="-"),
+      paste(trimws(format(x@filter,digits=digits,...)),collapse=", "),
+      paste(trimws(format(x@range[1:2],digits=digits,...)),collapse=" - "),
       sep=", ")
   else if(length(x@filter))
-    paste(as.character(x@filter),collapse=", ")
+    paste(trimws(format(x@filter,digits=digits,...)),collapse=", ")
   else if(length(x@range))
-    paste(as.character(x@range[1:2]),collapse="-")
+    paste(trimws(format(x@range[1:2],digits=digits,...)),collapse=" - ")
 }
 
 # setMethod("format","valid.values",format.valid.values) 

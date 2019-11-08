@@ -239,8 +239,7 @@ setMethod("Descriptives",signature(x="atomic"),
       Skewness=m.3/m.2^(3/2),
       Kurtosis=m.4/m.2^2-3,
       Min=min(x,na.rm=TRUE),
-      Max=max(x,na.rm=TRUE),
-      NAs=if(NAs) NAs else NULL
+      Max=max(x,na.rm=TRUE) 
      )
 })
 
@@ -262,9 +261,7 @@ setMethod("Descriptives",signature(x="item.vector"),
       Mean=m.1,
       "Std.Dev."=sqrt(m.2),
       Skewness=m.3/m.2^(3/2),
-      Kurtosis=m.4/m.2^2-3,
-      Miss.= if(miss) miss else NULL,
-      NAs= if(NAs) NAs else NULL
+      Kurtosis=m.4/m.2^2-3
      )
 })
 
