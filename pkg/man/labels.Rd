@@ -3,6 +3,7 @@
 \alias{labels,item-method}
 \alias{labels<-}
 \alias{labels<-,item,ANY-method}
+\alias{labels<-,ANY,NULL-method}
 \alias{labels<-,item,NULL-method}
 \alias{labels<-,vector,ANY-method}
 \alias{value.labels-class}

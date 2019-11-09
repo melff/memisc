@@ -4,6 +4,7 @@
 \alias{annotation,item-method}
 \alias{annotation,data.set-method}
 \alias{annotation<-}
+\alias{annotation<-,ANY,NULL-method}
 \alias{annotation<-,ANY,character-method}
 \alias{annotation<-,ANY,annotation-method}
 \alias{annotation<-,item,annotation-method}

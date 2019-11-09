@@ -8,6 +8,7 @@
 \alias{missing.values}
 \alias{missing.values,item.vector-method}
 \alias{missing.values<-}
+\alias{missing.values<-,ANY,NULL-method}
 \alias{missing.values<-,ANY,atomic-method}
 \alias{missing.values<-,ANY,list-method}
 \alias{missing.values<-,item,NULL-method}
@@ -17,12 +18,14 @@
 \alias{valid.values}
 \alias{valid.values,item.vector-method}
 \alias{valid.values<-}
+\alias{valid.values<-,ANY,NULL-method}
 \alias{valid.values<-,ANY,atomic-method}
 \alias{valid.values<-,item,valid.values-method}
 \alias{valid.values<-,atomic,valid.values-method}
 \alias{valid.range}
 \alias{valid.range,item.vector-method}
 \alias{valid.range<-}
+\alias{valid.range<-,ANY,NULL-method}
 \alias{valid.range<-,ANY,atomic-method}
 \alias{valid.range<-,item,valid.range-method}
 \alias{valid.range<-,atomic,valid.range-method}
