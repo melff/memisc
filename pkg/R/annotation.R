@@ -3,6 +3,12 @@
 setMethod("annotation","ANY",function(x)attr(x,"annotation"))
 setMethod("annotation","item",function(x)x@annotation)
 
+setMethod("annotation<-",signature(x="ANY",value="NULL"),function(x,value){
+  attr(x,"annotation") <- NULL
+  x
+})
+
+
 setMethod("annotation<-",signature(x="ANY",value="character"),function(x,value){
   value <- new("annotation",structure(as.character(value),names=names(value)))
   callGeneric(x,value)

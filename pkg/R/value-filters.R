@@ -37,6 +37,10 @@ is.missing2 <- function(x,filter){
 
 setMethod("value.filter",signature(x="item"),function(x)x@value.filter)
 
+setMethod("value.filter<-",signature(x="ANY",value="NULL"),function(x,value){
+  x
+})
+
 setMethod("value.filter<-",signature(x="item",value="NULL"),
   function(x,value){
     x@value.filter <- NULL
@@ -87,6 +91,11 @@ setMethod("valid.range",signature(x="item.vector"),function(x){
   new("valid.range",filter=range(vals))
 })
 
+setReplaceMethod("missing.values",signature(x="ANY",value="NULL"),
+  function(x,value){
+    x
+})
+
 
 setReplaceMethod("missing.values",signature(x="item",value="NULL"),
   function(x,value){
@@ -119,6 +128,10 @@ setReplaceMethod("missing.values",signature(x="atomic",value="missing.values"),
     else as.item(x,value.filter=value)
 })
 
+setReplaceMethod("valid.values",signature(x="ANY",value="NULL"),
+  function(x,value){
+    x
+})
 
 setReplaceMethod("valid.values",signature(x="ANY",value="atomic"),
   function(x,value){
@@ -138,6 +151,11 @@ setReplaceMethod("valid.values",signature(x="atomic",value="valid.values"),
       x
     }
     else as.item(x,value.filter=value)
+})
+
+setReplaceMethod("valid.range",signature(x="ANY",value="NULL"),
+  function(x,value){
+    x
 })
 
 setReplaceMethod("valid.range",signature(x="ANY",value="atomic"),
