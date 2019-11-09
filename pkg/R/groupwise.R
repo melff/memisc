@@ -17,10 +17,36 @@ getRows_ <- function(i,data) {
     data[i,,drop=FALSE]
 }
 
+as_factor <- function(x){
+    if(inherits(x,"item.vector")){
+        x <- include.missings(x)
+        x <- if(is.ordinal(x)) as.ordered(x)
+             else if(is.nominal(x)) as.factor(x)
+             else as.vector(x)
+    }
+    if(!is.factor(x)){
+        lev <- sort(unique(x),na.last=TRUE)
+        i <- match(x,lev)
+        x <- factor(i,labels=as.character(lev))
+        return(x)
+    }
+    else {
+        # if(any(is.na(x))){
+        #     lev <- c(levels(x),"<NA>")
+        #     nlev <- length(lev)
+        #     x <- as.integer(x)
+        #     x[is.na(x)] <- nlev
+        #     x <- factor(x,labels=lev)
+        # }
+        x <- addNA(factor(x),ifany=TRUE)
+        return(x)
+    }
+}
+
 Groups.data.set.formula <- function(data,by,...){
     varn <- all.vars(by)
     vars <- data[varn]
-    factors <- lapply(vars,as.vector)
+    factors <- lapply(vars,as_factor)
     ii <- 1:nrow(data)
     orig.id <- split(ii,factors)
     structure(tapply(ii,factors,getRows_,data=data),
