@@ -13,6 +13,8 @@
 \alias{Stata.file}
 \alias{Stata.importer-class}
 \alias{show,Stata.importer-method}
+\alias{Stata_new.importer-class}
+\alias{show,Stata_new.importer-method}
 \alias{as.data.set,importer-method}
 \alias{subset,importer-method}
 \alias{dim,importer-method}
@@ -27,6 +29,7 @@
 \alias{initialize,spss.system.importer-method}
 \alias{initialize,spss.fixed.importer-method}
 \alias{initialize,Stata.importer-method}
+\alias{initialize,Stata_new.importer-method}
 
 \title{Object Oriented Interface to Foreign Files}
 \description{
@@ -116,8 +119,11 @@ Stata.file(file)
 \code{spss.system.file}, and \code{Stata.file}
 return, respectively, objects of class
 \code{"spss.fixed.importer"}, \code{"spss.portable.importer"},
-\code{"spss.system.importer"}, or \code{"Stata.importer"},
+\code{"spss.system.importer"}, \code{"Stata.importer"}, or \code{"Stata_new.importer"},
 which, by inheritance, are also objects of class \code{"importer"}.
+\code{"Stata.importer"} is for files in the format of Stata versions up
+    to 12, while \code{"Stata_new.importer"} is for files in the newer
+    format of Stata versions from 13.
 
 Objects of class \code{"importer"} have at least the following two slots:
 
