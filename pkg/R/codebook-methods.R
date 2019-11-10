@@ -189,7 +189,7 @@ codebookTable <- function(x,drop.unlabelled=FALSE){
 
     if(ovld){
         tab <- c(tab," "=ovld)
-        lab <- c(lab,"(unlab.vld.)")
+        lab <- c(lab,"(unlab.val.)")
         valid <- c(valid,TRUE)
     }
 
@@ -225,7 +225,7 @@ codebookTable <- function(x,drop.unlabelled=FALSE){
     }
     rownames(tab) <- names(tperc)
     if(drop.unlabelled){
-        drp <- match("(unlab.vld.)",trimws(lab),nomatch=0L)
+        drp <- match("(unlab.val.)",trimws(lab),nomatch=0L)
         tab <- tab[-drp,,drop=FALSE]
         lab <- lab[-drp]
     }
