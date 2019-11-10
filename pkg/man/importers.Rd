@@ -199,43 +199,43 @@ description(nes1948)
 # Now a subset of the data is loaded:
 vote.socdem.48 <- subset(nes1948,
               select=c(
-                  v480018,
-                  v480029,
-                  v480030,
-                  v480045,
-                  v480046,
-                  v480047,
-                  v480048,
-                  v480049,
-                  v480050
+                  V480018,
+                  V480029,
+                  V480030,
+                  V480045,
+                  V480046,
+                  V480047,
+                  V480048,
+                  V480049,
+                  V480050
                   ))
 
 # Let's make the names more descriptive:
 vote.socdem.48 <- rename(vote.socdem.48,
-                  v480018 = "vote",
-                  v480029 = "occupation.hh",
-                  v480030 = "unionized.hh",
-                  v480045 = "gender",
-                  v480046 = "race",
-                  v480047 = "age",
-                  v480048 = "education",
-                  v480049 = "total.income",
-                  v480050 = "religious.pref"
+                  V480018 = "vote",
+                  V480029 = "occupation.hh",
+                  V480030 = "unionized.hh",
+                  V480045 = "gender",
+                  V480046 = "race",
+                  V480047 = "age",
+                  V480048 = "education",
+                  V480049 = "total.income",
+                  V480050 = "religious.pref"
         )
 
 # It is also possible to do both
 # in one step:
 # vote.socdem.48 <- subset(nes1948,
 #              select=c(
-#                  vote           = v480018,
-#                  occupation.hh  = v480029,
-#                  unionized.hh   = v480030,
-#                  gender         = v480045,
-#                  race           = v480046,
-#                  age            = v480047,
-#                  education      = v480048,
-#                  total.income   = v480049,
-#                  religious.pref = v480050
+#                  vote           = V480018,
+#                  occupation.hh  = V480029,
+#                  unionized.hh   = V480030,
+#                  gender         = V480045,
+#                  race           = V480046,
+#                  age            = V480047,
+#                  education      = V480048,
+#                  total.income   = V480049,
+#                  religious.pref = V480050
 #                  ))
 
 
