@@ -418,3 +418,4 @@ S3method(recombine,grouped.data)
 export(withGroups,withinGroups)
 
 export(Reshape)
+export(spss.file)

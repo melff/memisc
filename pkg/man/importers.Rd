@@ -1,6 +1,7 @@
 \name{importers}
 \alias{importer}
 \alias{importer-class}
+\alias{spss.file}
 \alias{spss.portable.file}
 \alias{spss.portable.importer-class}
 \alias{show,spss.portable.importer-method}
@@ -50,6 +51,8 @@ Most importantly, importer objects support the
 and \code{\link{description}}s, provided by this package.
 }
 \usage{
+spss.file(file,\dots)
+
 spss.fixed.file(file,
   columns.file,
   varlab.file=NULL,
@@ -91,9 +94,11 @@ Stata.file(file,
 
 }
 \arguments{
-    \item{x}{an object that inherits from class \code{"importer"}.}
     \item{file}{character string; the path to the file containing
-        the data}
+      the data}
+    \item{\dots}{Other arguments. \code{spss.file()} passes them on to
+        \code{spss.portable.file()} of  \code{spss.system.file()}. Other
+        function ignore further arguments.}
     \item{columns.file}{character string; the path to an
         SPSS/PSPP syntax file with a \code{DATA LIST FIXED} statement}
     \item{varlab.file}{character string; the path to an
@@ -112,6 +117,7 @@ Stata.file(file,
     \item{encoded}{a cacharacter string; the way characters are encoded
       in the improrted file. For the available encoding options
       see \code{?iconvlist}.}
+    \item{x}{an object that inherits from class \code{"importer"}.}
     \item{subset}{a logical vector or an expression containing variables
         from the external data file that evaluates to logical. }
     \item{select}{a vector of variable names from the external data file.
@@ -126,7 +132,6 @@ Stata.file(file,
     \item{optional}{ignored, present only for compatibility.}
     \item{compress.storage.modes}{logical value; if TRUE floating point values
       are converted to integers if possible without loss of information.}
-    \item{\dots}{other arguments; ignored.}
 }
 \value{
 \code{spss.fixed.file}, \code{spss.portable.file},
