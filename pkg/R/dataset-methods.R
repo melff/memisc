@@ -552,9 +552,10 @@ dsView <- function(x){
   .names <- x@names
   frame <- structure(Data,row.names=row.names,names=x@names,
                           class="data.frame")
-  #View.call <- call("View",x=frame,title=title)
-  #eval(View.call,globalenv())
-  View(x=frame,title=title)
+  View.call <- call("View",x=frame,title=title)
+  eval(View.call,globalenv())
+  #View(x=frame,title=title)
+  # do.call("View",list(x=frame,title=title))
 }
 
 
