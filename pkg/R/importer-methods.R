@@ -412,8 +412,10 @@ initcodebookStatsMetric <- function(x){
 
 updatecodebookStatsMetric <- function(cbe,x){
   stats <- cbe@stats
-  tab <- cbTable1(x)
-  stats$tab <- update_cbTable1(stats$tab,tab)
+  if(length(x@value.labels)){
+      tab <- cbTable1(x)
+      stats$tab <- update_cbTable1(stats$tab,tab)
+  }
   miss <- is.missing(x)
   NAs <- is.na(x@.Data)
   x <- x@.Data[!miss & !NAs]
@@ -500,18 +502,18 @@ fixupCodebookTable <- function(x,drop.unlabelled=FALSE){
     omiss <- x$omiss
     NAs <- x$NAs
 
-    if(ovld){
+    if(length(ovld) && ovld){
         tab <- c(tab," "=ovld)
         lab <- c(lab,"(unlab.val.)")
         valid <- c(valid,TRUE)
     }
 
-    if(omiss){
+    if(length(omiss) && omiss){
         tab <- c(tab," "=omiss)
         lab <- c(lab,"(unlab.mss.)")
         valid <- c(valid,FALSE)
     }
-    if(NAs){
+    if(length(NAs) && NAs){
         tab <- c(tab,"NA"=NAs)
         lab <- c(lab,"")
         valid <- c(valid,FALSE)
