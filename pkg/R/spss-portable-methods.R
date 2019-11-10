@@ -4,12 +4,14 @@ spss.portable.file <- function(
     codes.file=NULL,
     missval.file=NULL,
     count.cases=TRUE,
-    to.lower=TRUE
+    to.lower=getOption("spss.por.to.lower",FALSE),
+    encoded=getOption("spss.por.encoding","cp1252"),
+    iconv=TRUE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
     ptr <- porStream(file)
-    
+
     data.spec <- parseHeaderPorStream(ptr)
     types <- data.spec$types
     variables <- vector(length(types),mode="list")
@@ -72,10 +74,16 @@ spss.portable.file <- function(
       names(variables) <- tolower(names(variables))
     }
 
+    if(iconv)
+        variables <- lapply(variables,Iconv,from=encoded,to="")
+    else
+        encoded = ""
+
     warn_if_duplicate_labels(variables)
         
     document <- data.spec$document
     data.spec$document <- NULL
+
     new("spss.portable.importer",
       variables,
       ptr=ptr,
@@ -83,18 +91,20 @@ spss.portable.file <- function(
       codes.file=codes.file,
       missval.file=missval.file,
       document=document,
-      data.spec=data.spec
+      data.spec=data.spec,
+      encoded=encoded
       )
 }
 setMethod("initialize","spss.portable.importer",function(.Object,
-                                                          variables,
-                                                          ptr,
-                                                          varlab.file=character(),
-                                                          codes.file=character(),
-                                                          missval.file=character(),
-                                                          document=character(),
-                                                          data.spec
-                                                          ){
+                                                         variables,
+                                                         ptr,
+                                                         varlab.file=character(),
+                                                         codes.file=character(),
+                                                         missval.file=character(),
+                                                         document=character(),
+                                                         data.spec,
+                                                         encoded
+                                                         ){
      .Object@.Data <- variables
      .Object@ptr <- ptr
      .Object@varlab.file <- as.character(varlab.file)
@@ -102,6 +112,7 @@ setMethod("initialize","spss.portable.importer",function(.Object,
      .Object@missval.file <- as.character(missval.file)
      .Object@document <- as.character(document)
      .Object@data.spec <- data.spec
+     .Object@encoded <- encoded
      .Object
 })
 
@@ -121,28 +132,28 @@ setMethod("seekData","spss.portable.importer",function(x)
 
 setMethod("readData","spss.portable.importer",
   function(x,n)
-    .Call("readDataPorStream",
-      x@ptr,
-      what=x,
-      nlines=n,
-      types=x@data.spec$types
-))
+    iconv_list(.Call("readDataPorStream",
+           x@ptr,
+           what=x,
+           nlines=n,
+           types=x@data.spec$types),
+      encoded=x@encoded))
 
 setMethod("readSlice","spss.portable.importer",
   function(x,rows,cols)
-    .Call("readSlicePorStream",x@ptr,
-      what=x,
-      j=cols,i=rows,
-      types=x@data.spec$types
-))
+    iconv_list(.Call("readSlicePorStream",x@ptr,
+           what=x,
+           j=cols,i=rows,
+           types=x@data.spec$types),
+      encoded=x@encoded))
 
 setMethod("readChunk","spss.portable.importer",
   function(x,nrows,cols)
-    .Call("readChunkPorStream",x@ptr,
-      what=x,
-      vars=cols,n=nrows,
-      types=x@data.spec$types
-))
+    iconv_list(.Call("readChunkPorStream",x@ptr,
+           what=x,
+           vars=cols,n=nrows,
+           types=x@data.spec$types),
+      encoded=x@encoded))
 
 setMethod("show","spss.portable.importer",
   function(object){

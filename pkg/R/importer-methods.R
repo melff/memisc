@@ -502,7 +502,7 @@ fixupCodebookTable <- function(x,drop.unlabelled=FALSE){
 
     if(ovld){
         tab <- c(tab," "=ovld)
-        lab <- c(lab,"(unlab.vld.)")
+        lab <- c(lab,"(unlab.val.)")
         valid <- c(valid,TRUE)
     }
 
@@ -533,7 +533,7 @@ fixupCodebookTable <- function(x,drop.unlabelled=FALSE){
     tab <- cbind(N=tab,Valid=vperc,Total=tperc)
     rownames(tab) <- names(tperc)
     if(drop.unlabelled){
-        drp <- match("(unlab.vld.)",trimws(lab),nomatch=0L)
+        drp <- match("(unlab.val.)",trimws(lab),nomatch=0L)
         tab <- tab[-drp,,drop=FALSE]
         lab <- lab[-drp]
     }
@@ -600,4 +600,5 @@ fixupcodebookEntryDatetime <- function(cbe){
   cbe
 }
 
-
+setMethod("head",signature(x="importer"),utils::head.matrix)
+setMethod("tail",signature(x="importer"),utils::head.matrix)

@@ -27,3 +27,4 @@ Iconv.data.set <- function(x,from="",to="",...){
   x@.Data <- lapply(x@.Data,Iconv.item,from,to,...)
   return(x)
 }
+

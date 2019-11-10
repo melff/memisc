@@ -1,10 +1,19 @@
+spss.file <- function(file,...){
+    if(grepl("\\.por$",file) || grepl("\\.POR$",file))
+        spss.portable.file(file,...)
+    else
+        spss.system.file(file,...)
+}
+
 spss.system.file <- function(
     file,
     varlab.file=NULL,
     codes.file=NULL,
     missval.file=NULL,
     count.cases=TRUE,
-    to.lower=TRUE
+    to.lower=getOption("spss.sav.to.lower",FALSE),
+    encoded=getOption("spss.sav.encoding","cp1252"),
+    iconv=TRUE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -92,6 +101,11 @@ spss.system.file <- function(
     if(to.lower){
       names(variables) <- tolower(names(variables))
     }
+
+    if(iconv)
+        variables <- lapply(variables,Iconv,from=encoded,to="")
+    else
+        encoded = ""
     
     warn_if_duplicate_labels(variables)
     
@@ -102,18 +116,20 @@ spss.system.file <- function(
       codes.file=codes.file,
       missval.file=missval.file,
       document=document,
-      data.spec=data.spec
+      data.spec=data.spec,
+      encoded=encoded
       )
 }
 setMethod("initialize","spss.system.importer",function(.Object,
-                                                          variables,
-                                                          ptr,
-                                                          varlab.file=character(),
-                                                          codes.file=character(),
-                                                          missval.file=character(),
-                                                          document=character(),
-                                                          data.spec
-                                                          ){
+                                                       variables,
+                                                       ptr,
+                                                       varlab.file=character(),
+                                                       codes.file=character(),
+                                                       missval.file=character(),
+                                                       document=character(),
+                                                       data.spec,
+                                                       encoded=encoded
+                                                       ){
      .Object@.Data <- variables
      .Object@ptr <- ptr
      .Object@varlab.file <- as.character(varlab.file)
@@ -121,6 +137,7 @@ setMethod("initialize","spss.system.importer",function(.Object,
      .Object@missval.file <- as.character(missval.file)
      .Object@document <- as.character(document)
      .Object@data.spec <- data.spec
+     .Object@encoded <- encoded
      .Object
 })
 
@@ -143,30 +160,33 @@ setMethod("seekData","spss.system.importer",function(x){
 setMethod("readData","spss.system.importer",
   function(x,n){
     if(!.Call("check_pointer",x@ptr)) stop("pointer is NULL, you need to recreate the object")
-    .Call("read_sysfile_data",
+    iconv_list(.Call("read_sysfile_data",
       x@ptr,
       what=x,
       ncases=n,
-      types=x@data.spec$types
-)})
+      types=x@data.spec$types),
+      encoded=x@encoded)
+  })
 
 setMethod("readSlice","spss.system.importer",
   function(x,rows,cols){
     if(!.Call("check_pointer",x@ptr)) stop("pointer is NULL, you need to recreate the object")
-    .Call("read_sysfile_slice",x@ptr,
+    iconv_list(.Call("read_sysfile_slice",x@ptr,
       what=x,
       j=cols,i=rows,
-      types=x@data.spec$types
-)})
+      types=x@data.spec$types),
+      encoded=x@encoded)
+  })
 
 setMethod("readChunk","spss.system.importer",
   function(x,nrows,cols){
     if(!.Call("check_pointer",x@ptr)) stop("pointer is NULL, you need to recreate the object")
-    .Call("read_sysfile_chunk",x@ptr,
+    iconv_list(.Call("read_sysfile_chunk",x@ptr,
       what=x,
       vars=cols,n=nrows,
-      types=x@data.spec$types
-)})
+      types=x@data.spec$types),
+      encoded=x@encoded)
+  })
 
 
 setMethod("show","spss.system.importer",

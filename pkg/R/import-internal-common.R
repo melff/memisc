@@ -41,3 +41,13 @@ prettifyNames <- function(x){
       return(x)
     }
 
+iconv_list <- function(x,encoded){
+    iconv <- nzchar(encoded)
+    if(iconv){
+        ic <- sapply(x,is.character)
+        if(any(ic))
+            x[ic] <- lapply(x[ic],iconv,from=encoded)
+    }
+    return(x)
+}
+

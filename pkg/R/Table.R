@@ -102,7 +102,7 @@ setMethod("Table",signature(x="item.vector"),
         if(ovld){
           tab <- c(tab," "=ovld)
           if(style=="codebook")
-            lab <- c(lab,"(unlab.vld.)")
+            lab <- c(lab,"(unlab.val.)")
           else {
             lab <- if(length(vl)) c(lab,"Other valid") else c(lab,"Valid")
           }

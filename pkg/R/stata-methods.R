@@ -1,10 +1,16 @@
-
-Stata.file <- function(file){
+Stata.file <- function(file,
+                       encoded=if(new_format)getOption("Stata.new.encoding","utf-8")
+                               else getOption("Stata.old.encoding","cp1252"),
+                       iconv=TRUE){
     file <- path.expand(file)
     check.file(file,error=TRUE)
 
     ptr <- dta117_file_open(file)
-    if(dta117_check_magic(ptr)){
+
+    new_format <- dta117_check_magic(ptr)
+    
+    if(new_format){
+
         dta117_read_header(ptr)
         dta117_read_map(ptr)
         types <- dta117_read_vtypes(ptr)
@@ -53,15 +59,23 @@ Stata.file <- function(file){
                                                        variables[names(missval_labels)],
                                                        meas)
         }
+
+        if(iconv)
+            variables <- lapply(variables,Iconv,from=encoded,to="")
+        else
+            encoded = ""
+        
         
         new("Stata_new.importer",
             variables,
             ptr=ptr,
-            types=types
+            types=types,
+            encoded=encoded
             )
         
     }
     else {
+
         dta117_file_close(ptr)
         ptr <- new.dta(file)
         data.spec <- get.dictionary.dta(ptr)
@@ -93,11 +107,17 @@ Stata.file <- function(file){
                                                        variables[names(missval_labels)],
                                                        meas)
         }
-        
+
+        if(iconv)
+            variables <- lapply(variables,Iconv,from=encoded,to="")
+        else
+            encoded <- ""
+
         new("Stata.importer",
             variables,
             ptr=ptr,
-            data.spec=data.spec
+            data.spec=data.spec,
+            encoded=encoded
             )
     }
 }
@@ -106,11 +126,13 @@ Stata.file <- function(file){
 setMethod("initialize","Stata_new.importer",function(.Object,
                                                      variables,
                                                      ptr,
-                                                     types
+                                                     types,
+                                                     encoded
                                                      ){
      .Object@.Data <- variables
      .Object@ptr <- ptr
      .Object@types <- types
+     .Object@encoded <- encoded
      .Object
 })
 
@@ -123,28 +145,28 @@ setMethod("seekData","Stata_new.importer",function(x)
 
 setMethod("readData","Stata_new.importer",
   function(x,n)
-    .Call("dta117_read_data",
+    iconv_list(.Call("dta117_read_data",
       x@ptr,
       what=x,
       n=n,
-      types=x@types
-))
+      types=x@types),
+      encoded=x@encoded))
 
 setMethod("readSlice","Stata_new.importer",
   function(x,rows,cols)
-    .Call("dta117_read_slice",x@ptr,
+    iconv_list(.Call("dta117_read_slice",x@ptr,
       what=x,
       j=cols,i=rows,
-      types=x@types
-))
+      types=x@types),
+      encoded=x@encoded))
 
 setMethod("readChunk","Stata_new.importer",
   function(x,nrows,cols)
-    .Call("dta117_read_chunk",x@ptr,
+    iconv_list(.Call("dta117_read_chunk",x@ptr,
       what=x,
       cols=cols,n=nrows,
-      types=x@types
-))
+      types=x@types),
+      encoded=x@encoded))
 
 setMethod("show","Stata_new.importer",
   function(object){
@@ -162,11 +184,13 @@ setMethod("show","Stata_new.importer",
 setMethod("initialize","Stata.importer",function(.Object,
                                                  variables,
                                                  ptr,
-                                                 data.spec
+                                                 data.spec,
+                                                 encoded
                                                  ){
      .Object@.Data <- variables
      .Object@ptr <- ptr
      .Object@data.spec <- data.spec
+     .Object@encoded <- encoded
      .Object
 })
 
@@ -178,28 +202,28 @@ setMethod("seekData","Stata.importer",function(x)
 
 setMethod("readData","Stata.importer",
   function(x,n)
-    .Call("dta_read_data",
+    iconv_list(.Call("dta_read_data",
       x@ptr,
       what=x,
       ncases=n,
-      types=x@data.spec$types
-))
+      types=x@data.spec$types),
+      encoded=x@encoded))
 
 setMethod("readSlice","Stata.importer",
   function(x,rows,cols)
-    .Call("dta_read_slice",x@ptr,
+    iconv_list(.Call("dta_read_slice",x@ptr,
       what=x,
       j=cols,i=rows,
-      types=x@data.spec$types
-))
+      types=x@data.spec$types),
+      encoded=x@encoded))
 
 setMethod("readChunk","Stata.importer",
   function(x,nrows,cols)
-    .Call("dta_read_chunk",x@ptr,
+    iconv_list(.Call("dta_read_chunk",x@ptr,
       what=x,
       cols=cols,n=nrows,
-      types=x@data.spec$types
-))
+      types=x@data.spec$types),
+      encoded=x@encoded))
 
 setMethod("show","Stata.importer",
   function(object){
