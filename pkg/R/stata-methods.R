@@ -1,7 +1,7 @@
 Stata.file <- function(file,
+                       iconv=TRUE,
                        encoded=if(new_format)getOption("Stata.new.encoding","utf-8")
-                               else getOption("Stata.old.encoding","cp1252"),
-                       iconv=TRUE){
+                               else getOption("Stata.old.encoding","cp1252")){
     file <- path.expand(file)
     check.file(file,error=TRUE)
 

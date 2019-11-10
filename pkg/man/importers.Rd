@@ -64,16 +64,24 @@ spss.portable.file(file,
   codes.file=NULL,
   missval.file=NULL,
   count.cases=TRUE,
-  to.lower=TRUE)
+  to.lower=getOption("spss.por.to.lower",FALSE),
+  iconv=TRUE,
+  encoded=getOption("spss.por.encoding","cp1252"))
 
 spss.system.file(file,
   varlab.file=NULL,
   codes.file=NULL,
   missval.file=NULL,
   count.cases=TRUE,
-  to.lower=TRUE)
+  to.lower=getOption("spss.sav.to.lower",FALSE),
+  iconv=TRUE,
+  encoded=getOption("spss.sav.encoding","cp1252"))
 
-Stata.file(file)
+Stata.file(file,
+           iconv=TRUE,
+           encoded=if(new_format)
+                        getOption("Stata.new.encoding","utf-8")
+                   else getOption("Stata.old.encoding","cp1252"))
 
 ## The most important methods for "importer" objects are:
 \S4method{subset}{importer}(x, subset, select, drop = FALSE, \dots)
@@ -97,7 +105,13 @@ Stata.file(file)
     \item{count.cases}{logical; should cases in file be counted? This
       takes effect only if the data file does not already contain information
       about the number of cases.}
-    \item{to.lower}{logical; should variable names changed to lower case?}
+    \item{to.lower}{logical; should variable names changed to lower
+      case?}
+    \item{iconv}{logical; should strings (in labels and
+      variables) changed into encoding of the platform?}
+    \item{encoded}{a cacharacter string; the way characters are encoded
+      in the improrted file. For the available encoding options
+      see \code{?iconvlist}.}
     \item{subset}{a logical vector or an expression containing variables
         from the external data file that evaluates to logical. }
     \item{select}{a vector of variable names from the external data file.

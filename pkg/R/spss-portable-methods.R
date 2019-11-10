@@ -5,8 +5,8 @@ spss.portable.file <- function(
     missval.file=NULL,
     count.cases=TRUE,
     to.lower=getOption("spss.por.to.lower",FALSE),
-    encoded=getOption("spss.por.encoding","cp1252"),
-    iconv=TRUE
+    iconv=TRUE,
+    encoded=getOption("spss.por.encoding","cp1252")
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
