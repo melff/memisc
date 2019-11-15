@@ -64,13 +64,11 @@ some.grouped.data <- Groups(some.data,
 group.means <- with(some.grouped.data,
                     mean(y))
 group.means
-str(group.means)
 
 some.grouped.data <- within(some.grouped.data,{
     y.cent <- y - mean(y)
 },recombine=FALSE)
 
-#devtools::load_all("pkg")
 group.means <- with(some.grouped.data,
                     round(mean(y.cent),15))
 group.means
@@ -80,14 +78,6 @@ str(group.means)
 with(some.grouped.data,
      c(Centered=round(mean(y.cent),15),
        Uncentered=mean(y)))
-
-with(some.grouped.data,
-     list(Mean=round(mean(y.cent),15),
-          Variance=var(y.cent)))
-
-str(with(some.grouped.data,
-     list(Mean=round(mean(y.cent),15),
-          Variance=var(y.cent))))
 
 some.data.ungrouped <- recombine(some.grouped.data)
 str(some.data.ungrouped)
@@ -108,8 +98,7 @@ some.data <- within(Groups(some.data,~f+g),{
 
 round(with(some.data,
            tapply(y.cent,list(g,f),
-                  mean,na.rm=TRUE)),
-      15)
+                  mean,na.rm=TRUE)),15)
 
 some.data <- withinGroups(some.data,~f+g,{
     y.cent <- y - mean(y)
@@ -117,14 +106,10 @@ some.data <- withinGroups(some.data,~f+g,{
 
 round(with(some.data,
            tapply(y.cent,list(g,f),
-                  mean)),
-      15)
+                  mean)),15)
 
 
 withGroups(some.data,~f+g,{
     round(mean(y.cent),15)
 })
-
-genTable(round(mean(y.cent),15)~f+g,
-         data=some.data)
 }
