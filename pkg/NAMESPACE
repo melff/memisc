@@ -419,3 +419,9 @@ export(withGroups,withinGroups)
 
 export(Reshape)
 export(spss.file)
+
+export(as_tibble.data.set)
+# S3method("as_tibble",data.set)
+# exportMethods(as_tibble)
+export(as_haven)
+exportMethods(as_haven)

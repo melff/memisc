@@ -544,16 +544,23 @@ rbind.data.set <- function(...,deparse.level=1){
 
 dsView <- function(x){
   
-  title <- paste("Data set:", deparse(substitute(x))[1])
+    title <- paste("Data set:", deparse(substitute(x))[1])
 
-  Data <- lapply(x@.Data,format,justify="left")
-  document <- x@document
-  row.names <- x@row_names
-  .names <- x@names
-  frame <- structure(Data,row.names=row.names,names=x@names,
-                          class="data.frame")
-  View.call <- call("View",x=frame,title=title)
-  eval(View.call,globalenv())
+    Data <- lapply(x@.Data,format,justify="left")
+    
+    document <- x@document
+    row.names <- x@row_names
+    .names <- x@names
+    frame <- structure(Data,row.names=row.names,names=x@names,
+                       class="data.frame")
+    for(n in names(frame)){
+        d <- description(x[[n]])
+        if(length(d))
+            attr(frame[[n]],"label") <- d
+    }
+    
+    View.call <- call("View",x=frame,title=title)
+    eval(View.call,globalenv())
   #View(x=frame,title=title)
   # do.call("View",list(x=frame,title=title))
 }

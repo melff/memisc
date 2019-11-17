@@ -73,6 +73,9 @@ setMethod("as.item","numeric",function(x,
   measurement <- if(length(measurement)) match.arg(measurement,c("nominal","ordinal","interval","ratio"))
                  else if(length(value.labels) && !length(measurement)) "nominal" else "interval"
   annotation <- new("annotation",structure(as.character(annotation),names=names(annotation)))
+  label <- attr(x,"label")
+  if("description" %nin% names(annotation) && length(label))
+      annotation["description"] <- label
   cl <- paste(storage.mode(x),"item",sep=".")
   new(cl,
     x,
@@ -85,12 +88,20 @@ setMethod("as.item","numeric",function(x,
 
 setMethod("as.item","logical",function(x,...) {
   y <- as.integer(x)
-  attr(y,"annotation") <- attr(x,"annotation")
+  annotation <- attr(x,"annotation")
+  label <- attr(x,"label")
+  if("description" %nin% names(annotation) && length(label))
+      annotation["description"] <- label
+  attr(y,"annotation") <- annotation
   as.item(y,...)
 })
 setMethod("as.item","factor",function(x,...){
     y <- as.integer(x)
-    attr(y,"annotation") <- attr(x,"annotation")
+    annotation <- attr(x,"annotation")
+    label <- attr(x,"label")
+    if("description" %nin% names(annotation) && length(label))
+        annotation["description"] <- label
+    attr(y,"annotation") <- annotation
     y <- as.item(y,
             labels=new("value.labels",levels(x),values=seq_along(levels(x))),
             measurement="nominal",
@@ -100,7 +111,11 @@ setMethod("as.item","factor",function(x,...){
 })
 setMethod("as.item","ordered",function(x,...){
     y <- as.integer(x)
-  attr(y,"annotation") <- attr(x,"annotation")
+    annotation <- attr(x,"annotation")
+    label <- attr(x,"label")
+    if("description" %nin% names(annotation) && length(label))
+        annotation["description"] <- label
+    attr(y,"annotation") <- annotation
     y <- as.item(y,
                 labels=new("value.labels",levels(x),values=seq_along(levels(x))),
                 measurement="ordinal",
@@ -137,6 +152,9 @@ setMethod("as.item","character",function(x,
   measurement <- if(length(measurement)) match.arg(measurement,c("nominal","ordinal"))
                  else "nominal"
   annotation <- new("annotation",structure(as.character(annotation),names=names(annotation)))
+  label <- attr(x,"label")
+  if("description" %nin% names(annotation) && length(label))
+      annotation["description"] <- label
   new("character.item",x,
     value.labels=value.labels,
     value.filter=value.filter,
@@ -253,7 +271,7 @@ as.data.frame.integer.item <- function (x, row.names = NULL, optional = FALSE, .
     x <- if(is.ordinal(x)) as.ordered(x)
     else if(is.nominal(x)) as.factor(x)
     else as.vector(x)
-
+    
     value <- list(x)
     if (!optional)
         names(value) <- nm
@@ -267,6 +285,9 @@ setMethod("as.vector","item",function(x,mode = "any"){
     x <- callNextMethod()
     if(mode=="any") mode <- storage.mode(x)
     x[ism] <- as.vector(NA,mode=mode)
+    d <- description(x)
+    if(length(d))
+        attr(x,"label") <- d
     x
 })
 
@@ -291,6 +312,9 @@ setMethod("as.ordered","item.vector",function(x){
     f <- ordered(x@.Data,levels=values,labels=labels)
     if(length(attr(x,"contrasts")))
       attr(f,"contrasts") <- contrasts(x)
+    d <- description(x)
+    if(length(d))
+        attr(f,"label") <- d
     f
 })
 
@@ -312,17 +336,28 @@ setMethod("as.factor","item.vector",function(x){
     f <- factor(x@.Data,levels=values,labels=labels)
     if(length(attr(x,"contrasts")))
       contrasts(f) <- contrasts(x)
+    d <- description(x)
+    if(length(d))
+        attr(f,"label") <- d
     f
 })
 
 setMethod("as.character","item.vector",function(x,use.labels=TRUE,...){
-  if(use.labels && length(vl <- labels(x))){
-    i <- match(x,vl@values)
-    y <- vl@.Data[i]
-    y[is.na(y)] <- as.character(x@.Data[is.na(y)])
-    y
-  }
-  else as.character(x@.Data)
+    d <- description(x)
+    if(use.labels && length(vl <- labels(x))){
+        i <- match(x,vl@values)
+        y <- vl@.Data[i]
+        y[is.na(y)] <- as.character(x@.Data[is.na(y)])
+        if(length(d))
+            attr(y,"label") <- d
+        y
+    }
+    else {
+        y <- as.character(x@.Data)
+        if(length(d))
+            attr(y,"label") <- d
+        y
+    }
 })
 
 
