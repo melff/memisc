@@ -206,5 +206,51 @@ DS <- within(DS,{
 
 DS
 
+DS <- within(DS,{
+    xf <- recode(x,
+                 "a" <- range(min,2),
+                 "b" <- 3:4,
+                 "c" <- range(5,6)
+                 )
+    x1 <- recode(x,
+                 1 <- range(1,2),
+                 2 <- range(3,4),
+                 copy=TRUE
+                 )
+    xf1 <- recode(x,
+                 "A" <- range(1,2),
+                 "B" <- range(3,4),
+                 copy=TRUE
+                 )
+})
+DS
+codebook(DS)
+
+DF <- data.frame(x=rep(1:6,4,replace=TRUE))
+DF <- within(DF,{
+    xf <- recode(x,
+                 "a" <- range(min,2),
+                 "b" <- 3:4,
+                 "c" <- range(5,6)
+                 )
+    x1 <- recode(x,
+                 1 <- range(1,2),
+                 2 <- range(3,4),
+                 copy=TRUE
+                 )
+    xf1 <- recode(x,
+                 "A" <- range(1,2),
+                 "B" <- range(3,4),
+                 copy=TRUE
+                 )
+    xf2 <- recode(x,
+                 "B" <- range(3,4),
+                 "A" <- range(1,2),
+                 copy=TRUE
+                 )
+})
+DF
+codebook(DF)
+
 }
 \keyword{manip}
