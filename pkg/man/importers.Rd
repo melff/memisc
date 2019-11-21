@@ -26,6 +26,8 @@
 \alias{[,importer,missing,missing,ANY-method}
 \alias{[[,importer-method}
 \alias{$,importer-method}
+\alias{head,importer-method}
+\alias{tail,importer-method}
 \alias{initialize,spss.portable.importer-method}
 \alias{initialize,spss.system.importer-method}
 \alias{initialize,spss.fixed.importer-method}
@@ -92,6 +94,8 @@ Stata.file(file,
 \S4method{as.data.set}{importer}(x,row.names=NULL,optional=NULL,
                     compress.storage.modes=FALSE,\dots)
 
+\S4method{head}{importer}(x,n=20,\dots)
+\S4method{tail}{importer}(x,n=20,\dots)
 }
 \arguments{
     \item{file}{character string; the path to the file containing
@@ -132,6 +136,7 @@ Stata.file(file,
     \item{optional}{ignored, present only for compatibility.}
     \item{compress.storage.modes}{logical value; if TRUE floating point values
       are converted to integers if possible without loss of information.}
+    \item{n}{integer; the number of rows to be shown by \code{head} or \code{tail}}
 }
 \value{
 \code{spss.fixed.file}, \code{spss.portable.file},

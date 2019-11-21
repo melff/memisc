@@ -20,6 +20,8 @@
 \alias{dimnames,data.set-method}
 \alias{dimnames<-,data.set-method}
 \alias{row.names,data.set-method}
+\alias{head,data.set-method}
+\alias{tail,data.set-method}
 \alias{dsView}
 \title{Data Set Objects}
 \description{
@@ -52,6 +54,9 @@ is.data.set(x)
 \S4method{within}{data.set}(data, expr, \dots)
 
 dsView(x)
+
+\S4method{head}{data.set}(x,n=20,\dots)
+\S4method{tail}{data.set}(x,n=20,\dots)
 }
 \arguments{
   \item{\dots}{
@@ -68,6 +73,7 @@ dsView(x)
     \code{as.data.frame(x,...)} and \code{dsView(x)} a "data.set" object.}
   \item{data}{a data set, that is, an object of class "data.set". }
   \item{expr}{an expression, or several expressions enclosed in curly braces.}
+  \item{n}{integer; the number of rows to be shown by \code{head} or \code{tail}}
 }
 \details{
   The \code{as.data.frame} method for data sets is just a copy
