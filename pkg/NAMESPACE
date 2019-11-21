@@ -260,7 +260,9 @@ exportMethods(
     sample,
     query,
     "[[",
-    "$"
+    "$",
+    head,
+    tail
     )
 S3method(as.data.frame,character.item)
 S3method(as.data.frame,double.item)

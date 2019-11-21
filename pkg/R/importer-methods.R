@@ -602,5 +602,15 @@ fixupcodebookEntryDatetime <- function(cbe){
   cbe
 }
 
-setMethod("head",signature(x="importer"),utils::head.matrix)
-setMethod("tail",signature(x="importer"),utils::head.matrix)
+setMethod("head",signature(x="importer"),
+          function(x,n=20,...){
+              y <- utils::head.matrix(x,n=n,...)
+              rownames(y) <- 1:n
+              return(y)
+          })
+setMethod("tail",signature(x="importer"),
+          function(x,n=20,...){
+              y <- utils::tail.matrix(x,n=n,...)
+              rownames(y) <- seq.int(to=nrow(x),length=n)
+              return(y)
+          })
