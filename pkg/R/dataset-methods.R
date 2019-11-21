@@ -449,6 +449,11 @@ Write.descriptions <- function(x,file=stdout(),...){
   writeLines(out,con=file)
 }
 
+as.data.frame.descriptions <- function(x,...){
+  data.frame(variable=names(x),
+             description=as.character(x))
+}
+
 setMethod("unique","data.set",function(x, incomparables = FALSE, ...){
   frame <- structure(x@.Data,row.names=x@row_names,names=x@names,class="data.frame")
   new("data.set",
