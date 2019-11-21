@@ -611,6 +611,6 @@ setMethod("head",signature(x="importer"),
 setMethod("tail",signature(x="importer"),
           function(x,n=20,...){
               y <- utils::tail.matrix(x,n=n,...)
-              rownames(y) <- seq.int(to=nrow(x),length=n)
+              rownames(y) <- seq.int(to=nrow(x),length.out=n)
               return(y)
           })

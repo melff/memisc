@@ -673,6 +673,6 @@ setMethod("head",signature(x="data.set"),
 setMethod("tail",signature(x="data.set"),
           function(x,n=20,...){
               y <- utils::tail.matrix(x,n=n,...)
-              rownames(y) <- rownames(x)[seq.int(to=nrow(x),length=n)]
+              rownames(y) <- rownames(x)[seq.int(to=nrow(x),length.out=n)]
               return(y)
           })
