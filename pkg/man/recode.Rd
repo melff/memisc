@@ -10,9 +10,18 @@
   commercial statistical packages.
 }
 \usage{
-  \S4method{recode}{vector}(x,...,otherwise="NA")
-  \S4method{recode}{factor}(x,...,otherwise="NA")
-  \S4method{recode}{item}(x,...,otherwise="NA")
+recode(x,\dots,
+       copy=getOption("recode_copy",identical(otherwise,"copy")),
+       otherwise=NA)
+\S4method{recode}{vector}(x,\dots,
+    copy=getOption("recode_copy",identical(otherwise,"copy")),
+    otherwise=NA)
+\S4method{recode}{factor}(x,\dots,
+    copy=getOption("recode_copy",identical(otherwise,"copy")),
+    otherwise=NA)
+\S4method{recode}{item}(x,\dots,
+    copy=getOption("recode_copy",identical(otherwise,"copy")),
+    otherwise=NA)
 }
 \arguments{
   \item{x}{An object}
@@ -39,7 +48,9 @@
 
     If the \code{old.values} of different assignment expressions overlap,
     an error will be raised because the recoding is ambigous.
-    }
+  }
+  \item{copy}{logical; should those values of \code{x} not given an
+    explicit new code copied into the resulting vector?}
   \item{otherwise}{a character string or some other value
     that the result may obtain. If equal to \code{NA} or \code{"NA"},
     original codes not given an explicit new code are recoded into
@@ -163,6 +174,37 @@ recode(f,
   "A" <- c("a","b"),
   "B" <- c("c","d")
   )
+
+DS <- data.set(x=as.item(sample(1:6,20,replace=TRUE),
+        labels=c( a=1,
+                  b=2,
+                  c=3,
+                  d=4,
+                  e=5,
+                  f=6)))
+print(DS)
+
+DS <- within(DS,{
+    xf <- recode(x,
+                 "a" <- range(min,2),
+                 "b" <- 3:4,
+                 "c" <- range(5,6)
+                 )
+    xn <- x@.Data
+    xc <- recode(xn,
+                 "a" <- range(min,2),
+                 "b" <- 3:4,
+                 "c" <- range(5,6)
+                 )
+    xc <- as.character(x)
+    xcc <- recode(xc,
+                  1 <- letters[1:2],
+                  2 <- letters[3:4],
+                  3 <- letters[5:6]
+                  )
+})
+
+DS
 
 }
 \keyword{manip}
