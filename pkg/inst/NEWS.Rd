@@ -34,7 +34,7 @@
     \item Output of \code{mtable()} objects also include, if applicable,
           a note that explains the "significance stars" for p-values.
     \item Summary statistics reported by \code{mtable()} can now be
-          selected for each object or object class (via calls to \code{opitons})
+          selected for each object or object class (via calls to \code{options})
           separately.
     \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
           created by \code{mtable} and \code{ftable} etc.
@@ -45,8 +45,35 @@
     \item New \code{$} and \code{[[} operators for "importer" objects
           allow to create codebooks for single items/variables in 
           imported data files.
+    \item A \code{duplicated_labels} function allows to show and
+          describe duplicated labels.
     \item New operators \code{\%#\%}, \code{\%##\%}, and \code{\%@\%} to
           manipulate annotations and other attributes.
+    \item A \code{List} function adds names to its elements by deparsing
+          arguments in the same way as \code{data.frame} does.
+    \item A new function \code{Groups} allows to split a data frame or a
+          "data.set" into group based on factors in a more convenient
+          way. There are methods of \code{with} and \code{within} to deal with
+          resulting objects of class "grouped.data". For example, the
+          \code{within} method allows to substract group means from the
+          observations within groups. \code{withinGroups} allows to split a
+          data frame or "data.set" objects into groups, make within-group
+          computations and recombine the groups into the order of the original
+          data frame or "data.set" object.
+    \item A new function \code{Reshape} simplifies the syntax to reshape data frames
+          and "data.set" objects from wide into long or from long into
+          wide format.
+    \item 'tibbles', including those created with the \emph{haven}
+          package can be translated into "data.set" objects without loss
+          of information. Also "data.set" objects can be translated into
+          'tibbles' with minimal loss of information.
+    \item An extendable function \code{view} allows to use the
+          \code{View} facilities provided by graphical user interfaces (in
+          particular RStudio) with objects not originally supported by these
+          user interfaces. In addition, \code{view} methods for
+          "codeplan", "decriptions", "data.set", and "inporter" are
+          provided, which allow to conviently inspect the contents of
+          these objects in RStudio.
     }
   }
   \subsection{IMPROVEMENTS}{
@@ -61,15 +88,44 @@
             with the same name.
       \item \code{spss.system.file} now translates numeric variables with any SPSS
             date format into a "datetime.item"
+      \item The function \code{List} adds names to the elements of the
+            resulting list in a way similar to how \code{data.frame}
+            adds names to the columns of a data frame. 
+      \item \code{Stata.file} now handles files in format rev. 117 and
+            later as they are created by Stata version later than 13.
+      \item User definded missing values are now reported in separate
+            tables in entries created by \code{codebook} even if these
+            entries refer to items with measurement level "interval" or
+            "ratio".
+      \item If the annotation or the labels of a non-item is set to NULL
+            this no longer causes an error.
+      \item Changing varible names to lowercase while importing data
+            sets with \code{Stata.file}, \code{spss.portable.file}, and
+            \code{spss.system.file} is now optional.
+      \item Importer methods \code{Stata.file}, \code{spss.portable.file}, and
+            \code{spss.system.file} now have optional arguments that
+            allow to deal with variable labels or value labels in
+            non-native encoding (e.g. \code{CP1252} on a \code{utf-8}
+            platform).
+      \item A funcition \code{spss.file} acts as a portmanteu for
+            \code{spss.portable.file} and \code{spss.system.file}. 
+      \item The function \code{head} and \code{tail} now work with
+            "data.set" and "importer" objects in the same sensible way as they
+            do with data frames.
+      \item The function \code{recode} behaves more coherently:  If a labelled
+            vector is the result of 'recode' it gets the measurement level
+            "nominal". Factor levels explictly created first come first in the order of
+            factor levels. 
     }
   }
   \subsection{BUGFIXES}{
   \itemize{
     \item \code{str} and \code{ls.str} are imported from the 
           \code{utils} package to prevent a NOTE in R CMD check
-    \item HTML tables and lists are no loger wrapped in HTML paragraphs in \code{format_html.CodebookEntry}.
+    \item HTML tables and lists are no loger wrapped in HTML paragraphs
+          in \code{format_html.CodebookEntry}.
     \item \code{show} and \code{codebookEntry} methods for the
-    "datetime.item" now work asexpected. 
+          "datetime.item" now work asexpected. 
     \item \code{cases} handles \code{NA}s more gracefully
     \item \code{toLatex.ftable} output has been improved: No attempt at
           showing non-existent variable names, better application of
@@ -79,7 +135,7 @@
     \item A bug concerning missing values in SPSS files is fixed.
     \item Headlines in vignettes are now coherent.
     \item \code{mtable} with empty summary sections can be created
-    (again).
+          (again).
     \item Objects returned by \code{mtable} return objects with class
           "memisc_mtable" to avoid name clash with objects created by the
           \code{model.table} in package "stats".
@@ -87,17 +143,20 @@
     errors.
     \item \code{toLatex()} now handles matrices in data frames.
     \item \code{spss.portable.file()} now handles files with weighting
-    variables and empty variable labels.
+          variables and empty variable labels.
     \item \code{spss.fixed.file()} now handles files with lines that are
-    longer than the number of columns specified in the columns
-    definition file.
+          longer than the number of columns specified in the columns
+          definition file.
     \item \code{spss.system.file()} now correctly imports value labels
-    of string variables.
+          of string variables.
     \item Some PROTECTION issus in the C-source flagged by Tomas
-    Kalibera's \code{rchk} utility are fixed.
+          Kalibera's \code{rchk} utility are fixed.
     \item If "data.set" objects are combined and succeeding objects contain
-    "items" not contained in the preceding ones, the result now will
-    still be a valid "data.set" object.
+          "items" not contained in the preceding ones, the result now will
+          still be a valid "data.set" object.
+    \item \code{seekData} etc. no longer try to recreate external
+          pointers in order to avoid segmentation faults. Also the deletion of
+          empty pointers is avoided for the same reason. 
     }
   }
   \subsection{USER-VISIBLE CHANGES}{

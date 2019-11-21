@@ -1,3 +1,62 @@
+2011-11-21:
+   - Added sensible 'head' and 'tail' methods for "data.set" and "importer"
+     objects.
+   - The function 'recode' is made to behave more coherently: If a labelled
+     vector is the result of 'recode' it gets the measurement level
+     "nominal". Factor levels explictly created first come first in the order of
+     factor levels.
+
+2011-11-20:
+   - Added an extensible 'view' function which internally uses a generic
+     function 'viewPrep' to make it work with objects that are not (yet)
+     supported by the implementation of 'View' in base R or RStudio.
+
+2011-11-19:
+   - Added a 'as.data.frame' method for "description" objects, as they are
+     returned by 'description' applied to "importer" and "data.set" objects.
+
+2011-11-17:
+   - Added 'as_tibble' and 'as_haven' methods for "data.set" objects.
+   - 'as.data.set' and 'as.item' now handle attributes of variables in tibbles
+     imported with the 'haven' package. 'as.item' methods handle vectors with
+     class "haven_labelled" or "haven_labelled_spss".
+   - Methods of 'as.orders', 'as.factor' 'as.vector', 'as.character' for "item"
+     objects attach "description" annotations as "label" attributes to their
+     results. 
+
+2011-11-10:
+   - Improved handling of missing values in grouping factors in 'Groups',
+     'withinGroups', etc.
+   - Added 'encoded' and 'iconv' arguments to importer methods that allow to
+     re-encode variable labels and value labels while importing SPSS and Stata
+     files.
+   - Added a 'spss.file' function that can be used to import both SPSS
+     "portable" and "system" files.
+   - SPSS file importers do no longer change variable names to lowercase by
+     default. The ANES 1948 vignette is changed accordingly.
+
+2011-11-09:
+   - Added support for added missing values in Stata files prior to rev. 117.
+   - Improved 'codebook' output:
+     - Added a designated function to create tables of counts in codebook
+       entries.
+     - Codebook shows user-defined missing values in a table separate from
+       discrete statistics.
+     - Description of user-defined missing values is made a bit more stringent.
+   - Added support for setting annotations, value labels, or value filters to
+     NULL even if they are not of class "item"
+
+2019-11-07:
+   - Added user-level support for Stata files in the newer format of rev. 117,
+     118 and 119.
+
+2019-11-06:
+   - Fixed ecoding problems in value labels of Stata files: 'nzchar' is used
+     instead of 'nchar' to check for existence of value labels.
+   - Added low-level support for Stata files in the newer format of rev. 117,
+     118 and 119.
+   - Avoid deletion of empty pointers
+	
 2019-10-31:
    - Created and documented a 'Reshape' function as convenience wrapper for 'reshape'.
 
@@ -30,7 +89,7 @@
    - Fixed issues flagged by Tomas Kalibera's rchk utility
 
 2018-11-17:
-   - Added 'dublicated_labels()' function to show and and describe duplicated
+   - Added 'dublicated_labels()' function to show and describe duplicated
      labels
    - Let importers give more useful warnings about duplicated labels  
 
