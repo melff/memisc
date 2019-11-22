@@ -107,7 +107,7 @@
             allow to deal with variable labels or value labels in
             non-native encoding (e.g. \code{CP1252} on a \code{utf-8}
             platform).
-      \item A funcition \code{spss.file} acts as a portmanteu for
+      \item A function \code{spss.file} acts as a common interface to
             \code{spss.portable.file} and \code{spss.system.file}. 
       \item The function \code{head} and \code{tail} now work with
             "data.set" and "importer" objects in the same sensible way as they
