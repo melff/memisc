@@ -238,9 +238,9 @@ pf_mtable_format_html <- function(x,
                                               width=72)
 
         if(split.dec)
-            totspan <- ncols * 3
+            totspan <- sum(ncols) * 3
         else
-            totspan <- ncols
+            totspan <- sum(ncols)
         if(l.leaders)
             totspan <- totspan + 1
         
