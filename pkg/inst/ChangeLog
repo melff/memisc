@@ -1,3 +1,6 @@
+2011-11-28:
+   - Added new function 'view_html' for use with 'view'.
+
 2011-11-21:
    - Added sensible 'head' and 'tail' methods for "data.set" and "importer"
      objects.
