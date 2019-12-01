@@ -29,3 +29,9 @@ view_html(x,title=deparse(substitute(x)),output,\dots)
     and included into the Jupyter output.}
   \item{\dots}{other arguments; ignored.}
 }
+\examples{
+\dontrun{
+    example(data.set)
+    view(Data,vfunc=view_html)
+}
+}
