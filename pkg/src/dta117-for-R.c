@@ -737,7 +737,7 @@ SEXP dta117_seek_data(SEXP s_dta_file){
 }
 
 
-char charbuf[DTA_MAXSTR + 1];
+static char charbuf[DTA_MAXSTR + 1];
 
 SEXP dta117_read_data(SEXP s_dta_file, SEXP what, SEXP s_nobs, SEXP s_types){
   dta117_file *dtaf = get_dta117_file(s_dta_file);

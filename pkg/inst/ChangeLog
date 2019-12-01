@@ -1,4 +1,11 @@
-2011-11-21:
+2019-12-01:
+   - Declared 'charbuf' static in R-for-dta.c and R-for-dta117.c to avoid
+     compilation error with GCC 10.
+
+2019-11-28:
+   - Added new function 'view_html' for use with 'view'.
+
+2019-11-21:
    - Added sensible 'head' and 'tail' methods for "data.set" and "importer"
      objects.
    - The function 'recode' is made to behave more coherently: If a labelled
@@ -6,16 +13,16 @@
      "nominal". Factor levels explictly created first come first in the order of
      factor levels.
 
-2011-11-20:
+2019-11-20:
    - Added an extensible 'view' function which internally uses a generic
      function 'viewPrep' to make it work with objects that are not (yet)
      supported by the implementation of 'View' in base R or RStudio.
 
-2011-11-19:
+2019-11-19:
    - Added a 'as.data.frame' method for "description" objects, as they are
      returned by 'description' applied to "importer" and "data.set" objects.
 
-2011-11-17:
+2019-11-17:
    - Added 'as_tibble' and 'as_haven' methods for "data.set" objects.
    - 'as.data.set' and 'as.item' now handle attributes of variables in tibbles
      imported with the 'haven' package. 'as.item' methods handle vectors with
@@ -24,7 +31,7 @@
      objects attach "description" annotations as "label" attributes to their
      results. 
 
-2011-11-10:
+2019-11-10:
    - Improved handling of missing values in grouping factors in 'Groups',
      'withinGroups', etc.
    - Added 'encoded' and 'iconv' arguments to importer methods that allow to
@@ -35,7 +42,7 @@
    - SPSS file importers do no longer change variable names to lowercase by
      default. The ANES 1948 vignette is changed accordingly.
 
-2011-11-09:
+2019-11-09:
    - Added support for added missing values in Stata files prior to rev. 117.
    - Improved 'codebook' output:
      - Added a designated function to create tables of counts in codebook
