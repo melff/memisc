@@ -365,7 +365,7 @@ SEXP dta_seek_data(SEXP s_dta_file){
   else return ScalarInteger(NA_INTEGER);
 }
 
-char charbuf[256]; 
+static char charbuf[256]; 
 
 SEXP dta_make_prototype(SEXP s_types){
   int j, nvar = length(s_types);
