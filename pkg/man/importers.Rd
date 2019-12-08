@@ -61,8 +61,9 @@ spss.fixed.file(file,
   codes.file=NULL,
   missval.file=NULL,
   count.cases=TRUE,
-  to.lower=TRUE
-  )
+  to.lower=getOption("spss.fixed.to.lower",FALSE),
+  iconv=TRUE,
+  encoded=getOption("spss.fixed.encoding","cp1252"))
 
 spss.portable.file(file,
   varlab.file=NULL,

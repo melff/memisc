@@ -86,8 +86,11 @@ spss.parse.data.spec <- function(file){
   )
 }
 
-spss.parse.variable.labels <- function(file){
+spss.parse.variable.labels <- function(file,iconv=TRUE,
+    encoded=getOption("spss.syntax.encoding","cp1252")){
   text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  if(iconv)
+      text <- iconv(text,from=encoded,to="")
   text <- gsub("\"\"","'",text)
   text <- gsub("''","\"",text)
   res <- character()
@@ -133,8 +136,11 @@ spss.parse1.variable.labels <- function(text){
             remainder=text)
 }
 
-spss.parse.value.labels <- function(file){
+spss.parse.value.labels <- function(file,iconv=TRUE,
+    encoded=getOption("spss.syntax.encoding","cp1252")){
   text <- paste(readLines(file,n=-1,warn=FALSE),collapse=" ")
+  if(iconv)
+      text <- iconv(text,from=encoded,to="")
   text <- gsub("\"\"","'",text)
   text <- gsub("''","\"",text)
   res <- list()

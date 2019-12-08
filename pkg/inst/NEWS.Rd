@@ -121,6 +121,10 @@
             variables in their header. (These files are typically
             created by the library ReadStat, used e.g. by the R package
             'haven'.)
+      \item SPSS syntax files are now converted to the encoding of
+            the host system if they have a different one. By default,
+            the original encoding is assumed to be Codepage 1252 (extended
+            Latin-1).
     }
   }
   \subsection{BUGFIXES}{

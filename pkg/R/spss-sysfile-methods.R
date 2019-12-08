@@ -66,11 +66,15 @@ spss.system.file <- function(
 
     if(length(varlab.file) && check.file(varlab.file,error=TRUE)){
       message("using ",varlab.file)
-      varlabs <- spss.parse.variable.labels(varlab.file)
+      varlabs <- spss.parse.variable.labels(varlab.file,
+                                            iconv=iconv,
+                                            encoded=encoded)
       }
     if(length(codes.file) && check.file(codes.file,error=TRUE)){
       message("using ",codes.file)
-      vallabs <- spss.parse.value.labels(codes.file)
+      vallabs <- spss.parse.value.labels(codes.file,
+                                         iconv=iconv,
+                                         encoded=encoded)
       }
     if(length(missval.file) && check.file(missval.file,error=TRUE)){
       message("using ",missval.file)

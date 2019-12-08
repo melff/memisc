@@ -5,7 +5,9 @@ spss.fixed.file <- function(
     codes.file=NULL,
     missval.file=NULL,
     count.cases=TRUE,
-    to.lower=TRUE
+    to.lower=getOption("spss.fixed.to.lower",FALSE),
+    iconv=TRUE,
+    encoded=getOption("spss.fixed.encoding","cp1252")
     ){
     file <- force(file)
     columns.file <- force(columns.file)
@@ -17,9 +19,15 @@ spss.fixed.file <- function(
     data.spec <- spss.parse.data.spec(columns.file)
     types <- data.spec$types
 #     browser()
-    varlabs <- if(length(varlab.file) && check.file(varlab.file,error=TRUE)) spss.parse.variable.labels(varlab.file)
+    varlabs <- if(length(varlab.file) && check.file(varlab.file,error=TRUE))
+                   spss.parse.variable.labels(varlab.file,
+                                              iconv=iconv,
+                                              encoded=encoded)
                else NULL #vector(length(types),mode="list")
-    vallabs <- if(length(codes.file) && check.file(codes.file,error=TRUE)) spss.parse.value.labels(codes.file)
+    vallabs <- if(length(codes.file) && check.file(codes.file,error=TRUE))
+                   spss.parse.value.labels(codes.file,
+                                           iconv=iconv,
+                                           encoded=encoded)
                else NULL #vector(length(types),mode="list")
     missings <- if(length(missval.file) && check.file(missval.file,error=TRUE)) spss.parse.missing.values(missval.file)
                else NULL #vector(length(types),mode="list")
