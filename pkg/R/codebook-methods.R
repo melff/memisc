@@ -29,6 +29,8 @@ setMethod("codebook","factor",function(x){
   new("codebook",cb)
 })
 
+setMethod("codebook","NULL",function(x)NULL)
+
 setMethod("codebookEntry","item",function(x){
   annotation <- annotation(x)
   filter <- x@value.filter

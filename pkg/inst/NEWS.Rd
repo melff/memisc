@@ -125,6 +125,9 @@
             the host system if they have a different one. By default,
             the original encoding is assumed to be Codepage 1252 (extended
             Latin-1).
+      \item \code{codebook}, \code{codeplan}, \code{labels},
+            \code{value.filter}, and related functions return \code{NULL} 
+            for \code{NULL} arguments. 
     }
   }
   \subsection{BUGFIXES}{

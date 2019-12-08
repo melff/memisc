@@ -2,6 +2,8 @@
    - Handle SPSS files created with ReadStat/haven, that lack information 
      about the number of variables in the header.
    - Added support for SPSS syntax file with different encoding
+   - Added methods for NULL for 'labels', 'value.filter', 'codebook'
+     and 'codeplan' generics.
 
 2019-12-01:
    - Declared 'charbuf' static in R-for-dta.c and R-for-dta117.c to avoid

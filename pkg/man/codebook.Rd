@@ -3,6 +3,7 @@
 \alias{codebook,item-method}
 \alias{codebook,data.set-method}
 \alias{codebook,importer-method}
+\alias{codebook,NULL-method}
 \alias{codebook,atomic-method}
 \alias{codebook,data.frame-method}
 \alias{codebook,factor-method}

@@ -25,6 +25,8 @@ setValidity("value.labels",function(object){
                length(object@.Data),"labels")
 })
 
+setMethod("labels","NULL",function(object,...)NULL)
+
 setMethod("labels","item",function(object,...)object@value.labels)
 setMethod("labels<-",signature(x="item",value="ANY"),function(x,value){
   x@value.labels<-as(value,"value.labels")

@@ -1,5 +1,6 @@
 \name{labels}
 \alias{labels}
+\alias{labels,NULL-method}
 \alias{labels,item-method}
 \alias{labels<-}
 \alias{labels<-,item,ANY-method}

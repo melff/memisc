@@ -1,11 +1,13 @@
 \name{value.filter}
 \alias{value.filter}
 \alias{value.filter-class}
+\alias{value.filter,NULL-method}
 \alias{value.filter,item-method}
 \alias{missing.values-class}
 \alias{valid.values-class}
 \alias{valid.range-class}
 \alias{missing.values}
+\alias{missing.values,NULL-method}
 \alias{missing.values,item.vector-method}
 \alias{missing.values<-}
 \alias{missing.values<-,ANY,NULL-method}
@@ -16,6 +18,7 @@
 \alias{missing.values<-,item,missing.values-method}
 \alias{missing.values<-,atomic,missing.values-method}
 \alias{valid.values}
+\alias{valid.values,NULL-method}
 \alias{valid.values,item.vector-method}
 \alias{valid.values<-}
 \alias{valid.values<-,ANY,NULL-method}
@@ -23,6 +26,7 @@
 \alias{valid.values<-,item,valid.values-method}
 \alias{valid.values<-,atomic,valid.values-method}
 \alias{valid.range}
+\alias{valid.range,NULL-method}
 \alias{valid.range,item.vector-method}
 \alias{valid.range<-}
 \alias{valid.range<-,ANY,NULL-method}
@@ -44,6 +48,7 @@
 \alias{is.valid}
 \alias{is.missing}
 \alias{is.missing,item.vector-method}
+\alias{is.missing,NULL-method}
 \alias{is.missing,atomic-method}
 \alias{is.missing,factor-method}
 \alias{include.missings}

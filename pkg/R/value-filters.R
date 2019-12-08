@@ -35,6 +35,8 @@ is.missing2 <- function(x,filter){
       )
 }
 
+setMethod("value.filter",signature(x="NULL"),function(x)NULL)
+
 setMethod("value.filter",signature(x="item"),function(x)x@value.filter)
 
 setMethod("value.filter<-",signature(x="ANY",value="NULL"),function(x,value){
@@ -53,6 +55,8 @@ setMethod("value.filter<-",signature(x="item",value="value.filter"),
     x
 })
 
+setMethod("valid.values",signature(x="NULL"),function(x)NULL)
+
 setMethod("valid.values",signature(x="item.vector"),function(x){
   filter <- x@value.filter
   if(!length(filter)) return(new("valid.values",filter=sort(unique(x@.Data))))
@@ -64,6 +68,8 @@ setMethod("valid.values",signature(x="item.vector"),function(x){
   new("valid.values",filter=vals)
 })
 
+setMethod("missing.values",signature(x="NULL"),function(x)NULL)
+
 setMethod("missing.values",signature(x="item.vector"),function(x){
   filter <- x@value.filter
   if(!length(filter)) return(NULL)
@@ -74,6 +80,8 @@ setMethod("missing.values",signature(x="item.vector"),function(x){
     )
   new("missing.values",filter=vals)
 })
+
+setMethod("valid.range",signature(x="NULL"),function(x)NULL)
 
 setMethod("valid.range",signature(x="item.vector"),function(x){
   filter <- x@value.filter
@@ -211,6 +219,8 @@ setMethod("Arith",signature(e1="valid.range",e2="valid.range"),
 
 setMethod("Arith",signature(e1="value.filter",e2="vector"),
   function(e1,e2) callGeneric(e1,as(e2,class(e1))))
+
+setMethod("is.missing",signature(x="NULL"),function(x)NULL)
 
 setMethod("is.missing",signature(x="atomic"),function(x){
   is.na(x)
