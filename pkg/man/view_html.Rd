@@ -1,6 +1,6 @@
 \name{view_html}
 \alias{view_html}
-\title{HTML output for 'view.}
+\title{HTML Output for 'view.}
 \description{An alternative to 'View' for use with 'view'.}
 \usage{
 view_html(x,title=deparse(substitute(x)),output,\dots)

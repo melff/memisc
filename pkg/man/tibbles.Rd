@@ -5,7 +5,7 @@
 \alias{as_haven}
 \alias{as_haven,data.set-method}
 \alias{as_haven,item.vector-method}
-\title{Interface to packages 'tibble' and 'haven'}
+\title{Interface to Packages 'tibble' and 'haven'}
 \description{
   A \code{as_tibble} method (\code{as_table.data.set}) allows to transform \code{"data.set"} objects
   into objects of class \code{"tbl_df"} as defined by the package
