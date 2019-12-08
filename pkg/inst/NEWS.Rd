@@ -115,7 +115,12 @@
       \item The function \code{recode} behaves more coherently:  If a labelled
             vector is the result of 'recode' it gets the measurement level
             "nominal". Factor levels explictly created first come first in the order of
-            factor levels. 
+            factor levels.
+      \item The function \code{spss.system.file} now handles buggy SPSS
+            system files that lack information about the number of
+            variables in their header. (These files are typically
+            created by the library ReadStat, used e.g. by the R package
+            'haven'.)
     }
   }
   \subsection{BUGFIXES}{
