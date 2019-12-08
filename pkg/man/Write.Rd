@@ -5,7 +5,7 @@
 
 \title{Write Codebooks and Variable Descriptions into a Text File}
 \description{
-   This is a conventience function to facilitate the creation of data set documents
+   This is a convenience function to facilitate the creation of data set documents
    in text files.
   }
 \usage{
