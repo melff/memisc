@@ -1,3 +1,7 @@
+2019-12-08:
+   - Handle SPSS files created with ReadStat/haven, that lack information 
+     about the number of variables in the header.
+
 2019-12-01:
    - Declared 'charbuf' static in R-for-dta.c and R-for-dta117.c to avoid
      compilation error with GCC 10.

@@ -2,10 +2,21 @@ spss.readheader <- function(f)
  .Call("read_sysfile_header",f)
 
 spss.readvars <- function(f,n){
- ans <- list()
-  for(i in 1:n){
-    currvar <- .Call("read_sysfile_var",f)
-    ans <- c(ans,list(currvar))
+  ans <- list()
+
+  if(n > 0){
+      for(i in 1:n){
+          currvar <- .Call("read_sysfile_var",f)
+          ans <- c(ans,list(currvar))
+      }
+  }
+  else {
+      repeat {
+          currvar <- .Call("read_sysfile_var",f)
+          if(!is.null(currvar))
+              ans <- c(ans,list(currvar))
+          else break
+      }
   }
   names(ans) <- sapply(ans,function(x)x$name)
   ans
@@ -40,7 +51,15 @@ parseSysHeader <- function(file){
   attr(file,"bias") <- header$bias
   attr(file,"compressed") <- header$compressed
   variables <- spss.readvars(file,nvars)
-
+  if(nvars == 0){
+      warning("File header does not contain information on the number of variables.
+  This is a bug in the software (ReadStat/haven?) with which the data file was created.
+  Guessing that number.",
+              call.=FALSE,immediate.=TRUE)
+      nvars <- length(variables)
+      attr(file,"case_size") <- nvars
+  }
+  
   value.labels <- NULL
   document <- NULL
   if(spss.testcode(file)==3)
