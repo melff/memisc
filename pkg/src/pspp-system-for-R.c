@@ -311,10 +311,13 @@ SEXP read_sysfile_header(SEXP SysFile){
   sys_read(h.padding,3,s);
 
   SEXP ans;
-  PROTECT(ans = allocVector(VECSXP,11));
+  PROTECT(ans = allocVector(VECSXP,12));
   int protectcounter = 1;
 
 #ifdef DEBUG
+  Rprintf("\nh.rec_type = %s",h.rec_type);
+  Rprintf("\nh.case_size = %x",h.case_size);
+  Rprintf("\nh.case_size = %d",h.case_size);
   Rprintf("\nh.layout_code = %x",h.layout_code);
   Rprintf("\nh.layout_code = %d",h.layout_code);
 #endif
@@ -338,10 +341,11 @@ SEXP read_sysfile_header(SEXP SysFile){
   SET_VECTOR_ELT(ans,8,mkString(h.creation_time));
   SET_VECTOR_ELT(ans,9,mkString(h.file_label));
   SET_VECTOR_ELT(ans,10,ScalarInteger(s->swap_code));
+  SET_VECTOR_ELT(ans,11,mkString(h.rec_type));
 
 
   SEXP names;
-  PROTECT(names = allocVector(STRSXP,11));
+  PROTECT(names = allocVector(STRSXP,12));
   protectcounter++;
   SET_STRING_ELT(names,0,mkChar("prod_name"));
   SET_STRING_ELT(names,1,mkChar("layout_code"));
@@ -354,6 +358,7 @@ SEXP read_sysfile_header(SEXP SysFile){
   SET_STRING_ELT(names,8,mkChar("creation_time"));
   SET_STRING_ELT(names,9,mkChar("file_label"));
   SET_STRING_ELT(names,10,mkChar("swap_code"));
+  SET_STRING_ELT(names,11,mkChar("rec_type"));
   SET_NAMES(ans,names);
 
   UNPROTECT(protectcounter);
@@ -381,7 +386,7 @@ struct sysfile_variable
     /* The rest of the structure varies. */
   };
 
-
+/* #define DEBUG */
 SEXP read_sysfile_var(SEXP SysFile){
 #ifdef DEBUG
   Rprintf("\nread_sysfile_var");
@@ -398,9 +403,13 @@ SEXP read_sysfile_var(SEXP SysFile){
   Rprintf("\ntag: %d",curr_var.rec_type);
 #endif
   if(curr_var.rec_type != 2) {
+      #ifdef DEBUG
       Rprintf("%d\n",curr_var.rec_type);
       Rprintf("%s\n",&curr_var.rec_type);
-      error("expecting a variable record");
+      #endif
+      /* error("expecting a variable record"); */
+      fseek(s->f,-sizeof(R_int32),SEEK_CUR);
+      return R_NilValue;
   }
   sys_read_int(&curr_var.type,s);
   sys_read_int(&curr_var.has_var_label,s);
@@ -496,7 +505,7 @@ SEXP read_sysfile_var(SEXP SysFile){
   UNPROTECT(protectcounter);
   return var;
 }
-
+#undef DEBUG
 
 SEXP test_sysfile_int32(SEXP SysFile){
 #ifdef DEBUG
