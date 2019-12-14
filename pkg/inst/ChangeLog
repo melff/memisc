@@ -1,3 +1,10 @@
+2019-12-10:
+   - Further improvements of 'Reshape', added the possibility to
+     specify identifier variables.
+
+2019-12-09:
+   - Symplified further the call-syntax of 'Reshape'
+
 2019-12-08:
    - Handle SPSS files created with ReadStat/haven, that lack information 
      about the number of variables in the header.
