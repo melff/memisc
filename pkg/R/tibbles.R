@@ -31,6 +31,22 @@ setMethod("as.item",signature(x="haven_labelled"),function(x,...){
             annotation=annotation)
 })
 
+setMethod("codebookEntry","haven_labelled",function(x){
+    x <- as.item(x)
+    annotation <- annotation(x)
+    spec <- c(
+        "Storage mode:"=storage.mode(x),
+        "Measurement:"="undefined"
+    )
+    new("codebookEntry",
+        spec = spec,
+        stats = codebookStatsCateg(x),
+        annotation = annotation
+        )
+})
+
+
+
 setOldClass("haven_labelled_spss")
 setMethod("as.item",signature(x="haven_labelled_spss"),function(x,...){
     annotation <- c(description=attr(x,"label"))
@@ -44,6 +60,27 @@ setMethod("as.item",signature(x="haven_labelled_spss"),function(x,...){
     as.item(x,labels=labels,
             annotation=annotation,
             value.filter=value_filter)
+})
+
+setMethod("codebookEntry","haven_labelled_spss",function(x){
+    x <- as.item(x)
+    annotation <- annotation(x)
+    filter <- x@value.filter
+    spec <- c(
+        "Storage mode:"=storage.mode(x),
+        "Measurement:"="undefined"
+    )
+    if(length(filter)) spec <- c(spec,
+                                 switch(class(filter),
+                                        missing.values = c("Missing values:" = format(filter)),
+                                        valid.values   = c("Valid values:"   = format(filter)),
+                                        valid.range    = c("Valid range:"    = format(filter))
+                                        ))
+    new("codebookEntry",
+        spec = spec,
+        stats = codebookStatsCateg(x),
+        annotation = annotation
+        )
 })
 
 setGeneric("as_haven",function(x,...)standardGeneric("as_haven"))
