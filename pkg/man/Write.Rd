@@ -9,9 +9,9 @@
    in text files.
   }
 \usage{
-  Write(x,\dots)
-  \S3method{Write}{codebook}(x,file=stdout(),\dots)
-  \S3method{Write}{descriptions}(x,file=stdout(),\dots)
+Write(x,\dots)
+\S3method{Write}{codebook}(x,file=stdout(),\dots)
+\S3method{Write}{descriptions}(x,file=stdout(),\dots)
 }
 \arguments{
   \item{x}{a "codebook" or "descriptions" object.}

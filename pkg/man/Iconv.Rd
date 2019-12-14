@@ -37,7 +37,7 @@ Iconv(x,from="",to="",\dots)
   attributes.
 }
 \seealso{
-  \code{\link[base]{iconv}},\code{\link[base]{iconvlist}}
+  \code{\link[base]{iconv}}, \code{\link[base]{iconvlist}}
 }
 \examples{
 \dontrun{
