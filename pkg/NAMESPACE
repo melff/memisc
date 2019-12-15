@@ -437,3 +437,8 @@ S3method(viewPrep,descriptions)
 S3method(viewPrep,codeplan)
 S3method(viewPrep,importer)
 export(view_html)
+
+importFrom(data.table,as.data.table)
+S3method(as.data.table,data.set)
+# export(as.data.table.data.set) 
+# exportMethods(as.data.table) 

@@ -1,3 +1,7 @@
+2019-12-14:
+   - Added 'as.data.table' method to 'data.set' objects, to allow export of
+     'data.set' objects into data.tables.
+
 2019-12-10:
    - Further improvements of 'Reshape', added the possibility to
      specify identifier variables.

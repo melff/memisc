@@ -16,8 +16,8 @@ License: GPL-2
 LazyLoad: Yes
 Depends: R (>= 3.3.0), lattice, stats, methods, utils, MASS
 Suggests: splines, knitr, rmarkdown, sandwich
-Enhances: AER, car, eha, lme4, ordinal, simex, tibble, haven 
-Imports: grid, repr
+Enhances: AER, car, eha, lme4, ordinal, simex, tibble, haven
+Imports: grid, repr, data.table
 VignetteBuilder: knitr
 URL: http://www.elff.eu/software/memisc/,http://github.com/melff/memisc/
 BugReports: http://github.com/melff/memisc/issues

@@ -22,6 +22,8 @@
 \alias{row.names,data.set-method}
 \alias{head,data.set-method}
 \alias{tail,data.set-method}
+\alias{tail,data.set-method}
+\alias{as.data.table.data.set}
 \alias{dsView}
 \title{Data Set Objects}
 \description{

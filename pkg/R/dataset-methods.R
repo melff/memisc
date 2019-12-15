@@ -676,3 +676,12 @@ setMethod("tail",signature(x="data.set"),
               rownames(y) <- rownames(x)[seq.int(to=nrow(x),length.out=n)]
               return(y)
           })
+
+
+as.data.table.data.set <- function(x, ...){
+  dataf <- as.data.frame(as.list(x),
+                        row.names=if(length(row.names)) rownames
+                                  else x@row_names)
+  as.data.table(dataf,...)
+}
+
