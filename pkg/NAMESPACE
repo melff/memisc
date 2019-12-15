@@ -442,3 +442,5 @@ importFrom(data.table,as.data.table)
 S3method(as.data.table,data.set)
 # export(as.data.table.data.set) 
 # exportMethods(as.data.table) 
+
+export(set_measurement)

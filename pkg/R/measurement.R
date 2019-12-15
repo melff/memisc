@@ -21,3 +21,33 @@ is.nominal <- function(x) measurement(x) == "nominal"
 is.interval <- function(x) measurement(x) == "interval"
 is.ratio <- function(x) measurement(x) == "ratio"
 
+setReplaceMethod("measurement","data.set",function(x,value){
+    mslevels <- names(value)
+    for(mlv in mslevels){
+        mlv <- as.measurement.level(mlv)
+        vars <- value[[mlv]]
+        for(var in vars){
+            measurement(x[[var]]) <- mlv
+        }
+    }
+    invisible(x)
+})
+
+set_measurement <- function(x,...){
+    mycall <- match.call(expand.dots=FALSE)
+    lst <- mycall$...
+    mslevels <- names(lst)
+    for(mlv in mslevels){
+        mlv <- as.measurement.level(mlv)
+        vars <- lst[[mlv]]
+        if(inherits(vars,"call")){
+            vars <- sapply(vars[-1],as.character)
+        }
+        else
+            vars <- as.character(vars)
+        for(var in vars){
+            measurement(x[[var]]) <- mlv
+        }
+    }
+    return(x)
+}
