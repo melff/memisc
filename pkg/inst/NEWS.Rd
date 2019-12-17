@@ -74,6 +74,12 @@
           "codeplan", "decriptions", "data.set", and "inporter" are
           provided, which allow to conviently inspect the contents of
           these objects in RStudio.
+    \item An "as.data.table" for coercing "data.set" objects directly
+          into "data.table" objects.
+    \item It is now possible to specify the measurement level for a set
+          of variables in a "data.set" objects, either by using the
+          assignment operator with \code{measurement()} or by using
+          the new function \code{set_measurement()}. 
     }
   }
   \subsection{IMPROVEMENTS}{
@@ -127,7 +133,10 @@
             Latin-1).
       \item \code{codebook}, \code{codeplan}, \code{labels},
             \code{value.filter}, and related functions return \code{NULL} 
-            for \code{NULL} arguments. 
+            for \code{NULL} arguments.
+      \item \code{codebook} works also with data frames (or "tibbles")
+            imported with the \emph{haven} package.
+      
     }
   }
   \subsection{BUGFIXES}{
