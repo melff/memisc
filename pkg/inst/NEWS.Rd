@@ -136,7 +136,8 @@
             for \code{NULL} arguments.
       \item \code{codebook} works also with data frames (or "tibbles")
             imported with the \emph{haven} package.
-      
+      \item \code{codebook} now makes use of the "label" attribute of variables if the
+            attribute is present.
     }
   }
   \subsection{BUGFIXES}{

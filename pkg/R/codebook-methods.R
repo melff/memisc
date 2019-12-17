@@ -55,6 +55,12 @@ setMethod("codebookEntry","item",function(x){
 })
 
 setMethod("codebookEntry","atomic",function(x){
+
+  if(length(attr(x,"label")))
+      annotation <- c(description=attr(x,"label"))
+  else
+      annotation <- NULL
+
   spec <- c(
             "Storage mode:"=storage.mode(x)
             )
@@ -72,17 +78,21 @@ setMethod("codebookEntry","atomic",function(x){
       tab <- integer(0)
   stats <- list(tab=tab,
                 descr=stats)
-
   
   new("codebookEntry",
     spec = spec,
     stats = stats,
-    annotation = NULL
+    annotation = annotation
   )
 })
 
 setMethod("codebookEntry","factor",function(x){
 
+  if(length(attr(x,"label")))
+      annotation <- c(description=attr(x,"label"))
+  else
+      annotation <- NULL
+    
   spec <- c("Storage mode:"=storage.mode(x))
   spec <- if(is.ordered(x)) c(spec,
             "Ordered factor with"=paste(nlevels(x),"levels"))
@@ -120,7 +130,7 @@ setMethod("codebookEntry","factor",function(x){
   new("codebookEntry",
     spec = spec,
     stats = stats,
-    annotation = NULL
+    annotation = annotation
   )
 })
 

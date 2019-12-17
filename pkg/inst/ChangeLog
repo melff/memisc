@@ -1,3 +1,7 @@
+2019-12-17:
+   - 'codebook' now makes use of the "label" attribute of variables if the
+     attribute is present.
+
 2019-12-15:
    - 'measurement<-' can be used to change the measurement level of several
      variables in a 'data.set' object. Also a 'set_measurement' function is
