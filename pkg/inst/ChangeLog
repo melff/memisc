@@ -1,3 +1,7 @@
+2019-12-24:
+   - 'withGroups', 'withinGroups', as well as 'with' and 'within' for
+     grouped data is now considerably more time efficient. 
+
 2019-12-17:
    - 'codebook' now makes use of the "label" attribute of variables if the
      attribute is present.

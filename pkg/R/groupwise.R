@@ -48,12 +48,12 @@ Groups.data.set.formula <- function(data,by,...){
     vars <- data[varn]
     factors <- lapply(vars,as_factor)
     ii <- 1:nrow(data)
-    orig.id <- split(ii,factors)
-    structure(tapply(ii,factors,getRows_,data=data),
-              orig.id=orig.id,
-              row.names=attr(data,"row.names"),
-              spec=vars[0,,drop=FALSE],
-              class=c(paste("grouped",class(data)[1],sep="."),"grouped.data"))
+    ii <- tapply(ii,factors,I)
+    extra.attr <- list(groups=ii,
+                       spec=vars[0,,drop=FALSE],
+                       class=c(paste("grouped",class(data)[1],sep="."),"grouped.data",class(data)))
+    attributes(data) <- c(attributes(data),extra.attr)
+    data
 }
 
 setMethod("Groups",signature(data="data.set",by="formula"),
@@ -66,47 +66,91 @@ eval1call <- function(data,call,envir){
     eval(call,envir=envir)
 }
 
-within.grouped.data <- function(data,expr,recombine=FALSE,...){
+mklen <- function(x,n){
+    y <- vector(length=n,mode=mode(x))
+    y[] <- x
+    return(y)
+}
+
+within1.grouped.data.frame <- function(ii,data,expr,parent=parent.frame(),...){
+    if(!length(ii)) return(NULL)
+    e <- evalq(environment(),data[ii,,drop=FALSE],parent)
+    eval(expr,e)
+    l <- as.list(e,all.names=TRUE)
+    # l[!vapply(l, is.null, NA, USE.NAMES = FALSE)]
+    n <- length(ii)
+    ll <- vapply(l,length,0,USE.NAMES=FALSE)
+    ll1 <- which(ll==1)
+    l[ll1] <- lapply(l[ll1],mklen,n)
+    wrongl <- which(ll != n)
+    l[wrongl] <- NULL
+    return(l)                
+}
+
+rbind1col <- function(i,mat){
+    do.call(c,mat[,i])
+}
+
+reorder1 <- function(x,ii){
+    x[ii] <- x
+    return(x)
+}
+
+within.grouped.data.frame <- function(data,expr,recombine=FALSE,...){
+    parent <- parent.frame()
     non.null <- sapply(data,length) > 0
-    data_ <- data[non.null]
-    call_ <- match.call()
-    call_[[1]] <- as.name("within")
-    # for(i in 1:length(data_)){
-    #     call_$data=data_[[i]]
-    #     data_[[i]] <- eval(call_,envir=parent.frame())
-    # }
-    data_ <- lapply(data_,eval1call,call=call_,envir=parent.frame())
-    data[non.null] <- data_
-    if(recombine)
-        recombine(data)
+    mc <- match.call()
+    ii <- attr(data,"groups")
+    av <- all.vars(mc$expr)
+    av <- intersect(av,names(data))
+    res <- lapply(ii,within1.grouped.data.frame,data[av],mc$expr,parent=parent.frame())
+    n <- length(res)
+    m <- length(res[[1]])
+    nms <- names(res[[1]])
+    res <- unlist(res,recursive=FALSE)
+    dim(res) <- c(m,n)
+    res <- t(res)
+    res <- lapply(1:m,FUN=rbind1col,mat=res)
+    names(res) <- nms
+    ii <- unlist(ii)
+    res <- lapply(res,FUN=reorder1,ii=ii)
+    res <- rev(res)
+    data[names(res)] <- res
+    return(data)
+}
+
+with1 <- function(ii,data,expr,parent=parent.frame(),...){
+    if(!length(ii)) res <- NULL
     else
-        data
+        res <- eval(expr, data[ii,,drop=FALSE], enclos = parent)
+    res
 }
 
 with.grouped.data <- function(data,expr,...){
     non.null <- sapply(data,length) > 0
-    res_ <- data[non.null]
+    mc <- match.call()
+    ii <- attr(data,"groups")
+    av <- all.vars(mc$expr)
+    av <- intersect(av,names(data))
+    #with1. <- function(ii) eval(mc$expr,data[ii,av,drop=FALSE],enclos=parent.frame())
+    #browser()
+    res_ <- lapply(ii,with1,data[av],mc$expr,parent=parent.frame())
+    #system.time(res_ <- lapply(ii,with1.))#,data[av],mc$expr)
     spec_ <- attr(data,"spec")
-    call_ <- match.call()
-    call_[[1]] <- as.name("with")
-    # for(i in 1:length(res_)){
-    #     call_$data=res_[[i]]
-    #     res_[[i]] <- eval(call_,envir=parent.frame())
-    # }
-    res_ <- lapply(res_,eval1call,call=call_,envir=parent.frame())
+    
     if(all(non.null)){
         res_len <- sapply(res_,length)
         if(length(unique(res_len))==1) {
             # All results have the same length
             if(length(dim(res_[[1]]))){
-                newdim <- c(dim(res_[[1]]),dim(data))
-                newdimnames <- c(dimnames(res_[[1]]),dimnames(data))
+                newdim <- c(dim(res_[[1]]),dim(ii))
+                newdimnames <- c(dimnames(res_[[1]]),dimnames(ii))
             } else if(length(res_[[1]]) > 1){
-                newdim <- c(length(res_[[1]]),dim(data))
-                newdimnames <- c(list(names(res_[[1]])),dimnames(data))
+                newdim <- c(length(res_[[1]]),dim(ii))
+                newdimnames <- c(list(names(res_[[1]])),dimnames(ii))
             } else {
-                newdim <- c(dim(data))
-                newdimnames <- c(dimnames(data))
+                newdim <- c(dim(ii))
+                newdimnames <- c(dimnames(ii))
             }
             if(all(sapply(res_,is.atomic))) {
                 data <- unlist(res_)
@@ -134,9 +178,9 @@ print.grouped.result <- function(x,...){
     print.default(x)
 }
 
-names.grouped.data <- function(x){
-    names(x[[1]])
-}
+# names.grouped.data <- function(x){
+#     names(x[[1]])
+# }
 
 
 recombine <- function(x,...) UseMethod("recombine")
@@ -160,7 +204,7 @@ withGroups <- function(data,by,expr,...) {
 withinGroups <- function(data,by,expr,recombine=TRUE,...) {
     data <- Groups(data=data,by=by)
     call_ <- match.call()
-    call_[[1]] <- within.grouped.data
+    call_[[1]] <- within
     call_$data <- data
     call_$recombine <- recombine
     eval(call_,envir=parent.frame())
