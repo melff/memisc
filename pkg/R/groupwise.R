@@ -129,59 +129,87 @@ with1 <- function(ii,data,expr,parent=parent.frame(),...){
 with.grouped.data <- function(data,expr,...){
     non.null <- sapply(data,length) > 0
     mc <- match.call()
+    expr <- mc$expr
     ii <- attr(data,"groups")
     av <- all.vars(mc$expr)
     av <- intersect(av,names(data))
     #with1. <- function(ii) eval(mc$expr,data[ii,av,drop=FALSE],enclos=parent.frame())
     #browser()
-    res_ <- lapply(ii,with1,data[av],mc$expr,parent=parent.frame())
+    res <- lapply(ii,with1,data[av],expr,parent=parent.frame())
     #system.time(res_ <- lapply(ii,with1.))#,data[av],mc$expr)
     spec_ <- attr(data,"spec")
+
+    non.null <- !sapply(res,is.null)
+    res_ <- res[non.null]
     
-    if(all(non.null)){
-        res_len <- sapply(res_,length)
-        if(length(unique(res_len))==1) {
+    res_len <- sapply(res_,length)
+
+    if(length(unique(res_len))==1) {
             # All results have the same length
-            if(length(dim(res_[[1]]))){
-                newdim <- c(dim(res_[[1]]),dim(ii))
+        if(length(dim(res_[[1]]))){
+            newdim <- c(dim(res_[[1]]),dim(ii))
+            if(length(dimnames(res_[[1]])))
                 newdimnames <- c(dimnames(res_[[1]]),dimnames(ii))
-            } else if(length(res_[[1]]) > 1){
-                newdim <- c(length(res_[[1]]),dim(ii))
-                newdimnames <- c(list(names(res_[[1]])),dimnames(ii))
-            } else {
-                newdim <- c(dim(ii))
-                newdimnames <- c(dimnames(ii))
+            else
+                newdimnames <- c(rep(list(NULL),length(dim(res_[[1]]))),
+                                 dimnames(ii))
+        } else if(length(res_[[1]]) > 1){
+            newdim <- c(length(res_[[1]]),dim(ii))
+            newdimnames <- c(list(names(res_[[1]])),dimnames(ii))
+        } else {
+            newdim <- dim(ii)
+            newdimnames <- dimnames(ii)
+        }
+        if(all(sapply(res_,is.atomic))) {
+            if(all(non.null)){
+                res <- unlist(res_)
             }
-            if(all(sapply(res_,is.atomic))) {
-                data <- unlist(res_)
-            } else {
-                data <- unlist(res_,recursive=FALSE)
+            else {
+                res_len1 <- res_len[1]
+                res <- rep(NA,length(res)*res_len1)
+                res[rep(non.null,each=res_len1)] <- unlist(res_)
             }
-            dim(data) <- newdim
-            dimnames(data) <- newdimnames
-        } 
+            
+        } else {
+            res[non.null] <- unlist(res_,recursive=FALSE)
+        }
+        dim(res) <- newdim
+        dimnames(res) <- newdimnames
     }
-    else{
-        data[non.null] <- res_
-        attr(data,"orig.id") <- NULL
+    else {
+        dim(res) <- dim(ii)
+        dimnames(res) <- dimnames(ii)
     }
-    class(data) <- "grouped.result"
-    if(!inherits(spec_,"data.frame")){
-        attr(data,"spec") <- spec_
+
+    if(length(dim(res)) >= 2){
+        if(is.null(rownames(res))){
+            if(nrow(res)==1) rownames(res) <- deparse(expr)
+            else if( as.character(expr[[1]]) %in% c("c","cbind","rbind")
+                    && length(expr[-1]) == nrow(res))
+                rownames(res) <- paste(expr[-1])
+            else if(as.character(expr[[1]]) %in% c("range"))
+                rownames(res) <- c("Min","Max")
+        }
     }
-    data
+    
+    class(res) <- "grouped.result"
+    attr(res,"spec") <- spec_
+    if(!all(non.null)){
+        empty <- !non.null
+        dim(empty) <- dim(ii)
+        attr(res,"empty") <- empty
+    }
+    if(is.atomic(res))
+        class(res) <- c(class(res),"table")
+    res
 }
 
 print.grouped.result <- function(x,...){
     attr(x,"spec") <- NULL
+    attr(x,"empty") <- NULL
     class(x) <- NULL
     print.default(x)
 }
-
-# names.grouped.data <- function(x){
-#     names(x[[1]])
-# }
-
 
 recombine <- function(x,...) UseMethod("recombine")
 

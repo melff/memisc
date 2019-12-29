@@ -1,3 +1,6 @@
+2019-12-29:
+   - 'genTable' and 'Aggregate' now internally use 'with(Groups(...),...)
+
 2019-12-24:
    - 'withGroups', 'withinGroups', as well as 'with' and 'within' for
      grouped data is now considerably more time efficient. 
