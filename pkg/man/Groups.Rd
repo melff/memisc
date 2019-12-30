@@ -5,9 +5,9 @@
 \alias{grouped.data}
 \alias{with.grouped.data}
 \alias{within.grouped.data}
-\alias{names.grouped.data}
 \alias{recombine}
-\alias{recombine.grouped.data}
+\alias{recombine.grouped.data.frame}
+\alias{recombine.grouped.data.set}
 \alias{withGroups}
 \alias{withinGroups}
 \title{Operate on grouped data in data frames and data sets}
@@ -24,12 +24,12 @@ Groups(data,by,\dots)
 
 # Recombine grouped data into a data fame or a data set
 recombine(x,\dots)
-\method{recombine}{grouped.data}(x,\dots)
+\method{recombine}{grouped.data.frame}(x,\dots)
+\method{recombine}{grouped.data.set}(x,\dots)
 
 # Methods of the generics "with" and "within" for grouped data
 \method{with}{grouped.data}(data,expr,\dots)
 \method{within}{grouped.data}(data,expr,recombine=FALSE,\dots)
-\method{names}{grouped.data}(x)
 
 # This is equivalent to with(Groups(data,by),expr,...)
 withGroups(data,by,expr,\dots)
