@@ -1,49 +1,3 @@
-
-unarray <- function(x,fill=FALSE){
-  x <- drop(x)
-  if(!length(dim(x))) return(x)
-  if(length(dim(x))==1 || !length(dimnames(x))) return(c(x))
-  dims <- dim(x)
-  dimnames <- dimnames(x)
-  for(i in seq_along(dimnames)){
-    if(!length(dimnames[[i]]))
-      if(fill)
-        dimnames[[i]] <- format(seq_len(dims[i]))
-      else
-        dimnames[[i]] <- character(dims[i])
-    }
-  names <- c(reduce(dimnames,outer,dotpaste))
-  structure(c(x),names=names)
-}
-
-dotpaste <- function(x,y)ifelse(nchar(x)&nchar(y),paste(x,y,sep="."),paste(x,y,sep=""))
-
-
-
-has.response <- function(formula,data=NULL){
-  #if(length(dim(data))) data <- data[1,]
-  as.logical(attr(terms(formula,data=data),"response"))
-}
-
-
-mk.ixes <- function(dims){
- ijk <- as.matrix(seq(dims[1]))
- if(length(dims)>1){
-  for(i in 2:length(dims)){
-    tmp.nrow <- nrow(ijk)
-    ijk <- ijk[rep(seq(nrow(ijk)),dims[i]),]
-    ijk <- cbind(ijk,
-              rep(
-                  seq(dims[i]),
-                  rep(tmp.nrow,dims[i])
-                  )
-                )
-  }
- }
- ijk
-}
-
-
 genTable <- function (formula,
                       data=parent.frame(),
                       subset=NULL,
@@ -138,12 +92,6 @@ Aggregate <- function (formula,
                        ...){
 
     m <- match.call()
-    # if(length(formula) < 3 || length(formula[[2]]) < 2){
-    #     m[[1]] <- as.name("xtabs")
-    #     m[c("names","addFreq")] <- NULL
-    #     tab <- eval(substitute(m),enclos=parent.frame())
-    #     return(as.data.frame(tab))
-    # }
 
     m[[1]] <- as.name("genTable")
     res <- eval(m,enclos=parent.frame())
