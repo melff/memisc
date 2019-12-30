@@ -1,3 +1,7 @@
+2019-12-30:
+   - 'n_', 'N_', and 'i_'are  available in 'with(Groups)' and 'within(Groups())'
+   - 'N_' is available in 'within' for data.sets
+
 2019-12-29:
    - 'genTable' and 'Aggregate' now internally use 'with(Groups(...),...)
 

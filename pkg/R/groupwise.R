@@ -131,13 +131,18 @@ fill_dimnames2 <- function(dn,d){
     dn
 }
 
-within1.grouped.data <- function(ii,data,expr,parent=parent.frame(),...){
+## TODO: Add documentation for n_, N_, and i_ 
+within1.grouped.data <- function(ii,data,expr,N_,parent=parent.frame(),...){
     if(!length(ii)) return(NULL)
-    e <- evalq(environment(),data[ii,,drop=FALSE],parent)
+    encl <- new.env(parent=parent)
+    n <- length(ii)
+    assign("n_",n,envir=encl)
+    assign("N_",N_,envir=encl)
+    assign("i_",ii,envir=encl)
+    e <- evalq(environment(),data[ii,,drop=FALSE],encl)
     eval(expr,e)
     l <- as.list(e,all.names=TRUE)
     # l[!vapply(l, is.null, NA, USE.NAMES = FALSE)]
-    n <- length(ii)
     ll <- vapply(l,length,0,USE.NAMES=FALSE)
     ll1 <- which(ll==1)
     l[ll1] <- lapply(l[ll1],mklen,n)
@@ -168,7 +173,7 @@ within.grouped.data <- function(data,expr,recombine=FALSE,...){
     av <- all.vars(mc$expr)
     av <- intersect(av,names(data))
 
-    res <- lapply(ii,within1.grouped.data,data[av],mc$expr,parent=parent.frame())
+    res <- lapply(ii,within1.grouped.data,data[av],mc$expr,N_=nrow(data),parent=parent.frame())
 
     n <- length(res)
     m <- length(res[[1]])
@@ -195,8 +200,12 @@ within.grouped.data <- function(data,expr,recombine=FALSE,...){
         return(data)
 }
 
-with1 <- function(ii,data,expr,parent=parent.frame(),...){
-    eval(expr, data[ii,,drop=FALSE], enclos = parent)
+with1 <- function(ii,data,expr,N_,parent=parent.frame(),...){
+    encl <- new.env(parent=parent)
+    assign("n_",length(ii),envir=encl)
+    assign("N_",N_,envir=encl)
+    assign("i_",ii,envir=encl)
+    eval(expr, data[ii,,drop=FALSE], enclos = encl)
 }
 
 add_tags <- function(expr,taggables=c("c","list","cbind","rbind")){
@@ -229,7 +238,7 @@ with.grouped.data <- function(data,expr,...){
     expr <- add_tags(expr)
     
     ii <- groups[non_empty]
-    res_ <- lapply(ii,with1,data[av],expr,parent=parent.frame())
+    res_ <- lapply(ii,with1,data[av],expr,N_=nrow(data),parent=parent.frame())
     #system.time(res_ <- lapply(ii,with1.))#,data[av],mc$expr)
     spec_ <- attr(data,"spec")
 
