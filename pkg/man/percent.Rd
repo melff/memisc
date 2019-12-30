@@ -55,13 +55,12 @@ genTable(
   )
 
 gt <- genTable(
-  cbind(percent(x>0,ci=TRUE),
-        percent(y>0,ci=TRUE),
-        percent(z>0,ci=TRUE)) ~ f
+  cbind("x > 0" = percent(x>0,ci=TRUE),
+        "y > 0" = percent(y>0,ci=TRUE),
+        "z > 0" = percent(z>0,ci=TRUE)) ~ f
   )
 
-print(gt)
-ftable(gt,row.vars=2,col.vars=c(3,1))
+ftable(gt,row.vars=3:2,col.vars=1)
 
 ex.data <- expand.grid(mean=c(0,25,50),sd=c(1,10,100))[rep(1:9,rep(250,9)),]
 ex.data <- within(ex.data,x <- rnorm(n=nrow(ex.data),mean=ex.data$mean,sd=ex.data$sd))
