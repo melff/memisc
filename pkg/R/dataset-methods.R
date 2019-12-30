@@ -382,11 +382,12 @@ setMethod("subset","data.set",
 setMethod("within","data.set",function (data, expr, ...)
 {
     parent <- parent.frame()
-    
+    encl <- new.env(parent=parent)  
     frame <- structure(data@.Data,row.names=data@row_names,names=data@names,class="data.frame")
-    e <- evalq(environment(), frame, parent)
     nr <- nrow(frame)
     rn <- row.names(frame)
+    assign("N_",nr,envir=encl)
+    e <- evalq(environment(), frame, encl)
     ret <- eval(substitute(expr), e)
     l <- rev(as.list(e))
 
