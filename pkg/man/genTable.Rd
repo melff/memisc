@@ -15,15 +15,12 @@
   }
 \usage{
 Aggregate(formula, data=parent.frame(), subset=NULL,
-      sort = TRUE, names=NULL, addFreq=TRUE, as.vars=1,
-      drop.constants=TRUE,\dots)
+          names=NULL, addFreq=TRUE, drop = TRUE, as.vars=1,
+          \dots)
 
 genTable(formula, data=parent.frame(), subset=NULL,
-      names=NULL, addFreq=TRUE,\dots)
+         names=NULL, addFreq=TRUE,\dots)
 
-fapply(formula,data,\dots) # calls UseMethod("fapply",data)
-\method{fapply}{default}(formula, data, subset=NULL,
-      names=NULL, addFreq=TRUE,\dots)
 }
 \arguments{
   \item{formula}{a formula. The right hand side includes one or more
@@ -34,18 +31,11 @@ fapply(formula,data,\dots) # calls UseMethod("fapply",data)
   \item{data}{an environment or data frame or an object coercable into a data frame.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
-  \item{sort}{a logical value; determines the order in which the aggregated
-    data appear in the data frame returned by \code{Aggregate}.
-    If \code{sort} is TRUE, then the returned data frame is sorted by
-    the values of the grouping variables, if \code{sort} is FALSE,
-    the order of resulting data frame corresponds to the order in which
-    the values of the grouping variables appear in the original data
-    frame. }
   \item{names}{an optional character vector giving names to the
     result(s) yielded by the expression on the left hand side of \code{formula}.
     This argument may be redundant if the left hand side results in is a named vector.
     (See the example below.)}
-  \item{addFreq}{a logical value. If TRUE and
+  \item{addFreq}{a logical value. If \code{TRUE} and
       \code{data} is a table or a data frame with a variable
       named "Freq", a call to
       \code{table}, \code{\link{Table}}, \code{\link{percent}}, or \code{\link{nvalid}}
@@ -53,12 +43,16 @@ fapply(formula,data,\dots) # calls UseMethod("fapply",data)
       and a call to \code{table} is translated into
       a call to \code{Table}.
     }
+  \item{drop}{a logical value. If \code{TRUE}, empty groups (i.e. when
+    there are no observations in the aggregated data frame that contain
+    the defining combination of values or factor levels of the
+    conditioning variables in \code{by}) are dropped from the result of
+    \code{Aggregate}. Otherwise, result are filled with \code{NA}, where appropriate.
+  }
   \item{as.vars}{an integer; relevant only if the left hand side of the formula returns
     an array or a matrix - which dimension (rows, columns, or layers etc.) will transformed to
     variables? Defaults to columns in case of matrices and to the highest dimensional extend
     in case of arrays.}
-  \item{drop.constants}{logical; variables that are constant across levels dropped from the
-    result?}
   \item{\dots}{further arguments, passed to methods or ignored.}
 }
 \details{
