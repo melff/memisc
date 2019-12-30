@@ -383,12 +383,6 @@ setMethod("within","data.set",function (data, expr, ...)
 {
     parent <- parent.frame()
     
-    
-    assign(".nobs.",length(data@row_names),parent)
-    assign(".nvars.",length(data@names),parent)
-    assign(".id.",1:get(".nobs.",parent),parent)
-    
-    
     frame <- structure(data@.Data,row.names=data@row_names,names=data@names,class="data.frame")
     e <- evalq(environment(), frame, parent)
     nr <- nrow(frame)
