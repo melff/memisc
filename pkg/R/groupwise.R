@@ -43,10 +43,10 @@ as_factor <- function(x){
     }
 }
 
-Groups.data.set.formula <- function(data,by,...){
-    varn <- all.vars(by)
-    vars <- data[varn]
-    factors <- lapply(vars,as_factor)
+get_all_vars <- function(formula,data,inherits=TRUE){
+Groups.data.frame.formula <- function(data,by,...){
+    by.vars <- get_all_vars(by,data)
+    factors <- lapply(by.vars,as_factor)
     ii <- 1:nrow(data)
     ii <- tapply(ii,factors,I)
     extra.attr <- list(groups=ii,
@@ -56,9 +56,30 @@ Groups.data.set.formula <- function(data,by,...){
     data
 }
 
-setMethod("Groups",signature(data="data.set",by="formula"),
-          Groups.data.set.formula)
+
+Groups.data.set.formula <- function(data,by,...){
+    by.vars <- get_all_vars(by,data)
+    factors <- lapply(by.vars,as_factor)
+    data <- structure(data@.Data,
+                      names=names(data),
+                      row.names=data@row_names,
+                      class="data.frame")
+    ii <- 1:nrow(data)
+    ii <- tapply(ii,factors,I)
+    n.ii <- sapply(ii,length)
+    dim(n.ii) <- dim(ii)
+    extra.attr <- list(groups=ii,
+                       sizes=n.ii,
+                       spec=by.vars[0,,drop=FALSE],
+                       class=c("grouped.data.set","grouped.data",class(data)))
+    attributes(data) <- c(attributes(data),extra.attr)
+    data
+}
+
+
 setMethod("Groups",signature(data="data.frame",by="formula"),
+          Groups.data.frame.formula)
+setMethod("Groups",signature(data="data.set",by="formula"),
           Groups.data.set.formula)
 
 eval1call <- function(data,call,envir){
@@ -72,7 +93,8 @@ mklen <- function(x,n){
     return(y)
 }
 
-within1.grouped.data.frame <- function(ii,data,expr,parent=parent.frame(),...){
+
+within1.grouped.data <- function(ii,data,expr,parent=parent.frame(),...){
     if(!length(ii)) return(NULL)
     e <- evalq(environment(),data[ii,,drop=FALSE],parent)
     eval(expr,e)
@@ -96,7 +118,8 @@ reorder1 <- function(x,ii){
     return(x)
 }
 
-within.grouped.data.frame <- function(data,expr,recombine=FALSE,...){
+within.grouped.data <- function(data,expr,recombine=FALSE,...){
+
     parent <- parent.frame()
     non.null <- sapply(data,length) > 0
     mc <- match.call()
@@ -207,19 +230,8 @@ with.grouped.data <- function(data,expr,...){
 print.grouped.result <- function(x,...){
     attr(x,"spec") <- NULL
     attr(x,"empty") <- NULL
-    class(x) <- NULL
+    class(x) <- NULL #setdiff(class(x),"grouped.result")
     print.default(x)
-}
-
-recombine <- function(x,...) UseMethod("recombine")
-
-recombine.grouped.data <- function(x,...) {
-    orig.id <- attr(x,"orig.id")
-    row.names <- attr(x,"row.names")
-    y <- do.call(rbind,x)
-    ii <- unlist(orig.id)
-    y[ii,] <- y
-    structure(y,row.names=row.names)
 }
 
 withGroups <- function(data,by,expr,...) {
@@ -238,3 +250,29 @@ withinGroups <- function(data,by,expr,recombine=TRUE,...) {
     eval(call_,envir=parent.frame())
 }
 
+recombine <- function(x,...) UseMethod("recombine")
+
+recombine.grouped.data.frame <- function(x,...) {
+    attributes(x)[c("spec","sizes","groups")] <- NULL
+    class(x) <- "data.frame"
+    return(x)
+}
+
+recombine.grouped.data.set <- function(x,...) {
+    attributes(x)[c("spec","sizes","groups")] <- NULL
+    class(x) <- NULL
+    return(new("data.set",x))
+}
+
+
+print.grouped.data.frame <- function(x,...){
+  ngrps <- ngroups(x)  
+  cat("\nGrouped data frame with",nrow(x), "observations in",ngrps,"groups of",ncol(x),"variables\n\n")
+  print_frame_internal(x,max.obs=getOption("show.max.obs"),width=getOption("width"),...)
+}
+
+print.grouped.data.set <- function(x,...){
+  ngrps <- ngroups(x)  
+  cat("\nGrouped data frame with",nrow(x), "observations in",ngrps,"groups of",ncol(x),"variables\n\n")
+  print_frame_internal(x,max.obs=getOption("show.max.obs"),width=getOption("width"),...)
+}

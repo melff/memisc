@@ -150,3 +150,12 @@ setClass("codebookEntry",
 )
 
 setOldClass("codeplan")
+
+# setOldClass("grouped.data")
+# 
+# setClass("grouped.data.set",
+#          contains=c("grouped.data","data.set"),
+#          representation(
+#              groups="list",
+#              spec="data.set"
+#          ))
