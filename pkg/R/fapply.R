@@ -24,7 +24,10 @@ quickInteraction <- function(by){
   return(structure(f,unique=uf))
 }
 
-fapply <- function(formula,data,...) UseMethod("fapply",data)
+fapply <- function(formula,data,...) {
+    .Deprecated("withGroups")
+    UseMethod("fapply",data)
+}
 
 fapply.default <- function (formula,
                         data,
@@ -33,6 +36,8 @@ fapply.default <- function (formula,
                         addFreq=TRUE,
                         ...)
 {
+    
+    .Deprecated("withGroups")
     m <- match.call(expand.dots = FALSE)
     dots <- m$...
     if(attr(terms(formula,data=data),"response")){
@@ -152,18 +157,3 @@ fapply.default <- function (formula,
       formula=formula
       )
 }
-
-# fapply.labelled.data.frame <-function(data,
-#                         formula,
-#                         subset=NULL,
-#                         na.action=getOption("na.action"),
-#                         exclude = c(NA, NaN),
-#                         drop.unused.levels = FALSE,
-#                         names=NULL,
-#                         addFreq=TRUE,
-#                         forceNormalisation=FALSE,
-#                         ...){
-#     if(forceNormalization) data <- as.data.frame(data)
-#     else class(data) <- del.class(data,"labelled.data.frame")
-#     NextMethod("fapply")
-# }

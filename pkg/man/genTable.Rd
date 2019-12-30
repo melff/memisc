@@ -1,8 +1,6 @@
 \name{genTable}
 \alias{Aggregate}
 \alias{genTable}
-\alias{fapply}
-\alias{fapply.default}
 \title{Generic Tables and Data Frames of Descriptive Statistics}
 \description{
   \code{genTable} creates a table of arbitrary summaries conditional on
