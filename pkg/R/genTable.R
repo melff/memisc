@@ -18,21 +18,10 @@ genTable <- function (formula,
 
     if(is.table(data)) data <- as.data.frame(data)
     else if(is.environment(data)){
-        tmp <- try(as.data.frame(data),silent=TRUE)
-        if(inherits(tmp,"try-error")) {
-            tmp <- try(as.data.frame(as.list(data)),silent=TRUE)
-            if(inherits(tmp,"try-error")) {
-                mf <- m
-                mf[[1]] <- as.name("model.frame.default")
-                mf$x <- NULL
-                mf$formula <- as.formula(paste("~",paste(all.vars(formula),collapse="+")))
-                mf$data <- data
-                mf$... <- mf$names <- mf$addFreq <- mf$as.vars <- NULL
-                data <- eval(mf,parent)
-            }
-        }
-        else
-            data <- tmp
+        data <- mget(all.vars(formula),
+                     envir=data,
+                     inherits=TRUE)
+        data <- as.data.frame(data)
     }
 
     if(!missing(subset)){
