@@ -295,19 +295,22 @@ setMethod("annotation","data.set",function(x){
 
 
 print.data.set <- function(x,max.obs=Inf,width=Inf,...){
-  nrow.x <- nrow(x)
   frame <- structure(x@.Data,row.names=x@row_names,names=x@names,class="data.frame")
+  print_frame_internal(frame,max.obs=max.obs,width=width,...)
+}
+
+print_frame_internal <- function(x,max.obs=Inf,width=Inf,...){
   if(is.finite(max.obs)){
     if(nrow(x)<=max.obs)
       {
         max.obs <- Inf
-        res <- frame
+        res <- x
       }
     else
-      res <- frame[seq_len(max.obs),,drop=FALSE]
+      res <- x[seq_len(max.obs),,drop=FALSE]
   }
   else
-    res <- frame
+    res <- x
 
   varn <- names(res)
   rown <- rownames(res)
@@ -333,7 +336,7 @@ print.data.set <- function(x,max.obs=Inf,width=Inf,...){
     ww <- nchar(res[1,])
     res <- rbind(res,sapply(ww,mkdots))
     res <- apply(res,1,paste,collapse=" ")
-    res <- c(res,paste("(",length(res)-2," of ",nrow.x," observations shown)",sep=""))
+    res <- c(res,paste("(",length(res)-2," of ",nrow(x)," observations shown)",sep=""))
     }
   else
     res <- apply(res,1,paste,collapse=" ")
