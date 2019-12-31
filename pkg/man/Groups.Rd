@@ -10,13 +10,17 @@
 \alias{recombine}
 \alias{recombine.grouped.data.frame}
 \alias{recombine.grouped.data.set}
+\alias{as.data.frame.grouped.data}
+\alias{as.data.set,grouped.data.frame-method}
+\alias{as.data.set,grouped.data.set-method}
 \alias{withGroups}
 \alias{withinGroups}
 \title{Operate on grouped data in data frames and data sets}
 \description{\code{Group} creates a grouped variant of an object of
   class "data.frame" or of class "data.set", for which methods for
   \code{with} and \code{within} are defined, so that these well-known
-  functions can be applied "groupwise".}
+  functions can be applied "groupwise".
+}
 \usage{
 # Create an object of class "grouped.data" from a
 # data frame or a data set.
@@ -32,6 +36,11 @@ recombine(x,\dots)
 \method{recombine}{grouped.data.frame}(x,\dots)
 \method{recombine}{grouped.data.set}(x,\dots)
 
+# Recombine grouped data and coerce the result appropriately:
+\method{as.data.frame}{grouped.data}(x,\dots)
+\S4method{as.data.set}{grouped.data.frame}(x,row.names=NULL,\dots)
+\S4method{as.data.set}{grouped.data.set}(x,row.names=NULL,\dots)
+
 # Methods of the generics "with" and "within" for grouped data
 \method{with}{grouped.data}(data,expr,\dots)
 \method{within}{grouped.data}(data,expr,recombine=FALSE,\dots)
@@ -41,6 +50,7 @@ withGroups(data,by,expr,\dots)
 # This is equivalent to within(Groups(data,by),expr,recombine,...)
 withinGroups(data,by,expr,recombine=TRUE,\dots)
 }
+
 \arguments{
   \item{data}{an object of the classes "data.frame", "data.set" if an
     argument to \code{Groups}, \code{withGroups}, \code{withinGroups},
@@ -52,6 +62,7 @@ withinGroups(data,by,expr,recombine=TRUE,\dots)
   \item{recombine}{a logical vector; should the resulting grouped
     data be recombined?}
   \item{x}{an object of class "grouped.data".}
+  \item{row.names}{an optional character vector with row names.}
   \item{\dots}{other arguments, ignored.}
 }
 
@@ -130,6 +141,7 @@ with(some.grouped.data,
 some.data.ungrouped <- recombine(some.grouped.data)
 str(some.data.ungrouped)
 
+# It all works with "data.set" objects
 some.dataset <- as.data.set(some.data)
 some.grouped.dataset <- Groups(some.dataset,~f+g)
 

@@ -360,3 +360,17 @@ print.grouped.data.set <- function(x,...){
   cat("\nGrouped data frame with",nrow(x), "observations in",ngrps,"groups of",ncol(x),"variables\n\n")
   print_frame_internal(x,max.obs=getOption("show.max.obs"),width=getOption("width"),...)
 }
+
+
+as.data.set.grouped.data <- function(x,...){
+    as.data.set(recombine(x),...)
+}
+
+as.data.frame.grouped.data <- function(x,...){
+    as.data.frame(recombine(x),...)
+}
+
+setOldClass("grouped.data.set")
+setOldClass("grouped.data.frame")
+setMethod("as.data.set","grouped.data.set",as.data.set.grouped.data)
+setMethod("as.data.set","grouped.data.frame",as.data.set.grouped.data)
