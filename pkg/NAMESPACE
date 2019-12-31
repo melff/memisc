@@ -410,7 +410,9 @@ export(
 export(List)
 
 export(Groups)
-exportMethods(Groups)
+S3method(Groups,data.frame)
+S3method(Groups,data.set)
+S3method(Groups,grouped.data)
 
 S3method(with,grouped.data)
 S3method(within,grouped.data)

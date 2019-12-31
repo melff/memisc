@@ -1,3 +1,6 @@
+2019-12-31:
+   - Changed 'Groups' from S4-generic to S3-generic
+
 2019-12-30:
    - 'n_', 'N_', and 'i_'are  available in 'with(Groups)' and 'within(Groups())'
    - 'N_' is available in 'within' for data.sets

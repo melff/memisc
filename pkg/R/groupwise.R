@@ -58,7 +58,9 @@ get_all_vars <- function(formula,data,inherits=TRUE){
     }
 }
 
-Groups.data.frame.formula <- function(data,by,...){
+Groups <- function(data,by,...) UseMethod("Groups")
+    
+Groups.data.frame <- function(data,by,...){
     by.vars <- get_all_vars(by,data)
     factors <- lapply(by.vars,as_factor)
     ii <- 1:nrow(data)
@@ -74,7 +76,7 @@ Groups.data.frame.formula <- function(data,by,...){
 }
 
 
-Groups.data.set.formula <- function(data,by,...){
+Groups.data.set <- function(data,by,...){
     by.vars <- get_all_vars(by,data)
     factors <- lapply(by.vars,as_factor)
     data <- structure(data@.Data,
@@ -93,17 +95,7 @@ Groups.data.set.formula <- function(data,by,...){
     data
 }
 
-
-setMethod("Groups",signature(data="data.frame",by="formula"),
-          Groups.data.frame.formula)
-setMethod("Groups",signature(data="data.set",by="formula"),
-          Groups.data.set.formula)
-
-setMethod("Groups",signature(data="grouped.data.frame",by="formula"),
-          function(data,by,...)Groups(recombine(data),by,...))
-setMethod("Groups",signature(data="grouped.data.set",by="formula"),
-          function(data,by,...)Groups(recombine(data),by,...))
-
+Groups.grouped.data <- function(data,by,...)Groups(recombine(data),by,...)
 
 ngroups <- function(x){
     sum(attr(x,"sizes") > 0)

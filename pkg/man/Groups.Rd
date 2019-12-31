@@ -1,10 +1,9 @@
 \name{Groups}
 \alias{Groups}
-\alias{Groups,data.set,formula-method}
-\alias{Groups,data.frame,formula-method}
+\alias{Groups.data.set}
+\alias{Groups.data.frame}
 \alias{grouped.data}
-\alias{Groups,grouped.data.set,formula-method}
-\alias{Groups,grouped.data.frame,formula-method}
+\alias{Groups.grouped.data}
 \alias{with.grouped.data}
 \alias{within.grouped.data}
 \alias{recombine}
@@ -25,11 +24,9 @@
 # Create an object of class "grouped.data" from a
 # data frame or a data set.
 Groups(data,by,\dots)
-\S4method{Groups}{data.frame,formula}(data,by,\dots)
-\S4method{Groups}{data.set,formula}(data,by,\dots)
-
-\S4method{Groups}{grouped.data.frame,formula}(data,by,\dots)
-\S4method{Groups}{grouped.data.set,formula}(data,by,\dots)
+\method{Groups}{data.frame}(data,by,\dots)
+\method{Groups}{data.set}(data,by,\dots)
+\method{Groups}{grouped.data}(data,by,\dots)
 
 # Recombine grouped data into a data fame or a data set
 recombine(x,\dots)
