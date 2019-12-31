@@ -99,6 +99,12 @@ setMethod("Groups",signature(data="data.frame",by="formula"),
 setMethod("Groups",signature(data="data.set",by="formula"),
           Groups.data.set.formula)
 
+setMethod("Groups",signature(data="grouped.data.frame",by="formula"),
+          function(data,by,...)Groups(recombine(data),by,...))
+setMethod("Groups",signature(data="grouped.data.set",by="formula"),
+          function(data,by,...)Groups(recombine(data),by,...))
+
+
 ngroups <- function(x){
     sum(attr(x,"sizes") > 0)
 }  

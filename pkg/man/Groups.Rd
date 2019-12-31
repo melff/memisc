@@ -3,6 +3,8 @@
 \alias{Groups,data.set,formula-method}
 \alias{Groups,data.frame,formula-method}
 \alias{grouped.data}
+\alias{Groups,grouped.data.set,formula-method}
+\alias{Groups,grouped.data.frame,formula-method}
 \alias{with.grouped.data}
 \alias{within.grouped.data}
 \alias{recombine}
@@ -21,6 +23,9 @@
 Groups(data,by,\dots)
 \S4method{Groups}{data.frame,formula}(data,by,\dots)
 \S4method{Groups}{data.set,formula}(data,by,\dots)
+
+\S4method{Groups}{grouped.data.frame,formula}(data,by,\dots)
+\S4method{Groups}{grouped.data.set,formula}(data,by,\dots)
 
 # Recombine grouped data into a data fame or a data set
 recombine(x,\dots)
