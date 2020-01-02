@@ -1,77 +1,88 @@
 relabel <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
-  if(isS4(x)) relabel4(x,...,gsub=gsub,fixed=fixed,warn=warn)
-  else UseMethod("relabel")
+    if(isS4(x)) {
+        m <- as.list(match.call(expand.dots=FALSE))
+        dots <- lapply(m$...,as.character)
+        m <- c(m[1:2],dots,m[-(1:3)])
+        m[[1]] <- as.name("relabel4")
+        #relabel4(x,...,gsub=gsub,fixed=fixed,warn=warn)
+        m <- as.call(m)
+        eval(m,parent.frame())
+    }
+    else UseMethod("relabel")
 }
 
 relabel.default <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
-  if(!is.null(attr(x,"labels"))) labels <- attr(x,"labels")
-  else labels <- names(x)
-  subst <- c(...)
-  if(gsub){
-    for(i in 1:length(subst)){
-      labels <- gsub(names(subst[i]),subst[i],labels,fixed=fixed)
+    if(!is.null(attr(x,"labels"))) labels <- attr(x,"labels")
+    else labels <- names(x)
+    m <- match.call(expand.dots=FALSE)
+    subst <- sapply(m$...,as.character)
+    if(gsub){
+        for(i in 1:length(subst)){
+            labels <- gsub(names(subst[i]),subst[i],labels,fixed=fixed)
+        }
     }
-  }
-  else {
-    i <- match(names(subst),labels)
-    if(any(is.na(i))) {
-      if(warn) warning("undefined label(s) selected")
-      if(any(!is.na(i)))
-        subst <- subst[!is.na(i)]
-      i <- i[!is.na(i)]
+    else {
+        i <- match(names(subst),labels)
+        if(any(is.na(i))) {
+            if(warn) warning("undefined label(s) selected")
+            if(any(!is.na(i)))
+                subst <- subst[!is.na(i)]
+            i <- i[!is.na(i)]
+        }
+        if(length(i))
+            labels[i] <- subst
     }
-    if(length(i))
-      labels[i] <- subst
-  }
-  if(!is.null(attr(x,"labels"))) attr(x,"labels") <- labels
-  else names(x) <- labels
-  return(x)
+    if(!is.null(attr(x,"labels"))) attr(x,"labels") <- labels
+    else names(x) <- labels
+    return(x)
 }
 
 relabel.factor <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
-  subst <- c(...)  
-  labels <- levels(x)
-  if(gsub){
-    for(i in 1:length(subst)){
-      labels <- gsub(names(subst[i]),subst[i],labels,fixed=fixed)
+    m <- match.call(expand.dots=FALSE)
+    subst <- sapply(m$...,as.character)
+    labels <- levels(x)
+    if(gsub){
+        for(i in 1:length(subst)){
+            labels <- gsub(names(subst[i]),subst[i],labels,fixed=fixed)
+        }
     }
-  }
-  else {
-    i <- match(names(subst),labels)
-    if(any(is.na(i))) {
-      if(warn) warning("undefined label(s) selected")
-      if(any(!is.na(i)))
-        subst <- subst[!is.na(i)]
-      i <- i[!is.na(i)]
+    else {
+        i <- match(names(subst),labels)
+        if(any(is.na(i))) {
+            if(warn) warning("undefined label(s) selected")
+            if(any(!is.na(i)))
+                subst <- subst[!is.na(i)]
+            i <- i[!is.na(i)]
+        }
+        if(length(i))
+            labels[i] <- subst
     }
-    if(length(i))
-      labels[i] <- subst
-  }
-  if(any(duplicated(labels)))
-      warning("Duplicate labels")
-  levels(x) <- labels
-  return(x)
+    if(any(duplicated(labels)))
+        warning("Duplicate labels")
+    levels(x) <- labels
+    return(x)
 }
 
 relabel1 <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
-  subst <- c(...)
-  if(gsub){
-    for(i in 1:length(subst)){
-      x <- gsub(names(subst[i]),subst[i],x,fixed=fixed)
+    m <- match.call(expand.dots=FALSE)
+    subst <- sapply(m$...,as.character)
+    if(gsub){
+        for(i in 1:length(subst)){
+            x <- gsub(names(subst[i]),subst[i],x,fixed=fixed)
+        }
     }
-  }
-  else {
-    i <- match(names(subst),x)
-    if(any(is.na(i))) {
-      if(warn) warning("unused name(s) selected")
-      if(any(!is.na(i)))
-        subst <- subst[!is.na(i)]
-      i <- i[!is.na(i)]
+    else {
+        i <- match(names(subst),x)
+        if(any(is.na(i))) {
+            if(warn) warning("unused name(s) selected")
+            if(any(!is.na(i)))
+                subst <- subst[!is.na(i)]
+            i <- i[!is.na(i)]
+        }
+        if(length(i))
+            x[i] <- subst
     }
-    if(length(i))
-      x[i] <- subst
-  }
-  return(x)
+    return(x)
 }
 
 

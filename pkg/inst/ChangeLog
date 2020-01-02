@@ -1,6 +1,8 @@
 2019-01-02:
    - Added convenience wrappers 'Mean()', 'Var()', etc. to basic stats
      functions such as 'mean()', 'var()', etc.
+   - 'rename()', 'relabel()', 'dimrename()', etc. now also work without
+     quoting the new labels, i.e. 'rename(x,a=A)' now works like 'rename(x,a="A")'.
 
 2019-12-31:
    - Changed 'Groups' from S4-generic to S3-generic
