@@ -1,0 +1,11 @@
+Mean <- function(x,na.rm=TRUE,...) mean(x,na.rm=na.rm,...)
+Median <- function(x,na.rm=TRUE,...) median(x,na.rm=na.rm,...)
+Min <- function(x,na.rm=TRUE,...) min(x,na.rm=na.rm,...)
+Max <- function(x,na.rm=TRUE,...) max(x,na.rm=na.rm,...)
+Weighted.Mean <- function(x, w, ..., na.rm = TRUE) weighted.mean(x,w,...,na.rm=na.rm)
+Var <- function(x,na.rm=TRUE,...) var(x,na.rm=na.rm,...)
+StdDev <- function(x,na.rm=TRUE,...) sd(x,na.rm=na.rm,...)
+
+Cov <- function(x, y = NULL, use = "pairwise.complete.obs", ...) cov(x,y,use=use,...)
+Cor <- function(x, y = NULL, use = "pairwise.complete.obs", ...) cor(x,y,use=use,...)
+Range <- function(..., na.rm = TRUE, finite = FALSE) range(..., na.rm = FALSE, finite = FALSE)

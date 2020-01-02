@@ -1,3 +1,7 @@
+2019-01-02:
+   - Added convenience wrappers 'Mean()', 'Var()', etc. to basic stats
+     functions such as 'mean()', 'var()', etc.
+
 2019-12-31:
    - Changed 'Groups' from S4-generic to S3-generic
 

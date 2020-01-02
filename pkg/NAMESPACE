@@ -455,3 +455,6 @@ S3method(as.data.table,data.set)
 # exportMethods(as.data.table) 
 
 export(set_measurement)
+
+export(Mean,Median,Min,Max,Weighted.Mean,
+       Var,StdDev,Cov,Cor,Range)
