@@ -46,5 +46,13 @@ rename(x, \dots, gsub = FALSE, fixed = TRUE, warn = TRUE)
   str(rename(iris,
                   .="_"
                   ,gsub=TRUE))
+
+  # Since version 0.99.22 - the following also works:
+  str(rename(iris,
+                  Sepal.Length=Sepal_Length,
+                  Sepal.Width =Sepal_Width,
+                  Petal.Length=Petal_Length,
+                  Petal.Width =Petal_Width
+                  ))
 }
 \keyword{manip}

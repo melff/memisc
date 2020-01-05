@@ -54,6 +54,12 @@ dimrename(m,2,"A"="first",B="second")
 
 rowrename(m,a="first",b="second")
 colrename(m,"A"="first",B="second")
+
+# Since version 0.99.22 - the following also works:
+
+dimrename(m,1,a=first,b=second)
+dimrename(m,1,A=first,B=second)
+dimrename(m,2,A=first,B=second)
 }
 
 \keyword{manip}

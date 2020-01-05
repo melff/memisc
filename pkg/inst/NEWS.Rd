@@ -79,7 +79,10 @@
     \item It is now possible to specify the measurement level for a set
           of variables in a "data.set" objects, either by using the
           assignment operator with \code{measurement()} or by using
-          the new function \code{set_measurement()}. 
+          the new function \code{set_measurement()}.
+    \item There are convenience wrappers such as \code{Mean()} etc. for
+          \code{mean()} etc. that have the default setting \code{na.rm=TRUE} 
+          instead of \code{na.rm=FALSE}. 
     }
   }
   \subsection{IMPROVEMENTS}{
@@ -138,6 +141,15 @@
             imported with the \emph{haven} package.
       \item \code{codebook} now makes use of the "label" attribute of variables if the
             attribute is present.
+      \item \code{with(Groups())}, \code{withGroups()},
+            \code{within(Groups())}, \code{withinGroups()},
+            \code{Aggregate()}, and \code{genTable()} are considerably
+            faster now. They can also make use of certain automatic
+            variables such as \code{_n}, \code{_i}, that contain group
+            sizes and group indices.
+      \item \code{relabel()}, \code{rename()}, and \code{dimrename()},
+            do no longer require their arguments to be enclosed in
+            quotation marks.
     }
   }
   \subsection{BUGFIXES}{

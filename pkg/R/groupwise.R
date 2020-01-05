@@ -129,7 +129,6 @@ fill_dimnames2 <- function(dn,d){
     dn
 }
 
-## TODO: Add documentation for n_, N_, and i_ 
 within1.grouped.data <- function(ii,data,expr,N_,parent=parent.frame(),...){
     if(!length(ii)) return(NULL)
     encl <- new.env(parent=parent)

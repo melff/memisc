@@ -65,6 +65,29 @@
     d="D"
     )
   labels(F)
+
+  # Since version 0.99.22 - the following also works:
+
+  f <- as.factor(rep(letters[1:4],5))
+  levels(f)
+  F <- relabel(f,
+    a=A,
+    b=B,
+    c=C,
+    d=D
+    )
+  levels(F)
+  
+  f <- as.item(f)
+  labels(f)
+  F <- relabel(f,
+    a=A,
+    b=B,
+    c=C,
+    d=D
+    )
+  labels(F)
+  
 }
 
 
