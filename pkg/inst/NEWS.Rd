@@ -145,7 +145,7 @@
             \code{within(Groups())}, \code{withinGroups()},
             \code{Aggregate()}, and \code{genTable()} are considerably
             faster now. They can also make use of certain automatic
-            variables such as \code{_n}, \code{_i}, that contain group
+            variables such as \code{n_}, \code{i_} that contain group
             sizes and group indices.
       \item \code{relabel()}, \code{rename()}, and \code{dimrename()},
             do no longer require their arguments to be enclosed in
