@@ -46,7 +46,8 @@
           allow to create codebooks for single items/variables in 
           imported data files.
     \item A \code{duplicated_labels} function allows to show and
-          describe duplicated labels.
+          describe duplicated labels and a \code{deduplicate_labels}
+          function allows to get rid of such duplicates.
     \item New operators \code{\%#\%}, \code{\%##\%}, and \code{\%@\%} to
           manipulate annotations and other attributes.
     \item A \code{List} function adds names to its elements by deparsing

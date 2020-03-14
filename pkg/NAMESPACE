@@ -458,3 +458,8 @@ export(set_measurement)
 
 export(Mean,Median,Min,Max,Weighted.Mean,
        Var,StdDev,Cov,Cor,Range)
+
+export(deduplicate_labels)
+S3method(deduplicate_labels,default)
+S3method(deduplicate_labels,item)
+S3method(deduplicate_labels,item.list)

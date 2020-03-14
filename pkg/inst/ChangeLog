@@ -1,4 +1,7 @@
-2019-01-02:
+2020-03-14:	
+   - Added 'deduplicate_labels()' function to deal with duplicated value labels.
+
+2020-01-02:
    - Added convenience wrappers 'Mean()', 'Var()', etc. to basic stats
      functions such as 'mean()', 'var()', etc.
    - 'rename()', 'relabel()', 'dimrename()', etc. now also work without
