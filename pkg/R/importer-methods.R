@@ -239,7 +239,12 @@ setMethod("description","importer",function(x){
     structure(res,class="descriptions")
 })
 
-setMethod("codebook","importer",function(x){
+setMethod("codebook","importer",function(x, weights=NULL, ...){
+  if(!missing(weights))
+    weights <- deparse(substitute(weights))
+  if(length(weights))
+    warning("Weights for codebooks of 'importer' objects are not yet supported.")
+  
   cs <- getOption("codebook.chunk.size")
   nobs <- nrow(x)
   if(nobs < cs) cs <- nobs
@@ -250,10 +255,19 @@ setMethod("codebook","importer",function(x){
                           names=x@names),
                 initcodebookEntry)
   seekData(x)
-  for(i in 1:m)
-    res <- mapply(updatecodebookEntry,res,readData(x,n=cs))
-  if(r > 0)
-    res <- mapply(updatecodebookEntry,res,readData(x,n=r))
+  w <- NULL
+  for(i in 1:m){
+    chunk <- readData(x,n=cs)
+    if(length(weights))
+      w <- chunk[weights]
+    res <- mapply(updatecodebookEntry,res,chunk)
+  }
+  if(r > 0){
+    chunk <- readData(x,n=r)
+    if(length(weights))
+      w <- chunk[weights]
+    res <- mapply(updatecodebookEntry,res,chunk)
+  }
   res <- lapply(res,fixupcodebookEntry)
   new("codebook",res)
 })
