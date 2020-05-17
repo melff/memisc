@@ -1,37 +1,46 @@
-setMethod("codebook","data.set",function(x){
-  cb <- lapply(x,codebookEntry)
+setMethod("codebook","data.set",function(x,weights,...){
+  weights <- eval(substitute(weights),x,parent.frame())
+  cb <- lapply(x,codebookEntry,weights=weights)
   new("codebook",cb)
 })
 
-setMethod("codebook","item",function(x){
+setMethod("codebook","item",function(x,weights,...){
   xname <- paste(deparse(substitute(x)))
-  cb <- list(codebookEntry(x))
+  cb <- list(codebookEntry(x,weights=weights))
   names(cb) <- xname
   new("codebook",cb)
 })
 
-setMethod("codebook","data.frame",function(x){
-  cb <- lapply(x,codebookEntry)
+setMethod("codebook","data.frame",function(x,weights,...){
+  weights <- eval(substitute(weights),x,parent.frame())
+  cb <- lapply(x,codebookEntry,weights=weights)
   new("codebook",cb)
 })
 
-setMethod("codebook","atomic",function(x){
+setMethod("codebook","atomic",function(x,weights,...){
   xname <- paste(deparse(substitute(x)))
-  cb <- list(codebookEntry(x))
+  cb <- list(codebookEntry(x,weights=weights))
   names(cb) <- xname
   new("codebook",cb)
 })
 
-setMethod("codebook","factor",function(x){
+setMethod("codebook","factor",function(x,weights,...){
   xname <- paste(deparse(substitute(x)))
-  cb <- list(codebookEntry(x))
+  cb <- list(codebookEntry(x,weights=weights))
   names(cb) <- xname
   new("codebook",cb)
 })
 
-setMethod("codebook","NULL",function(x)NULL)
+setMethod("codebook","ANY",function(x,weights,...){
+  xname <- paste(deparse(substitute(x)))
+  cb <- list(codebookEntry(x,weights=weights))
+  names(cb) <- xname
+  new("codebook",cb)
+})
 
-setMethod("codebookEntry","item",function(x){
+setMethod("codebook","NULL",function(x,weights,...)NULL)
+
+setMethod("codebookEntry","item",function(x,weights,...){
   annotation <- annotation(x)
   filter <- x@value.filter
   spec <- c(
@@ -47,37 +56,63 @@ setMethod("codebookEntry","item",function(x){
   new("codebookEntry",
     spec = spec,
     stats = switch(measurement(x),
-            nominal=,ordinal=codebookStatsCateg(x),
-            interval=,ratio=codebookStatsMetric(x)
+            nominal=,ordinal=codebookStatsCateg(x,weights=weights),
+            interval=,ratio=codebookStatsMetric(x,weights=weights)
             ),
     annotation = annotation
   )
 })
 
-setMethod("codebookEntry","atomic",function(x){
+NAtab <- function(isna,weights=NULL){
+  if(!length(weights))
+    weights <- rep(1,length(isna))
+  counts <- c(
+    Valid = sum(weights*!isna),
+    "Missing (NA)" = sum(weights*isna),
+    Total = sum(weights)
+  )
+  perc <- 100*counts/counts[3]
+  perc[3] <- NA
+  cbind(N=counts,
+        Percent=perc)
+}
+
+setMethod("codebookEntry","atomic",function(x,weights,...){
 
   if(length(attr(x,"label")))
       annotation <- c(description=attr(x,"label"))
   else
       annotation <- NULL
 
-  spec <- c(
-            "Storage mode:"=storage.mode(x)
-            )
+  spec <- c("Storage mode:"=storage.mode(x))
   isna <- is.na(x)
-  stats <- summary(x)
-  stats.na <- names(stats) == "NA's"
-  stats <- stats[!stats.na]
-  NAs <- sum(isna)
-  N <- length(x)
-  if(NAs> 0) {
-      tab <- cbind(N=NAs,Percent=100*NAs/N)
-      rownames(tab) <- "NA"
-      attr(tab,"title") <- " "
+  descr <- Descriptives(x)
+  if(length(weights) && length(descr) > 2){ # There is more than a range
+      wdescr <- Descriptives(x,weights)
+      descr <- collect(unweighted=descr,
+                       weighted=wdescr)
+  }
+  else 
+      descr <- as.matrix(descr)
+
+  if(any(isna)){
+    tab <- NAtab(isna)
+    if(length(weights)){
+      wtab <- NAtab(isna,weights)
+      tab <- collect(unweighted=tab,
+                     weighted=tab)
+    }
+    else
+      tab <- array(tab,
+                   dim=c(dim(tab),1),
+                   dimnames=c(dimnames(tab),
+                              list(NULL)))
+    attr(tab,"title") <- "Valid and missing values"
   } else
-      tab <- integer(0)
+    tab <- integer(0)
+
   stats <- list(tab=tab,
-                descr=stats)
+                descr=descr)
   
   new("codebookEntry",
     spec = spec,
@@ -86,23 +121,73 @@ setMethod("codebookEntry","atomic",function(x){
   )
 })
 
-setMethod("codebookEntry","factor",function(x){
+
+setMethod("codebookEntry","ANY",function(x,weights,...){
 
   if(length(attr(x,"label")))
       annotation <- c(description=attr(x,"label"))
   else
       annotation <- NULL
-    
-  spec <- c("Storage mode:"=storage.mode(x))
-  spec <- if(is.ordered(x)) c(spec,
-            "Ordered factor with"=paste(nlevels(x),"levels"))
-          else c(spec,
-            "Factor with"=paste(nlevels(x),"levels"))
-            
-  isna <- is.na(x)
-  NAs <- sum(isna)
 
-  counts <- table(x)
+  spec <- c("Storage mode:"=storage.mode(x))
+
+  isat <- is.atomic(x)
+  if(isat)
+    isna <- is.na(x)
+  else
+    isna <- FALSE
+
+  if(mode(x) == "numeric"){
+    descr <- Descriptives(x)
+    if(length(weights) && length(descr) > 2){ # There is more than a range
+      wdescr <- Descriptives(x,weights)
+      descr <- collect(unweighted=format(descr),
+                       weighted=format(wdescr))
+    }
+    else 
+      descr <- as.matrix(format(descr))
+  }
+  else
+    descr <- NULL
+
+  if(any(isna)){
+    tab <- NAtab(isna)
+    if(length(weights)){
+      wtab <- NAtab(isna,weights)
+      tab <- collect(unweighted=tab,
+                     weighted=tab)
+    }
+    else
+      tab <- array(tab,
+                   dim=c(dim(tab),1),
+                   dimnames=c(dimnames(tab),
+                              list(NULL)))
+    attr(tab,"title") <- "Valid and missing values"
+  } else
+    tab <- integer(0)
+
+  stats <- list(tab=tab,
+                descr=descr)
+  
+  new("codebookEntry",
+    spec = spec,
+    stats = stats,
+    annotation = annotation
+  )
+})
+
+
+
+codebookTable_factor <- function(x,weights=NULL){
+
+  if(!length(weights))
+    weights <- rep(1,length(x))
+
+  isna <- is.na(x)
+  counts <- rowsum(weights[!isna],x[!isna])
+
+  NAs <- sum(weights*isna)
+
   tab <- cbind(counts,100*counts/sum(counts))
   if(any(isna)) {
       labs <- sQuote(levels(x))
@@ -115,18 +200,49 @@ setMethod("codebookEntry","factor",function(x){
       tab <- rbind(tab,c(NAs,NA))
       counts <- c(counts,NAs)
       tab <- cbind(tab,100*counts/sum(counts))
+      colnames(tab) <- c("N","Valid","Total")
     }
   else {
       labs <- sQuote(levels(x))
       labs <- paste(format(1:nlevels(x),justify="right"),
                     format(labs,justify="left")
                     )
+      colnames(tab) <- c("N","Valid")
   }
   rownames(tab) <- labs
   
+
+  return(tab)
+}
+
+setMethod("codebookEntry","factor",function(x,weights=NULL,...){
+
+  tab <- codebookTable_factor(x)
+  if(length(weights)){
+    wtab <- codebookTable_factor(x,weights=weights)
+    tab <- collect(unweighted=tab,
+                   weighted=wtab)
+  }
+  else{
+    tab.dn <- dimnames(tab)
+    tab.d <- dim(tab)
+    dim(tab) <- c(tab.d,1)
+    dimnames(tab) <- c(tab.dn,list(NULL))
+  }
   attr(tab,"title") <- "Levels and labels"
+  
+  if(length(attr(x,"label")))
+      annotation <- c(description=attr(x,"label"))
+  else
+      annotation <- NULL
+    
+  spec <- c("Storage mode:"=storage.mode(x))
+  spec <- if(is.ordered(x)) c(spec,
+            "Ordered factor with"=paste(nlevels(x),"levels"))
+          else c(spec,
+            "Factor with"=paste(nlevels(x),"levels"))
+            
   stats <- list(tab=tab)
-  stats <- c(stats,list(NAs = NAs))
   new("codebookEntry",
     spec = spec,
     stats = stats,
@@ -134,11 +250,31 @@ setMethod("codebookEntry","factor",function(x){
   )
 })
 
-setMethod("codebookEntry","character",function(x){
+setMethod("codebookEntry","character",function(x,weights=NULL,...){
 
   spec <- c("Storage mode:"=storage.mode(x))
-  stats <- codebookStatsChar(x)
-    
+  isna <- is.na(x)
+  descr <- as.matrix(codebookStatsChar(x))
+
+  if(any(isna)){
+    tab <- NAtab(isna)
+    if(length(weights)){
+      wtab <- NAtab(isna,weights)
+      tab <- collect(unweighted=tab,
+                     weighted=tab)
+    }
+    else
+      tab <- array(tab,
+                   dim=c(dim(tab),1),
+                   dimnames=c(dimnames(tab),
+                              list(NULL)))
+    attr(tab,"title") <- "Valid and missing values"
+  } else
+    tab <- integer(0)
+
+  stats <- list(tab=tab,
+                descr=descr)
+  
   new("codebookEntry",
     spec = spec,
     stats = stats,
@@ -147,107 +283,157 @@ setMethod("codebookEntry","character",function(x){
 })
 
 
-codebookStatsCateg <- function(x){
+codebookStatsCateg <- function(x,weights=NULL,...){
     vl <- labels(x)
     ic <- inherits(x,"character")
-    if(length(vl) || !ic)
-        list(tab=codebookTable(x))
+    if(length(vl) || !ic){
+        tab <- codebookTable_item(x)
+        tab.title <- attr(tab,"title")
+        if(length(weights)){
+            wtab <- codebookTable_item(x,weights)
+            tab <- collect(unweighted=tab,
+                           weighted=wtab)
+        }
+        else
+            tab <- array(tab,
+                         dim=c(dim(tab),1),
+                         dimnames=c(dimnames(tab),
+                                    list(NULL)))
+        attr(tab,"title") <- tab.title
+        list(tab=tab)
+    }
     else
         codebookStatsChar(x)
 }
 
-codebookStatsChar <- function(x){
-  isna <- is.na(x)
-  NAs <- sum(isna)
-  descr <- structure(range(x),names=c("Min","Max"))
-  list(descr=descr,
-       NAs = NAs)
+codebookStatsChar <- function(x,...){
+  structure(dQuote(range(x,na.rm=TRUE)),
+            names=c("Min","Max"))
 }
 
-codebookStatsMetric <- function(x){
-  tab <- codebookTable(x,drop.unlabelled=TRUE)
+codebookStatsMetric <- function(x,weights=TRUE,...){
+
+  if(length(labels(x))){
+    tab <- codebookTable_item(x,drop.unlabelled=TRUE)
+    tab.title <- attr(tab,"title")
+    if(length(weights)){
+      wtab <- codebookTable_item(x,weights=weights,
+                                 drop.unlabelled=TRUE)
+      tab <- collect(unweighted=tab,
+                     weighted=wtab)
+    }
+    else
+      tab <- array(tab,
+                   dim=c(dim(tab),1),
+                   dimnames=c(dimnames(tab),
+                              list(NULL)))
+    attr(tab,"title") <- tab.title
+  }
+  else
+    tab <- NULL
+  
   descr <- Descriptives(x)
+  if(length(weights)){
+      wdescr <- Descriptives(x,weights)
+      descr <- collect(unweighted=descr,
+                       weighted=wdescr)
+  }
+  else 
+      descr <- as.matrix(descr)
   list(
     tab=tab,
     descr=descr
     )
 }
 
-codebookTable <- function(x,drop.unlabelled=FALSE){
-    is.m <- is.missing(x)
-    isNA <- is.na(x)
-    vl <- labels(x)
-    if(length(vl)){
-        vvl <- vl@values
-        lvl <- vl@.Data
-        valid <- !is.missing2(vvl,x@value.filter)
-        i <- match(x@.Data,vvl,nomatch=0L)
-        tab <- tabulate(i,nbins=length(vvl))
-        names(tab) <- as.character(vvl)
-        lab <- sQuote(vl@.Data)
-        tab.title <- "Values and labels"
+codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE){
+  
+  is.m <- is.missing(x)
+  isNA <- is.na(x)
+  vl <- labels(x)
+  if(!length(weights))
+    weights <- rep(1,length(x))
+  if(length(vl)){
+    vvl <- vl@values
+    lvl <- vl@.Data
+    valid <- !is.missing2(vvl,x@value.filter)
+    i <- match(x@.Data,vvl,nomatch=0L)
+    tab <- drop(rowsum(weights,i))
+    if("0" %in% names(tab)){
+      ii <- match("0",names(tab))
+      tab <- tab[-ii]
     }
-    else {
-        valid <- logical(0)
-        tab <- c()
-        lab <- c()
-        i <- logical(length(x))
-        tab.title <- "Values"
-    }
+    names(tab) <- as.character(vvl)
+    lab <- sQuote(vl@.Data)
+    tab.title <- "Values and labels"
+  }
+  else {
+    valid <- logical(0)
+    tab <- c()
+    lab <- c()
+    i <- logical(length(x))
+    tab.title <- "Values"
+  }
 
-    ovld <- sum(!is.m & !i)
-    omiss <- sum(is.m & !i & !isNA)
-    NAs <- sum(isNA)
+  ovld <- sum(weights*(!is.m & !i))
+  omiss <- sum(weights*(is.m & !i & !isNA))
+  NAs <- sum(weights*(isNA))
 
-    if(ovld){
-        tab <- c(tab," "=ovld)
-        lab <- c(lab,"(unlab.val.)")
-        valid <- c(valid,TRUE)
-    }
+  if(ovld){
+    tab <- c(tab," "=ovld)
+    lab <- c(lab,"(unlab.val.)")
+    valid <- c(valid,TRUE)
+  }
 
-    if(omiss){
-        tab <- c(tab," "=omiss)
-        lab <- c(lab,"(unlab.mss.)")
-        valid <- c(valid,FALSE)
-    }
-    if(NAs){
-        tab <- c(tab,"NA"=NAs)
-        lab <- c(lab,"")
-        valid <- c(valid,FALSE)
-    }
-    
+  if(omiss){
+    tab <- c(tab," "=omiss)
+    lab <- c(lab,"(unlab.mss.)")
+    valid <- c(valid,FALSE)
+  }
+  if(NAs){
+    tab <- c(tab,"NA"=NAs)
+    lab <- c(lab,"")
+    valid <- c(valid,FALSE)
+  }
+
+  if(any(!valid)){
     missing.marker <- "M"
     valid.marker <- paste(rep(" ",nchar(missing.marker)),collapse="")
     lab <- paste(ifelse(valid,valid.marker,missing.marker),lab)
-    tab.nonzero <- tab>0
-    tab <- tab[valid | tab.nonzero]
-    lab <- lab[valid | tab.nonzero]
-    valid <- valid[valid | tab.nonzero]
-    if(NAs + omiss > 0){
-        vperc <- rep(NA,length(tab))
-        vtab <- tab[valid]
-        Nvalid <- sum(vtab)
-        if(Nvalid) vperc[valid] <- 100 * vtab/Nvalid
-        else vperc[valid] <- 0
-        tperc <- 100 * tab/sum(tab)
-        tab <- cbind(N=tab,Valid=vperc,Total=tperc)
-    } else {
-        tperc <- 100 * tab/sum(tab)
-        tab <- cbind(N=tab,Percent=tperc)
+  }
+  tab.nonzero <- tab>0
+  tab <- tab[valid | tab.nonzero]
+  lab <- lab[valid | tab.nonzero]
+  valid <- valid[valid | tab.nonzero]
+  if(any(!valid)){
+    vperc <- rep(NA,length(tab))
+    vtab <- tab[valid]
+    Nvalid <- sum(vtab)
+    if(Nvalid) vperc[valid] <- 100 * vtab/Nvalid
+    else vperc[valid] <- 0
+    tperc <- 100 * tab/sum(tab)
+    tab <- cbind(N=tab,Valid=vperc,Total=tperc)
+  } else {
+    tperc <- 100 * tab/sum(tab)
+    tab <- cbind(N=tab,Percent=tperc)
+  }
+  rownames(tab) <- names(tperc)
+  if(drop.unlabelled){
+    drp <- match("(unlab.val.)",trimws(lab),nomatch=0L)
+    tab <- tab[-drp,,drop=FALSE]
+    lab <- lab[-drp]
+    if(all(is.na(tab[,2]))){
+      tab <- tab[,-2,drop=FALSE]
+      colnames(tab) <- c("N","Percent")
     }
-    rownames(tab) <- names(tperc)
-    if(drop.unlabelled){
-        drp <- match("(unlab.val.)",trimws(lab),nomatch=0L)
-        tab <- tab[-drp,,drop=FALSE]
-        lab <- lab[-drp]
-    }
-    if(!length(tab))
-        tab <- NULL
-    else {
-        rownames(tab) <- paste(format(rownames(tab),justify="right"),format(lab,justify="left"))
-        attr(tab,"title") <- tab.title
-    }
-    return(tab)
+  }
+  if(!length(tab))
+    tab <- NULL
+  else {
+    rownames(tab) <- paste(format(rownames(tab),justify="right"),format(lab,justify="left"))
+    attr(tab,"title") <- tab.title
+  }
+  return(tab)
 }
 
 
@@ -303,47 +489,46 @@ setMethod("format","codebookEntry",
   descr <- unclass(x@stats$descr)
   
   if(length(tab)){
+
     tab.title <- attr(tab,"title")
-    if(ncol(tab)>2){
-    tab <- cbind(
-        formatC(tab[,1,drop=FALSE],format="d"),
-        formatC(tab[,2],format="f",digits=1),
-        formatC(tab[,3],format="f",digits=1)
-      )
+    tab.d <- dim(tab)
+    tab.dn <- dimnames(tab)
+    tab <- apply(tab,3,format_cb_table)
+    #tab <- lapply(tab,unlist)
+    #tab <- do.call(cbind,tab)
+    rn <- rownames(tab)
+    rn[1] <- tab.title
+    rn <- format(rn)
+    if(tab.d[3]>1){
+       tab <- cbind(" "=rn,tab)
+       tab <- rbind(colnames(tab),"",tab)
+       tab <- apply(tab,2,format,justify="right")
     }
     else {
-      tab <- cbind(
-        formatC(tab[,1,drop=FALSE],format="d"),
-        formatC(tab[,2],format="f",digits=1),
-        ""
-      )
+      tab <- cbind(rn,tab)
     }
-    tab[tab=="NA"] <- ""
-    tab <- format(tab,justify="right")
-    tab <- cbind(
-        format(c(tab.title,"",rownames(tab)),justify="right"),
-        format(c("N","",tab[,1]),justify="right"),
-        " ",
-        format(c("Percent","",apply(tab[,2:3,drop=FALSE],1,paste,collapse=" ")),justify="centre")
-    )
-    
     tab <- paste("  ",apply(tab,1,paste,collapse=" "))
   }
   if(length(descr)){
-    descr <- cbind(
-            format(paste(names(descr),": ",sep=""),justify="right"),
-            format(formatC(descr,format="f",digits=3),justify="right")
-            )
+    descr.rn <- format(paste(rownames(descr),":",sep=""),justify="right")
+    descr[] <- formatC(descr[],format="f",digits=3)
+    descr[] <- gsub("NA","",descr[])
+    if(ncol(descr) > 1){
+      descr.rn <- c("","",descr.rn)
+      descr <- rbind(colnames(descr),"",descr)
+    }
+    descr <- cbind(descr.rn,descr)
+    descr <- apply(descr,2,format,justify="right")
     descr <- paste("  ",apply(descr,1,paste,collapse=" "))
   }
   if(length(tab) && length(descr)){
-    statstab <- paste("   ",format(c(tab,"",descr),justify="left"))
+    statstab <- format(c(tab,"",descr),justify="left")
   }
   else if(length(tab)){
     statstab <- tab
   }
   else if(length(descr)){
-    statstab <- paste("   ",descr)
+    statstab <- descr
   }
   
   annot.out <- character()
@@ -381,3 +566,24 @@ setMethod("format","codebookEntry",
     )
 })
 
+format_cb_table <- function(tab){
+    cn <- colnames(tab)
+    if(ncol(tab)>2){
+        tab <- cbind(
+            formatC(tab[,1,drop=FALSE],format="d"),
+            formatC(tab[,2],format="f",digits=1),
+            formatC(tab[,3],format="f",digits=1)
+        )
+    }
+    else {
+        tab <- cbind(
+            formatC(tab[,1,drop=FALSE],format="d"),
+            formatC(tab[,2],format="f",digits=1)
+        )
+    }
+    tab[tab=="NA"] <- ""
+    tab <- rbind(" "=cn,"",tab)
+    tab <- format(tab,justify="right")
+    tab <- apply(tab,1,paste,collapse=" ")
+    tab
+}

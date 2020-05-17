@@ -112,15 +112,38 @@ setMethod("codebookEntry","Date.item",function(x){
                                         ))
   ism <- is.missing(x)
   isna <- is.na(x)
+
+  if(any(ism || isna)){
+      tab <- missNAtab(ism,isna)
+    if(length(weights)){
+      wtab <- missNAtab(ism,isna,weights)
+      tab <- collect(unweighted=tab,
+                     weighted=tab)
+    }
+    else
+      tab <- array(tab,
+                   dim=c(dim(tab),1),
+                   dimnames=c(dimnames(tab),
+                              list(NULL)))
+    attr(tab,"title") <- "Valid and missing values"
+  } else
+    tab <- integer(0)
+
+  x <- as.Date(x)
+  descr <- Descriptives(x)
+  # if(length(weights)){
+  #     wdescr <- Descriptives(x,weights)
+  #     descr <- collect(unweighted=format(descr),
+  #                      weighted=format(wdescr))
+  # }
+  # else 
+  descr <- as.matrix(format(descr))
+
+  stats <- list(tab=tab,
+                descr=descr)
   new("codebookEntry",
     spec = spec,
-    stats = list(
-      descr=format(c(
-                     format(summary(x)),
-                    `N.miss.` = sum(ism & !isna),
-                    NAs = sum(isna)),
-                    justify="left")
-      ),
+    stats = stats,
     annotation = annotation
   )
 })

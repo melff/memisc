@@ -344,20 +344,21 @@ setMethod("as.factor","item.vector",function(x){
 
 setMethod("as.character","item.vector",function(x,use.labels=TRUE,...){
     d <- description(x)
+    ism <- is.missing(x)
     if(use.labels && length(vl <- labels(x))){
         i <- match(x,vl@values)
         y <- vl@.Data[i]
         y[is.na(y)] <- as.character(x@.Data[is.na(y)])
         if(length(d))
             attr(y,"label") <- d
-        y
     }
     else {
         y <- as.character(x@.Data)
         if(length(d))
             attr(y,"label") <- d
-        y
     }
+    y[ism] <- as.vector(NA,mode="character")
+    y
 })
 
 

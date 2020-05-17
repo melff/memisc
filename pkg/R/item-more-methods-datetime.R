@@ -146,8 +146,25 @@ setMethod("summary","datetime.item",function(object,...,maxsum=100,digits=3){
   summary(xvalid)
 })
 
+missNAtab <- function(ism,isna,weights=NULL){
+  if(!length(weights))
+      weights <- rep(1,length(isna))
+  isvalid <- !isna & !ism
+  isomiss <- ism & !isna
+  counts <- c(
+      Valid = sum(weights*isvalid),
+      "NA" = sum(weights*isna),
+      "Other missing" = sum(weights*isomiss),
+      Total = sum(weights)
+  )
+  perc <- 100*counts/counts[length(counts)]
+  perc[length(counts)] <- NA
+  cbind(N=counts,
+        Percent=perc)
+}
 
-setMethod("codebookEntry","datetime.item",function(x){
+
+setMethod("codebookEntry","datetime.item",function(x,weights,...){
   annotation <- annotation(x)
   filter <- x@value.filter
   spec <- c(
@@ -163,15 +180,38 @@ setMethod("codebookEntry","datetime.item",function(x){
                                         ))
   ism <- is.missing(x)
   isna <- is.na(x)
+
+  if(any(ism || isna)){
+      tab <- missNAtab(ism,isna)
+    if(length(weights)){
+      wtab <- missNAtab(ism,isna,weights)
+      tab <- collect(unweighted=tab,
+                     weighted=tab)
+    }
+    else
+      tab <- array(tab,
+                   dim=c(dim(tab),1),
+                   dimnames=c(dimnames(tab),
+                              list(NULL)))
+    attr(tab,"title") <- "Valid and missing values"
+  } else
+    tab <- integer(0)
+
+  x <- as.POSIXct(x)
+  descr <- Descriptives(x)
+  # if(length(weights)){
+  #     wdescr <- Descriptives(x,weights)
+  #     descr <- collect(unweighted=format(descr),
+  #                      weighted=format(wdescr))
+  # }
+  # else 
+  descr <- as.matrix(format(descr))
+
+  stats <- list(tab=tab,
+                descr=descr)
   new("codebookEntry",
     spec = spec,
-    stats = list(
-      descr=format(c(
-                     format(summary(x)),
-                    `N.miss.` = sum(ism & !isna),
-                    NAs = sum(isna)),
-                    justify="left")
-      ),
+    stats = stats,
     annotation = annotation
   )
 })

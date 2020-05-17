@@ -221,40 +221,61 @@ setMethod("Table",signature(x="item.vector"),
 })
 
 
+wmean <- function(x,w){
+    if(length(w)>0) weighted.mean(x,w)
+    else mean(x)
+}
 
 
+NULLfunc <- function(...) NULL
+
+Descriptives_numeric <- function(x,weights=NULL,...){
+
+     isna <- is.na(x)
+     if(length(weights)>0)
+         w <- weights[!isna]
+     else
+         w <- NULL
+     x <- x[!isna]
+     m.1 <- tryCatch(wmean(1L*x,w),error=NULLfunc)
+     x.cent <- tryCatch(x-m.1,error=NULLfunc)
+     m.2 <- tryCatch(wmean(x.cent^2,w),error=NULLfunc)
+     m.3 <- tryCatch(wmean(x.cent^3,w),error=NULLfunc)
+     m.4 <- tryCatch(wmean(x.cent^4,w),error=NULLfunc)
+     c(
+      Min=min(x,na.rm=TRUE),
+      Max=max(x,na.rm=TRUE),
+      Mean=m.1,
+      "Std.Dev."=tryCatch(sqrt(m.2),error=NULLfunc),
+      Skewness=tryCatch(m.3/m.2^(3/2),error=NULLfunc),
+      Kurtosis=tryCatch(m.4/m.2^2-3,error=NULLfunc)
+     )
+}
 
 setMethod("Descriptives",signature(x="atomic"),
-    function(x,...){
-     NAs <- is.na(x)
-     x <- x[!NAs]
-     NAs <- sum(NAs)
-     mean.x <- mean(x)
-     m.2 <- mean((x-mean.x)^2)
-     m.3 <- mean((x-mean.x)^3)
-     m.4 <- mean((x-mean.x)^4)
-     c(
-      Mean=mean.x,
-      Variance=m.2,
-      Skewness=m.3/m.2^(3/2),
-      Kurtosis=m.4/m.2^2-3,
-      Min=min(x,na.rm=TRUE),
-      Max=max(x,na.rm=TRUE) 
-     )
+          Descriptives_numeric)
+
+setMethod("Descriptives",signature(x="ANY"),
+function(x,weights=NULL,...){
+    if(mode(x)=="numeric")
+        Descriptives_numeric(x,weights,...)
+    else NULL
 })
 
+
 setMethod("Descriptives",signature(x="item.vector"),
-    function(x,...){
+    function(x,weights=NULL,...){
      miss <- is.missing(x)
-     NAs <- is.na(x@.Data)
+     if(length(weights)>0)
+         w <- weights[!miss]
+     else
+         w <- NULL
      x <- x@.Data[!miss]
-     NAs <- sum(NAs)
-     miss <- sum(miss)
-     m.1 <- mean(x)
+     m.1 <- wmean(x,w)
      x.cent <- x-m.1
-     m.2 <- mean(x.cent^2)
-     m.3 <- mean(x.cent^3)
-     m.4 <- mean(x.cent^4)
+     m.2 <- wmean(x.cent^2,w)
+     m.3 <- wmean(x.cent^3,w)
+     m.4 <- wmean(x.cent^4,w)
      c(
       Min=min(x,na.rm=TRUE),
       Max=max(x,na.rm=TRUE),
