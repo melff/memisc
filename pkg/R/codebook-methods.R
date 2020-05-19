@@ -347,7 +347,7 @@ codebookStatsMetric <- function(x,weights=TRUE,...){
 }
 
 codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE){
-  
+
   is.m <- is.missing(x)
   isNA <- is.na(x)
   vl <- labels(x)
@@ -362,6 +362,12 @@ codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE){
     if("0" %in% names(tab)){
       ii <- match("0",names(tab))
       tab <- tab[-ii]
+    }
+    if(length(tab) < length(vvl)){
+      tab0 <- numeric(length(vvl))
+      ii <- as.integer(names(tab))
+      tab0[ii] <- tab
+      tab <- tab0
     }
     names(tab) <- as.character(vvl)
     lab <- sQuote(vl@.Data)
