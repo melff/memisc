@@ -556,8 +556,11 @@ fixupCodebookTable <- function(x,drop.unlabelled=FALSE){
     if(!length(tab))
         tab <- NULL
     else {
-        rownames(tab) <- paste(format(rownames(tab),justify="right"),format(lab,justify="left"))
-        attr(tab,"title") <- tab.title
+      rownames(tab) <- paste(format(rownames(tab),justify="right"),format(lab,justify="left"))
+      tab.dn <- dimnames(tab)
+      dim(tab) <- c(dim(tab),1)
+      dimnames(tab) <- c(tab.dn,list(NULL))
+      attr(tab,"title") <- tab.title
     }
     return(tab)
 }
@@ -566,8 +569,9 @@ fixupcodebookEntryCateg <- function(cbe){
     tab <- cbe@stats$tab
     descr <- cbe@stats$descr
     if(length(tab))
-        cbe@stats$tab <- fixupCodebookTable(tab,drop.unlabelled=FALSE)
-    # else if(length(descr))
+      cbe@stats$tab <- fixupCodebookTable(tab,drop.unlabelled=FALSE)
+    if(length(descr))
+      cbe@stats$descr <- as.matrix(descr)
     cbe
 }
 
@@ -593,7 +597,8 @@ fixupcodebookEntryMetric <- function(cbe){
         Min=Min,
         Max=Max
     )
-
+    descr <- as.matrix(descr)
+    
     cbe@stats <- list(tab=tab,descr=descr)
     cbe
 }
@@ -610,9 +615,11 @@ fixupcodebookEntryDatetime <- function(cbe){
   descr <- c(
             Min=format(as.POSIXct(Min,origin=origin)),
             Max=format(as.POSIXct(Max,origin=origin))
-            )
+  )
+  descr[] <- format(descr[])
+  descr <- as.matrix(descr)
 
-  cbe@stats <- list(descr=format(descr))
+  cbe@stats <- list(descr=descr)
   cbe
 }
 
