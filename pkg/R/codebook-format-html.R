@@ -4,6 +4,26 @@ trimws_drpz <- function(x){
   x[nzchar(x)]
 }
 
+format_cb_table_ht <- function(tab){
+    cn <- colnames(tab)
+    if(ncol(tab)>2){
+        tab <- cbind(
+            formatC(tab[,1,drop=FALSE],format="d"),
+            formatC(tab[,2],format="f",digits=1),
+            formatC(tab[,3],format="f",digits=1)
+        )
+    }
+    else {
+        tab <- cbind(
+            formatC(tab[,1,drop=FALSE],format="d"),
+            formatC(tab[,2],format="f",digits=1)
+        )
+    }
+    tab[tab=="NA"] <- ""
+    tab <- rbind(" "=cn,"",tab)
+    tab
+}
+
 format_html.codebookEntry <- function(x,name="",
                                       toprule=2,
                                       midrule=1,
@@ -13,7 +33,6 @@ format_html.codebookEntry <- function(x,name="",
                                       title_tag="p",
                                       ...
 ){
-  
   firstcol <- c("padding-left"="0.3em")
   toprule <- c("border-top"=paste0(midrule,"px solid"))
   bottomrule <- c("border-bottom"=paste0(midrule,"px solid"))
@@ -54,23 +73,39 @@ format_html.codebookEntry <- function(x,name="",
   descr <- x@stats$descr
   
   if(length(tab)){
-    
-    counts_html <- formatC(tab[,1],format="d")
+    counts_html <- formatC(tab[,1,1],format="d")
     counts_html <- html_td(counts_html,vectorize=TRUE,style=css(align.right,lrpad))
-    
-    perc_html <- formatC(tab[,-1,drop=FALSE],
+
+    perc_html <- formatC(tab[,-1,1,drop=FALSE],
                          format="f",digits=1)
     perc_html[perc_html=="NA"] <- ""
-    
     perc_html <- spltDec(perc_html)
     perc_html <- html_td_spltDec(perc_html)
-    
+
     tab_html <- c(
       counts_html,
       perc_html
     )
-    dim(tab_html) <- dim(tab)
-    
+
+    if(dim(tab)[3] > 1){
+      counts_html <- formatC(tab[,1,1],
+                             format="f",digits=1)
+      counts_html <- spltDec(counts_html)
+      counts_html <- html_td_spltDec(counts_html)
+
+      perc_html <- formatC(tab[,-1,2,drop=FALSE],
+                            format="f",digits=1)
+      perc_html[perc_html=="NA"] <- ""
+      perc_html <- spltDec(perc_html)
+      perc_html <- html_td_spltDec(perc_html)
+      wtab_html <- c(
+        counts_html,
+        perc_html
+      )
+      tab_html <- c(tab_html,wtab_html)
+    }  
+    tab_html <- matrix(tab_html, nrow = nrow(tab))
+
     tab_rown <- trimws(rownames(tab))
     
     tab_lab <- strsplit(tab_rown," ")
@@ -94,11 +129,48 @@ format_html.codebookEntry <- function(x,name="",
     
     tab_html <- cbind(tab_lab_html,tab_html)
     tab_html <- as.html_group(apply(tab_html,1,html_tr))
-    
-    tabh_html <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
-                            html_td("N",style=css(align.center)),
-                            html_td("Percent",colspan=6,style=css(align.center)))
-    tabh_html <- html_tr(tabh_html)
+
+    if(dim(tab)[3] == 1){
+      if(dim(tab)[2] == 3){
+        tabh_html <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
+                                html_td("N",style=css(align.center)),
+                                html_td("Valid",colspan=3,style=css(align.center)),
+                                html_td("Total",colspan=3,style=css(align.center)))
+      }
+      else{
+        tabh_html <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
+                                html_td("N",style=css(align.center)),
+                                html_td("Percent",colspan=3,style=css(align.center)))
+      }
+      tabh_html <- html_tr(tabh_html)
+    } else {
+      if(dim(tab)[2] == 3){
+        tabh_html2 <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
+                                html_td("N",style=css(align.center)),
+                                html_td("Valid",colspan=3,style=css(align.center)),
+                                html_td("Total",colspan=3,style=css(align.center)),
+                                html_td("N",colspan=3,style=css(align.center)),
+                                html_td("Valid",colspan=3,style=css(align.center)),
+                                html_td("Total",colspan=3,style=css(align.center)))
+        tabh_html1 <- html_group(html_td("",colspan=3),
+                               html_td("Unweighted",colspan=7,style=css(align.center)),
+                               html_td("Weighted",colspan=9,style=css(align.center)))
+      }
+      else{
+        tabh_html2 <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
+                                html_td("N",style=css(align.center)),
+                                html_td("Percent",colspan=3,style=css(align.center)),
+                                html_td("N",colspan=3,style=css(align.center)),
+                                html_td("Percent",colspan=3,style=css(align.center)))
+        tabh_html1 <- html_group(html_td("",colspan=3),
+                               html_td("Unweighted",colspan=4,style=css(align.center)),
+                               html_td("Weighted",colspan=6,style=css(align.center)))
+      }
+      
+      tabh_html1 <- html_tr(tabh_html1)
+      tabh_html2 <- html_tr(tabh_html2)
+      tabh_html <- c(tabh_html1,tabh_html2)
+    }
     
     tab_html <- html_table(html_group(tabh_html,tab_html),class="cbe-table",
                            style=css("border-collapse"="collapse"))
@@ -107,20 +179,27 @@ format_html.codebookEntry <- function(x,name="",
   else tab_html <- NULL
   
   if(length(descr)){
-    
-    descr_ldr_html <- trimws(paste(names(descr),": ",sep=""))
+    descr_ldr_html <- trimws(paste(rownames(descr),": ",sep=""))
     descr_ldr_html <- html_td(descr_ldr_html,style=css(align.right,lrpad),vectorize=TRUE)
-
     descr_html <- formatC(descr,format="f",digits=3)
     
     descr_html <- spltDec(descr_html)
     descr_html <- html_td_spltDec(descr_html)
-    
+
+    dim(descr_html) <- dim(descr)
+
     descr_html <- cbind(descr_ldr_html,descr_html)
-    
     descr_html <- apply(descr_html,1,html_tr)
+
+    if(ncol(descr)>1){
+      descrh_html <- html_group(html_td(""),
+                                html_td("Unweighted",colspan=3,style=css(align.center)),
+                                html_td("&nbsp;Weighted",colspan=3,style=css(align.center)))
+      descr_html <- c(list(html_tr(descrh_html)),descr_html)
+    }
+    
     descr_html <- html_table(descr_html,class="cbe-table",
-                             style=css("border-collapse"="collapse"))
+                               style=css("border-collapse"="collapse"))
     descr_html <- html_group(html_p(""),descr_html)
   } else descr_html <- NULL
   
