@@ -339,9 +339,9 @@ codebookStatsMetric <- function(x,weights=TRUE,...){
   else
     tab <- NULL
   
-  descr <- Descriptives(x)
+  descr <- Descriptives(x)[1:4]
   if(length(weights)){
-      wdescr <- Descriptives(x,weights)
+      wdescr <- Descriptives(x,weights)[1:4]
       descr <- collect(Unweighted=descr,
                        Weighted=wdescr)
   }
