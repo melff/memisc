@@ -1,5 +1,6 @@
 \name{Descriptives}
 \alias{Descriptives}
+\alias{Descriptives,ANY-method}
 \alias{Descriptives,atomic-method}
 \alias{Descriptives,item.vector-method}
 \title{Vectors of Univariate Sample Statistics}
@@ -9,11 +10,12 @@
 }
 \usage{
 Descriptives(x,...)
-\S4method{Descriptives}{atomic}(x,...)
-\S4method{Descriptives}{item.vector}(x,...)
+\S4method{Descriptives}{atomic}(x, weights = NULL, ...)
+\S4method{Descriptives}{item.vector}(x, weights = NULL, ...)
 }
 \arguments{
   \item{x}{an atomic vector or \code{"item.vector"} object. }
+  \item{weights}{an optional vector of weights.}
   \item{\dots}{further arguments, to be passed to future methods.}
 }
 \value{

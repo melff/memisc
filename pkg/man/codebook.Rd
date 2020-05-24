@@ -1,5 +1,6 @@
 \name{codebook}
 \alias{codebook}
+\alias{codebook,ANY-method}
 \alias{codebook,item-method}
 \alias{codebook,data.set-method}
 \alias{codebook,importer-method}
@@ -19,16 +20,18 @@
   in a nicely formatted way. 
 }
 \usage{
-codebook(x)
-\S4method{codebook}{item}(x)
-\S4method{codebook}{atomic}(x)
-\S4method{codebook}{factor}(x)
-\S4method{codebook}{data.set}(x)
-\S4method{codebook}{data.frame}(x)
-\S4method{codebook}{importer}(x)
+codebook(x, weights = NULL, \dots)
+\S4method{codebook}{item}(x, weights = NULL, \dots)
+\S4method{codebook}{atomic}(x, weights = NULL, \dots)
+\S4method{codebook}{factor}(x, weights = NULL, \dots)
+\S4method{codebook}{data.set}(x, weights = NULL, \dots)
+\S4method{codebook}{data.frame}(x, weights = NULL, \dots)
+\S4method{codebook}{importer}(x, weights = NULL, \dots)
 }
 \arguments{
   \item{x}{an \code{\link{item}}, numeric or character vector, factor, \code{\link{data.set}}, \code{\link{data.frame}} or \code{\link{importer}} object for \code{codebook()}}
+  \item{weights}{an optional vector of weights.}
+  \item{\dots}{other arguments, currently ignored.}
 }
 \value{
   An object of class "codebook", for which a \code{\link{show}} method exists that
