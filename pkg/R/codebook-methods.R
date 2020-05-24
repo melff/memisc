@@ -353,13 +353,14 @@ codebookStatsMetric <- function(x,weights=TRUE,...){
     )
 }
 
-codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE){
+codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE,drop.empty=TRUE){
 
   is.m <- is.missing(x)
   isNA <- is.na(x)
   vl <- labels(x)
-  if(!length(weights))
+  if(!length(weights)){
     weights <- rep(1,length(x))
+  }
   if(length(vl)){
     vvl <- vl@values
     lvl <- vl@.Data
@@ -392,18 +393,18 @@ codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE){
   omiss <- sum(weights*(is.m & !i & !isNA))
   NAs <- sum(weights*(isNA))
 
-  if(ovld){
+  if(ovld | !drop.empty){
     tab <- c(tab," "=ovld)
     lab <- c(lab,"(unlab.val.)")
     valid <- c(valid,TRUE)
   }
 
-  if(omiss){
+  if(omiss | !drop.empty){
     tab <- c(tab," "=omiss)
     lab <- c(lab,"(unlab.mss.)")
     valid <- c(valid,FALSE)
   }
-  if(NAs){
+  if(NAs | !drop.empty){
     tab <- c(tab,"NA"=NAs)
     lab <- c(lab,"")
     valid <- c(valid,FALSE)
@@ -415,9 +416,10 @@ codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE){
     lab <- paste(ifelse(valid,valid.marker,missing.marker),lab)
   }
   tab.nonzero <- tab>0
-  tab <- tab[valid | tab.nonzero]
-  lab <- lab[valid | tab.nonzero]
-  valid <- valid[valid | tab.nonzero]
+  tab.keep <- tab.nonzero | !drop.empty
+  tab <- tab[valid | tab.keep]
+  lab <- lab[valid | tab.keep]
+  valid <- valid[valid | tab.keep]
   if(any(!valid)){
     vperc <- rep(NA,length(tab))
     vtab <- tab[valid]
