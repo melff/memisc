@@ -575,17 +575,33 @@ setMethod("format","codebookEntry",
 format_cb_table <- function(tab){
     cn <- colnames(tab)
     if(ncol(tab)>2){
-        tab <- cbind(
-            formatC(tab[,1,drop=FALSE],format="d"),
-            formatC(tab[,2],format="f",digits=1),
-            formatC(tab[,3],format="f",digits=1)
-        )
+        if(all(trunc(tab[,1])==tab[,1])){
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="d"),
+                formatC(tab[,2],format="f",digits=1),
+                formatC(tab[,3],format="f",digits=1)
+            )
+        } else {
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="f",digits=1),
+                formatC(tab[,2],format="f",digits=1),
+                formatC(tab[,3],format="f",digits=1)
+            )
+        }
     }
     else {
-        tab <- cbind(
-            formatC(tab[,1,drop=FALSE],format="d"),
-            formatC(tab[,2],format="f",digits=1)
-        )
+        if(all(trunc(tab[,1])==tab[,1])){
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="d"),
+                formatC(tab[,2],format="f",digits=1)
+            )
+        } else {
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="f",digits=1),
+                formatC(tab[,2],format="f",digits=1)
+            )
+        }
+        
     }
     tab[tab=="NA"] <- ""
     tab <- rbind(" "=cn,"",tab)
