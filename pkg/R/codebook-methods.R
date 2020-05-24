@@ -309,8 +309,13 @@ codebookStatsCateg <- function(x,weights=NULL,...){
 }
 
 codebookStatsChar <- function(x,...){
-  structure(dQuote(range(x,na.rm=TRUE)),
-            names=c("Min","Max"))
+  descr <- structure(dQuote(range(x,na.rm=TRUE)),
+                     names=c("Min","Max"))
+  descr <- as.matrix(descr)
+  list(
+    tab = NULL,
+    descr = descr
+  )
 }
 
 codebookStatsMetric <- function(x,weights=TRUE,...){
