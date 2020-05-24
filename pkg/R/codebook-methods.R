@@ -52,15 +52,17 @@ setMethod("codebookEntry","item",function(x,weights,...){
                                         missing.values = c("Missing values:" = format(filter)),
                                         valid.values   = c("Valid values:"   = format(filter)),
                                         valid.range    = c("Valid range:"    = format(filter))
-                                        ))
-  new("codebookEntry",
-    spec = spec,
-    stats = switch(measurement(x),
+                                     ))
+  stats <- switch(measurement(x),
             nominal=,ordinal=codebookStatsCateg(x,weights=weights),
             interval=,ratio=codebookStatsMetric(x,weights=weights)
-            ),
+            )
+  cbe <- new("codebookEntry",
+    spec = spec,
+    stats = stats,
     annotation = annotation
-  )
+    )
+  return(cbe)
 })
 
 NAtab <- function(isna,weights=NULL){
