@@ -229,7 +229,7 @@ format_html.codebook <- function(x,toprule=2,
                                  title_tag="p",
                                  ...)
 {
-  out <- mapply(format_html,x=x,name=names(x),
+  out <- mapply(format_html,x=x@.Data,name=names(x),
                 MoreArgs = list(
                     toprule=toprule,midrule=midrule,
                     padding=padding,var_tag=var_tag,

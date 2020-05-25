@@ -12,6 +12,9 @@
 \alias{format,codebookEntry-method}
 \alias{show,codebook-method}
 \alias{as.character,codebook-method}
+\alias{$,codebook-method}
+\alias{[,codebook,atomic,missing,ANY-method}
+\alias{[[,codebook-method}
 \title{Generate a Codebook of a Data Set}
 \description{
   Function \code{codebook} collects documentation about an item,
@@ -82,6 +85,11 @@ description(Data)
 
 codebook(Data)
 
+codebook(Data)$vote
+codebook(Data)[2]
+
+codebook(Data[2])
+    
 \dontrun{
 Write(description(Data),
            file="Data-desc.txt")

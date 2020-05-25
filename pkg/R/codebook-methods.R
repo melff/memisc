@@ -456,7 +456,7 @@ setMethod("as.character","codebook",function(x,...){
   width <- getOption("width")
   toprule <- paste(rep("=",width),collapse="")
   midrule <- paste(rep("-",width),collapse="")
-  out <- mapply(format,x=x,name=names(x),toprule=toprule,midrule=midrule)
+  out <- mapply(format,x=x@.Data,name=names(x),toprule=toprule,midrule=midrule)
   unlist(out)
 })
 
@@ -464,7 +464,7 @@ setMethod("show","codebook",function(object){
   width <- getOption("width")
   toprule <- paste(rep("=",width),collapse="")
   midrule <- paste(rep("-",width),collapse="")
-  out <- mapply(format,x=object,name=names(object),toprule=toprule,midrule=midrule)
+  out <- mapply(format,x=object@.Data,name=names(object),toprule=toprule,midrule=midrule)
   out <- unlist(out)
   writeLines(out)
 })
@@ -474,7 +474,7 @@ Write.codebook <- function(x,file=stdout(),...){
   width <- getOption("width")
   toprule <- paste(rep("=",width),collapse="")
   midrule <- paste(rep("-",width),collapse="")
-  out <- mapply(format,x=x,name=names(x),toprule=toprule,midrule=midrule)
+  out <- mapply(format,x=x@.Data,name=names(x),toprule=toprule,midrule=midrule)
   out <- unlist(out)
   writeLines(out,con=file)
 }
@@ -526,7 +526,8 @@ setMethod("format","codebookEntry",
   }
   if(length(descr)){
     descr.rn <- format(paste(rownames(descr),":",sep=""),justify="right")
-    descr[] <- formatC(descr[],format="f",digits=3)
+    if(is.numeric(descr[]))  
+       descr[] <- formatC(descr[],format="f",digits=3)
     descr[] <- gsub("NA","",descr[])
     if(ncol(descr) > 1){
       descr.rn <- c("","",descr.rn)
@@ -618,3 +619,35 @@ format_cb_table <- function(tab){
     tab <- apply(tab,1,paste,collapse=" ")
     tab
 }
+
+setMethod("[",signature(x="codebook",i="atomic",j="missing",drop="ANY"),
+  function(x,i,j,...,drop=TRUE){
+      if(is.character(i))
+          i <- match(i,names(x))
+      cb <- x@.Data[i]
+      if(!length(cb)) return(NULL)
+      if(is.numeric(i) || is.logical(i))
+          names(cb) <- names(x)[i]
+      else return(NULL)
+      new("codebook",cb)
+  })
+
+setMethod("$",signature(x="codebook"),
+function(x,name){
+  i <- match(name,names(x))
+  cb <- x@.Data[i]
+  if(!length(cb)) return(NULL)
+  names(cb) <- name
+  new("codebook",cb)
+})
+
+setMethod("[[",signature(x="codebook"),
+function(x,i,...){
+      if(is.character(i))
+          i <- match(i,names(x))
+      cb <- x@.Data[i]
+      if(!length(cb)) return(NULL)
+      if(is.numeric(i) || is.logical(i))
+          names(cb) <- names(x)[i]
+      new("codebook",cb)
+})
