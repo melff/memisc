@@ -101,6 +101,15 @@ spss.system.file <- function(
     attr(ptr,"ncases") <- ncases
     document <- data.spec$document
     data.spec$document <- NULL
+
+    aux <- data.spec$auxiliaries
+    if(length(aux$aux_var)){
+      aux_var <- do.call("rbind",aux$aux_var)
+      mlev <- aux_var[,1]
+      mlev[mlev==0] <- 1
+      mlev <- c("nominal","ordinal","interval")[mlev]
+      variables <- mapply("measurement<-",variables,mlev)
+    }
     
     if(to.lower){
       names(variables) <- tolower(names(variables))
