@@ -379,41 +379,67 @@ update_cbChar1 <- function(current,update){
 }
 
 
-initcodebookStatsMetric <- function(x){
-    stats <- list()
-    if(length(x@value.labels))
-        stats$tab <- list()
-    stats$moments <- numeric(0)
+initcodebookStatsMetric <- function(x,weights=NULL){
+    if(length(labels(x))){
+        if(length(weights))
+            stats <- list(tab=list(),wtab=list())
+        else
+            stats <- list(tab=list())
+    }
+    else stats <- list()
+    stats$descr <- numeric(0)
     stats$range <- numeric(0)
     stats$missings <- integer(0)
     stats
 }
 
+cb_descr <- function(x,w=NULL){
+  m <- c(n     = length(x),
+         sum.x = sum(x),
+         sum.x2 = sum(x^2))
+  if(length(w)){
+    wm <- c(sum(w),
+            sum(w*x),
+            sum(w*x^2))
+    m <- cbind(Unweighted=m,Weighted=wm)
+  }
+  else m <- as.matrix(m)
+  return(m)
+}
+
 updatecodebookStatsMetric <- function(cbe,x,weights=NULL){
   stats <- cbe@stats
   if(length(x@value.labels)){
-      tab <- cbTable1(x)
-      stats$tab <- update_cbTable1(stats$tab,tab)
+    tab <- codebookTable_item(x,drop.empty=FALSE)
+    tab.title <- attr(tab,"title")
+    if(length(stats$tab)){
+      stats$tab <- stats$tab + tab
+    }
+    else 
+      stats$tab <- tab
+    attr(stats$tab,"title") <- tab.title
+    if(length(weights)){
+      wtab <- codebookTable_item(x,weights=weights,drop.empty=FALSE)
+      if(length(stats$wtab))
+        stats$wtab <- stats$wtab + wtab
+      else 
+        stats$wtab <- wtab
+    }
   }
-  miss <- is.missing(x)
-  NAs <- is.na(x@.Data)
-  x <- x@.Data[!miss & !NAs]
-  NAs <- sum(NAs)
-  miss <- sum(miss,na.rm=TRUE)
+  ismiss <- is.missing(x)
+  isna <- is.na(x@.Data)
+  x <- x@.Data[!ismiss & !isna]
+  NAs <- sum(isna)
+  miss <- sum(ismiss,na.rm=TRUE)
   if(length(x)){
-    moments <- Moments(x)
-    stats$moments <- if(length(stats$moments)) {
-                      N1 <- stats$moments[5]
-                      N2 <- moments[5]
-                      N <- N1 + N2
-                      w1 <- N1/N
-                      w2 <- N2/N
-                      c(
-                        w1*stats$moments[-5] + w2*moments[-5],
-                        N = N
-                        )
-                      }
-                  else moments
+    if(length(weights))
+      w <- weights[!ismiss & !isna]
+    else
+      w <- NULL
+    descr <- cb_descr(x,w=w)
+    stats$descr <- if(length(stats$descr)) stats$descr + descr
+                     else descr
+    
     stats$range <- if(length(stats$range)) range(stats$range,range(x))
                 else range(x)
   }
@@ -466,7 +492,6 @@ prc <- function(x){
 fixupcodebookEntryCateg <- function(cbe){
     tab <- cbe@stats$tab
     wtab <- cbe@stats$wtab
-    descr <- cbe@stats$descr
     if(length(tab)){
         tab.title <- attr(tab,"title")
         if(length(wtab)){
@@ -485,41 +510,55 @@ fixupcodebookEntryCateg <- function(cbe){
         tab <- tab[!ii,,,drop=FALSE]
         d <- dim(tab)
         dn <- dimnames(tab)
-        tab <- apply(tab,2:3,prc)
+        tab[,-1,] <- apply(tab[,-1,,drop=FALSE],2:3,prc)
         dim(tab) <- d
         dimnames(tab) <- dn
         attr(tab,"title") <- tab.title
-        cbe@stats$tab <- tab
-        cbe@stats$wtab <- NULL
+        cbe@stats <- list(tab=tab)
     }
-    if(length(descr))
-      cbe@stats$descr <- as.matrix(descr)
     cbe
 }
 
 fixupcodebookEntryMetric <- function(cbe){
-    tab <- cbe@stats$tab
-    if(length(tab))
-        tab <- fixupCodebookTable(tab,drop.unlabelled=TRUE)
+    stats <- cbe@stats
+    tab <- stats$tab
+    wtab <- stats$wtab
+    if(length(tab)){
+        tab.title <- attr(tab,"title")
+        if(length(wtab)){
+            tab <- collect(Unweighted=tab,
+                           Weighted=wtab)
+        } else {
+            tab <- array(tab,
+                         dim=c(dim(tab),1),
+                         dimnames=c(dimnames(tab),
+                                    list(NULL)))
+        }
+        rn <- rownames(tab)
+        ii <- (grepl("(unlab.val.)",rn,fixed=TRUE) | grepl("(unlab.mss.)",rn,fixed=TRUE) |
+               grepl("NA M ",rn,fixed=TRUE))
+        ii <- ii & tab[,1,1] == 0
+        tab <- tab[!ii,,,drop=FALSE]
+        d <- dim(tab)
+        dn <- dimnames(tab)
+        tab[,-1,] <- apply(tab[,-1,,drop=FALSE],2:3,prc)
+        dim(tab) <- d
+        dimnames(tab) <- dn
+        attr(tab,"title") <- tab.title
+    }
 
-    moments <- unname(cbe@stats$moments)
-    m.1 <- moments[1]
-    m.2 <- moments[2] - m.1^2
-    m.3 <- moments[3] - 3*moments[2]*m.1 + 2*m.1^3
-    m.4 <- moments[4] - 4*moments[3]*m.1 + 6*moments[2]*m.1^2 - 3*m.1^4
-
-    Min <- cbe@stats$range[1]
-    Max <- cbe@stats$range[2]
-
-    descr <- c(
-        Mean=m.1,
-        Variance=m.2,
-        Skewness=m.3/m.2^(3/2),
-        Kurtosis=m.4/m.2^2-3,
-        Min=Min,
-        Max=Max
-    )
-    descr <- as.matrix(descr)
+    descr <- stats$descr
+    cn.d <- colnames(descr)
+    descr <- t(t(descr[-1,,drop=FALSE])/descr[1,]) # From sums to (weighted) means ...
+    descr[2,] <- sqrt(descr[2,] - descr[1,]^2)
+    
+    rnge <- stats$range
+    if(ncol(descr)==2)
+      descr <- rbind(cbind(rnge,rnge),descr)
+    else
+      descr <- as.matrix(c(rnge,descr))
+    rownames(descr) <- c("Min","Max","Mean","Std.Dev.")
+    colnames(descr) <- cn.d
     
     cbe@stats <- list(tab=tab,descr=descr)
     cbe
