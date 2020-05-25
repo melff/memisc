@@ -16,13 +16,12 @@ genTable <- function (formula,
 
     parent <- parent.frame()
 
-    if(is.table(data)) data <- as.data.frame(data)
-    else if(is.environment(data)){
+    if(is.environment(data)){
         data <- mget(all.vars(formula),
                      envir=data,
                      inherits=TRUE)
-        data <- as.data.frame(data)
     }
+    data <- as.data.frame(data)
 
     if(!missing(subset)){
         subset <- eval(substitute(subset),data,parent)
