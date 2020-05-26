@@ -10,7 +10,8 @@ importFrom(utils,
            getFromNamespace,
            View,
            browseURL,
-           getS3method)
+           getS3method,
+           localeToCharset)
 export(
       contr,
       contr.treatment,

@@ -121,7 +121,9 @@ Stata.file(file,
       variables) changed into encoding of the platform?}
     \item{encoded}{a cacharacter string; the way characters are encoded
       in the improrted file. For the available encoding options
-      see \code{?iconvlist}.}
+      see \code{?iconvlist}. Using this argument for
+      \code{spss.system.file} this is only a fallback, as the function
+      uses the encoding information present in the file if it is present.}
     \item{x}{an object that inherits from class \code{"importer"}.}
     \item{subset}{a logical vector or an expression containing variables
         from the external data file that evaluates to logical. }

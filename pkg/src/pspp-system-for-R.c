@@ -639,6 +639,7 @@ static const int info_int32 = 3;
 static const int info_flt64 = 4;
 static const int aux_var = 11;
 static const int long_var_names = 13;
+static const int aux_enc = 20;
 
 SEXP read_sysfile_aux(SEXP SysFile){
 #ifdef DEBUG
@@ -790,7 +791,7 @@ SEXP read_sysfile_aux(SEXP SysFile){
 #endif
     return ans;
   }
-  else if (subtype == long_var_names){
+  else if(subtype == long_var_names){
 #ifdef DEBUG
     Rprintf("\nsubtype == long_var_names");
 #endif
@@ -815,11 +816,39 @@ SEXP read_sysfile_aux(SEXP SysFile){
     memset(longnames_data,0,count+1);
     sys_read(longnames_data,count,s);
     SET_STRING_ELT(longnames,0,mkChar(longnames_data));
-
     SET_VECTOR_ELT(ans,1,longnames);
     SET_STRING_ELT(names,1,mkChar("data"));
     SET_NAMES(ans,names);
 
+    UNPROTECT(protectcounter);
+#ifdef DEBUG
+    PrintValue(ans);
+#endif
+    return ans;
+  }
+  else if(subtype == aux_enc) {
+#ifdef DEBUG
+    Rprintf("\nsubtype == aux_enc");
+#endif
+    PROTECT(ans = NEW_LIST(2));
+    PROTECT(names = allocVector(STRSXP,2));
+    protectcounter+=2;
+    SET_VECTOR_ELT(ans,0,mkString("aux_enc"));
+    SET_STRING_ELT(names,0,mkChar("type"));
+    sys_read_int(&size,s);
+    sys_read_int(&count,s);
+    
+    SEXP AuxEnc;
+    PROTECT(AuxEnc = allocVector(STRSXP,1));
+    protectcounter++;
+    char *AuxEnc_data;
+    AuxEnc_data = R_alloc(count+1,1);
+    memset(AuxEnc_data,0,count+1);
+    sys_read(AuxEnc_data,count,s);
+    SET_STRING_ELT(AuxEnc,0,mkChar(AuxEnc_data));
+    SET_VECTOR_ELT(ans,1,AuxEnc);
+    SET_STRING_ELT(names,1,mkChar("data"));
+    SET_NAMES(ans,names);
     UNPROTECT(protectcounter);
 #ifdef DEBUG
     PrintValue(ans);

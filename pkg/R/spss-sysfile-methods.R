@@ -115,10 +115,36 @@ spss.system.file <- function(
       names(variables) <- tolower(names(variables))
     }
 
-    if(iconv)
-        variables <- lapply(variables,Iconv,from=encoded,to="")
-    else
-        encoded = ""
+    if(length(aux$aux_enc)){
+        encoding2 <- toupper(aux$aux_enc)
+        if(encoding2 %in% iconvlist())
+            encoding <- encoding2
+        message(sprintf("File character set is '%s'.",encoding))
+    }
+    else if(length(aux$info_int32)){
+        encoding <- aux$info_int32["character_code"]
+        enc_table <- c("EBCDICUS"=1,
+                   "ASCII"=2,
+                   "ASCII"=3,
+                   "DEC Kanji"=4,
+                   "CP1250"=1250,
+                   "CP1252"=1252,
+                   "ISO8859-1"=28591,
+                   "UTF-8"=65001)
+        encoding1 <- names(enc_table)[match(encoding,enc_table)]
+        if(encoding1 %in% iconvlist())
+            encoding <- encoding1
+        message(sprintf("File character set is '%s'.",encoding))
+    }
+    else {
+        encoding <- encoded
+        message("File does not contain character set encoding information, using fallback")
+    }
+
+    if(iconv){
+        message(sprintf("Converting character set to the local '%s'.",tolower(localeToCharset()[1])))
+        variables <- lapply(variables,Iconv,from=encoding,to="")
+    }
     
     warn_if_duplicate_labels(variables)
     
@@ -130,7 +156,7 @@ spss.system.file <- function(
       missval.file=missval.file,
       document=document,
       data.spec=data.spec,
-      encoded=encoded
+      encoded=encoding
       )
 }
 setMethod("initialize","spss.system.importer",function(.Object,
