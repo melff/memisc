@@ -1,4 +1,23 @@
-2020-03-14:	
+2020-05-26:
+   - The character set encoding in an SPSS file is now detected (if information
+     is available) and used to translate the variable labels and value labels.
+
+2020-05-25:
+   - Added support for weighted codebooks from importer objects
+   - Added documentation about use of weights
+   - Added support for subsetting codebooks with '$', '[', and  '[['
+   - Fixed a bug that prevented 'genTable' and 'Aggregate' to work as expected
+     with data.set objects
+   - Measurement levels of variables in 'data.set' objects are now obtained from
+     the metadata in the SPSS file (if available)
+
+2020-05-24:
+   - Drop skewness and kurtosis from codebook output
+
+2020-05-19:
+   - Added support for weighted codebooks from in-memory data.set objects
+
+2020-03-14:
    - Added 'deduplicate_labels()' function to deal with duplicated value labels.
 
 2020-01-02:

@@ -1,5 +1,3 @@
-## TODO: Handle NA in labels part
-
 ## labels ################################################################################
 
 setMethod("initialize","value.labels",function(.Object,...){

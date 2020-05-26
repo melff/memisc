@@ -83,8 +83,11 @@
           the new function \code{set_measurement()}.
     \item There are convenience wrappers such as \code{Mean()} etc. for
           \code{mean()} etc. that have the default setting \code{na.rm=TRUE} 
-          instead of \code{na.rm=FALSE}. 
-    }
+          instead of \code{na.rm=FALSE}.
+    \item A new \code{deduplicate_labels()} function allows to deal with
+          duplicate labels (where several codes have the same label)
+    \item It is now possible to create codebooks for weighted data.
+        }       
   }
   \subsection{IMPROVEMENTS}{
     \itemize{
@@ -151,6 +154,15 @@
       \item \code{relabel()}, \code{rename()}, and \code{dimrename()},
             do no longer require their arguments to be enclosed in
             quotation marks.
+      \item Operators '$', '[', and  '[[' can now be appied to codebook objects
+            to get a codebook of a subset of the varaibles.
+      \item \code{spss.system.file()} now uses information contained in SPSS
+            files (if available) to determine the measurement level
+            of the improrted variables.
+      \item \code{spss.system.file()} uses information about the character set
+            encoding if available in the file to translate variable labels and
+            value labels into the coding of the machine on which \emph{R} is
+            being run.
     }
   }
   \subsection{BUGFIXES}{
@@ -199,6 +211,8 @@
      \item All vignettes are now using \emph{knitr}.
      \item HTML output uses unicode characters by default instead of
      amersand-escapes to enhance compatibility with \emph{pandoc}.
+     \item \code{codebook()} no longer shows the skewness and kurtosis of
+           numeric variables to save output space.    
    }
   }
   \subsection{DEFUNCT}{
