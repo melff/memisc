@@ -34,7 +34,7 @@ setGeneric("as.measurement.level",function(x)standardGeneric("as.measurement.lev
 
 setGeneric("as.data.set",function(x,row.names=NULL,...)standardGeneric("as.data.set"))
 
-setGeneric("codebook",function(x,weights=NULL,...)standardGeneric("codebook"))
+setGeneric("codebook",function(x,weights=NULL,unweighted=TRUE,...)standardGeneric("codebook"))
 setGeneric("wild.codes",function(x)standardGeneric("wild.codes"))
 
 setGeneric("Table",function(x,...) standardGeneric("Table"))

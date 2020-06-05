@@ -23,17 +23,21 @@
   in a nicely formatted way. 
 }
 \usage{
-codebook(x, weights = NULL, \dots)
-\S4method{codebook}{item}(x, weights = NULL, \dots)
-\S4method{codebook}{atomic}(x, weights = NULL, \dots)
-\S4method{codebook}{factor}(x, weights = NULL, \dots)
-\S4method{codebook}{data.set}(x, weights = NULL, \dots)
-\S4method{codebook}{data.frame}(x, weights = NULL, \dots)
-\S4method{codebook}{importer}(x, weights = NULL, \dots)
+codebook(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{item}(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{atomic}(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{factor}(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{data.set}(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{data.frame}(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{importer}(x, weights = NULL, unweighted = TRUE, \dots)
 }
 \arguments{
-  \item{x}{an \code{\link{item}}, numeric or character vector, factor, \code{\link{data.set}}, \code{\link{data.frame}} or \code{\link{importer}} object for \code{codebook()}}
+  \item{x}{an \code{\link{item}}, numeric or character vector, factor,
+    \code{\link{data.set}}, \code{\link{data.frame}} or \code{\link{importer}} object for \code{codebook()}}
   \item{weights}{an optional vector of weights.}
+  \item{unweighted}{an optional logical vector; if weights are given, it
+    determines of only summaries of weighted data are show or also summaries of
+    unweighted data.}
   \item{\dots}{other arguments, currently ignored.}
 }
 \value{

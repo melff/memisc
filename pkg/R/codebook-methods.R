@@ -1,46 +1,46 @@
-setMethod("codebook","data.set",function(x,weights,...){
+setMethod("codebook","data.set",function(x,weights,unweighted=TRUE,...){
   weights <- eval(substitute(weights),x,parent.frame())
-  cb <- lapply(x,codebookEntry,weights=weights)
+  cb <- lapply(x,codebookEntry,weights=weights,unweighted=unweighted)
   new("codebook",cb)
 })
 
-setMethod("codebook","item",function(x,weights,...){
+setMethod("codebook","item",function(x,weights,unweighted=TRUE,...){
   xname <- paste(deparse(substitute(x)))
-  cb <- list(codebookEntry(x,weights=weights))
+  cb <- list(codebookEntry(x,weights=weights,unweighted=unweighted))
   names(cb) <- xname
   new("codebook",cb)
 })
 
-setMethod("codebook","data.frame",function(x,weights,...){
+setMethod("codebook","data.frame",function(x,weights,unweighted=TRUE,...){
   weights <- eval(substitute(weights),x,parent.frame())
-  cb <- lapply(x,codebookEntry,weights=weights)
+  cb <- lapply(x,codebookEntry,weights=weights,unweighted=unweighted)
   new("codebook",cb)
 })
 
-setMethod("codebook","atomic",function(x,weights,...){
+setMethod("codebook","atomic",function(x,weights,unweighted=TRUE,...){
   xname <- paste(deparse(substitute(x)))
-  cb <- list(codebookEntry(x,weights=weights))
+  cb <- list(codebookEntry(x,weights=weights,unweighted=unweighted))
   names(cb) <- xname
   new("codebook",cb)
 })
 
-setMethod("codebook","factor",function(x,weights,...){
+setMethod("codebook","factor",function(x,weights,unweighted=TRUE,...){
   xname <- paste(deparse(substitute(x)))
-  cb <- list(codebookEntry(x,weights=weights))
+  cb <- list(codebookEntry(x,weights=weights,unweighted=unweighted))
   names(cb) <- xname
   new("codebook",cb)
 })
 
-setMethod("codebook","ANY",function(x,weights,...){
+setMethod("codebook","ANY",function(x,weights,unweighted=TRUE,...){
   xname <- paste(deparse(substitute(x)))
-  cb <- list(codebookEntry(x,weights=weights))
+  cb <- list(codebookEntry(x,weights=weights,unweighted=unweighted))
   names(cb) <- xname
   new("codebook",cb)
 })
 
-setMethod("codebook","NULL",function(x,weights,...)NULL)
+setMethod("codebook","NULL",function(x,weights,unweighted=TRUE,...)NULL)
 
-setMethod("codebookEntry","item",function(x,weights,...){
+setMethod("codebookEntry","item",function(x,weights,unweighted=TRUE,...){
   annotation <- annotation(x)
   filter <- x@value.filter
   spec <- c(
@@ -54,8 +54,8 @@ setMethod("codebookEntry","item",function(x,weights,...){
                                         valid.range    = c("Valid range:"    = format(filter))
                                      ))
   stats <- switch(measurement(x),
-            nominal=,ordinal=codebookStatsCateg(x,weights=weights),
-            interval=,ratio=codebookStatsMetric(x,weights=weights)
+            nominal=,ordinal=codebookStatsCateg(x,weights=weights,unweighted=unweighted),
+            interval=,ratio=codebookStatsMetric(x,weights=weights,unweighted=unweighted)
             )
   cbe <- new("codebookEntry",
     spec = spec,
@@ -79,7 +79,7 @@ NAtab <- function(isna,weights=NULL){
         Percent=perc)
 }
 
-setMethod("codebookEntry","atomic",function(x,weights,...){
+setMethod("codebookEntry","atomic",function(x,weights,unweighted=TRUE,...){
 
   if(length(attr(x,"label")))
       annotation <- c(description=attr(x,"label"))
@@ -91,8 +91,11 @@ setMethod("codebookEntry","atomic",function(x,weights,...){
   descr <- Descriptives(x)
   if(length(weights) && length(descr) > 2){ # There is more than a range
       wdescr <- Descriptives(x,weights)
-      descr <- collect(Unweighted=descr,
-                       Weighted=wdescr)
+      if(unweighted)
+          descr <- collect(Unweighted=descr,
+                           Weighted=wdescr)
+      else
+          descr <- as.matrix(wdescr)
   }
   else 
       descr <- as.matrix(descr)
@@ -101,8 +104,14 @@ setMethod("codebookEntry","atomic",function(x,weights,...){
     tab <- NAtab(isna)
     if(length(weights)){
       wtab <- NAtab(isna,weights)
-      tab <- collect(Unweighted=tab,
-                     Weighted=tab)
+      if(unweighted)
+          tab <- collect(Unweighted=tab,
+                         Weighted=wtab)
+      else
+          tab <- array(wtab,
+                       dim=c(dim(tab),1),
+                       dimnames=c(dimnames(tab),
+                                  list(NULL)))
     }
     else
       tab <- array(tab,
@@ -124,7 +133,7 @@ setMethod("codebookEntry","atomic",function(x,weights,...){
 })
 
 
-setMethod("codebookEntry","ANY",function(x,weights,...){
+setMethod("codebookEntry","ANY",function(x,weights,unweighted=TRUE,...){
 
   if(length(attr(x,"label")))
       annotation <- c(description=attr(x,"label"))
@@ -143,8 +152,11 @@ setMethod("codebookEntry","ANY",function(x,weights,...){
     descr <- Descriptives(x)
     if(length(weights) && length(descr) > 2){ # There is more than a range
       wdescr <- Descriptives(x,weights)
-      descr <- collect(Unweighted=format(descr),
-                       Weighted=format(wdescr))
+      if(unweighted)
+          descr <- collect(Unweighted=format(descr),
+                           Weighted=format(wdescr))
+      else
+          descr <- as.matrix(format(wdescr))
     }
     else 
       descr <- as.matrix(format(descr))
@@ -156,8 +168,14 @@ setMethod("codebookEntry","ANY",function(x,weights,...){
     tab <- NAtab(isna)
     if(length(weights)){
       wtab <- NAtab(isna,weights)
-      tab <- collect(Unweighted=tab,
-                     Weighted=tab)
+      if(unweighted)
+          tab <- collect(Unweighted=tab,
+                         Weighted=wtab)
+      else
+          tab <- array(wtab,
+                       dim=c(dim(tab),1),
+                       dimnames=c(dimnames(tab),
+                                  list(NULL)))
     }
     else
       tab <- array(tab,
@@ -180,7 +198,7 @@ setMethod("codebookEntry","ANY",function(x,weights,...){
 
 
 
-codebookTable_factor <- function(x,weights=NULL){
+codebookTable_factor <- function(x,weights=NULL,...){
 
   if(!length(weights))
     weights <- rep(1,length(x))
@@ -217,13 +235,21 @@ codebookTable_factor <- function(x,weights=NULL){
   return(tab)
 }
 
-setMethod("codebookEntry","factor",function(x,weights=NULL,...){
+setMethod("codebookEntry","factor",function(x,weights=NULL,unweighted=TRUE,...){
 
   tab <- codebookTable_factor(x)
   if(length(weights)){
     wtab <- codebookTable_factor(x,weights=weights)
-    tab <- collect(Unweighted=tab,
-                   Weighted=wtab)
+    if(unweighted)
+        tab <- collect(Unweighted=tab,
+                       Weighted=wtab)
+    else {
+        tab <- wtab
+        tab.dn <- dimnames(tab)
+        tab.d <- dim(tab)
+        dim(tab) <- c(tab.d,1)
+        dimnames(tab) <- c(tab.dn,list(NULL))
+    }
   }
   else{
     tab.dn <- dimnames(tab)
@@ -252,7 +278,7 @@ setMethod("codebookEntry","factor",function(x,weights=NULL,...){
   )
 })
 
-setMethod("codebookEntry","character",function(x,weights=NULL,...){
+setMethod("codebookEntry","character",function(x,weights=NULL,unweighted=TRUE,...){
 
   spec <- c("Storage mode:"=storage.mode(x))
   isna <- is.na(x)
@@ -262,8 +288,14 @@ setMethod("codebookEntry","character",function(x,weights=NULL,...){
     tab <- NAtab(isna)
     if(length(weights)){
       wtab <- NAtab(isna,weights)
-      tab <- collect(Unweighted=tab,
-                     Weighted=tab)
+      if(unweighted)
+          tab <- collect(Unweighted=tab,
+                         Weighted=tab)
+      else
+          tab <- array(wtab,
+                       dim=c(dim(tab),1),
+                       dimnames=c(dimnames(tab),
+                                  list(NULL)))
     }
     else
       tab <- array(tab,
@@ -285,7 +317,7 @@ setMethod("codebookEntry","character",function(x,weights=NULL,...){
 })
 
 
-codebookStatsCateg <- function(x,weights=NULL,...){
+codebookStatsCateg <- function(x,weights=NULL,unweighted=TRUE,...){
     vl <- labels(x)
     ic <- inherits(x,"character")
     if(length(vl) || !ic){
@@ -293,8 +325,14 @@ codebookStatsCateg <- function(x,weights=NULL,...){
         tab.title <- attr(tab,"title")
         if(length(weights)){
             wtab <- codebookTable_item(x,weights)
-            tab <- collect(Unweighted=tab,
-                           Weighted=wtab)
+            if(unweighted)
+                tab <- collect(Unweighted=tab,
+                               Weighted=wtab)
+            else
+                tab <- array(wtab,
+                             dim=c(dim(tab),1),
+                             dimnames=c(dimnames(tab),
+                                        list(NULL)))
         }
         else
             tab <- array(tab,
@@ -318,7 +356,7 @@ codebookStatsChar <- function(x,...){
   )
 }
 
-codebookStatsMetric <- function(x,weights=TRUE,...){
+codebookStatsMetric <- function(x,weights=TRUE,unweighted=TRUE,...){
 
   if(length(labels(x))){
     tab <- codebookTable_item(x,drop.unlabelled=TRUE)
@@ -326,8 +364,14 @@ codebookStatsMetric <- function(x,weights=TRUE,...){
     if(length(weights)){
       wtab <- codebookTable_item(x,weights=weights,
                                  drop.unlabelled=TRUE)
-      tab <- collect(Unweighted=tab,
-                     Weighted=wtab)
+      if(unweighted)
+          tab <- collect(Unweighted=tab,
+                         Weighted=wtab)
+      else
+          tab <- array(wtab,
+                       dim=c(dim(tab),1),
+                       dimnames=c(dimnames(tab),
+                                  list(NULL)))
     }
     else
       tab <- array(tab,
@@ -342,8 +386,11 @@ codebookStatsMetric <- function(x,weights=TRUE,...){
   descr <- Descriptives(x)[1:4]
   if(length(weights)){
       wdescr <- Descriptives(x,weights)[1:4]
-      descr <- collect(Unweighted=descr,
-                       Weighted=wdescr)
+      if(unweighted)
+          descr <- collect(Unweighted=descr,
+                           Weighted=wdescr)
+      else
+          descr <- as.matrix(wdescr)
   }
   else 
       descr <- as.matrix(descr)

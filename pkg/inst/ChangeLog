@@ -1,3 +1,7 @@
+2020-06-05:
+   - With 'codebook()' it is now possible to disable the display of unweighted
+     data summaries.
+
 2020-05-26:
    - The character set encoding in an SPSS file is now detected (if information
      is available) and used to translate the variable labels and value labels.

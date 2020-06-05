@@ -239,7 +239,7 @@ setMethod("description","importer",function(x){
     structure(res,class="descriptions")
 })
 
-setMethod("codebook","importer",function(x, weights=NULL, ...){
+setMethod("codebook","importer",function(x, weights=NULL, unweighted=TRUE, ...){
   if(!missing(weights))
     weights <- deparse(substitute(weights))
   if(length(weights)){
@@ -277,11 +277,11 @@ setMethod("codebook","importer",function(x, weights=NULL, ...){
     res <- mapply(updatecodebookEntry,res,chunk,
                   MoreArgs=list(weights=w))
   }
-  res <- lapply(res,fixupcodebookEntry)
+  res <- lapply(res,fixupcodebookEntry,unweighted=unweighted)
   new("codebook",res)
 })
 
-initcodebookEntry <- function(x,weights=NULL){
+initcodebookEntry <- function(x,weighted){
   annotation <- annotation(x)
   filter <- x@value.filter
   spec <- c(
@@ -296,7 +296,7 @@ initcodebookEntry <- function(x,weights=NULL){
                                ))
   stats <- switch(spec["Measurement:"],
                   nominal=,ordinal=initcodebookStatsCateg(x,weights),
-                  interval=,ratio=initcodebookStatsMetric(x),
+                  interval=,ratio=initcodebookStatsMetric(x,weights),
                   `Date/time`=initcodebookStatsDatetime(x)
   )
   new("codebookEntry",
@@ -476,10 +476,10 @@ updatecodebookStatsDatetime <- function(cbe,x,weights=NULL){
 }
 
 
-fixupcodebookEntry <- function(cbe){
+fixupcodebookEntry <- function(cbe,unweighted=TRUE){
     switch(cbe@spec["Measurement:"],
-    nominal=,ordinal=fixupcodebookEntryCateg(cbe),
-    interval=,ratio=fixupcodebookEntryMetric(cbe),
+    nominal=,ordinal=fixupcodebookEntryCateg(cbe,unweighted=unweighted),
+    interval=,ratio=fixupcodebookEntryMetric(cbe,unweighted=unweighted),
     `Date/time`=fixupcodebookEntryDatetime(cbe)
   )
 }
@@ -489,14 +489,20 @@ prc <- function(x){
   100*x/s
 }
 
-fixupcodebookEntryCateg <- function(cbe){
+fixupcodebookEntryCateg <- function(cbe,unweighted=TRUE){
     tab <- cbe@stats$tab
     wtab <- cbe@stats$wtab
     if(length(tab)){
         tab.title <- attr(tab,"title")
         if(length(wtab)){
-            tab <- collect(Unweighted=tab,
-                           Weighted=wtab)
+            if(unweighted)
+                tab <- collect(Unweighted=tab,
+                               Weighted=wtab)
+            else
+                tab <- array(wtab,
+                             dim=c(dim(tab),1),
+                             dimnames=c(dimnames(tab),
+                                        list(NULL)))
         } else {
             tab <- array(tab,
                          dim=c(dim(tab),1),
@@ -519,15 +525,21 @@ fixupcodebookEntryCateg <- function(cbe){
     cbe
 }
 
-fixupcodebookEntryMetric <- function(cbe){
+fixupcodebookEntryMetric <- function(cbe,unweighted=TRUE){
     stats <- cbe@stats
     tab <- stats$tab
     wtab <- stats$wtab
     if(length(tab)){
         tab.title <- attr(tab,"title")
         if(length(wtab)){
-            tab <- collect(Unweighted=tab,
-                           Weighted=wtab)
+            if(unweighted)
+                tab <- collect(Unweighted=tab,
+                               Weighted=wtab)
+            else
+                tab <- array(wtab,
+                             dim=c(dim(tab),1),
+                             dimnames=c(dimnames(tab),
+                                        list(NULL)))
         } else {
             tab <- array(tab,
                          dim=c(dim(tab),1),
@@ -546,20 +558,27 @@ fixupcodebookEntryMetric <- function(cbe){
         dimnames(tab) <- dn
         attr(tab,"title") <- tab.title
     }
-
     descr <- stats$descr
-    cn.d <- colnames(descr)
-    descr <- t(t(descr[-1,,drop=FALSE])/descr[1,]) # From sums to (weighted) means ...
-    descr[2,] <- sqrt(descr[2,] - descr[1,]^2)
-    
-    rnge <- stats$range
-    if(ncol(descr)==2)
-      descr <- rbind(cbind(rnge,rnge),descr)
-    else
-      descr <- as.matrix(c(rnge,descr))
-    rownames(descr) <- c("Min","Max","Mean","Std.Dev.")
-    colnames(descr) <- cn.d
-    
+    if(length(descr)){
+        # if(length(dim(descr))!=2) browser()
+        cn.d <- colnames(descr)
+        descr <- t(t(descr[-1,,drop=FALSE])/descr[1,]) # From sums to (weighted) means ...
+        descr[2,] <- sqrt(descr[2,] - descr[1,]^2)
+        
+        rnge <- stats$range
+        if(ncol(descr)==2){
+            if(unweighted)
+                descr <- rbind(cbind(rnge,rnge),descr)
+            else{
+                descr <- as.matrix(c(rnge,descr[,2]))
+                cn.d <- cn.d[2]
+            }
+        }
+        else
+            descr <- as.matrix(c(rnge,descr))
+        rownames(descr) <- c("Min","Max","Mean","Std.Dev.")
+        colnames(descr) <- cn.d
+    }
     cbe@stats <- list(tab=tab,descr=descr)
     cbe
 }
