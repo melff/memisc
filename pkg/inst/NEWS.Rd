@@ -6,20 +6,20 @@
   \subsection{NEW FEATURES}{
   \itemize{
     \item A new object-oriented infrastructure for the creation of HTML code
-          is used in \code{format_html} methods. This infrastructure is exposed 
-          by the \code{html} function.
-    \item Support for with model groups in \code{mtable}. \code{c.mtable} now creates 
+          is used in \code{format_html()} methods. This infrastructure is exposed 
+          by the \code{html()} function.
+    \item Support for with model groups in \code{mtable()}. \code{c.mtable()} now creates 
           groups of models, if arguments are tagged.
-    \item Flattened contingency tables (\code{ftable}s as they are created
-          by the eponymous function in the \code{stats} package) can now be
-          combined into \code{ftable_matrix} objects. This can be done by
+    \item Flattened contingency tables (\code{ftable()}s as they are created
+          by the eponymous function in the \code{stats()} package) can now be
+          combined into \code{ftable_matrix()} objects. This can be done by
           using \code{rbind()} or \code{cbind()}.
     \item There is now an object class for survey items containing dates (without
           times), called \code{"Date.item"}.
     \item Support for including sandwich estimates of sampling variances and
-          standard errors into the output of \code{summary} and \code{mtable},
-          by the new generic functions \code{withVCov} and
-          \code{withSE}.
+          standard errors into the output of \code{summary()} and \code{mtable()},
+          by the new generic functions \code{withVCov()} and
+          \code{withSE()}.
     \item Support for different parameter sections is added to
           \code{mtable}. This is intended to allow output of mixed
           effects  models to distinguish between ("fixed effects")
@@ -34,10 +34,10 @@
     \item Output of \code{mtable()} objects also include, if applicable,
           a note that explains the "significance stars" for p-values.
     \item Summary statistics reported by \code{mtable()} can now be
-          selected for each object or object class (via calls to \code{options})
+          selected for each object or object class (via calls to \code{options()})
           separately.
     \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
-          created by \code{mtable} and \code{ftable} etc.
+          created by \code{mtable()} and \code{ftable()} etc.
     \item A function \code{codeplan()}  creates a data frame
           describing the structure of an "importer" or "data.set"
           object. It is possible to copy this so described structure 
@@ -45,33 +45,33 @@
     \item New \code{$} and \code{[[} operators for "importer" objects
           allow to create codebooks for single items/variables in 
           imported data files.
-    \item A \code{duplicated_labels} function allows to show and
-          describe duplicated labels and a \code{deduplicate_labels}
+    \item A \code{duplicated_labels()} function allows to show and
+          describe duplicated labels and a \code{deduplicate_labels()}
           function allows to get rid of such duplicates.
     \item New operators \code{\%#\%}, \code{\%##\%}, and \code{\%@\%} to
           manipulate annotations and other attributes.
-    \item A \code{List} function adds names to its elements by deparsing
-          arguments in the same way as \code{data.frame} does.
-    \item A new function \code{Groups} allows to split a data frame or a
+    \item A \code{List()} function adds names to its elements by deparsing
+          arguments in the same way as \code{data.frame()} does.
+    \item A new function \code{Groups()} allows to split a data frame or a
           "data.set" into group based on factors in a more convenient
-          way. There are methods of \code{with} and \code{within} to deal with
+          way. There are methods of \code{with()} and \code{within()} to deal with
           resulting objects of class "grouped.data". For example, the
-          \code{within} method allows to substract group means from the
-          observations within groups. \code{withinGroups} allows to split a
+          \code{within()} method allows to substract group means from the
+          observations within groups. \code{withinGroups()} allows to split a
           data frame or "data.set" objects into groups, make within-group
           computations and recombine the groups into the order of the original
           data frame or "data.set" object.
-    \item A new function \code{Reshape} simplifies the syntax to reshape data frames
+    \item A new function \code{Reshape()} simplifies the syntax to reshape data frames
           and "data.set" objects from wide into long or from long into
           wide format.
     \item 'tibbles', including those created with the \emph{haven}
           package can be translated into "data.set" objects without loss
           of information. Also "data.set" objects can be translated into
           'tibbles' with minimal loss of information.
-    \item An extendable function \code{view} allows to use the
-          \code{View} facilities provided by graphical user interfaces (in
+    \item An extendable function \code{view()} allows to use the
+          \code{View()} facilities provided by graphical user interfaces (in
           particular RStudio) with objects not originally supported by these
-          user interfaces. In addition, \code{view} methods for
+          user interfaces. In addition, \code{view()} methods for
           "codeplan", "decriptions", "data.set", and "inporter" are
           provided, which allow to conviently inspect the contents of
           these objects in RStudio.
@@ -99,37 +99,37 @@
             superscript symbols. This can be set either by an explicit
             (new) argument \code{toLatex.escape.tex} or by a global option
             with the same name.
-      \item \code{spss.system.file} now translates numeric variables with any SPSS
+      \item \code{spss.system.file()} now translates numeric variables with any SPSS
             date format into a "datetime.item"
-      \item The function \code{List} adds names to the elements of the
-            resulting list in a way similar to how \code{data.frame}
+      \item The function \code{List()} adds names to the elements of the
+            resulting list in a way similar to how \code{data.frame()}
             adds names to the columns of a data frame. 
-      \item \code{Stata.file} now handles files in format rev. 117 and
+      \item \code{Stata.file()} now handles files in format rev. 117 and
             later as they are created by Stata version later than 13.
       \item User definded missing values are now reported in separate
-            tables in entries created by \code{codebook} even if these
+            tables in entries created by \code{codebook()} even if these
             entries refer to items with measurement level "interval" or
             "ratio".
       \item If the annotation or the labels of a non-item is set to NULL
             this no longer causes an error.
       \item Changing varible names to lowercase while importing data
-            sets with \code{Stata.file}, \code{spss.portable.file}, and
-            \code{spss.system.file} is now optional.
-      \item Importer methods \code{Stata.file}, \code{spss.portable.file}, and
-            \code{spss.system.file} now have optional arguments that
+            sets with \code{Stata.file()}, \code{spss.portable.file()}, and
+            \code{spss.system.file()} is now optional.
+      \item Importer methods \code{Stata.file()}, \code{spss.portable.file()}, and
+            \code{spss.system.file()} now have optional arguments that
             allow to deal with variable labels or value labels in
             non-native encoding (e.g. \code{CP1252} on a \code{utf-8}
             platform).
-      \item A function \code{spss.file} acts as a common interface to
-            \code{spss.portable.file} and \code{spss.system.file}. 
-      \item The function \code{head} and \code{tail} now work with
+      \item A function \code{spss.file()} acts as a common interface to
+            \code{spss.portable.file()} and \code{spss.system.file()}. 
+      \item The function \code{head()} and \code{tail()} now work with
             "data.set" and "importer" objects in the same sensible way as they
             do with data frames.
-      \item The function \code{recode} behaves more coherently:  If a labelled
+      \item The function \code{recode()} behaves more coherently:  If a labelled
             vector is the result of 'recode' it gets the measurement level
             "nominal". Factor levels explictly created first come first in the order of
             factor levels.
-      \item The function \code{spss.system.file} now handles buggy SPSS
+      \item The function \code{spss.system.file()} now handles buggy SPSS
             system files that lack information about the number of
             variables in their header. (These files are typically
             created by the library ReadStat, used e.g. by the R package
@@ -138,13 +138,14 @@
             the host system if they have a different one. By default,
             the original encoding is assumed to be Codepage 1252 (extended
             Latin-1).
-      \item \code{codebook}, \code{codeplan}, \code{labels},
+      \item \code{codebook()}, \code{codeplan()}, \code{labels()},
             \code{value.filter}, and related functions return \code{NULL} 
             for \code{NULL} arguments.
-      \item \code{codebook} works also with data frames (or "tibbles")
+      \item \code{codebook()} works also with data frames (or "tibbles")
             imported with the \emph{haven} package.
-      \item \code{codebook} now makes use of the "label" attribute of variables if the
+      \item \code{codebook()} now makes use of the "label" attribute of variables if the
             attribute is present.
+      \item \code{desciption()}
       \item \code{with(Groups())}, \code{withGroups()},
             \code{within(Groups())}, \code{withinGroups()},
             \code{Aggregate()}, and \code{genTable()} are considerably
@@ -163,6 +164,8 @@
             encoding if available in the file to translate variable labels and
             value labels into the coding of the machine on which \emph{R} is
             being run.
+     \item  \code{as.item()} now drops non-unique labelled values when applied to a
+            "labelled", "haven_labelled", or "haven_labelled_spss" object.
     }
   }
   \subsection{BUGFIXES}{

@@ -1,3 +1,9 @@
+2020-06-09:
+   - 'as.item()' and 'codebookEntry()' methods are added for objects of class
+     "labelled" as they occur in some imported tibbles.
+   - 'as.item()' now drops non-unique labelled values when applied to a
+     "labelled", "haven_labelled", or "haven_labelled_spss" object.
+	
 2020-06-05:
    - With 'codebook()' it is now possible to disable the display of unweighted
      data summaries.

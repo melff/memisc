@@ -1,5 +1,6 @@
 \name{tibbles}
 \alias{as_tibble.data.set}
+\alias{as.item,labelled-method}
 \alias{as.item,haven_labelled-method}
 \alias{as.item,haven_labelled_spss-method}
 \alias{as_haven}

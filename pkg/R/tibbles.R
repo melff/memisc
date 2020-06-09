@@ -22,15 +22,50 @@ as_tibble.data.set <- function(x, ...){
     return(y)
 }
 
-setOldClass("haven_labelled")
-setMethod("as.item",signature(x="haven_labelled"),function(x,...){
+sanitize_labels <- function(labels){
+    labn <- names(labels)
+    if(length(unique(labels)) < length(labn)){
+        dup <- duplicated(labels)
+        warning(sprintf("Dropped non-unique label(s) %s",
+                        paste(paste(labn[dup],"=",labels[dup]),collapse=", ")),
+                call.=FALSE,immediate.=TRUE)
+        labels <- labels[!dup]
+    }
+    labels
+}
+
+setOldClass("labelled")
+setMethod("as.item",signature(x="labelled"),function(x,...){
     annotation <- c(description=attr(x,"label"))
     labels <- attr(x,"labels")
+    labels <- sanitize_labels(labels)
     class(x) <- NULL
     as.item(x,labels=labels,
             annotation=annotation)
 })
+setMethod("codebookEntry","labelled",function(x){
+    x <- as.item(x)
+    annotation <- annotation(x)
+    spec <- c(
+        "Storage mode:"=storage.mode(x),
+        "Measurement:"="undefined"
+    )
+    new("codebookEntry",
+        spec = spec,
+        stats = codebookStatsCateg(x),
+        annotation = annotation
+        )
+})
 
+setOldClass("haven_labelled")
+setMethod("as.item",signature(x="haven_labelled"),function(x,...){
+    annotation <- c(description=attr(x,"label"))
+    labels <- attr(x,"labels")
+    labels <- sanitize_labels(labels)
+    class(x) <- NULL
+    as.item(x,labels=labels,
+            annotation=annotation)
+})
 setMethod("codebookEntry","haven_labelled",function(x){
     x <- as.item(x)
     annotation <- annotation(x)
@@ -51,6 +86,7 @@ setOldClass("haven_labelled_spss")
 setMethod("as.item",signature(x="haven_labelled_spss"),function(x,...){
     annotation <- c(description=attr(x,"label"))
     labels <- attr(x,"labels")
+    labels <- sanitize_labels(labels)
     mis_range <- attr(x,"na_range")
     mis_values <- attr(x,"na_values")
     class(x) <- NULL
@@ -61,7 +97,6 @@ setMethod("as.item",signature(x="haven_labelled_spss"),function(x,...){
             annotation=annotation,
             value.filter=value_filter)
 })
-
 setMethod("codebookEntry","haven_labelled_spss",function(x){
     x <- as.item(x)
     annotation <- annotation(x)
