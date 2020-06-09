@@ -47,8 +47,7 @@
 }
 \usage{
 data.set(\dots,row.names = NULL, check.rows = FALSE, check.names = TRUE,
-    stringsAsFactors = default.stringsAsFactors(),
-                 document = NULL)
+    stringsAsFactors = FALSE, document = NULL)
 as.data.set(x, row.names=NULL, \dots)
 \S4method{as.data.set}{list}(x,row.names=NULL,\dots)
 is.data.set(x)

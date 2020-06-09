@@ -252,7 +252,7 @@ as.data.frame.data.set <- function(x, row.names = NULL, optional = FALSE, ...){
 
 
 data.set <- function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE,
-    stringsAsFactors = default.stringsAsFactors(),
+    stringsAsFactors = FALSE,
     document = NULL){
 
   args <- list(...)

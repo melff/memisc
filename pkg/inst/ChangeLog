@@ -1,6 +1,9 @@
 2020-06-05:
    - With 'codebook()' it is now possible to disable the display of unweighted
      data summaries.
+   - In accordance to future deprecation of the function
+     'default.stringsAsFactors()' the default value of the 'stringsAsFactor'
+     argument is now FALSE.
 
 2020-05-26:
    - The character set encoding in an SPSS file is now detected (if information
