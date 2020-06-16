@@ -142,3 +142,14 @@ setMethod("as_haven",signature(x="item.vector"),function(x,user_na=FALSE,...){
     }
     return(y)
 })
+
+setMethod("as.data.set","tbl_df",function(x,row.names=NULL,...){
+  class(x) <- "data.frame"
+  if(length(row.names)){
+    if(length(row.names)!=nrow(x)) stop("row.names argument has wrong length")
+    attr(x,"row.names") <- row.names
+  }
+  else
+    attr(x,"row.names") <- seq_len(nrow(x))
+  new("data.set",x)
+})
