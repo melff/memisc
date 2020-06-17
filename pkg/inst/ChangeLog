@@ -1,3 +1,10 @@
+2020-06-16:
+   - Added an explicit 'as.data.set()' method for "tibbles", which seems to be
+     necessary, because under some circumstances method dispatch via inheritence
+     does not seem to work.
+   - Added methods to apply 'codeplan()' to individual survey items and to set
+     'codeplan()' to NULL.
+
 2020-06-09:
    - 'as.item()' and 'codebookEntry()' methods are added for objects of class
      "labelled" as they occur in some imported tibbles.

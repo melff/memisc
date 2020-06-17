@@ -17,6 +17,21 @@ setMethod("codeplan",
     structure(df,class=c("codeplan","data.frame"))
 })
 
+setMethod("codeplan",
+          signature(x="item"),
+          function(x){
+    df <- data.frame(
+               description=depr_descr(x),
+               annotation=depr_annot(x),
+               labels=depr_labels(x),
+               value.filter=depr_vfilter(x),
+               mode=mode(x),
+               measurement=measurement(x),
+               stringsAsFactors=FALSE)
+    structure(df,class=c("codeplan","data.frame"))
+})
+
+
 print.codeplan <- function(x,...,width=getOption("width")%/%5){
     for(i in 1:length(x))
         x[[i]] <- formatw(x[[i]],width)
@@ -62,12 +77,19 @@ depr_vfilter <- function(x){
     v <- value.filter(x)
     if(length(v)){
         cl <- as.character(class(v))
-        if(cl == "missing.values")
+        if(cl == "missing.values"){
             cl <- "missing"
-        else if(cl %in% c("valid.values","valid.range"))
+            v <- list(range=v@range,
+                      values=v@filter)
+        }
+        else if(cl == "valid.values"){
             cl <- "valid"
-        v <- list(range=v@range,
-                  values=v@filter)
+            v <- list(values=v@filter)
+        }
+        else if(cl == "valid.range"){
+            cl <- "valid"
+            v <- list(range=v@filter)
+        }
         paste(cl,"=",
               paste(deparse(v),collapse=" "))
     }
@@ -91,6 +113,35 @@ function(x,value){
         }
     x
 })
+
+setMethod("setCodeplan",signature(x="data.set",value="NULL"),
+function(x,value){
+    y <- as.list(x)
+    y <- lapply(y,setCodeplan,value=NULL)
+    as.data.frame(y,row.names=row.names(x))
+})
+
+setMethod("setCodeplan",signature(x="item",value="codeplan"),
+function(x,value){
+    setCodeplan1(x,value[1,])
+})
+
+setMethod("setCodeplan",signature(x="atomic",value="codeplan"),
+function(x,value){
+    setCodeplan1(x,value[1,])
+})
+
+setMethod("setCodeplan",signature(x="item",value="NULL"),
+function(x,value){
+    x@.Data
+})
+
+setMethod("setCodeplan",signature(x="atomic",value="NULL"),
+function(x,value){
+    x@.Data
+})
+
+
 
 "codeplan<-" <- function(x,value) {
     x <- setCodeplan(x,value)

@@ -2,10 +2,16 @@
 \alias{codeplan}
 \alias{codeplan,ANY-method}
 \alias{codeplan,item.list-method}
+\alias{codeplan,item-method}
 \alias{codeplan<-}
 \alias{setCodeplan}
 \alias{setCodeplan,data.frame,codeplan-method}
 \alias{setCodeplan,data.set,codeplan-method}
+\alias{setCodeplan,data.set,NULL-method}
+\alias{setCodeplan,item,codeplan-method}
+\alias{setCodeplan,item,NULL-method}
+\alias{setCodeplan,atomic,codeplan-method}
+\alias{setCodeplan,atomic,NULL-method}
 \title{Describe structure of Data Sets and Importers}
 \description{
   The function \code{codeplan()} creates a data frame that
@@ -21,18 +27,25 @@
 \usage{
 codeplan(x)
 \S4method{codeplan}{item.list}(x)
+\S4method{codeplan}{item}(x)
 setCodeplan(x,value)
 \S4method{setCodeplan}{data.frame,codeplan}(x,value)
 \S4method{setCodeplan}{data.set,codeplan}(x,value)
+\S4method{setCodeplan}{data.set,NULL}(x,value)
+\S4method{setCodeplan}{item,codeplan}(x,value)
+\S4method{setCodeplan}{item,NULL}(x,value)
+\S4method{setCodeplan}{atomic,codeplan}(x,value)
+\S4method{setCodeplan}{atomic,NULL}(x,value)
 codeplan(x) <- value
 }
 \arguments{
   \item{x}{for \code{codeplan(x)} an object that inherits from class \code{"item.list"},
-  i.e. can be a \code{"data.set"} object or an \code{"importer"} object;
-  for \code{codeplan(x) <- value} or \code{setCodeplan(x,value)} a data frame.}
-  \item{value}{an object as it would be returned by \code{codeplan(x)}}
+    i.e. can be a \code{"data.set"} object or an \code{"importer"}
+  object, it can also be an object that inherits from class \code{"item"}}
+  \item{value}{an object as it would be returned by \code{codeplan(x)}
+  or \code{NULL}.}
 }
-\value{If applicable \code{codeplan} returns a data frame with
+\value{If applicable, \code{codeplan} returns a data frame with
   additional S3 class attribute \code{"codeplan"}. For arguments for
   which the relevant information does not exist, the function returns \code{NULL}.
 Such a data frame has the following variables:
@@ -45,7 +58,12 @@ Such a data frame has the following variables:
   \item{\code{mode}}{a character string that describes storage mode, such as \code{"character"},
         \code{"integer"}, or \code{"numeric"}.}
   \item{\code{measurement}}{a character string with the measurement level,
-        \code{"nominal"}, \code{"ordinal"}, \code{"interval"}, or \code{"ratio"}.}
+        \code{"nominal"}, \code{"ordinal"}, \code{"interval"}, or
+        \code{"ratio"}.}
+  If \code{codeplan(x)<-value} or \code{setCodeplan(x,value)} is used
+  and \code{value} is \code{NULL}, all the special information about
+  annotation, labels, value filters, etc. is removed from the resulting
+  object, which then is usually a mere atomic vector or data frame.
 }
 \examples{
 Data1 <- data.set(
@@ -91,4 +109,20 @@ Data2 <- data.frame(
           )
 codeplan(Data2) <- cpData1
 codebook(Data2)
+
+# Note the difference between 'as.data.frame' and setting
+# the codeplan to NULL:
+Data2df <- as.data.frame(Data2)
+codeplan(Data2) <- NULL
+str(Data2)
+str(Data2df)
+
+# Codeplans of survey items can also be inquired and manipulated:
+vote <- Data1$vote
+str(vote)
+cp.vote <- codeplan(vote)
+codeplan(vote) <- NULL
+str(vote)
+codeplan(vote) <- cp.vote
+vote
 }

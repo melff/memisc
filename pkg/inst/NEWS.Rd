@@ -141,7 +141,10 @@
       \item \code{codebook()}, \code{codeplan()}, \code{labels()},
             \code{value.filter}, and related functions return \code{NULL} 
             for \code{NULL} arguments.
-      \item \code{codebook()} works also with data frames (or "tibbles")
+      \item \code{codeplan()} also works with indiviual survey items and
+            can set to \code{NULL}, which means that all memisc-specific
+            information is removed from the data. 
+        \item \code{codebook()} works also with data frames (or "tibbles")
             imported with the \emph{haven} package.
       \item \code{codebook()} now makes use of the "label" attribute of variables if the
             attribute is present.
@@ -206,7 +209,9 @@
           still be a valid "data.set" object.
     \item \code{seekData} etc. no longer try to recreate external
           pointers in order to avoid segmentation faults. Also the deletion of
-          empty pointers is avoided for the same reason. 
+          empty pointers is avoided for the same reason.
+    \item \code{as.data.set} works for "tibbles" also when method dispatch
+          via class inheritance does not work.
     }
   }
   \subsection{USER-VISIBLE CHANGES}{
