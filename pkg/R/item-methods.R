@@ -342,9 +342,9 @@ setMethod("as.factor","item.vector",function(x){
     f
 })
 
-setMethod("as.character","item.vector",function(x,use.labels=TRUE,...){
+setMethod("as.character","item.vector",function(x,use.labels=TRUE,include.missings=FALSE,...){
     d <- description(x)
-    ism <- is.missing(x)
+    ism <- is.missing(x) & !isTRUE(include.missings)
     if(use.labels && length(vl <- labels(x))){
         i <- match(x,vl@values)
         y <- vl@.Data[i]
@@ -467,10 +467,9 @@ smry.interval.vector <- smry.ratio.vector <- function(x,...,maxsum=100,digits=3)
 format.item.vector <- function(x,use.labels=getOption("print.use.value.labels"),justify="right",...){
   ism <- is.missing(x) & !is.na(x)
   if(use.labels && has.value.labels(x))
-    x <- as.character(x,use.labels=use.labels)
+    x <- as.character(x,use.labels=use.labels,include.missings=TRUE)
   x <- format.default(x,trim=TRUE,justify="none",...)
   x[ism] <- paste("*",x[ism],sep="")
-#   browser()
   format(x,justify=justify,...)
 }
 setMethod("format","item.vector",format.item.vector)
