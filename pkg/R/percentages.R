@@ -151,7 +151,11 @@ as.data.frame.xpercentage.table <- function(x,...){
                  dim=dx[-ld],
                  dimnames=dn[-ld],
                  slicenames=dn[[ld]]
-    )
+                 )
+  Freq.col <- which("Freq"==names(tabs[[1]]))
+  result.names <- dimnames(x)$Result
+  for(i in seq_along(tabs))
+      names(tabs[[i]])[Freq.col] <- result.names[i]
   Reduce(merge,tabs)
 }
 
