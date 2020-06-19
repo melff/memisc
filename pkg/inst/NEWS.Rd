@@ -39,7 +39,7 @@
     \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
           created by \code{mtable()} and \code{ftable()} etc.
     \item A function \code{codeplan()}  creates a data frame
-          describing the structure of an "importer" or "data.set"
+          describing the structure of an "importer", "data.set" or "item"
           object. It is possible to copy this so described structure 
           from one "data.set" object to another or to a data frame.
     \item New \code{$} and \code{[[} operators for "importer" objects
@@ -121,7 +121,7 @@
             non-native encoding (e.g. \code{CP1252} on a \code{utf-8}
             platform).
       \item A function \code{spss.file()} acts as a common interface to
-            \code{spss.portable.file()} and \code{spss.system.file()}. 
+            \code{spss.portable.file()} and \code{spss.system.file()}.
       \item The function \code{head()} and \code{tail()} now work with
             "data.set" and "importer" objects in the same sensible way as they
             do with data frames.
@@ -144,7 +144,7 @@
       \item \code{codeplan()} also works with indiviual survey items and
             can set to \code{NULL}, which means that all memisc-specific
             information is removed from the data. 
-        \item \code{codebook()} works also with data frames (or "tibbles")
+      \item \code{codebook()} works also with data frames (or "tibbles")
             imported with the \emph{haven} package.
       \item \code{codebook()} now makes use of the "label" attribute of variables if the
             attribute is present.
@@ -169,6 +169,10 @@
             being run.
      \item  \code{as.item()} now drops non-unique labelled values when applied to a
             "labelled", "haven_labelled", or "haven_labelled_spss" object.
+      \item \code{spss.system.file()} no takes into account metadata about
+            measurement levels ("nominal", "ordinal", or "scale") to set
+            the \code{measurement()} attributes of the items in
+            the resulting \code{"importer"} and \code{"data.set"} objects.
     }
   }
   \subsection{BUGFIXES}{

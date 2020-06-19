@@ -1,3 +1,14 @@
+2020-06-19:
+   - Added documentation about coercion of items into vectors, etc.
+
+2020-06-18:
+   - Fixed 'as.data.frame()' method for extended tables of percentages (i.e.
+     those that include standard errors or confidence intervals).
+
+2020-06-17:
+   - Add 'include.missings' option to 'as.character()' coercion method for
+     "item.vector" objects.
+
 2020-06-16:
    - Added an explicit 'as.data.set()' method for "tibbles", which seems to be
      necessary, because under some circumstances method dispatch via inheritence
