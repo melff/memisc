@@ -31,17 +31,6 @@
 \alias{str.character.item}
 \alias{str.datetime.item}
 \alias{unique,item.vector-method}
-\alias{as.data.frame.character.item}
-\alias{as.data.frame.double.item}
-\alias{as.data.frame.integer.item}
-\alias{as.vector,item-method}
-\alias{as.numeric,item-method}
-\alias{as.integer,item-method}
-\alias{as.factor,item.vector-method}
-\alias{as.ordered,item.vector-method}
-\alias{as.character,item.vector-method}
-\alias{as.character,datetime.item-method}
-\alias{as.character,Date.item-method}
 \alias{summary,item.vector-method}
 \alias{summary,datetime.item-method}
 \alias{summary,Date.item-method}
@@ -71,6 +60,11 @@
   Objects of class \code{item} are data vectors with additional information
   attached to them like ``value labels'' and ``user-defined missing values''
   known from software packages like SPSS or Stata.
+
+  The class \code{item} is intended to facilitate data management of
+  survey data. Objects in this class should \emph{not} directly used
+  in data analysis. Instead they should changed into "ordinary" vectors
+  or factors before. For this see the documentation for \code{\link{as.vector,item-method}}.
   }
 \usage{
 ## The constructor for objects of class "item"
@@ -129,8 +123,7 @@
 
 \arguments{
   \item{x}{for \code{as.item} methods,
-  any atomic vector; for the \code{as.character}, \code{as.factor},
-  \code{as.integer}, \code{as.double}, a vector with class \code{"item"};
+  any atomic vector; 
   for the \code{unique}, 
   \code{summary}, \code{str}, \code{print}, \code{[}, and \code{<-}
   methods, a vector with class \code{labelled}.

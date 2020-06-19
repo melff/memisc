@@ -80,7 +80,7 @@ dsView(x)
   The \code{as.data.frame} method for data sets is just a copy
   of the method for list. Consequently, all items in the data set
   are coerced in accordance to their \code{\link{measurement}} setting,
-  see \code{\link{item}} and \code{\link{measurement}}.
+  see \code{\link{as.vector,item-method}} and \code{\link{measurement}}.
 
   The \code{within} method for data sets has the same effect as
   the \code{\link[base]{within}} method for data frames, apart from two differences:
