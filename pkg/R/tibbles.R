@@ -143,6 +143,7 @@ setMethod("as_haven",signature(x="item.vector"),function(x,user_na=FALSE,...){
     return(y)
 })
 
+setOldClass("tbl_df")
 setMethod("as.data.set","tbl_df",function(x,row.names=NULL,...){
   class(x) <- "data.frame"
   if(length(row.names)){
