@@ -189,7 +189,7 @@ argument to a matrix and applies the matrix method of \code{toLatex}.
 }
 \subsection{Dimension-Preserving Versions of \code{lapply} and \code{sapply}}{
   If a function that is involved in a call to 
-  \code{\link[base]{sapply}} returns a result an array or a matrix, the
+  \code{\link[base:lapply]{sapply}} returns a result an array or a matrix, the
   dimensional information gets lost. Also, if a list object to which
   \code{\link[base]{lapply}} or \code{\link[base]{sapply}} are applied
   have a dimension attribute, the result looses this information.

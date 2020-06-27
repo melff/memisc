@@ -83,7 +83,7 @@ dsView(x)
   see \code{\link{as.vector,item-method}} and \code{\link{measurement}}.
 
   The \code{within} method for data sets has the same effect as
-  the \code{\link[base]{within}} method for data frames, apart from two differences:
+  the \code{\link[base:with]{within}} method for data frames, apart from two differences:
   all results of the computations are coerced into items if
   they have the appropriate length, otherwise, they are automatically
   dropped.

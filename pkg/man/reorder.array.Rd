@@ -46,7 +46,7 @@
   The reordered object \code{x}.
 }
 \seealso{
-  The default method of \code{\link[stats]{reorder}} in package \code{stats}.
+  The default method of \code{\link[stats:reorder.factor]{reorder}} in package \code{stats}.
 }
 \examples{
   (M <- matrix(rnorm(n=25),5,5,dimnames=list(LETTERS[1:5],letters[1:5])))

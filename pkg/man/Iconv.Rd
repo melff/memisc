@@ -8,7 +8,7 @@
 
 \title{Convert Annotations, and Value Labels between Encodings}
 \description{
-  This function uses the base package function \code{\link{iconv}}
+  This function uses the base package function \code{\link[base]{iconv}}
   to translate variable descriptions (a.k.a variable labels) and
   value labels of \code{\link{item}}, \code{\link{data.set}},
   and \code{\link{importer}} objects into a specified encoding.
@@ -37,7 +37,7 @@ Iconv(x,from="",to="",\dots)
   attributes.
 }
 \seealso{
-  \code{\link[base]{iconv}}, \code{\link[base]{iconvlist}}
+  \code{\link[base]{iconv}}, \code{\link[base:iconv]{iconvlist}}
 }
 \examples{
 \dontrun{

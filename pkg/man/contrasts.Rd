@@ -11,8 +11,8 @@
 \title{Convenience Methods for Setting Contrasts}
 \description{
   This package provides modified versions of
-  \code{\link[stats]{contr.treatment}} and
-  \code{\link[stats]{contr.sum}}. \code{contr.sum}
+  \code{\link[stats:contrast]{contr.treatment}} and
+  \code{\link[stats:contrast]{contr.sum}}. \code{contr.sum}
   gains an optional \code{base} argument, analog to the
   one of \code{contr.treatment}, furthermore,
   the \code{base} argument may be the name of a
@@ -46,10 +46,10 @@ contr.sum(n,base=NULL,contrasts=TRUE)
     a contrast matrix.
     }
   \item{\dots}{further arguments, passed to \code{contr.treatment}, etc. }
-  \item{n}{a number of factor levels or a vector of factor levels names, see e.g. \code{\link[stats]{contr.treatment}}.}
+  \item{n}{a number of factor levels or a vector of factor levels names, see e.g. \code{\link[stats:contrast]{contr.treatment}}.}
   \item{base}{a number of a factor level or the names of a factor level,
     which specifies the baseline category,
-    see e.g. \code{\link[stats]{contr.treatment}} or NULL.
+    see e.g. \code{\link[stats:contrast]{contr.treatment}} or NULL.
     }
   \item{contrasts}{a logical value, see  \code{\link[stats]{contrasts}}}
   \item{how.many}{the number of contrasts to generate, see \code{\link[stats]{contrasts}}}

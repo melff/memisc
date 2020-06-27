@@ -169,7 +169,7 @@ is called with \code{to.lower=FALSE}. If long variable names
 are defined (in case of a PSPP/SPSS system file), they take
 precedence and are \emph{not} coerced to lower case.
 }
-\seealso{ \code{\link[memisc]{codebook}}, \code{\link[memisc]{description}},
+\seealso{ \code{\link{codebook}}, \code{\link{description}},
 \code{\link[foreign]{read.spss}}
 }
 \details{
