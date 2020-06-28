@@ -148,7 +148,6 @@
             imported with the \emph{haven} package.
       \item \code{codebook()} now makes use of the "label" attribute of variables if the
             attribute is present.
-      \item \code{desciption()}
       \item \code{with(Groups())}, \code{withGroups()},
             \code{within(Groups())}, \code{withinGroups()},
             \code{Aggregate()}, and \code{genTable()} are considerably
