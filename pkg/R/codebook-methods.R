@@ -361,7 +361,7 @@ codebookStatsMetric <- function(x,weights=TRUE,unweighted=TRUE,...){
   if(length(labels(x))){
     tab <- codebookTable_item(x,drop.unlabelled=TRUE)
     tab.title <- attr(tab,"title")
-    if(length(weights)){
+    if(length(weights) && length(tab)){
       wtab <- codebookTable_item(x,weights=weights,
                                  drop.unlabelled=TRUE)
       if(unweighted)
@@ -372,13 +372,15 @@ codebookStatsMetric <- function(x,weights=TRUE,unweighted=TRUE,...){
                        dim=c(dim(tab),1),
                        dimnames=c(dimnames(tab),
                                   list(NULL)))
+      attr(tab,"title") <- tab.title
     }
-    else
+    else if(length(tab)){
       tab <- array(tab,
                    dim=c(dim(tab),1),
                    dimnames=c(dimnames(tab),
                               list(NULL)))
-    attr(tab,"title") <- tab.title
+      attr(tab,"title") <- tab.title
+    }
   }
   else
     tab <- NULL
@@ -481,12 +483,15 @@ codebookTable_item <- function(x,weights=NULL,drop.unlabelled=FALSE,drop.empty=T
   }
   rownames(tab) <- names(tperc)
   if(drop.unlabelled){
-    drp <- match("(unlab.val.)",trimws(lab),nomatch=0L)
-    tab <- tab[-drp,,drop=FALSE]
-    lab <- lab[-drp]
-    if(all(is.na(tab[,2]))){
-      tab <- tab[,-2,drop=FALSE]
-      colnames(tab) <- c("N","Percent")
+      drp <- match("(unlab.val.)",trimws(lab),nomatch=0L)
+      if(drp > 0){
+          tab <- tab[-drp,,drop=FALSE]
+          lab <- lab[-drp]
+          
+      }
+    if(all(is.na(tab[,2])) && length(tab)){
+        tab <- tab[,-2,drop=FALSE]
+        colnames(tab) <- c("N","Percent")
     }
   }
   if(!length(tab))
