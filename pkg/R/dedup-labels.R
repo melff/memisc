@@ -63,9 +63,10 @@ deduplicate_labels.item.list <- function(x,...){
     n <- ncol(x)
     for(i in 1:n){
         x.i <- x[[i]]
-        if(length(labels(x.i)) &&
+        if(inherits(x.i,"item") &&
+           length(labels(x.i)) &&
            length(duplicated_labels(x.i))){
-            x.i <- deduplicate_labels(x.i,...)
+            x.i <- deduplicate_labels.item(x.i,...)
             x@.Data[[i]] <- x.i
         }
     }
