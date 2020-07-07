@@ -1,3 +1,14 @@
+2020-07-05:
+   - Made 'deduplicate_labels' methods for "data.set"-objects a bit more
+     resilient
+     
+2020-07-05:
+   - Fixed bug in the creation of codebooks
+
+2020-06-27:
+   - Fix warnings about 'Non-file package-anchored link(s) in documentation
+     object'
+
 2020-06-19:
    - Added documentation about coercion of items into vectors, etc.
 
