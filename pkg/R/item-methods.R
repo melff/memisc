@@ -282,10 +282,10 @@ as.data.frame.integer.item <- function (x, row.names = NULL, optional = FALSE, .
 
 setMethod("as.vector","item",function(x,mode = "any"){
     ism <- is.missing(x)
+    d <- description(x)
     x <- callNextMethod()
     if(mode=="any") mode <- storage.mode(x)
     x[ism] <- as.vector(NA,mode=mode)
-    d <- description(x)
     if(length(d))
         attr(x,"label") <- d
     x

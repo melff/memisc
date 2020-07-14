@@ -1,3 +1,8 @@
+2020-07-14:
+   - Made sure that variable labels are retained by 'as.vector' and
+     'as.data.frame' even for items with 'interval' or 'ratio' level of
+     measurement.
+
 2020-07-05:
    - Made 'deduplicate_labels' methods for "data.set"-objects a bit more
      resilient
