@@ -55,10 +55,10 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
                            c("est","se","stat","p","lwr","upr"),
                            names(obj@frame)[1])
     VarPar <- c(VarPar,list(vp.i))
-    VarPar.names <- c(paste0("Var(",lv.i,")"),
-                       VarPar.names)
+    VarPar.names <- c(VarPar.names,
+                      paste0("Var(",lv.i,")"))
   }
-  if(smry$sigma>1){
+  if(smry$sigma!=1){
     vp.i <- matrix(NA,nrow=1,ncol=6)
     vp.i[1] <- smry$sigma^2
     dim(vp.i) <- c(dim(vp.i),1)
