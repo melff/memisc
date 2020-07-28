@@ -65,12 +65,16 @@ coefxpand <- function(x,names){
         call.arg <- c(call.arg,list(value=as.vector(x)))
         do.call("[<-",call.arg)
     }
-    else {
+    else if(length(dim(x))){
         d <- dim(x)
         dd <- dimnames(x)
         d[3] <- length(names)
         dd[[3]] <- names
         array("",dim=d,dimnames=dd)
+    } else {
+        r <- length(names)
+        array("",dim=c(r,1,1),
+              dimnames=list(names,NULL,NULL))
     }
 }
 
