@@ -93,8 +93,8 @@ getSummary.clmm <- function(obj,
                            ...){
   
   smry <- summary(obj)
-  # N <- if(length(weights(obj))) sum(weights(obj))
-  # else smry$nobs
+  N <- if(length(weights(obj))) sum(weights(obj))
+       else nrow(obj$model)
   
   prmtable <- coef(smry)
 
@@ -126,8 +126,8 @@ getSummary.clmm <- function(obj,
 
   varcor <- lapply(obj$ST,tcrossprod)
 
-  VarPar <- list()
-  VarPar.names <- c()
+  VarPar <- NULL
+    
   for(i in seq_along(varcor)){
     vc.i <- varcor[[i]]
     lv.i <- names(varcor)[i]
@@ -146,12 +146,9 @@ getSummary.clmm <- function(obj,
     dimnames(vp.i) <- list(c(vrnames.i,cvnames.i),
                            c("est","se","stat","p","lwr","upr"),
                            names(obj$model)[1])
-    VarPar <- c(VarPar,list(vp.i))
-    VarPar.names <- c(VarPar.names,
-                      paste0("Var(",lv.i,")"))
-  }
-  names(VarPar) <- VarPar.names
-  ans <- c(ans,VarPar)
+    VarPar <- rabind2(VarPar,vp.i)
+ }
+  ans <- c(ans,list(Variances=VarPar))
   
   # null.model <- update(obj, .~1)
   
@@ -181,21 +178,21 @@ getSummary.clmm <- function(obj,
     Nagelkerke <- NA
   # }
   
-  # AIC <- AIC(obj)
+  AIC <- AIC(obj)
   # BIC <- AIC(obj,k=log(N))
   sumstat <- c(
     # LR            = LR,
-    df            = df,
+    # df            = df,
     # p             = p,
     logLik        = ll,
-    deviance      = dev#,
+    deviance      = dev,
     # Aldrich.Nelson = Aldrich.Nelson,
     # McFadden      = McFadden,
     # Cox.Snell       = Cox.Snell,
     # Nagelkerke    = Nagelkerke,
-  #   AIC           = AIC,
+    AIC           = AIC,
   #   BIC           = BIC,
-  #   N             = N
+    N             = N
   )
 
   ans <- c(ans,

@@ -1,12 +1,14 @@
 setSummaryTemplate(lmerMod = c("Log-likelihood" = "($logLik:f#)",
                      "Deviance" = "($deviance:f#)",
                      "AIC" = "($AIC:f#)",
-                     "BIC" = "($BIC:f#)"))
+                     "BIC" = "($BIC:f#)",
+                     N     = "($N:d)"))
 
 setSummaryTemplate(glmerMod = c("Log-likelihood" = "($logLik:f#)",
                                "Deviance" = "($deviance:f#)",
                                "AIC" = "($AIC:f#)",
-                               "BIC" = "($BIC:f#)"))
+                               "BIC" = "($BIC:f#)",
+                               N     = "($N:d)"))
 
 getSummary.merMod <- function (obj, alpha = 0.05, ...) {
 
@@ -33,8 +35,7 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
     
   varcor <- smry$varcor
 
-  VarPar <- list()
-  VarPar.names <- c()
+  VarPar <- NULL
   
   for(i in seq_along(varcor)){
     vc.i <- varcor[[i]]
@@ -54,9 +55,7 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
     dimnames(vp.i) <- list(c(vrnames.i,cvnames.i),
                            c("est","se","stat","p","lwr","upr"),
                            names(obj@frame)[1])
-    VarPar <- c(VarPar,list(vp.i))
-    VarPar.names <- c(VarPar.names,
-                      paste0("Var(",lv.i,")"))
+    VarPar <- rabind2(VarPar,vp.i)
   }
   if(smry$sigma!=1){
     vp.i <- matrix(NA,nrow=1,ncol=6)
@@ -65,10 +64,8 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
     dimnames(vp.i) <- list("Var(residual)",
                            c("est","se","stat","p","lwr","upr"),
                            names(obj@frame)[1])
-    VarPar <- c(list(vp.i),VarPar)
-    VarPar.names <- c("Var(residual)",VarPar.names)
+    VarPar <- rabind2(VarPar,vp.i)
   }
-  names(VarPar) <- VarPar.names
     
   ## Factor levels.
   xlevels <- list()
@@ -85,20 +82,19 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
   AIC <- AIC(obj)
   BIC <- BIC(obj)
   
-  N <- c(Total=nobs(obj))
   G <-as.integer(smry$ngrps)
   names(G) <- names(smry$ngrps)
-  G <- c(N,G)
     
   sumstat <- c(logLik = ll,
                deviance = deviance,
                AIC = AIC,
-               BIC = BIC)
+               BIC = BIC,
+               N=nobs(obj))
   ## Return model summary.
   
   ans <- list(coef= coef)
 
-  ans <- c(ans,VarPar)
+  ans <- c(ans,list(Variances=VarPar))
     
   ans <- c(ans,       
            list(Groups = G,

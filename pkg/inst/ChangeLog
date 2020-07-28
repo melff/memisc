@@ -1,3 +1,7 @@
+2020-07-28:
+   - Added 'mtable' support for 'clmm' objects (package "ordinal"") and improved
+     support for 'merMod' objects (package "lme4").
+
 2020-07-14:
    - Made sure that variable labels are retained by 'as.vector' and
      'as.data.frame' even for items with 'interval' or 'ratio' level of
@@ -6,7 +10,7 @@
 2020-07-05:
    - Made 'deduplicate_labels' methods for "data.set"-objects a bit more
      resilient
-     
+
 2020-07-05:
    - Fixed bug in the creation of codebooks
 
@@ -37,7 +41,7 @@
      "labelled" as they occur in some imported tibbles.
    - 'as.item()' now drops non-unique labelled values when applied to a
      "labelled", "haven_labelled", or "haven_labelled_spss" object.
-	
+
 2020-06-05:
    - With 'codebook()' it is now possible to disable the display of unweighted
      data summaries.

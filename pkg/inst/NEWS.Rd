@@ -168,11 +168,16 @@
             being run.
      \item  \code{as.item()} now drops non-unique labelled values when applied to a
             "labelled", "haven_labelled", or "haven_labelled_spss" object.
-      \item \code{spss.system.file()} no takes into account metadata about
+     \item \code{spss.system.file()} no takes into account metadata about
             measurement levels ("nominal", "ordinal", or "scale") to set
             the \code{measurement()} attributes of the items in
-            the resulting \code{"importer"} and \code{"data.set"} objects.
-    }
+            the resulting \code{"importer"} and \code{"data.set"}
+            objects.
+     \item \code{mtable()} now handles objects of class "clmm" (from package "ordinal")
+           and the handling of objects of class "merMod" (from package "lme4")
+           is more consistent with those of class "glm" (e.g. the number of
+           observations is shown).
+     }
   }
   \subsection{BUGFIXES}{
   \itemize{
