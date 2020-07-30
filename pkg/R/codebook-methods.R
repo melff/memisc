@@ -196,7 +196,13 @@ setMethod("codebookEntry","ANY",function(x,weights,unweighted=TRUE,...){
   )
 })
 
-
+rwnexp <- function(mat,nms){
+  res <- array(0,c(length(nms),ncol(mat)),
+               dimnames=list(nms,colnames(mat)))
+  rn <- rownames(mat)
+  res[rn,] <- mat
+  return(res)
+}
 
 codebookTable_factor <- function(x,weights=NULL,...){
 
@@ -205,7 +211,9 @@ codebookTable_factor <- function(x,weights=NULL,...){
 
   isna <- is.na(x)
   counts <- rowsum(weights[!isna],x[!isna])
-
+  lev <- levels(x)
+  counts <- rwnexp(counts,lev)
+  
   NAs <- sum(weights*isna)
 
   tab <- cbind(counts,100*counts/sum(counts))

@@ -1,3 +1,7 @@
+2020-07-30:
+   - Bugfix: Make codebook work with factors that have empty levels (i.e. no
+     observations for certain levels).
+
 2020-07-28:
    - Added 'mtable' support for 'clmm' objects (package "ordinal"") and improved
      support for 'merMod' objects (package "lme4").
