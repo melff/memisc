@@ -44,12 +44,18 @@ genTable <- function (formula,
     }
     if(addFreq){
         if("Freq" %in% names(data) &&length(expr) > 1 && 
-           as.character(expr[[1]]) %in% c("table","Table","percent","nvalid") &&
+           as.character(expr[[1]]) %in% c("table","Table","percent") &&
            !("weights" %in% names(expr))
            ){
             if(as.character(expr[[1]])=="table")
                 expr[[1]] <- as.symbol("Table")
-            expr$weights <- as.symbol("Freq")
+            if(length(expr) > 2){
+                if(!length(names(expr))) addFreq <- FALSE
+                else if("weights" %in% names(expr))
+                     addFreq <- FALSE
+            }
+            if(addFreq)
+                expr$weights <- as.symbol("Freq")
         }
     }
 
