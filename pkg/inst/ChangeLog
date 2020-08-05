@@ -1,5 +1,9 @@
+2020-08-05:
+   - Bugfix: 'genTable()' and 'Aggregate()' now correctly handle implicit
+     frequency weights 
+
 2020-07-30:
-   - Bugfix: Make codebook work with factors that have empty levels (i.e. no
+   - Bugfix: Make 'codebook()' work with factors that have empty levels (i.e. no
      observations for certain levels).
 
 2020-07-28:

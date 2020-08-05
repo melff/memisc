@@ -8,7 +8,6 @@ setMethod("Table",signature(x="atomic"),
             tmp <- rowsum(weights[good],x[good])
             tab <- drop(tmp)
           }
-
         if(percentage) {
           perc <- 100 * tab/sum(tab)
         }
@@ -53,7 +52,7 @@ setMethod("Table",signature(x="item.vector"),
             include.missings=(style=="codebook"),
             missing.marker=if(style=="codebook") "M" else "*",
             ...){
-       if(!(counts || percentage)) stop("either counts or percentage must be TRUE")
+      if(!(counts || percentage)) stop("either counts or percentage must be TRUE")
       is.m <- is.missing(x)
       isNA <- is.na(x)
       style <- match.arg(style)

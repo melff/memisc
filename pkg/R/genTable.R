@@ -49,7 +49,7 @@ genTable <- function (formula,
            ){
             if(as.character(expr[[1]])=="table")
                 expr[[1]] <- as.symbol("Table")
-            expr[[3]] <- as.symbol("Freq")
+            expr$weights <- as.symbol("Freq")
         }
     }
 
