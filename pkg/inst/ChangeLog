@@ -1,6 +1,9 @@
+2020-08-10:
+   - Minor fix in documentation for 'collect()'.
+
 2020-08-05:
    - Bugfix: 'genTable()' and 'Aggregate()' now correctly handle implicit
-     frequency weights 
+     frequency weights
 
 2020-07-30:
    - Bugfix: Make 'codebook()' work with factors that have empty levels (i.e. no

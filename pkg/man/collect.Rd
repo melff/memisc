@@ -55,9 +55,6 @@ collect(\dots,names=NULL,inclusive=TRUE)
   or they equal to the number of dimnames that appear in all arguments
   for each given dimension.
 
-  If \code{x} and all \dots arguments are tables then the result will be a table.
-  The result
-
   If \code{x} and all \dots arguments are data frames or data sets, the
   result is a data frame or data set.
   The number of variables of the resulting data frame or data set depends on
