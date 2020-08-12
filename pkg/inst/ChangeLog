@@ -1,3 +1,6 @@
+2020-08-12:
+   - Some 'setOldClass()' calls are now conditional on the absence of certain packages.
+
 2020-08-10:
    - Minor fix in documentation for 'collect()'.
 
