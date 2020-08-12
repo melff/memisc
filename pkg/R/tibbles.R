@@ -57,7 +57,8 @@ setMethod("codebookEntry","labelled",function(x){
         )
 })
 
-if(!("haven" %in% installed.packages())) setOldClass("haven_labelled")
+# if(!requireNamespace("haven",quietly = TRUE))
+    setOldClass("haven_labelled")
 setMethod("as.item",signature(x="haven_labelled"),function(x,...){
     annotation <- c(description=attr(x,"label"))
     labels <- attr(x,"labels")
@@ -82,7 +83,8 @@ setMethod("codebookEntry","haven_labelled",function(x){
 
 
 
-if(!("haven" %in% installed.packages())) setOldClass("haven_labelled_spss")
+# if(!requireNamespace("haven",quietly = TRUE))
+    setOldClass("haven_labelled_spss")
 setMethod("as.item",signature(x="haven_labelled_spss"),function(x,...){
     annotation <- c(description=attr(x,"label"))
     labels <- attr(x,"labels")
@@ -143,7 +145,7 @@ setMethod("as_haven",signature(x="item.vector"),function(x,user_na=FALSE,...){
     return(y)
 })
 
-if(!("tibble" %in% installed.packages())) setOldClass("tbl_df")
+if(!requireNamespace("tibble",quietly = TRUE)) setOldClass("tbl_df")
 setMethod("as.data.set","tbl_df",function(x,row.names=NULL,...){
   class(x) <- "data.frame"
   if(length(row.names)){
