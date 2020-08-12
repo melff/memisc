@@ -1,5 +1,8 @@
 2020-08-12:
-   - Some 'setOldClass()' calls are now conditional on the absence of certain packages.
+   - Some 'setOldClass()' calls are now conditional on the absence of certain
+     packages.
+   - A general 'getSummary_expcoef()' default method is now provided,
+     which is widely applicable as it builds on 'getSummary()'.
 
 2020-08-10:
    - Minor fix in documentation for 'collect()'.

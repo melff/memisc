@@ -34,7 +34,7 @@ export(
       getSummary.weibreg,
       getSummary.merMod,
       getSummary_expcoef,
-      getSummary_expcoef.glm,
+      getSummary_expcoef.default,
       getSummary.ivreg,
       getSummary.tobit,
       getSummary.hurdle,
@@ -142,7 +142,7 @@ S3method(getSummary,simex)
 S3method(getSummary,survreg)
 S3method(getSummary,tobit)
 S3method(getSummary,weibreg)
-S3method(getSummary_expcoef,glm)
+S3method(getSummary_expcoef,default)
 S3method(getSummary,clm)
 S3method(getSummary,clmm)
 S3method(sort,data.frame)

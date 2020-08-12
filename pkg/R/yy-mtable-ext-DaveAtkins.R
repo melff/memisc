@@ -7,6 +7,8 @@
 
 getSummary_expcoef <- function(obj, alpha = 0.05, ...) UseMethod("getSummary_expcoef")
 
+### This function is no longer exported, because there is a more general
+### default method available now.
 getSummary_expcoef.glm <- function (obj, alpha = 0.05, ...)
 {
     smry <- summary(obj)

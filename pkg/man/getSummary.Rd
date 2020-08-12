@@ -6,7 +6,7 @@
 \alias{getSummary.clm}
 \alias{getSummary.polr}
 \alias{getSummary.simex}
-\alias{getSummary_expcoef.glm}
+\alias{getSummary_expcoef.default}
 \alias{getSummary.aftreg}
 \alias{getSummary.coxph}
 \alias{getSummary.phreg}
@@ -31,19 +31,19 @@
   \method{getSummary}{glm}(obj, alpha=.05,\dots)
   \method{getSummary}{merMod}(obj, alpha=.05, \dots)
 
-  # These are contributed by Christopher N. Lawrence
+# These are contributed by Christopher N. Lawrence
   \method{getSummary}{clm}(obj, alpha=.05,\dots)
   \method{getSummary}{polr}(obj, alpha=.05,\dots)
   \method{getSummary}{simex}(obj, alpha=.05,\dots)
 
-  # These are contributed by Jason W. Morgan
+# These are contributed by Jason W. Morgan
   \method{getSummary}{aftreg}(obj, alpha=.05,\dots)
   \method{getSummary}{coxph}(obj, alpha=.05,\dots)
   \method{getSummary}{phreg}(obj, alpha=.05,\dots)
   \method{getSummary}{survreg}(obj, alpha=.05,\dots)
   \method{getSummary}{weibreg}(obj, alpha=.05,\dots)
 
-  # These are contributed by Achim Zeileis
+# These are contributed by Achim Zeileis
   \method{getSummary}{ivreg}(obj, alpha=.05,\dots)
   \method{getSummary}{tobit}(obj, alpha=.05,\dots)
   \method{getSummary}{hurdle}(obj, alpha=.05,\dots)
@@ -51,11 +51,11 @@
   \method{getSummary}{betareg}(obj, alpha=.05,\dots)
   \method{getSummary}{multinom}(obj, alpha=.05,\dots)
   
-  # These are contributed by Dave Atkins
-  # Method for 'glm' objects - to report
-  # exponentiated coefficients.
-  getSummary_expcoef(obj, alpha=.05,\dots)
-  \method{getSummary_expcoef}{glm}(obj, alpha=.05,\dots)
+# A variant that reports exponentiated coefficients.
+# The default method calls 'getSummary()' internally and should
+# be applicable to all classes for which 'getSummary()' methods exist.
+getSummary_expcoef(obj, alpha=.05,\dots)
+  \method{getSummary_expcoef}{default}(obj, alpha=.05,\dots)
 }
 \arguments{
   \item{obj}{a model object, e.g. of class \code{lm} or \code{glm}}
