@@ -38,6 +38,7 @@ export(
       getSummary.ivreg,
       getSummary.tobit,
       getSummary.hurdle,
+      getSummary.zeroinfl,
       getSummary.betareg,
       getSummary.multinom,
       applyTemplate,
@@ -132,6 +133,7 @@ S3method(getSummary,clm)
 S3method(getSummary,coxph)
 S3method(getSummary,glm)
 S3method(getSummary,hurdle)
+S3method(getSummary,zeroinfl)
 S3method(getSummary,ivreg)
 S3method(getSummary,lm)
 S3method(getSummary,merMod)
