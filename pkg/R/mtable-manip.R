@@ -95,6 +95,11 @@ safe.charidx <- function(nms,i){
     attr.y$summary.stats <- attr.y$summary.stats[kk]
     attr.y$parameter.names <- i
 
+    if(length(attr.y$controls)){
+        attr.y$controls$coefs <- attr.y$controls$coefs[kk]
+        attr.y$controls$terms <- attr.y$controls$terms[kk]
+    }
+    
     l.y <- length(y)
     l.pt <- length(partypes)
 
@@ -184,6 +189,21 @@ combine_mtables <- function(...){
 
     res <- do.call(c,args)
 
+    controls <- lapply(args,attr,"controls")
+        controls.coefs <- lapply(controls,"[[","coefs")
+    controls.terms <- lapply(controls,"[[","terms")
+    controls.coefs <- unlist(controls.coefs,recursive=FALSE)
+    controls.terms <- unlist(controls.terms,recursive=FALSE)
+    if(length(controls.terms))
+        controls <- list(coefs = controls.coefs,
+                         terms = controls.terms)
+    else controls <- NULL
+    
+    collapse.controls <- unlist(lapply(args,attr,"collapse.controls"))
+    collapse.controls <- any(collapse.controls)
+
+    control.var.indicator <- attr(args[[1]],"control.var.indicator")
+    
     structure(res,
             class="memisc_mtable",
             parameter.names=parameter.names,
@@ -198,7 +218,10 @@ combine_mtables <- function(...){
             stemplates=stemplates,
             sdigits=sdigits,
             show.eqnames=show.eqnames,
-            model.groups=model.groups
+            model.groups=model.groups,
+            controls=controls,
+            collapse.controls=collapse.controls,
+            control.var.indicator=control.var.indicator
             )
 }
 

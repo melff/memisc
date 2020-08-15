@@ -81,6 +81,7 @@ pf_mtable_format_html <- function(x,
     sh <- x$sect.headers
     leaders <- x$leaders
     headers <- x$headers
+    outtypes <- x$outtypes
     l.headers <- length(headers)
     l.leaders <- length(leaders)
 
@@ -92,8 +93,6 @@ pf_mtable_format_html <- function(x,
         need.sh <- c(need.sh,FALSE)
     res <- NULL
 
-
-    
     for(j in 1:ncol(pt)){
         
         pt.j <- pt[,j]
@@ -107,20 +106,29 @@ pf_mtable_format_html <- function(x,
         for(i in 1:length(pt.j)){
 
             pt.ij <- pt.j[[i]]
+            ot.ij <- outtypes[i,j]
             dm.ij <- dim(pt.ij)
             
-            if(getOption("html.use.ampersand",FALSE))
-                pt.ij[] <- gsub("-","&minus;",pt.ij[],fixed=TRUE)
-            else
-                pt.ij[] <- gsub("-","\u2212",pt.ij[],fixed=TRUE)
+            if(ot.ij == "num"){
+                if(getOption("html.use.ampersand",FALSE))
+                    pt.ij[] <- gsub("-","&minus;",pt.ij[],fixed=TRUE)
+                else
+                    pt.ij[] <- gsub("-","\u2212",pt.ij[],fixed=TRUE)
 
-            if(split.dec){
-                pt.ij <- spltDec(pt.ij)
-                pt.ij <- gsub("([*]+)","<span class=\"signif.symbol\">\\1</span>",pt.ij)
-                pt.ij <- html_td_spltDec(pt.ij, style=css(style))
+                if(split.dec){
+                    pt.ij <- spltDec(pt.ij)
+                    pt.ij <- gsub("([*]+)","<span class=\"signif.symbol\">\\1</span>",pt.ij)
+                    pt.ij <- html_td_spltDec(pt.ij, style=css(style))
+                }
+                else
+                    pt.ij[] <- html_td(pt.ij,style=css(style),vectorize=TRUE)
+            } else {
+                tstyle <- upd_vect(style,align.center)
+                if(split.dec)
+                    pt.ij[] <- html_td(pt.ij,colspan=3,style=css(tstyle),vectorize=TRUE)
+                else 
+                    pt.ij[] <- html_td(pt.ij,style=css(tstyle),vectorize=TRUE)
             }
-            else
-                pt.ij[] <- html_td(pt.ij,style=css(style),vectorize=TRUE)
             dim(pt.ij) <- dm.ij
             
             if(need.sh[[i]]){

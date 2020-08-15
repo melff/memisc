@@ -72,7 +72,8 @@ pf_mtable_format_latex <- function(x,
     sh <- x$sect.headers
     leaders <- x$leaders
     headers <- x$headers
-
+    outtypes <- x$outtypes
+    
     ncols <- sapply(pt[1,],ncol)
     if(missing(compact) && all(ncols)==1) compact = TRUE
 
@@ -100,12 +101,18 @@ pf_mtable_format_latex <- function(x,
             pt.j <- lapply(pt.j,cols_folded,span.j,sep=colsep)
 
         for(i in 1:length(pt.j)){
+            ot.ij <- outtypes[i,j]
             pt.ij <- pt.j[[i]]
-            pt.ij <- sub("(\\*+)","^{\\1}",pt.ij)
-            pt.ij <- sub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",pt.ij)
-            pt.ij <- centerAt(pt.ij,at=".",integers="dot")
-            if(!useDcolumn)
-                pt.ij[] <- paste0("$",pt.ij,"$")
+            if(ot.ij == "num"){
+                pt.ij <- sub("(\\*+)","^{\\1}",pt.ij)
+                pt.ij <- sub("([eE])([-+]?[0-9]+)","\\\\textrm{\\1}\\2",pt.ij)
+                pt.ij <- centerAt(pt.ij,at=".",integers="dot")
+                if(!useDcolumn)
+                    pt.ij[] <- paste0("$",pt.ij,"$")
+            } else {
+                if(useDcolumn)
+                    pt.ij[] <- paste0("\\multicolumn{1}{c}{",pt.ij,"}")
+            }
             
             if(need.sh[[i]]){
                 sh.ij <- sh.j[[i]]

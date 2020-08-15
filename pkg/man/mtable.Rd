@@ -26,7 +26,10 @@ mtable(\dots,coef.style=getOption("coef.style"),
     digits=min(3,getOption("digits")),
     sdigits=digits,
     show.eqnames=getOption("mtable.show.eqnames",NA),
-    gs.options=NULL
+    gs.options=NULL,
+    controls=NULL,
+    collapse.controls=FALSE,
+    control.var.indicator=getOption("control.var.indicator",c("Yes","No"))
   )
 \method{relabel}{memisc_mtable}(x, \dots, gsub = FALSE, fixed = !gsub, warn = FALSE)
 
@@ -95,7 +98,23 @@ write.mtable(object,file="",
 			 among models or one of the models has multiple equations.
 		 }
      \item{gs.options}{an optional list of arguments passed on to
-           \code{getSummary}}
+       \code{getSummary}}
+     \item{controls}{an optional formula or character vector that
+       designates "control variables" for which no coefficients are
+       reported, but only whether they are present in the model.
+     }
+     \item{collapse.controls}{a logical values; should the report about
+       inclusion of control variables collapsed to a single value? If
+       yes, models should either contain none or all of the control
+       variables.
+     }
+     \item{control.var.indicator}{
+       a character vector with to elements; the first element being used
+       to indicate the presence of a control variable or all
+       control variables (if \code{collapse.controls=TRUE}), the second
+       element being used otherwise. By default these elements are
+       \code{"Yes"} and \code{"No"}. 
+     }
      \item{x, object}{an object of class \code{mtable}}
      \item{gsub, warn, fixed}{logical values, see \code{\link{relabel}}}
      \item{target}{a character string which indicates the target format.
