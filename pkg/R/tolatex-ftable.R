@@ -1,3 +1,28 @@
+insert_rows <- function(x,i,val){
+    l <- length(i)
+    n <- nrow(x)
+    y <- matrix(nrow=n+l,ncol=ncol(x))
+    ii1 <- i + 1:l - 1
+    ii2 <- seq.int(n+l)
+    ii2 <- ii2[!(ii2%in%ii1)]
+    y[ii2,] <- x
+    y[ii1,] <- val
+    return(y)
+}
+
+insert <- function(x,i,val){
+    l <- length(i)
+    n <- length(x)
+    y <- vector(length=n+l,mode=mode(x))
+    ii1 <- i + 1:l - 1
+    ii2 <- seq.int(n+l)
+    ii2 <- ii2[!(ii2%in%ii1)]
+    y[ii2] <- x
+    y[ii1] <- val
+    return(y)
+}
+
+
 toLatex.ftable <- function(object,
           show.titles=TRUE,
           digits=if(is.integer(object)) 0 else getOption("digits"),
@@ -13,6 +38,7 @@ toLatex.ftable <- function(object,
           bottomrule=if(useBooktabs) "\\bottomrule" else "\\hline\\hline",
           extrarowsep = NULL,
           toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
+          fold.leaders=FALSE,
           ...){
   row.vars <- attr(object,"row.vars")
   col.vars <- attr(object,"col.vars")
@@ -89,44 +115,67 @@ toLatex.ftable <- function(object,
       header[i] <- paste(header[i],collapse=" && ")
   }
 
-  show.titles <- show.titles && length(names(row.vars)) && length(names(col.vars))
-  if(show.titles){
-    if(length(names(col.vars))==1){
+
+  if(!fold.leaders){
+      show.titles <- show.titles && length(names(row.vars)) && length(names(col.vars))
+      if(show.titles){
+          if(length(names(col.vars))==1){
+              
+              hleaders <- matrix("",nrow=2,ncol=n.row.vars)
+              hleaders[2,] <- names(row.vars)
+              hleaders <- apply(hleaders,1,paste,collapse="&")
+              
+              header <- c(paste("\\multicolumn{",m,"}{c}{",names(col.vars),"}",sep=""),
+                          header)
+          }
+          else {
+              hleaders <- matrix("",nrow=n.col.vars,ncol=n.row.vars+1)
+              hleaders[,n.row.vars+1] <- paste0(names(col.vars),":")
+              hleaders[n.col.vars,1:n.row.vars] <- names(row.vars)
+              hleaders <- apply(hleaders,1,paste,collapse="&")
+          }
+      } else {
+          hleaders <- matrix("",nrow=n.col.vars,ncol=n.row.vars)
+          hleaders <- apply(hleaders,1,paste,collapse="&")
+      }
       
-      hleaders <- matrix("",nrow=2,ncol=n.row.vars)
-      hleaders[2,] <- names(row.vars)
-      hleaders <- apply(hleaders,1,paste,collapse="&")
-      
-      header <- c(paste("\\multicolumn{",m,"}{c}{",names(col.vars),"}",sep=""),
-                  header)
-    }
-    else {
-      hleaders <- matrix("",nrow=n.col.vars,ncol=n.row.vars+1)
-      hleaders[,n.row.vars+1] <- paste0(names(col.vars),":")
-      hleaders[n.col.vars,1:n.row.vars] <- names(row.vars)
-      hleaders <- apply(hleaders,1,paste,collapse="&")
-    }
-  } else {
-    hleaders <- matrix("",nrow=n.col.vars,ncol=n.row.vars)
-    hleaders <- apply(hleaders,1,paste,collapse="&")
+      leaders <- matrix("",nrow=nrow(body),ncol=n.row.vars)
+      lrv <- integer(n.row.vars)
+      for(i in 1:n.row.vars){
+          rv <- row.vars[[i]]
+          if(i == 1)
+              lrv[i] <- length(rv)
+          else
+              lrv[i] <- length(rv) * lrv[i-1]
+          tmp.leaders <- matrix("",ncol=lrv[i],nrow=n/lrv[i])
+          tmp.leaders[1,] <- rv
+          leaders[,i] <- c(tmp.leaders)
+      }
+  }
+  else{
+      leaders <- matrix("",nrow=n,ncol=1)
+      rown <- row.vars[[n.row.vars]]
+      leaders[] <- rown
+      if(n.row.vars > 1){
+          mg <- length(rown)
+          ng <- n/mg
+          jj <- rev(seq(n.row.vars - 1))
+          for(j in jj){
+              i <- seq(by=mg,length=ng)
+              body <- insert_rows(body,i,"")
+              rn.j <- row.vars[[j]]
+              leaders <- insert_rows(leaders,i,rn.j)
+              mg <- mg + 1
+          }
+      }
+      n <- nrow(body)
+      hleaders <- matrix("",nrow=n.col.vars,ncol=1)
   }
   
-  leaders <- matrix("",nrow=nrow(body),ncol=n.row.vars)
-  lrv <- integer(n.row.vars)
-  for(i in 1:n.row.vars){
-    rv <- row.vars[[i]]
-    if(i == 1)
-      lrv[i] <- length(rv)
-    else
-      lrv[i] <- length(rv) * lrv[i-1]
-    tmp.leaders <- matrix("",ncol=lrv[i],nrow=n/lrv[i])
-    tmp.leaders[1,] <- rv
-    leaders[,i] <- c(tmp.leaders)
-  }
-
   leaders <- format(leaders)
   leaders <- apply(leaders,1,paste,collapse="&")
-  
+
+
   lcv <- length(col.vars[[n.col.vars]])
   dim(body) <- c(n,lcv,m/lcv)
   body <- format(body)
@@ -150,14 +199,24 @@ toLatex.ftable <- function(object,
   else {
     rowsep <- rep("\\\\",NROW(body))
     .extrarowsep <- rep("",NROW(body))
-    lrv <- length(row.vars[[n.row.vars]])
-    ii <- seq(NROW(body)%/%lrv-1)*lrv
+    if(!fold.leaders){
+        lrv <- length(row.vars[[n.row.vars]])
+        ii <- seq(from=lrv,by=lrv,to=n-lrv)
+    }
+    else {
+        ii <- seq(from=mg,by=mg,to=n-mg)
+    }
     .extrarowsep[ii] <- paste("[",extrarowsep,"]",sep="")
     rowsep <- paste(rowsep,.extrarowsep,sep="")
     body <- paste(body,rowsep,sep="")
   }
-
-  ans <- c(toprule,header,midrule,body,bottomrule)
+ 
+  ans <- c(toprule,header,body,bottomrule)
+  mr_pos <- length(toprule) + length(header) + 1
+  if(fold.leaders){
+      mr_pos <- seq(from=mr_pos,by=mg,length=ng)
+  }
+  ans <- insert(ans,mr_pos,midrule)
   if(toLatex.escape.tex)
     ans <- LaTeXcape(ans)
   

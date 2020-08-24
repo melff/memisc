@@ -74,6 +74,7 @@
     bottomrule=if(useBooktabs) "\\\\bottomrule" else "\\\\hline\\\\hline",
     extrarowsep = NULL,
     toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
+    fold.leaders=FALSE,
     \dots)
 
 \method{toLatex}{ftable_matrix}(object,
@@ -134,17 +135,20 @@
      table body produced by \code{toLatex}. }
      \item{compact}{logical, if \code{TRUE}, extra column space between sub-tables 
         is suppressed. Defaults to \code{FALSE}}
-    \item{varontop}{logical, whether names of column variables should appear on top of factor levels}
-    \item{varinfront}{logical, whether names of row variables should appear in front of factor levels}
+     \item{varontop}{logical, whether names of column variables should appear on top of factor levels}
+     \item{varinfront}{logical, whether names of row variables should appear in front of factor levels}
      \item{groupsep}{character string, containing a TeX length; extra 
       vertical space inserted between sub-tables, unless \code{compact} is \code{TRUE}.}
      \item{grouprule}{character string, TeX code that determines how
        sub-table headings are embellished.}
-		 \item{row.names}{logical, whether row names should be included in
+     \item{row.names}{logical, whether row names should be included in
 			 exported LaTeX code.}
-		 \item{NAas}{character string, how missing values should be represented.}
-		\item{toLatex.escape.tex}{logical, should symbols \$, \_, and \^ be
-			escaped with backslashes?}
+     \item{NAas}{character string, how missing values should be represented.}
+     \item{toLatex.escape.tex}{logical, should symbols \$, \_, and \^ be
+	   escaped with backslashes?}
+     \item{fold.leaders}{logical, if \code{TRUE}, factor levels of row
+       variables are not distributed into different columns, but
+       'folded' into a single column.}
      \item{\dots}{further argument, currently ignored.}
 }
 \examples{
