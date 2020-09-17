@@ -1,3 +1,6 @@
+2020-09-17:
+   - Fix bug in handling of encoding of SPSS system files.
+
 2020-08-12:
    - Some 'setOldClass()' calls are now conditional on the absence of certain
      packages.
