@@ -123,7 +123,7 @@ spss.system.file <- function(
         }
         else {
             encoding <- encoded
-            message(sprintf("Invalid or unsupported encoding information %d in file, using fallback",
+            message(sprintf("Invalid or unsupported encoding information '%s' in file, using fallback",
                             encoding2))
         }
     }
@@ -144,7 +144,7 @@ spss.system.file <- function(
         }
         else {
             encoding <- encoded
-            message(sprintf("Invalid or unsupported encoding information %d in file, using fallback",
+            message(sprintf("Invalid or unsupported encoding information  '%s' in file, using fallback",
                             encoding1))
         }
     }
