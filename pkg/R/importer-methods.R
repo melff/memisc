@@ -371,8 +371,10 @@ cbChar1 <- function(x){
 update_cbChar1 <- function(current,update){
     if(!length(current)) return(update)
     else {
+        descr <- range(c(current$descr,update$descr))
+        names(descr) <- c("Min","Max")
         list(
-            descr = range(c(current$descr,update$descr)),
+            descr = as.matrix(descr),
             NAs = current$NAs + update$NAs
         )
     }
