@@ -584,11 +584,13 @@ setMethod("format","codebookEntry",
     }
     tab <- paste("  ",apply(tab,1,paste,collapse=" "))
   }
+  if(!is.matrix(descr)) descr <- NULL
   if(length(descr)){
     descr.rn <- format(paste(rownames(descr),":",sep=""),justify="right")
     if(is.numeric(descr[]))  
        descr[] <- formatC(descr[],format="f",digits=3)
     descr[] <- gsub("NA","",descr[])
+    if(!length(ncol(descr))) browser()
     if(ncol(descr) > 1){
       descr.rn <- c("","",descr.rn)
       descr <- rbind(colnames(descr),"",descr)
@@ -606,6 +608,8 @@ setMethod("format","codebookEntry",
   else if(length(descr)){
     statstab <- descr
   }
+  else
+    statstab <- NULL
   
   annot.out <- character()
   if(length(annot)){
