@@ -81,7 +81,8 @@ spss.system.file(file,
   count.cases=TRUE,
   to.lower=getOption("spss.sav.to.lower",FALSE),
   iconv=TRUE,
-  encoded=getOption("spss.sav.encoding","cp1252"))
+  encoded=getOption("spss.sav.encoding","cp1252"),
+  ignore.scale.info = FALSE)
 
 Stata.file(file,
            iconv=TRUE,
@@ -123,7 +124,10 @@ Stata.file(file,
       in the improrted file. For the available encoding options
       see \code{?iconvlist}. Using this argument for
       \code{spss.system.file} this is only a fallback, as the function
-      uses the encoding information present in the file if it is present.}
+      uses the encoding information present in the file if it is
+      present.}
+    \item{ignore.scale.info}{logical; should information about measuremnt
+      scale levels provided in the file be ignored?}
     \item{x}{an object that inherits from class \code{"importer"}.}
     \item{subset}{a logical vector or an expression containing variables
         from the external data file that evaluates to logical. }

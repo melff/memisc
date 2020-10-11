@@ -1,3 +1,9 @@
+2020-10-10:
+   - 'codebook()' better handles character variables in SPSS system files.
+   - 'spss.system.file()' uses information in the file about the intended
+     measurement level of the variables, however, this is optional and can be
+     switched off.
+
 2020-08-21:
    - Added new option 'fold.leaders' to 'toLatex' method for 'ftable' objects
 

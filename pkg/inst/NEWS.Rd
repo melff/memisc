@@ -166,6 +166,8 @@
             encoding if available in the file to translate variable labels and
             value labels into the coding of the machine on which \emph{R} is
             being run.
+      \item \code{spss.system.file()} also (optionally) uses information
+            about the intended measurement level fo variables in the file.
      \item  \code{as.item()} now drops non-unique labelled values when applied to a
             "labelled", "haven_labelled", or "haven_labelled_spss" object.
      \item \code{spss.system.file()} no takes into account metadata about
@@ -220,8 +222,10 @@
           empty pointers is avoided for the same reason.
     \item \code{as.data.set} works for "tibbles" also when method dispatch
           via class inheritance does not work.
+    \item \code{codebook()} now handles character variables in SPSS
+           system files correclty.
+        }
     }
-  }
   \subsection{USER-VISIBLE CHANGES}{
    \itemize{
      \item All vignettes are now using \emph{knitr}.

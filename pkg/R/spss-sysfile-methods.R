@@ -13,7 +13,8 @@ spss.system.file <- function(
     count.cases=TRUE,
     to.lower=getOption("spss.sav.to.lower",FALSE),
     iconv=TRUE,
-    encoded=getOption("spss.sav.encoding","cp1252")
+    encoded=getOption("spss.sav.encoding","cp1252"),
+    ignore.scale.info = FALSE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -103,7 +104,7 @@ spss.system.file <- function(
     data.spec$document <- NULL
 
     aux <- data.spec$auxiliaries
-    if(length(aux$aux_var)){
+    if(length(aux$aux_var) && !ignore.scale.info){
       aux_var <- do.call("rbind",aux$aux_var)
       mlev <- aux_var[,1]
       mlev[mlev==0] <- 1
