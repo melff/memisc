@@ -1,3 +1,6 @@
+2020-11-01:
+   - Fix 'as.item()' methods for "haven_labelled" objects etc.
+
 2020-10-10:
    - 'codebook()' better handles character variables in SPSS system files.
    - 'spss.system.file()' uses information in the file about the intended

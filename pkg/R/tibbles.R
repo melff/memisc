@@ -36,10 +36,10 @@ sanitize_labels <- function(labels){
 
 setOldClass("labelled")
 setMethod("as.item",signature(x="labelled"),function(x,...){
-    annotation <- c(description=attr(x,"label"))
-    labels <- attr(x,"labels")
+    annotation <- c(description=attr(x,"label",exact=TRUE))
+    labels <- attr(x,"labels",exact=TRUE)
     labels <- sanitize_labels(labels)
-    class(x) <- NULL
+    attributes(x) <- NULL
     as.item(x,labels=labels,
             annotation=annotation)
 })
@@ -60,10 +60,10 @@ setMethod("codebookEntry","labelled",function(x){
 # if(!requireNamespace("haven",quietly = TRUE))
     setOldClass("haven_labelled")
 setMethod("as.item",signature(x="haven_labelled"),function(x,...){
-    annotation <- c(description=attr(x,"label"))
-    labels <- attr(x,"labels")
+    annotation <- c(description=attr(x,"label",exact=TRUE))
+    labels <- attr(x,"labels",exact=TRUE)
     labels <- sanitize_labels(labels)
-    class(x) <- NULL
+    attributes(x) <- NULL
     as.item(x,labels=labels,
             annotation=annotation)
 })
@@ -86,12 +86,12 @@ setMethod("codebookEntry","haven_labelled",function(x){
 # if(!requireNamespace("haven",quietly = TRUE))
     setOldClass("haven_labelled_spss")
 setMethod("as.item",signature(x="haven_labelled_spss"),function(x,...){
-    annotation <- c(description=attr(x,"label"))
-    labels <- attr(x,"labels")
+    annotation <- c(description=attr(x,"label",exact=TRUE))
+    labels <- attr(x,"labels",exact=TRUE)
     labels <- sanitize_labels(labels)
     mis_range <- attr(x,"na_range")
     mis_values <- attr(x,"na_values")
-    class(x) <- NULL
+    attributes(x) <- NULL
     value_filter <- new("missing.values",
                         filter=mis_values,
                         range=mis_range)
