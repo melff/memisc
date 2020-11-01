@@ -36,8 +36,13 @@
     \item Summary statistics reported by \code{mtable()} can now be
           selected for each object or object class (via calls to \code{options()})
           separately.
+    \item It is now possible to compress the output concerning control
+          variables in \code{mtable()}.
     \item Support for HTML and LaTeX output in Jupyter notebooks is added to objects
           created by \code{mtable()} and \code{ftable()} etc.
+    \item The \code{toLatex()} method for "ftable" objects gains a
+          \code{fold.leaders} option (with default value \code{FALSE})
+          which allows the row labels (leaders) to remain in a single column.
     \item A function \code{codeplan()}  creates a data frame
           describing the structure of an "importer", "data.set" or "item"
           object. It is possible to copy this so described structure 
@@ -179,7 +184,9 @@
            and the handling of objects of class "merMod" (from package "lme4")
            is more consistent with those of class "glm" (e.g. the number of
            observations is shown).
-     }
+     \item Variance component estimates of "merMod" and "clmm" objects are reported
+           as distinct statistics.
+         }
   }
   \subsection{BUGFIXES}{
   \itemize{

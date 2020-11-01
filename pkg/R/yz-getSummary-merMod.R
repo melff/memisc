@@ -36,7 +36,17 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
   varcor <- smry$varcor
 
   VarPar <- NULL
-  
+
+  if(smry$sigma!=1){
+    vp.i <- matrix(NA,nrow=1,ncol=6)
+    vp.i[1] <- smry$sigma^2
+    dim(vp.i) <- c(dim(vp.i),1)
+    dimnames(vp.i) <- list("Var(residual)",
+                           c("est","se","stat","p","lwr","upr"),
+                           names(obj@frame)[1])
+    VarPar <- list(residual=vp.i)
+  }
+
   for(i in seq_along(varcor)){
     vc.i <- varcor[[i]]
     lv.i <- names(varcor)[i]
@@ -55,16 +65,7 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
     dimnames(vp.i) <- list(c(vrnames.i,cvnames.i),
                            c("est","se","stat","p","lwr","upr"),
                            names(obj@frame)[1])
-    VarPar <- rabind2(VarPar,vp.i)
-  }
-  if(smry$sigma!=1){
-    vp.i <- matrix(NA,nrow=1,ncol=6)
-    vp.i[1] <- smry$sigma^2
-    dim(vp.i) <- c(dim(vp.i),1)
-    dimnames(vp.i) <- list("Var(residual)",
-                           c("est","se","stat","p","lwr","upr"),
-                           names(obj@frame)[1])
-    VarPar <- rabind2(VarPar,vp.i)
+    VarPar <- c(VarPar,structure(list(vp.i),names=lv.i))
   }
     
   ## Factor levels.
@@ -94,7 +95,7 @@ getSummary.merMod <- function (obj, alpha = 0.05, ...) {
   
   ans <- list(coef= coef)
 
-  ans <- c(ans,list(Variances=VarPar))
+  ans <- c(ans,VarPar)
     
   ans <- c(ans,       
            list(Groups = G,

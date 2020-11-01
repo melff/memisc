@@ -146,7 +146,9 @@ getSummary.clmm <- function(obj,
     dimnames(vp.i) <- list(c(vrnames.i,cvnames.i),
                            c("est","se","stat","p","lwr","upr"),
                            names(obj$model)[1])
-    VarPar <- rabind2(VarPar,vp.i)
+    VarPar <- c(VarPar,structure(
+                           list(vp.i),
+                           names=lv.i))
  }
   ans <- c(ans,list(Variances=VarPar))
   
