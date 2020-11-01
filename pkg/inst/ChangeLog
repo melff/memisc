@@ -1,7 +1,9 @@
 2020-11-01:
    - Fix 'as.item()' methods for "haven_labelled" objects etc.
    - Variance component estimates of "merMod" and "clmm" objects are reported
-     as distinct statistics.            
+     as distinct statistics.
+   - An attempt to coerce an "importer" object into a data frame directly is now flagged
+     as an error.
 
 2020-10-10:
    - 'codebook()' better handles character variables in SPSS system files.

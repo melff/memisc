@@ -617,3 +617,14 @@ setMethod("tail",signature(x="importer"),
               rownames(y) <- seq.int(to=nrow(x),length.out=n)
               return(y)
           })
+
+as.data.frame.importer <- function(x, row.names = NULL, optional = FALSE, ...){
+  stop("\"importer\" objects cannot be coerced into data frames directly.
+First apply 'as.data.set()' or 'subset()'.")
+}
+
+as.data.frame.spss.system.importer <- as.data.frame.importer
+as.data.frame.spss.portable.importer <- as.data.frame.importer
+as.data.frame.spss.fixed.importer <- as.data.frame.importer
+as.data.frame.Stata.importer <- as.data.frame.importer
+as.data.frame.Stata_new.importer <- as.data.frame.importer

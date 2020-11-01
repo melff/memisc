@@ -293,6 +293,13 @@ S3method(Iconv,importer)
 S3method(Write,descriptions)
 S3method(Write,codebook)
 
+S3method(as.data.frame,spss.system.importer)
+S3method(as.data.frame,spss.portable.importer)
+S3method(as.data.frame,spss.fixed.importer)
+S3method(as.data.frame,Stata.importer)
+S3method(as.data.frame,Stata_new.importer)
+
+
 S3method(format_html,memisc_mtable)
 S3method(format_html,ftable)
 S3method(format_html,codebook)
