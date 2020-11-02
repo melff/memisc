@@ -14,14 +14,14 @@ knitr::opts_chunk$set(comment=NA,
 
 This vignette gives an example for the analysis of a typical social science data set.
 It is the data file of the *American National Election Study* of
-1948[^1] available from the [American National Election Studies website](https://www.electionstudies.org). The data file contains data
+1948[^1] available from the [American National Election Studies website](https://electionstudies.org). The data file contains data
 from to USA-wide surveys conducted October and November 1948
 by the Survey Research Centre, University Michigan
 (principal investigators: Angus Campbell and Robert L. Kahn). The
 total number of cases in the data set is 662 and the number of variables
 is 65 (more details about this
 data set can be found
-at <https://www.electionstudies.org/studypages/1948prepost/1948prepost.htm>).
+at <https://electionstudies.org/studypages/1948prepost/1948prepost.htm>).
 
 [^1]: National Election Studies, 1948: *Post-Election Study [dataset].* Ann Arbor, MI: University of Michigan, Center for Political Studies [producer and distributor], 1999. ANES Dataset ID: 1948.T; ICPSR Study Number: 7218. These materials are based on work supported by the National Science Foundation under Grant Nos.: SBR-9707741, SBR-9317631, SES-9209410, SES-9009379, SES-8808361, SES-8341310, SES-8207580, and SOC77-08885. Any opinions, findings and conclusions or recommendations expressed in these materials are those of the author(s) and do not necessarily reflect those of the National Science Foundation.
 
