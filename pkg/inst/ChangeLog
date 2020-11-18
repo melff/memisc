@@ -1,5 +1,11 @@
+2020-11-18:
+   - Fixed error caused by a change in 'getS3method()' introduced by R r79435:
+     'getS3method()' now enforces a the hitherto undocumented restriction that
+     the 'cls' argument must have length 1.
+   - Added 'title' metadata to Rmarkdown vignettes.
+
 2020-11-01:
-   - Fix 'as.item()' methods for "haven_labelled" objects etc.
+   - Fixed 'as.item()' methods for "haven_labelled" objects etc.
    - Variance component estimates of "merMod" and "clmm" objects are reported
      as distinct statistics.
    - An attempt to coerce an "importer" object into a data frame directly is now flagged

@@ -8,6 +8,10 @@ knitr::opts_chunk$set(comment=NA,
                results="markup")
 ```
 
+---
+title: Combining flattened contingency tables (and other tables)
+---
+
 # Combining flattened contingency tables (and other tables)
 
 This vignette demonstrates how flattened contingency tables can be combined into more

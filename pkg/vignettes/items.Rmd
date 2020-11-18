@@ -7,6 +7,10 @@ knitr::opts_chunk$set(comment=NA,
                fig.align="center",
                results="markup")
 ```
+--- 
+title:  Handling questionnaire items with 'memisc'
+---
+
 # Handling questionnaire items with *memisc*
 
 ## Motivation

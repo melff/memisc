@@ -7,6 +7,10 @@ knitr::opts_chunk$set(comment=NA,
                results="markup")
 ```
 
+---
+title: A demonstration of showing 'mtable' results in HTML format
+---
+
 # A demonstration of showing `mtable` results in HTML format
 
 First, we load the package and estimate some regression models.
