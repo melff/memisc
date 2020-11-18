@@ -53,12 +53,20 @@ getSummary <- function(obj,alpha=.05,...) UseMethod("getSummary")
 summaryTemplate <- function(x)
   UseMethod("summaryTemplate")
 
+getFirstS3method <- function(mname,cls,optional){
+    for(cls1 in cls){
+        mfun <- getS3method(mname,cls1,optional)
+        if(length(mfun)) return(mfun)
+    }
+    return(NULL)
+}
+
 getSummaryTemplate <- function(x){
   SummaryTemplates <- get("SummaryTemplates", envir=.memiscEnv)
   if(missing(x)) return(SummaryTemplates)
   if(is.character(x)) cls <- x
   else cls <- class(x)
-  stf <- getS3method("summaryTemplate",cls,optional=TRUE)
+  stf <- getFirstS3method("summaryTemplate",cls,optional=TRUE)
   if(length(stf))
     res <- stf(x)
   else
