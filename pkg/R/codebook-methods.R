@@ -287,10 +287,10 @@ setMethod("codebookEntry","factor",function(x,weights=NULL,unweighted=TRUE,...){
 })
 
 setMethod("codebookEntry","character",function(x,weights=NULL,unweighted=TRUE,...){
-
   spec <- c("Storage mode:"=storage.mode(x))
   isna <- is.na(x)
-  descr <- as.matrix(codebookStatsChar(x))
+  descr <- codebookStatsChar(x)
+  descr <- descr$descr
 
   if(any(isna)){
     tab <- NAtab(isna)

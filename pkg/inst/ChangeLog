@@ -1,3 +1,6 @@
+2020-12-15:
+   - Fixed creation of codebooks for character vectors.
+
 2020-11-18:
    - Fixed error caused by a change in 'getS3method()' introduced by R r79435:
      'getS3method()' now enforces a the hitherto undocumented restriction that
