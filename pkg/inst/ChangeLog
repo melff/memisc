@@ -1,3 +1,6 @@
+2020-01-16:
+   - Added functions 'reorder_codes()' and 'trim_labels()'.
+
 2020-12-15:
    - Fixed creation of codebooks for character vectors.
 

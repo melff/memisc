@@ -475,3 +475,6 @@ export(deduplicate_labels)
 S3method(deduplicate_labels,default)
 S3method(deduplicate_labels,item)
 S3method(deduplicate_labels,item.list)
+
+export(trim_labels,reorder_codes)
+exportMethods(trim_labels,reorder_codes)

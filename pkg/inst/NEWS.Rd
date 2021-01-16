@@ -92,7 +92,11 @@
     \item A new \code{deduplicate_labels()} function allows to deal with
           duplicate labels (where several codes have the same label)
     \item It is now possible to create codebooks for weighted data.
-        }       
+    \item The function \code{trim_labels()} allows to trim codes from
+          value labels.
+    \item The function \code{reorder_codes()} allows to reorder the
+          codes of a survey item.
+    }
   }
   \subsection{IMPROVEMENTS}{
     \itemize{
