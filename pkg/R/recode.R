@@ -79,7 +79,7 @@ setMethod("recode","item",function(x,...,
   }
   newvlab <- newcodes[nzchar(names(newcodes))]
 
-  if(length(lab.y <- labels(x)) && identical(otherwise,"copy")){
+  if(length(lab.y <- labels(x)) && copy){
     lab.y.val <- lab.y@values
     lab.oldcodes <- lapply(oldcodes,Substitute,list(x=lab.y.val))
     lab.torecode <- sapply(lab.oldcodes,eval,envir=environment(),enclos=parent.frame())
