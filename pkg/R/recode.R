@@ -6,7 +6,7 @@ setMethod("recode","item",function(x,...,
                                    otherwise=NA){
   recodings <- match.call(expand.dots=FALSE)$...
   recodings <- recodings[nzchar(sapply(recodings,paste,collapse=""))]
-
+  
   if(any(sapply(sapply(recodings,"[[",1),paste)!="<-"))
     stop("invalid recoding request")
   if(!length(recodings)) return(x)
@@ -76,6 +76,9 @@ setMethod("recode","item",function(x,...,
     length(otherwise) <- length(y)
     otherwise[] <- tmp
     y[!recoded] <- otherwise[!recoded]
+    nNA <-sum(is.na(otherwise[!recoded]))
+    if(nNA > 0)
+      warning("recoding created ",nNA," NAs")
   }
   newvlab <- newcodes[nzchar(names(newcodes))]
 
@@ -191,6 +194,9 @@ setMethod("recode","vector",function(x,...,
         length(otherwise) <- length(y)
         otherwise[] <- tmp
         y[!recoded] <- otherwise[!recoded]
+        nNA <-sum(is.na(otherwise[!recoded]))
+        if(nNA > 0)
+            warning("recoding created ",nNA," NAs")
     }
     if(is.character(y)) {
         levels <- sort(unique(y[y%nin%newcodes]))
@@ -218,9 +224,9 @@ setMethod("recode","factor",function(x,...,copy=getOption("recode_copy",identica
   newcodes <- as.character(newcodes)
   oldcodes <- lapply(recodings,"[[",3)
   oldcodes <- lapply(oldcodes,eval,envir=environment())
-  oldcodes <- sapply(oldcodes,function(o) x %in% o)
-  if(!is.matrix(oldcodes)) oldcodes <- t(oldcodes)
-  nevtrue <- colSums(oldcodes) == 0
+  torecode <- sapply(oldcodes,function(o) x %in% o)
+  if(!is.matrix(torecode)) torecode <- t(torecode)
+  nevtrue <- colSums(torecode) == 0
   if(any(nevtrue)){
     nrecng <- paste(recodings[nevtrue])
     if(length(nrecng)>1)
@@ -228,13 +234,13 @@ setMethod("recode","factor",function(x,...,copy=getOption("recode_copy",identica
     else
       warning("recoding ",nrecng," has no consequences")
   }
-  ambiguous <- rowSums(oldcodes) > 1
+  ambiguous <- rowSums(torecode) > 1
   if(any(ambiguous))
     stop("recoding request is ambiguous")
 
   y <- integer(length=length(x))
-  for(i in 1:ncol(oldcodes)){
-    y[oldcodes[,i]] <- i
+  for(i in 1:ncol(torecode)){
+    y[torecode[,i]] <- i
   }
   if(copy){
     olevels <- levels(unique(x[y==0,drop=TRUE]))
@@ -251,6 +257,10 @@ setMethod("recode","factor",function(x,...,copy=getOption("recode_copy",identica
   }
   else {
     y <- factor(y,levels=1:max(y),labels=newcodes)
+    recoded <- as.logical(rowSums(torecode))
+    nNA <- sum(is.na(y[!recoded]) & !is.na(x[!recoded]))
+    if(nNA > 0)
+      warning("recoding created ",nNA," NAs")
   }
   return(y)
 })
