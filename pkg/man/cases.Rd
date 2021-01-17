@@ -8,18 +8,22 @@
   \code{\link{ifelse}}.
   }
 \usage{
-cases(\dots,check.xor)
+cases(\dots,check.xor=c("warn","stop","ignore"),
+      .default=NA,.complete=FALSE)
 }
 \arguments{
   \item{\dots}{A sequence of logical expressions or assignment expressions containing
     logical expressions as "right hand side".}
   \item{check.xor}{character (either \code{"warn"}, \code{"stop"}, or  \code{"ignore"})
-  or logical; if \code{TRUE} or equal to \code{"stop"} or 
-  \code{"warn"}, 
-  \code{cases} checks, whether the case
-    conditions are mutually exclusive and exhaustive. If this is not
+    or logical; if \code{TRUE} or equal to \code{"stop"} or 
+    \code{"warn"}, 
+    \code{cases} checks, whether the case
+    conditions are mutually exclusive. If this is not
     satisfied and \code{check.xor} equals \code{"warn"} a warning is shown,
-    otherwise an error exception is raised. }
+    otherwise an error exception is raised.}
+  \item{.default}{a value to be used for unsatisfied conditions.}
+  \item{.complete}{logical, if \code{TRUE} an additional factor level is
+    created for the unsatisfied conditions.}
 }
 \details{
   There are two distinct ways to use this function. Either the
@@ -37,7 +41,9 @@ cases(\dots,check.xor)
   attached to the logical expressions, after the tags of the expressions.
   Not that the logical expressions all need to evaluate to logical vectors
   of the same length, otherwise an error condition is raised.
-
+  If \code{.complete} is \code{TRUE} then an additional factor level is
+  created for the conditions not satisfied for any of the cases.
+  
   For the second use, the \code{\dots} arguments have to be a series
   of assignment expression of the type \code{<expression> <- <logical expression>}
   or \code{<logical expression> -> <expression>}. For cases
@@ -47,11 +53,14 @@ cases(\dots,check.xor)
   the result of the second expression that appears on the other side
   of the assignment operator become elements of the
   vector returned by \code{cases}, etc.
+  For cases that do not satisfy any of the given conditions the value of
+  the \code{.default} argument is used. 
   Note that the logical expressions also here all need to evaluate to logical
   vectors of the same length. The expressions on the other side of the
   assignment operator should also be either vectors of the same length
   and mode or should scalars of the same mode, otherwise unpredictable
   results may occur.
+
 }
 \value{
   If it is called with logical expressions as \dots arguments,
@@ -100,6 +109,18 @@ fun <- function(x)
   )
 x <- seq(from=-2,to=2,length=101)
 plot(fun(x)~x)
+
+# Demo of the new .default and .complete arguments
+x <- seq(from=-2,to=2)
+cases(a = x < -1,
+      b = x > 1,
+      .complete = TRUE)
+cases(x < -1,
+      x > 1,
+      .complete = TRUE)
+cases(1 <- x < -1,
+      3 <- x > 1,
+      .default = 2)
 }
 
 \keyword{manip}

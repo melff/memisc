@@ -1,4 +1,5 @@
-cases <- function(...,check.xor=c("warn","stop","ignore")){
+cases <- function(...,check.xor=c("warn","stop","ignore"),
+                  .default=NA,.complete=FALSE){
   subst <- match.call(expand.dots=FALSE)$...
   
   if(!missing(check.xor))  
@@ -16,6 +17,7 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
   have.arrows[have.arrows] <- have.arrows[have.arrows] & sapply(sapply(subst[have.arrows],"[[",1),paste)=="<-"
 
   parent <- parent.frame()
+  
   if(all(have.arrows)){
     cond.names <- names(subst)
 
@@ -29,11 +31,9 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
     na.cond <- rowSums(is.na(conditions)) > 0
 
     done <- rowSums(conditions, na.rm=TRUE)
-    if(any(done!=1) && check.xor!="ignore") {
+    if(any(done > 1) && check.xor!="ignore") {
       msg <- switch(check.xor,warn=warning,stop=stop)
-      if(any(done==0) && any(done>1)) msg("conditions are neither exhaustive nor mutually exclusive")
-      else if(any(done==0)) msg("conditions are not exhaustive")
-      else if(any(done>0)) msg("conditions are not mutually exclusive")
+      msg("conditions are not mutually exclusive")
     }
     never <- colSums(conditions[!na.cond,,drop=FALSE]) == 0
     if(any(never) && check.xor!="ignore"){
@@ -61,8 +61,16 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
     for(i in rev(1:ncol(conditions))){
       res[conditions[,i]] <- values[conditions[,i],i]
     }
+    if(any(done == 0) && !is.na(.default)){
+      xvalue <- .default[1]
+      xvalue <- as.vector(xvalue,mode=storage.mode(values))
+      res[done == 0] <- xvalue
+      done <- done + 1
+    }
     res[na.cond] <- as.vector(NA,mode=storage.mode(values))
     res[done==0] <- as.vector(NA,mode=storage.mode(values))
+    nNA <- sum(na.cond & done==0)
+    if(nNA > 0) warning(nNA," NAs created")
     if(length(cond.names) && all(nzchar(cond.names))){
         uq.values <- drop(unique(values))
         if(length(uq.values)==length(cond.names))
@@ -73,7 +81,6 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
   else if(!any(have.arrows))
   {
     conditions <- cbind(...)
-    
     if(ncol(conditions)!=length(subst)) stop("at least one condition results in NULL")
     if(!is.logical(conditions)) stop("all conditions have to be logical")
     #if(any(is.na(conditions))) stop("NA in logical condition")
@@ -86,11 +93,9 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
     else labels <- deflabels
 
     done <- rowSums(conditions,na.rm=TRUE)
-    if(any(done!=1) && check.xor!="ignore") {
+    if(any(done > 1) && check.xor!="ignore") {
       msg <- switch(check.xor,warn=warning,stop=stop)
-      if(any(done==0) && any(done>1)) msg("conditions are neither exhaustive nor mutually exclusive")
-      else if(any(done==0)) msg("conditions are not exhaustive")
-      else if(any(done>0)) msg("conditions are not mutually exclusive")
+      msg("conditions are not mutually exclusive")
     }
     never <- colSums(conditions[!na.cond,,drop=FALSE]) == 0
     if(any(never)){
@@ -106,8 +111,26 @@ cases <- function(...,check.xor=c("warn","stop","ignore")){
     for(i in rev(1:ncol(conditions))){
       res[conditions[,i]] <- i
     }
+    if(any(done == 0) && .complete){
+      nms <- names(subst)
+      if(length(nms)){
+        elevel <- paste(nms,collapse="|")
+      }
+      else {
+        elevel <- sapply(subst,deparse)
+        elevel <- paste(elevel,collapse=" | ")
+      }
+      elevel <- paste0("!(",elevel,")")
+      xcode <- length(codes) + 1
+      res[done == 0] <- xcode
+      codes <- c(codes,xcode)
+      labels <- c(labels,elevel)
+      done <- done + 1
+    }
     res[na.cond] <- NA_integer_
     res[done==0] <- NA_integer_
+    nNA <- sum(na.cond & done==0)
+    if(nNA > 0) warning(nNA," NAs created")
     factor(res,levels=codes,labels=labels)
   }
   else stop("inconsistent arguments to 'cases'")

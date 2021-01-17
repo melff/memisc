@@ -1,6 +1,7 @@
 2020-01-17:
    - Make copying of labels while recoding work again.
    - Make 'recode()' warn about NAs being created.
+   - Add a new optional '.default' and '.complete' arguments to 'cases()'.
 
 2020-01-16:
    - Added functions 'reorder_codes()' and 'trim_labels()'.
