@@ -255,7 +255,6 @@ exportMethods(
     "%in%",
     recode,
     dim,
-    subset,
     initialize,
     coerce,
     Table,
@@ -281,6 +280,7 @@ S3method(str,datetime.item)
 S3method(str,Date.item)
 S3method(as.list,data.set)
 S3method(as.data.frame,data.set)
+S3method(subset,data.set)
 S3method(cbind,data.set)
 S3method(fapply,data.set)
 S3method(print,descriptions)
@@ -299,6 +299,11 @@ S3method(as.data.frame,spss.fixed.importer)
 S3method(as.data.frame,Stata.importer)
 S3method(as.data.frame,Stata_new.importer)
 
+S3method(subset,spss.system.importer)
+S3method(subset,spss.portable.importer)
+S3method(subset,spss.fixed.importer)
+S3method(subset,Stata.importer)
+S3method(subset,Stata_new.importer)
 
 S3method(format_html,memisc_mtable)
 S3method(format_html,ftable)

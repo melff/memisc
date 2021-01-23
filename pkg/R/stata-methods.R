@@ -234,3 +234,6 @@ setMethod("show","Stata.importer",
     cat(nvar,"variables and ")
     cat(nobs,"observations\n")
 })
+
+subset.Stata.importer <- subset.importer
+subset.Stata_new.importer <- subset.importer

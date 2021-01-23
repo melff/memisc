@@ -127,10 +127,8 @@ c_Data <- function(x1,x2) {
   }
 }
 
-setMethod("subset","importer",
-    function (x, subset, select, drop = FALSE,
-              ...)
-{
+subset.importer <- function (x, subset, select, drop = FALSE,
+              ...){
 
     if(missing(subset) && missing(select))
         return(as.data.set(x))
@@ -218,7 +216,7 @@ setMethod("subset","importer",
     }
     class(res) <- "data.frame"
     new("data.set",res)
-})
+}
 
 
 setMethod("$",signature(x="importer"),

@@ -367,15 +367,26 @@ str.data.set <- function (object, ...)
     else invisible(NextMethod("str", give.length = FALSE, ...))
 }
 
-# subset.data.set <- subset.data.frame
-setMethod("subset","data.set",
-  function(x,...){
-    frame <- structure(x@.Data,row.names=x@row_names,names=x@names,class="data.frame")
-    new("data.set",
-      subset(frame,...),
-      document=x@document
-      )
-})
+subset.data.set <- function (x, subset, select, drop = FALSE, ...) 
+{
+    r <- if (missing(subset)) 
+        rep_len(TRUE, nrow(x))
+    else {
+        e <- substitute(subset)
+        r <- eval(e, x, parent.frame())
+        if (!is.logical(r)) 
+            stop("'subset' must be logical")
+        r & !is.na(r)
+    }
+    vars <- if (missing(select)) 
+        rep_len(TRUE, ncol(x))
+    else {
+        nl <- as.list(seq_along(x))
+        names(nl) <- names(x)
+        eval(substitute(select), nl, parent.frame())
+    }
+    x[r, vars, drop = drop]
+}
 
 
 

@@ -161,3 +161,4 @@ setMethod("show","spss.fixed.importer",
     if(length(missval.file)) cat("\twith missing value definitions from file",sQuote(missval.file),"\n")
 })
 
+subset.spss.fixed.importer <- subset.importer

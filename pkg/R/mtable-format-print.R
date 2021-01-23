@@ -313,7 +313,7 @@ pf_mtable_format_print <- function(x,
     x[[l]]
 }
 
-format_signif_print <- function(syms,tmpl,width){
+format_signif_print <- function(syms,tmpl,width,dec="."){
     title <- tmpl[1]
     clps <- tmpl[3]
     tmpl <- tmpl[2]
@@ -321,9 +321,11 @@ format_signif_print <- function(syms,tmpl,width){
     empty.title <- paste(rep(" ",nchar(title)),collapse="")
     
     ns <- length(syms)
+    dotrepl <- paste0("{",dec,"}")
     for(i in 1:ns){
         sym <- names(syms)[i]
         thrsh <- unname(syms[i])
+        thrsh <- gsub(".",dotrepl,thrsh,fixed=TRUE)
         res.i <- sub("$sym",sym,tmpl,fixed=TRUE)
         res.i <- sub("$val",thrsh,res.i,fixed=TRUE)
         if(i < ns)

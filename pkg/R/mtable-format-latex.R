@@ -306,6 +306,7 @@ pf_mtable_format_latex <- function(x,
                                      signif.symbol.toLatex.default.template)
         signif.symbols <- format_signif_print(signif.symbols,
                                               signif.template,
+                                              dec=LaTeXdec,
                                               width=nchar(bottomrule))
         if(signif.notes.type=="include"){
             signif.symbols <- paste0("\\multicolumn{",total.ncol,"}{",

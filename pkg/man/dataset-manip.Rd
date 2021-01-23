@@ -1,5 +1,5 @@
 \name{data.set manipulation}
-\alias{subset,data.set-method}
+\alias{subset.data.set}
 \alias{unique,data.set-method}
 \alias{merge,data.set,data.set-method}
 \alias{merge,data.set,data.frame-method}
@@ -22,7 +22,7 @@
   \code{data.set} objects, that is, to \code{item} objects.
 }
 \usage{
-\S4method{subset}{data.set}(x, \dots)
+\method{subset}{data.set}(x, subset, select, drop = FALSE, \dots)
 
 \S4method{unique}{data.set}(x, incomparables = FALSE, \dots)
 
@@ -41,6 +41,12 @@
     \code{merge} may also be an object coercable into a data frame
     and the result still is a \code{data.set} object.
   }
+  \item{subset}{a logical expression, used to select observations from
+    the data set.}
+  \item{select}{a vector with variablen names, which are retained in the
+    data subset.}
+  \item{drop}{logical; if \code{TRUE} and the result has only one
+    column, the result is an item and not a data set.}
   \item{\dots}{for \code{subset}: a logical vector
     of the same length as the number of rows of the \code{data.set}
     and, optionally, a vector of variable names (tagged as \code{select});

@@ -17,7 +17,6 @@
 \alias{Stata_new.importer-class}
 \alias{show,Stata_new.importer-method}
 \alias{as.data.set,importer-method}
-\alias{subset,importer-method}
 \alias{dim,importer-method}
 \alias{names,importer-method}
 \alias{[,importer,atomic,atomic,ANY-method}
@@ -33,6 +32,11 @@
 \alias{initialize,spss.fixed.importer-method}
 \alias{initialize,Stata.importer-method}
 \alias{initialize,Stata_new.importer-method}
+\alias{subset.spss.portable.importer}
+\alias{subset.spss.system.importer}
+\alias{subset.spss.fixed.importer}
+\alias{subset.Stata.importer}
+\alias{subset.Stata_new.importer}
 
 \title{Object Oriented Interface to Foreign Files}
 \description{
@@ -91,7 +95,11 @@ Stata.file(file,
                    else getOption("Stata.old.encoding","cp1252"))
 
 ## The most important methods for "importer" objects are:
-\S4method{subset}{importer}(x, subset, select, drop = FALSE, \dots)
+\method{subset}{spss.system.importer}(x, subset, select, drop = FALSE, \dots)
+\method{subset}{spss.portable.importer}(x, subset, select, drop = FALSE, \dots)
+\method{subset}{spss.fixed.importer}(x, subset, select, drop = FALSE, \dots)
+\method{subset}{Stata.importer}(x, subset, select, drop = FALSE, \dots)
+\method{subset}{Stata_new.importer}(x, subset, select, drop = FALSE, \dots)
 
 \S4method{as.data.set}{importer}(x,row.names=NULL,optional=NULL,
                     compress.storage.modes=FALSE,\dots)
