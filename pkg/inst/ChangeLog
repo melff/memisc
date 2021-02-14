@@ -1,3 +1,6 @@
+2021-01-25:
+   - Made function 'reorder_codes()' redundant and memoved it.
+
 2021-01-23:
    - Made the subset methods S3-methods (again).
 

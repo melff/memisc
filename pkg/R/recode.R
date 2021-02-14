@@ -11,38 +11,42 @@ setMethod("recode","item",function(x,...,
     stop("invalid recoding request")
   if(!length(recodings)) return(x)
   newcodes <- lapply(recodings,"[[",2)
-  oldcodes <- lapply(recodings,"[[",3)
-  has.range <- paste(lapply(oldcodes,"[[",1)) == "range"
+  conditions <- lapply(recodings,"[[",3)
+  has.range <- paste(lapply(conditions,"[[",1)) == "range"
   if(any(has.range)){
-    has.min <- paste(lapply(oldcodes[has.range],"[[",2)) == "min"
-    has.max <- paste(lapply(oldcodes[has.range],"[[",3)) == "max"
+    oldcodes <- conditions
+    has.min <- paste(lapply(conditions[has.range],"[[",2)) == "min"
+    has.max <- paste(lapply(conditions[has.range],"[[",3)) == "max"
     if(any(has.min)){
       min.list <- list(min=min(x))
-      oldcodes[has.range][has.min] <- lapply(
-                oldcodes[has.range][has.min],
+      conditions[has.range][has.min] <- lapply(
+                conditions[has.range][has.min],
                 function(x) do.call("substitute",list(x,min.list))
                 )
     }
     if(any(has.max)){
       max.list <- list(max=max(x))
-      oldcodes[has.range][has.max] <- lapply(
-                oldcodes[has.range][has.max],
+      conditions[has.range][has.max] <- lapply(
+                conditions[has.range][has.max],
                 function(x) do.call("substitute",list(x,max.list))
                 )
     }
   }
-  oldcodes[has.range] <- lapply(oldcodes[has.range],
+  else
+      oldcodes <- sapply(conditions,eval)
+      
+  conditions[has.range] <- lapply(conditions[has.range],
                           function(x)
                           as.call(list(as.symbol("&"),
                             as.call(list(as.symbol("<="),x[[2]],as.symbol("x"))),
                             as.call(list(as.symbol("<="),as.symbol("x"),x[[3]]))
                             )
                           ))
-  oldcodes[!has.range] <- lapply(oldcodes[!has.range],
+  conditions[!has.range] <- lapply(conditions[!has.range],
                           function(x)
                           as.call(list(as.symbol("%in%"),as.symbol("x"),x))
                           )
-  torecode <- sapply(oldcodes,eval,envir=environment(),enclos=parent.frame())
+  torecode <- sapply(conditions,eval,envir=environment(),enclos=parent.frame())
   if(!is.matrix(torecode)) torecode <- t(torecode)
   newcodes <- sapply(newcodes,eval,parent.frame())
   nevtrue <- colSums(torecode) == 0
@@ -81,10 +85,25 @@ setMethod("recode","item",function(x,...,
       warning("recoding created ",nNA," NAs")
   }
   newvlab <- newcodes[nzchar(names(newcodes))]
-
-  if(length(lab.y <- labels(x)) && copy){
+  bijective <- FALSE
+  lab.y <- lab.x <- labels(x)
+  if(!is.list(oldcodes)){
+      # This happens only in one-to-one recodings
+      if(all(newcodes %in% oldcodes)){
+          if(copy) bijective <- TRUE
+          else if(length(lab.x) && all(lab.x@values %in% oldcodes))
+              bijective <- TRUE
+      }
+  }
+  if(length(lab.x) && bijective){
+      ii <- match(oldcodes,lab.x@values)
+      jj <- match(newcodes,lab.y@values)
+      lab.y@.Data[jj] <- lab.x@.Data[ii]
+      labels(y) <- lab.y
+  }
+  else if(length(lab.x) && copy){
     lab.y.val <- lab.y@values
-    lab.oldcodes <- lapply(oldcodes,Substitute,list(x=lab.y.val))
+    lab.oldcodes <- lapply(conditions,Substitute,list(x=lab.y.val))
     lab.torecode <- sapply(lab.oldcodes,eval,envir=environment(),enclos=parent.frame())
     for(i in seq(along=newcodes)){
       lab.y.val[lab.torecode[,i]] <- as.vector(newcodes[i],mode=storage.mode(lab.y.val))
