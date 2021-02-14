@@ -483,4 +483,4 @@ S3method(deduplicate_labels,item.list)
 
 export(trim_labels)
 exportMethods(trim_labels)
-export(reverse_codes)
+export(reversed)

@@ -1,3 +1,7 @@
+2021-02-14:
+   - Renamed 'reverse_codes()' to 'reversed()', which now leaves missing
+     values unchanged.
+
 2021-01-25:
    - Made function 'reorder_codes()' redundant and memoved it.
 
