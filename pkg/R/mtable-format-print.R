@@ -98,7 +98,8 @@ pf_mtable_format_print <- function(x,
         
         pt.j <- pt[,j]
         sh.j <- sh[,j]
-
+        l.pt.j <- length(pt.j)
+        
         ncol.j <- unique(sapply(pt.j,ncol))
         stopifnot(length(ncol.j)==1)
         ncols <- c(ncols,ncol.j)
@@ -107,27 +108,31 @@ pf_mtable_format_print <- function(x,
         max.width <- 0
 
         maxncols.j <- max(unlist(lapply(pt.j,ncol)))
-        
-        for(i in 1:length(pt.j)){
-            pt.ij <- pt.j[[i]]
-            skip.ij <- rep(FALSE,nrow(pt.ij))
 
-            if(need.sh[[i]]){
-                sh.ij <- sh.j[[i]]
-                if(length(sh.ij)){
-                    span.ij <- attr(sh.ij,"span")
-                    sh.ij <- set_length(sh.ij,ncol.j/span.ij)
-                    pt.ij <- rbind(sh.ij,pt.ij)
-                }
-                else
-                    pt.ij <- rbind("",pt.ij)
-                skip.ij <- c(TRUE,skip.ij)
-            }
+        span.j <- 1
+        if(length(sh.j)){
+            span.j <- attr(sh.j[[1]],"span")
+            if(!length(span.j))
+                span.j <- 1
+        }
+        
+        nr.j <- numeric(l.pt.j)
+        for(i in 1:l.pt.j){
+            pt.ij <- pt.j[[i]]
+            nr.j[i] <- nrow(pt.ij)
+            skip.ij <- rep(FALSE,nrow(pt.ij))
             tmp <- matrix("",nrow=nrow(pt.ij),ncol=maxncols.j)
             ii <- 1:ncol(pt.ij)
             tmp[,ii] <- pt.ij
             pt.j[[i]] <- pt.ij
             skip.j <- c(skip.j,skip.ij)
+            if(need.sh[[i]]){
+                sh.ij <- sh.j[[i]]
+                if(!length(sh.ij)){
+                    sh.ij <- ""
+                    sh.j[[i]] <- sh.j
+                }
+            }
         }
         pt.j <- do.call(rbind,pt.j)
         
@@ -140,8 +145,14 @@ pf_mtable_format_print <- function(x,
         }
         pt.j <- apply(pt.j,2,centerAt,skip=skip.j)
         pt.j <- apply(pt.j,2,format,justify="centre")
+        if(any(need.sh)){
+            dim(pt.j) <- c(nrow(pt.j),span.j,ncol(pt.j)/span.j)
+            pt.j <- apply(pt.j,c(1,3),paste,collapse=colsep)
+            ins. <- cumsum(c(1,.drop_last(nr.j)))[need.sh]
+            pt.j <- .row_prepend(pt.j,ins.,sh.j)
+            pt.j <- format(pt.j,justify="left")
+        }
         pt.j <- apply(pt.j,1,paste,collapse=colsep)
-        pt.j <- format(pt.j,justify="centre")
         res <- cbind(res,pt.j)
     }
 
@@ -196,7 +207,7 @@ pf_mtable_format_print <- function(x,
     for(i in 1:nrow(pt)){
         if(need.sh[[i]]){
             for(j in 1:ncol(pt)){
-                if(length(sh.ij))
+                if(length(sh.j))
                     sec.hrule[i,j] <- mkRule(sectionsep,nchar(res[1,j]))
                 else
                     sec.hrule[i,j] <- mkRule(" ",nchar(res[1,j]))
@@ -321,11 +332,10 @@ format_signif_print <- function(syms,tmpl,width,dec="."){
     empty.title <- paste(rep(" ",nchar(title)),collapse="")
     
     ns <- length(syms)
-    dotrepl <- paste0("{",dec,"}")
     for(i in 1:ns){
         sym <- names(syms)[i]
         thrsh <- unname(syms[i])
-        thrsh <- gsub(".",dotrepl,thrsh,fixed=TRUE)
+        thrsh <- gsub(".",dec,thrsh,fixed=TRUE)
         res.i <- sub("$sym",sym,tmpl,fixed=TRUE)
         res.i <- sub("$val",thrsh,res.i,fixed=TRUE)
         if(i < ns)
@@ -342,3 +352,20 @@ format_signif_print <- function(syms,tmpl,width,dec="."){
     res
 }
 signif.symbol.print.default.template <- c("Significance: ","$sym = p < $val","; ")
+
+.row_prepend <- function(x,where,value){
+    l <- length(where)
+    stopifnot(l == length(value))
+    where_ <- where + 1:l - 1
+    y <- matrix("",nrow(x)+l,ncol(x))
+    nr.y <- nrow(y)
+    rows.y <- 1:nr.y
+    other <- rows.y[!(rows.y %in% where_)]
+    y[other,] <- x
+    for(i in 1:l){
+        wh.i <- where_[l]
+        y[wh.i,] <- value[[i]]
+    }
+    y
+}
+.drop_last <- function(x) x[-length(x)]

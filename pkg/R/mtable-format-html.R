@@ -143,6 +143,8 @@ pf_mtable_format_html <- function(x,
                 if(split.dec)
                     colspan <- 3*colspan
                 sh.ij <- html_td(sh.ij,colspan=colspan,style=css(hstyle),vectorize=TRUE)
+                dim(pt.ij) <- c(nrow(pt.ij),span.j,ncol(pt.ij)/span.j)
+                pt.ij <- apply(pt.ij,c(1,3),as.html_group)
                 pt.ij <- rbind(sh.ij,pt.ij)
             }
             pt.j[[i]] <- pt.ij
@@ -164,6 +166,10 @@ pf_mtable_format_html <- function(x,
             else
                 sst.j <- html_td(sst.j,style=css(style),vectorize=TRUE)
             dim(sst.j) <- dm.ij
+            if(span.j > 1){
+                dim(sst.j) <- c(nrow(sst.j),span.j,ncol(sst.j)/span.j)
+                sst.j <- apply(sst.j,c(1,3),as.html_group)
+            }
             pt.j <- rbind(pt.j,sst.j)
         }
 

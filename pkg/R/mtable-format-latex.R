@@ -56,12 +56,12 @@ pf_mtable_format_latex <- function(x,
           sumry.multicol=FALSE,
           escape.tex=getOption("toLatex.escape.tex",FALSE),
           signif.notes.type=getOption("toLatex.signif.notes.type","include"),
-          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.5\\linewidth}"),
+          signif.notes.spec=getOption("toLatex.signif.notes.spec","p{.7\\linewidth}"),
           ...
           ){
 
     signif.notes.type <- match.arg(signif.notes.type,
-                                           c("include","drop","append","tnotes","drop"))
+                                           c("include","append","tnotes","drop"))
     
     colsep <- " & "
     rowsep <- "\n"
@@ -304,7 +304,7 @@ pf_mtable_format_latex <- function(x,
     if(length(signif.symbols)){
         signif.template <- getOption("signif.symbol.toLatex.template",
                                      signif.symbol.toLatex.default.template)
-        signif.symbols <- format_signif_print(signif.symbols,
+        signif.symbols <- format_signif_latex(signif.symbols,
                                               signif.template,
                                               dec=LaTeXdec,
                                               width=nchar(bottomrule))
@@ -348,3 +348,31 @@ pf_mtable_format_latex <- function(x,
 
 signif.symbol.toLatex.default.template <- c("Significance: ","$$sym \\equiv p < $val$","; ")
 
+format_signif_latex <- function(syms,tmpl,width,dec="."){
+    title <- tmpl[1]
+    clps <- tmpl[3]
+    tmpl <- tmpl[2]
+    res <- title
+    empty.title <- paste(rep(" ",nchar(title)),collapse="")
+    
+    ns <- length(syms)
+    dotrepl <- paste0("{",dec,"}")
+    for(i in 1:ns){
+        sym <- names(syms)[i]
+        thrsh <- unname(syms[i])
+        thrsh <- gsub(".",dotrepl,thrsh,fixed=TRUE)
+        res.i <- sub("$sym",sym,tmpl,fixed=TRUE)
+        res.i <- sub("$val",thrsh,res.i,fixed=TRUE)
+        if(i < ns)
+            res.i <- paste0(res.i,clps)
+        len <- length(res)
+        res.l <- res[len]
+        n.res.l <- nchar(res.l)
+        n.res.i <- nchar(res.i)
+        if(n.res.l+n.res.i <= width)
+            res[len] <- paste0(res.l,res.i)
+        else
+            res <- c(res,paste0(empty.title,res.i))
+    }
+    res
+}
