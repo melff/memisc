@@ -94,8 +94,8 @@
     \item It is now possible to create codebooks for weighted data.
     \item The function \code{trim_labels()} allows to trim codes from
           value labels.
-    \item The function \code{reorder_codes()} allows to reorder the
-          codes of a survey item.
+    \item The function \code{reverse()} allows to reorder the
+          codes of a survey item in reverse order.
     }
   }
   \subsection{IMPROVEMENTS}{
@@ -108,6 +108,8 @@
             superscript symbols. This can be set either by an explicit
             (new) argument \code{toLatex.escape.tex} or by a global option
             with the same name.
+      \item The \code{toLatex()} method for "ftable" objects has a new
+            option \code{fold.leaders}. 
       \item \code{spss.system.file()} now translates numeric variables with any SPSS
             date format into a "datetime.item"
       \item The function \code{List()} adds names to the elements of the
@@ -190,8 +192,14 @@
            observations is shown).
      \item Variance component estimates of "merMod" and "clmm" objects are reported
            as distinct statistics.
-         }
-  }
+     \item \code{recode()} has a new optional argument \code{code=}. If
+           \code{TRUE}, existing codes (and labels) are retained.
+     \item If the change in codes done by \code{recode()} merely
+           reorders codes, labels are reordered accordingly.
+     \item \code{subset()} is S3-generic again, as this allows for lazy
+           evaluation of its arguments.
+   }
+ }
   \subsection{BUGFIXES}{
   \itemize{
     \item \code{str} and \code{ls.str} are imported from the 
