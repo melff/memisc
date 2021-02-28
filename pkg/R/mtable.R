@@ -265,7 +265,7 @@ mtable <- function(...,
     summaries <- lapply(args,getSummary)
   
   parameter.types <- unique(unlist(lapply(summaries,names)))
-  parameter.types <- parameter.types[parameter.types %nin% c("sumstat","contrats","call")]
+  parameter.types <- parameter.types[parameter.types %nin% c("sumstat","contrasts","call","xlevels")]
   parmnames <- list()
   for(pt in parameter.types){
 
