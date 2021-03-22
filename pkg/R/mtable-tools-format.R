@@ -57,13 +57,19 @@ coefxpand <- function(x,names){
     if(length(x)){
         d <- dx <- dim(x)
         dd <- ddx <- dimnames(x)
+        ddNULL <- sapply(dd,is.null)
         d[3] <- length(names)
         dd[[3]] <- names
+        dd_ <- dd
+        dd[ddNULL] <- lapply(d[ddNULL],seq,from=1)
+        ddx[ddNULL] <- dd[ddNULL]
         res <- array("",dim=d,dimnames=dd)
         call.arg <- list(res)
         call.arg <- c(call.arg,ddx)
         call.arg <- c(call.arg,list(value=as.vector(x)))
-        do.call("[<-",call.arg)
+        res <- do.call("[<-",call.arg)
+        dimnames(res) <- dd_
+        res
     }
     else if(length(dim(x))){
         d <- dim(x)

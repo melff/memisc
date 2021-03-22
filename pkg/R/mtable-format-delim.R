@@ -43,38 +43,35 @@ pf_mtable_format_delim <- function(x,
     sh <- x$sect.headers
     leaders <- x$leaders
     headers <- x$headers
+    eq.headers <- x$eq.headers
 
-    sh.nonnull <- !Sapply(sh,is.null)
-    need.sh <- apply(sh.nonnull,1,any)
-    if(length(sst))
-        need.sh <- c(need.sh,FALSE)
     res <- NULL
 
     l.headers <- length(headers)
     l.leaders <- length(leaders)
-    
+
+    has.eq.headers <- length(eq.headers) > 0
+
     for(j in 1:ncol(pt)){
         
+        name.j <- colnames(pt)[j]
         pt.j <- pt[,j]
-        sh.j <- sh[,j]
 
         ncol.j <- unique(sapply(pt.j,ncol))
         stopifnot(length(ncol.j)==1)
-        span.j <- unique(sapply(sh.j,attr,"span"))
 
-        for(i in 1:length(pt.j)){
-            pt.ij <- pt.j[[i]]
-            if(need.sh[[i]]){
-                sh.ij <- sh.j[[i]]
-                if(length(sh.ij))
-                    pt.ij <- rbind(sh.ij,pt.ij)
-                else
-                    pt.ij <- rbind("",pt.ij)
-            }
-            pt.j[[i]] <- pt.ij
-        }
         pt.j <- do.call(rbind,pt.j)
-        
+
+        if(has.eq.headers){
+            eq.header.j <- eq.headers[[name.j]]
+            n.eq.j <- length(eq.header.j)
+            eq.span <- ncol(pt.j)/n.eq.j
+            tmp <- matrix("",ncol=n.eq.j,nrow=eq.span)
+            tmp[1,] <- eq.header.j
+            eq.header.j <- as.vector(tmp)
+            pt.j <- rbind(eq.header.j,pt.j)
+        }
+
         if(length(sst)){
             sst.j <- sst[[j]]
             sst.j <- colexpand(sst.j,ncol.j)
@@ -97,16 +94,9 @@ pf_mtable_format_delim <- function(x,
     
 
     if(l.leaders){
-
-        for(i in 1:l.leaders){
-            if(need.sh[i]){
-                leaders.i <- leaders[[i]]
-                leaders[[i]] <- c(list(structure("",span=1)),leaders.i)
-            }
-        }
-        
-        if(l.headers)
-            leaders <- c(rep(list(list(structure("",span=1))),l.headers),
+        lh <- l.headers + has.eq.headers      
+        if(lh)
+            leaders <- c(rep(list(list(structure("",span=1))),lh),
                          leaders)
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)

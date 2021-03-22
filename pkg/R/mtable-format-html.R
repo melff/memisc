@@ -78,30 +78,25 @@ pf_mtable_format_html <- function(x,
 
     pt <- x$parmtab
     sst <- x$summary.stats
-    sh <- x$sect.headers
     leaders <- x$leaders
     headers <- x$headers
+    eq.headers <- x$eq.headers
     outtypes <- x$outtypes
     l.headers <- length(headers)
     l.leaders <- length(leaders)
 
     ncols <- sapply(pt[1,,drop=FALSE],ncol)
 
-    sh.nonnull <- !Sapply(sh,is.null)
-    need.sh <- apply(sh.nonnull,1,any)
-    if(length(sst))
-        need.sh <- c(need.sh,FALSE)
     res <- NULL
+    has.eq.headers <- length(eq.headers) > 0
 
     for(j in 1:ncol(pt)){
         
+        name.j <- colnames(pt)[j]
         pt.j <- pt[,j]
-        sh.j <- sh[,j]
 
         ncol.j <- unique(sapply(pt.j,ncol))
         stopifnot(length(ncol.j)==1)
-        span.j <- unique(unlist(lapply(sh.j,attr,"span")))
-        if(is.null(span.j)|| !span.j) span.j <- 1
         
         for(i in 1:length(pt.j)){
 
@@ -131,25 +126,21 @@ pf_mtable_format_html <- function(x,
             }
             dim(pt.ij) <- dm.ij
             
-            if(need.sh[[i]]){
-                sh.ij <- sh.j[[i]]
-                if(!length(sh.ij)){
-                    sh.ij <- ""
-                    hstyle <- upd_vect(style,align.center)
-                }
-                else
-                    hstyle <- upd_vect(style,align.center,midrule_above)
-                colspan <- span.j
-                if(split.dec)
-                    colspan <- 3*colspan
-                sh.ij <- html_td(sh.ij,colspan=colspan,style=css(hstyle),vectorize=TRUE)
-                dim(pt.ij) <- c(nrow(pt.ij),span.j,ncol(pt.ij)/span.j)
-                pt.ij <- apply(pt.ij,c(1,3),as.html_group)
-                pt.ij <- rbind(sh.ij,pt.ij)
-            }
             pt.j[[i]] <- pt.ij
         }
         pt.j <- do.call(rbind,pt.j)
+        if(has.eq.headers){
+            eq.header.j <- eq.headers[[name.j]]
+            n.eq.j <- length(eq.header.j)
+            eq.span <- ncol.j/n.eq.j
+            if(split.dec)
+                eq.span <- eq.span*3
+            ehstyle <- upd_vect(style,align.center)
+            if(l.headers > 0)
+                ehstyle <- upd_vect(ehstyle,midrule_above)
+            eq.header.j <- html_td(eq.header.j,colspan=eq.span,style=css(ehstyle),vectorize=TRUE)
+            pt.j <- rbind(eq.header.j,pt.j)
+        }
 
         if(length(sst)){
             sst.j <- sst[[j]]
@@ -166,10 +157,6 @@ pf_mtable_format_html <- function(x,
             else
                 sst.j <- html_td(sst.j,style=css(style),vectorize=TRUE)
             dim(sst.j) <- dm.ij
-            if(span.j > 1){
-                dim(sst.j) <- c(nrow(sst.j),span.j,ncol(sst.j)/span.j)
-                sst.j <- apply(sst.j,c(1,3),as.html_group)
-            }
             pt.j <- rbind(pt.j,sst.j)
         }
 
@@ -180,16 +167,11 @@ pf_mtable_format_html <- function(x,
 
     if(l.leaders){
 
-        for(i in 1:l.leaders){
-            if(need.sh[i]){
-                leaders.i <- leaders[[i]]
-                leaders[[i]] <- c(list(structure("",span=1)),leaders.i)
-            }
-        }
-        
         leaders <- lapply(leaders,ldxp)
         leaders <- do.call(rbind,leaders)
-
+        if(has.eq.headers)
+            leaders <- rbind("",leaders)
+        
         lstyle <- upd_vect(style,align.left,firstcol)
         leaders <- html_td(leaders,vectorize=TRUE,style=css(lstyle))
         
@@ -229,9 +211,6 @@ pf_mtable_format_html <- function(x,
     sect.at <- integer()
     csum <- 1
     for(i in 1:nrow(pt)){
-        if(need.sh[i]){
-            csum <- csum + 1
-        }
         sect.at <- c(sect.at,csum)
         csum <- csum + nrow(pt[[i,1]])
     }
@@ -239,6 +218,8 @@ pf_mtable_format_html <- function(x,
         sect.at <- c(sect.at,csum)
     if(l.headers)
         sect.at <- c(sect.at + l.headers)
+    if(has.eq.headers)
+        sect.at <- sect.at + 1
     #browser()
     for(i in sect.at)
         res[[i]] <- lapply(res[[i]],setStyle,midrule_above)

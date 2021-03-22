@@ -352,7 +352,7 @@ prefmt1 <- function(parm,template,float.style,digits,signif.symbols,controls){
                                         "d","f"),
                                  width=1),
                          dim=c(1,1,length(parm),1),
-                         dimnames=list("1","2",names(parm),"3"))
+                         dimnames=list(NULL,NULL,names(parm),NULL))
             return(ans)
         }
     }
@@ -366,14 +366,14 @@ prefmt1 <- function(parm,template,float.style,digits,signif.symbols,controls){
         newdims <- c(dim(template),dim(ans)[-1])
         newdimnames <- c(dimnames(template),dimnames(ans)[-1])
 
-        for(i in 1:length(newdims)){
-            if(!length(newdimnames[[i]])){
-                if(newdims[i]==0)
-                    newdimnames[[i]] <- character(0)
-                else
-                    newdimnames[[i]] <- as.character(1:newdims[i])
-            }
-        }
+        # for(i in 1:length(newdims)){
+        #     if(!length(newdimnames[[i]])){
+        #         if(newdims[i]==0)
+        #             newdimnames[[i]] <- character(0)
+        #         else
+        #             newdimnames[[i]] <- as.character(1:newdims[i])
+        #     }
+        # }
         
         dim(ans) <- newdims
         dimnames(ans) <- newdimnames
@@ -528,7 +528,6 @@ preformat_mtable <- function(x){
     digits <- attr(x,"digits")
     stemplates <- attr(x,"stemplates")
     sdigits <- attr(x,"sdigits")
-    show.eqnames <- attr(x,"show.eqnames")
     
     allcompo <- unique(unlist(lapply(x,names)))
     nonparnames <- c("sumstat","contrasts","xlevels","call")
@@ -570,13 +569,11 @@ preformat_mtable <- function(x){
     }
     
     parmtab <- NULL
-    sect.headers <- NULL
 
     ct.indicator <- attr(x,"control.var.indicator")
     if(!length(ct.indicator)) ct.indicator <- c("X","")
     
     if(length(partypes)){
-
         for(n in 1:length(parms)){
 
             parms.n <- parms[[n]]
@@ -611,8 +608,7 @@ preformat_mtable <- function(x){
         }
         if(length(control.terms))
             partypes <- append(partypes,"Controls",after=1)
-        sect.headers <- parmtab <-
-            array(list(),
+        parmtab <- array(list(),
                   dim=c(length(partypes),length(parms)),
                   dimnames=list(partypes,names(parms)))
 
@@ -651,13 +647,6 @@ preformat_mtable <- function(x){
                     parmtab[[m,n]] <- parmtab.mn
                 }
                 modm <- mod[[m]]
-                if(length(dim(modm))>3){
-                    nc.mn <- max(ncol(parmtab.mn),1)
-                    d4 <- dim(modm)[4]
-                    dn4 <- dimnames(modm)[[4]]
-                    dn4 <- do_subs(dn4,relab.attr)
-                    sect.headers[[m,n]] <- structure(dn4,span=nc.mn/d4)
-                }
             }
             maxncol <- max(unlist(lapply(parmtab[,n],ncol)) )
             parmtab[,n] <- lapply(parmtab[,n],colexpand,maxncol)
@@ -673,16 +662,6 @@ preformat_mtable <- function(x){
                 nz <- nz[[1]]
             parmtab[n,] <- lapply(parmtab[n,],get_rows,i=nz)
         }
-
-        for(m in rownames(sect.headers)){
-            sh <- sect.headers[m,]
-            if(is.na(show.eqnames))
-                show.eqnames <- (length(unique(unlist(sh))) > 1)
-            if(!show.eqnames ){
-                sh <- list(NULL)
-            }
-            sect.headers[m,] <- sh
-        }
     }
     headers <- list()
     if(length(modelnames) > 1 || length(modelnames) == 1 && force.header) {
@@ -695,7 +674,21 @@ preformat_mtable <- function(x){
             headers <- c(list(h),headers)
         }
     }
-    leaders <- list()
+    # show.eqnames <- show.eqnames || has.multieq(x)
+
+    get_eq.headers <- function(x){
+        cf <- x$coef
+        eq.names <- dimnames(cf)[[3]]
+    }
+    eq.headers <- lapply(x,get_eq.headers)
+    all.eq.names <- unique(unlist(eq.headers))
+    if(is.na(show.eqnames))
+        show.eqnames <- length(all.eq.names) > 1
+    if(!show.eqnames)
+        eq.headers <- NULL
+    
+    leaders <- vector(mode="list",length=nrow(parmtab))
+    names(leaders) <- rownames(parmtab)
     if(length(partypes)){
       i <- 0 
       for(m in rownames(parmtab)){
@@ -714,7 +707,6 @@ preformat_mtable <- function(x){
         else
           leaders[[i]] <- lapply(pn,structure,span=span)
       }
-      names(leaders) <- rownames(parmtab)
     }
 
     if(length(summary.stats)) {
@@ -748,7 +740,7 @@ preformat_mtable <- function(x){
     structure(list(parmtab=parmtab,
                    leaders=leaders,
                    headers=headers,
-                   sect.headers=sect.headers,
+                   eq.headers=eq.headers,
                    summary.stats = summary.stats,
                    signif.symbols=signif.symbols,
                    controls=controls,
