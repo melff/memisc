@@ -1,4 +1,4 @@
-\name{syntactic-shugar}
+\name{syntactic-sugar}
 \alias{\%#\%}
 \alias{\%##\%}
 \alias{\%@\%}
