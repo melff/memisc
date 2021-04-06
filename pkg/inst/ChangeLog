@@ -1,3 +1,7 @@
+2021-04-06:
+   - Added a new 'Means()' generic function for the convenient computation of 
+     group means.
+
 2021-02-14:
    - Renamed 'reverse_codes()' to 'reversed()', which now leaves missing
      values unchanged.

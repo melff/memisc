@@ -96,6 +96,8 @@
           value labels.
     \item The function \code{reverse()} allows to reorder the
           codes of a survey item in reverse order.
+    \item The generic function \code{Means()} allows to conveniently obtain
+          group means, optionally with standard errors and/or confidence intervals.
     }
   }
   \subsection{IMPROVEMENTS}{

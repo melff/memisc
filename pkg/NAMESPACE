@@ -484,3 +484,13 @@ S3method(deduplicate_labels,item.list)
 export(trim_labels)
 exportMethods(trim_labels)
 export(reversed)
+
+export(Means)
+S3method(Means,formula)
+S3method(Means,data.frame)
+S3method(Means,data.set)
+S3method(Means,numeric)
+S3method(as.data.frame,means.table)
+S3method(as.data.frame,xmeans.table)
+
+
