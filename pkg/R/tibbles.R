@@ -130,17 +130,26 @@ setMethod("as_haven",signature(x="data.set"),function(x,user_na=FALSE,...){
 })
 setMethod("as_haven",signature(x="item.vector"),function(x,user_na=FALSE,...){
     y <- x@.Data
-    attr(y,"label") <- description(x)
-    attr(y,"labels") <- as.vector(labels(x))
-    ms <- missing.values(x)
-    if(user_na && length(ms)){
-        attr(y,"na_values") <- ms@filter
-        attr(y,"na_range") <- ms@range
-        class(y) <- "haven_labelled_spss"
-    } else {
-        ism <- is.missing(x)
-        y[ism] <- NA
-        class(y) <- "haven_labelled"
+    if(length(description(x)))
+        attr(y,"label") <- description(x)
+    if(is.character(x))
+        labels(x) <- NULL
+    if(length(labels(x))){
+        l <- as.vector(labels(x))
+        storage.mode(y) <- "integer"
+        storage.mode(l) <- "integer"
+        attr(y,"labels") <- l
+        ms <- missing.values(x)
+        if(user_na && length(ms)){
+            attr(y,"na_values") <- as.integer(ms@filter)
+            attr(y,"na_range") <- as.integer(ms@range)
+            class(y) <- "haven_labelled_spss"
+        } else {
+            ism <- is.missing(x)
+            y[ism] <- NA
+            class(y) <- "haven_labelled"
+        }
     }
+    names(y) <- gsub(".","_",names(y),fixed=TRUE)
     return(y)
 })
