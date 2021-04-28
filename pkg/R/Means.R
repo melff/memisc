@@ -229,8 +229,11 @@ Means.numeric <- function(data,...){
 }
 
 Means.data.set <- function(data,...){
+    cl <- match.call()
     data <- as.data.frame(data)
-    NextMethod()
+    cl$data <- data
+    cl[[1]] <- as.symbol("Means")
+    eval(cl,parent.frame())
 }
 
 Means.formula <- function(data,subset,weights,
