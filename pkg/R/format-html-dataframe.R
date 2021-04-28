@@ -1,6 +1,6 @@
 df_format_stdstyle <- c(
   "padding-top"="3px",
-  "padding-bottom"="0px",
+  "padding-bottom"="3px",
   "padding-left"="0.5ex",
   "padding-right"="0.5ex",
   "margin-top"="0px",
