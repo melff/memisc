@@ -124,6 +124,7 @@ setGeneric("as_haven",function(x,...)standardGeneric("as_haven"))
 setMethod("as_haven",signature(x="data.set"),function(x,user_na=FALSE,...){
     y <- lapply(x@.Data,as_haven,user_na=user_na,...)
     names(y) <- names(x)
+    names(y) <- gsub(".","_",names(y),fixed=TRUE)
     attr(y,"row.names") <- x@row_names
     class(y) <- c("tbl_df","tbl","data.frame")
     return(y)
@@ -150,6 +151,5 @@ setMethod("as_haven",signature(x="item.vector"),function(x,user_na=FALSE,...){
             class(y) <- "haven_labelled"
         }
     }
-    names(y) <- gsub(".","_",names(y),fixed=TRUE)
     return(y)
 })
