@@ -9,7 +9,9 @@
   }
 \usage{
 cases(\dots,check.xor=c("warn","stop","ignore"),
-      .default=NA,.complete=FALSE)
+      .default=NA,.complete=FALSE,
+      check.na=c("warn","stop","ignore"),
+      na.rm=TRUE)
 }
 \arguments{
   \item{\dots}{A sequence of logical expressions or assignment expressions containing
@@ -17,13 +19,27 @@ cases(\dots,check.xor=c("warn","stop","ignore"),
   \item{check.xor}{character (either \code{"warn"}, \code{"stop"}, or  \code{"ignore"})
     or logical; if \code{TRUE} or equal to \code{"stop"} or 
     \code{"warn"}, 
-    \code{cases} checks, whether the case
+    \code{cases} checks whether the case
     conditions are mutually exclusive. If this is not
-    satisfied and \code{check.xor} equals \code{"warn"} a warning is shown,
+    satisfied and \code{check.xor} equals \code{"warn"} (the default), a warning is shown,
     otherwise an error exception is raised.}
   \item{.default}{a value to be used for unsatisfied conditions.}
   \item{.complete}{logical, if \code{TRUE} an additional factor level is
     created for the unsatisfied conditions.}
+  \item{check.na}{character (either \code{"warn"}, \code{"stop"}, or  \code{"ignore"})
+    or logical; if \code{TRUE} or equal to \code{"stop"} or 
+    \code{"warn"}, \code{cases} checks, whether any of the case
+    conditions evaluates to \code{NA}.
+    If that case, if \code{check.na} is \code{TRUE} or equals
+    \code{"stop"} an error exception is raised, while if \code{check.na}
+    equals \code{"warn"} (the default) a warning is shown.}
+  \item{na.rm}{a logical value; how to handle \code{NA}s (if they do not
+    already lead to an error exception). If \code{FALSE} if \emph{any} of the
+    conditions evaluates to \code{NA}, the corresponding value of the
+    result vector is \code{NA}. If \code{TRUE} (the default), the
+    resulting vector or factor is \code{NA} only for instances where all
+    conditions result in \code{NA}. 
+  }
 }
 \details{
   There are two distinct ways to use this function. Either the
@@ -121,6 +137,61 @@ cases(x < -1,
 cases(1 <- x < -1,
       3 <- x > 1,
       .default = 2)
+
+threshhold <- 5
+d <- c(1:10, NaN)
+
+d1 <- cases(
+  d > threshhold -> 1,
+  d <= threshhold -> 2
+)
+
+d2 <- cases(
+  is.na(d) -> 0,
+  d > threshhold -> 1,
+  d <= threshhold -> 2
+)
+
+# Leads to missing values because some of the conditions result in missing
+# even though they could be 'captured'
+d3 <- cases(
+  is.na(d) -> 0,
+  d > threshhold -> 1,
+  d <= threshhold -> 2,
+  na.rm=FALSE
+)
+
+d4 <- cases(
+  is.na(d) -> 0,
+  d > threshhold +2 -> 1,
+  d <= threshhold -> 2,
+  na.rm=FALSE
+)
+
+cbind(d,d1,d2,d3,d4)
+
+cases(
+  d > threshhold,
+  d <= threshhold
+)
+
+cases(
+  is.na(d),
+  d > threshhold,
+  d <= threshhold
+)
+
+cases(
+  d > threshhold,
+  d <= threshhold,
+  .complete=TRUE
+)
+
+cases(
+  d > threshhold + 2,
+  d <= threshhold,
+  .complete=TRUE
+)
 }
 
 \keyword{manip}

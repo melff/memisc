@@ -200,6 +200,10 @@
            reorders codes, labels are reordered accordingly.
      \item \code{subset()} is S3-generic again, as this allows for lazy
            evaluation of its arguments.
+    \item \code{cases()} handles \code{NAs} more sensibly - if a
+          case condition is \code{TRUE} this leads to a non-\code{NA} 
+          result even if other conditions evaluate to \code{FALSE}, if
+          \code{cases()} is called with \code{na.rm=TRUE} (the default). 
    }
  }
   \subsection{BUGFIXES}{
@@ -244,7 +248,7 @@
     \item \code{as.data.set} works for "tibbles" also when method dispatch
           via class inheritance does not work.
     \item \code{codebook()} now handles character variables in SPSS
-           system files correclty.
+    system files correclty.
         }
     }
   \subsection{USER-VISIBLE CHANGES}{

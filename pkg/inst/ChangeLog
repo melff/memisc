@@ -1,3 +1,6 @@
+2021-05-03:
+   - Fixed handling of missing values (NA) in 'cases()'.
+
 2021-04-06:
    - Added a new 'Means()' generic function for the convenient computation of 
      group means.
