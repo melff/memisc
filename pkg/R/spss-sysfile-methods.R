@@ -118,9 +118,14 @@ spss.system.file <- function(
 
     if(length(aux$aux_enc)){
         encoding2 <- toupper(aux$aux_enc)
-        if(encoding2 %in% iconvlist())
+        if(encoding2 %in% iconvlist()){
             encoding <- encoding2
-        message(sprintf("File character set is '%s'.",encoding))
+            message(sprintf("File character set is '%s'.",encoding))
+        }
+        else {
+            warning(sprintf("File contains unsupported character set '%s', using fallback.",encoding2))
+            encoding <- encoded
+        }
     }
     else if(length(aux$info_int32)){
         encoding <- aux$info_int32["character_code"]
@@ -133,13 +138,18 @@ spss.system.file <- function(
                    "ISO8859-1"=28591,
                    "UTF-8"=65001)
         encoding1 <- names(enc_table)[match(encoding,enc_table)]
-        if(encoding1 %in% iconvlist())
+        if(encoding1 %in% iconvlist()){
             encoding <- encoding1
-        message(sprintf("File character set is '%s'.",encoding))
+            message(sprintf("File character set is '%s'.",encoding))
+        }
+        else {
+            warning(sprintf("File contains unsupported character set '%s', using fallback.",encoding1))
+            encoding <- encoded
+        }
     }
     else {
         encoding <- encoded
-        message("File does not contain character set encoding information, using fallback")
+        message("File does not contain character set encoding information, using fallback.")
     }
 
     if(iconv){

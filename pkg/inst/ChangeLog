@@ -1,3 +1,6 @@
+2021-05-24:
+   - Fixed use of file-supplied encoding information.
+
 2021-05-03:
    - Fixed handling of missing values (NA) in 'cases()'.
 
