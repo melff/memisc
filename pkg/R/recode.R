@@ -69,10 +69,11 @@ setMethod("recode","item",function(x,...,
       names=newcodes
       )
   }
-  newcodes <- newcodes[!nevtrue]
-  torecode <- torecode[,!nevtrue,drop=FALSE]
+  #newcodes <- newcodes[!nevtrue]
+  #torecode <- torecode[,!nevtrue,drop=FALSE]
   for(i in seq(along=newcodes)){
-    y[torecode[,i]] <- as.vector(newcodes[i],mode=storage.mode(y))
+    if(!nevtrue[i])
+      y[torecode[,i]] <- as.vector(newcodes[i],mode=storage.mode(y))
   }
   if(!copy){
     recoded <- as.logical(rowSums(torecode))
