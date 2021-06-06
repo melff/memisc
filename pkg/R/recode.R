@@ -81,7 +81,7 @@ setMethod("recode","item",function(x,...,
     length(otherwise) <- length(y)
     otherwise[] <- tmp
     y[!recoded] <- otherwise[!recoded]
-    nNA <-sum(is.na(otherwise[!recoded]))
+    nNA <-sum(is.na(otherwise[!recoded])) - sum(is.na(x[!recoded]))
     if(nNA > 0)
       warning("recoding created ",nNA," NAs")
   }
@@ -214,7 +214,7 @@ setMethod("recode","vector",function(x,...,
         length(otherwise) <- length(y)
         otherwise[] <- tmp
         y[!recoded] <- otherwise[!recoded]
-        nNA <-sum(is.na(otherwise[!recoded]))
+        nNA <- sum(is.na(otherwise[!recoded])) - sum(is.na(x[!recoded]))
         if(nNA > 0)
             warning("recoding created ",nNA," NAs")
     }
