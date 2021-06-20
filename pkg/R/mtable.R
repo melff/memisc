@@ -678,7 +678,11 @@ preformat_mtable <- function(x){
 
     get_eq.headers <- function(x){
         cf <- x$coef
-        eq.names <- dimnames(cf)[[3]]
+        dn.cf <- dimnames(cf)
+        if(length(dn.cf)>2)
+            eq.names <- dimnames(cf)[[3]]
+        else
+            eq.names <- NULL
     }
     eq.headers <- lapply(x,get_eq.headers)
     all.eq.names <- unique(unlist(eq.headers))
