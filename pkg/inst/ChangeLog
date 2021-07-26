@@ -1,3 +1,7 @@
+2021-07-26:
+   - Fixed handling of missing values in 'Means()'
+   - Handle 'cbind()' in 'Means()' nicely
+
 2021-05-24:
    - Fixed use of file-supplied encoding information.
 
@@ -16,7 +20,7 @@
    - Made function 'reorder_codes()' redundant and memoved it.
 
 2021-01-23:
-   - Made the subset methods S3-methods (again).
+   - Made the subset methods use S3-methods (again).
 
 2021-01-17:
    - Make copying of labels while recoding work again.

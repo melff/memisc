@@ -92,16 +92,26 @@ Means.data.frame <-
         formula <- by
         lhs <- formula[[2]]
         rhs <- formula[[3]]
-        lhs <- each_term(lhs)
-        nms <- sapply(lhs,deparse)
-        lhs <- as.call(c(quote(cbind),lhs))
-        formula[[2]] <- lhs
+        if(deparse(lhs[[1]]) != "cbind"){
+          lhs <- each_term(lhs)
+          nms <- sapply(lhs,deparse)
+          lhs <- as.call(c(quote(cbind),lhs))
+          formula[[2]] <- lhs
+        }
+        else {
+            if(length(names(lhs)))
+                nms <- names(lhs)[-1]
+            else
+                nms <- NULL
+        }
         mf <- match.call(expand.dots=FALSE)
         m <- match(c("data", "subset", "weights"), names(mf), 0L)
         mf <- mf[c(1L, m)]
         mf$drop.unused.levels <- TRUE
+        mf$na.action <- quote(na.pass)
         mf$formula <- formula
         mf[[1L]] <- quote(stats::model.frame)
+
         mf <- eval(mf, parent.frame())
         if(!missing(weights)){
             weights <- model.weights(mf)
