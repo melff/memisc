@@ -92,7 +92,10 @@ Means.data.frame <-
         formula <- by
         lhs <- formula[[2]]
         rhs <- formula[[3]]
-        if(deparse(lhs[[1]]) != "cbind"){
+        if(typeof(lhs) == "symbol"){
+            nms <- deparse(lhs)
+        }
+        else if(deparse(lhs[[1]]) != "cbind"){
           lhs <- each_term(lhs)
           nms <- sapply(lhs,deparse)
           lhs <- as.call(c(quote(cbind),lhs))
