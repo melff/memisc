@@ -249,7 +249,12 @@ setMethod("recode","factor",function(x,...,copy=getOption("recode_copy",identica
 
   if(!length(recodings)) return(x)
   newcodes <- sapply(recodings,"[[",2)
-  newcodes <- as.character(newcodes)
+  if(copy)
+      newcodes <- as.character(newcodes) # 'copy=TRUE' requires the result also to be a factor ... 
+  if(is.character(newcodes))
+      to_factor <- TRUE
+  else
+      to_factor <- FALSE
   oldcodes <- lapply(recodings,"[[",3)
   oldcodes <- lapply(oldcodes,eval,envir=environment())
   torecode <- sapply(oldcodes,function(o) x %in% o)
@@ -266,29 +271,46 @@ setMethod("recode","factor",function(x,...,copy=getOption("recode_copy",identica
   if(any(ambiguous))
     stop("recoding request is ambiguous")
 
-  y <- integer(length=length(x))
-  for(i in 1:ncol(torecode)){
-    y[torecode[,i]] <- i
-  }
-  if(copy){
-    olevels <- levels(unique(x[y==0,drop=TRUE]))
-    max.y <- max(y)
-    for(i in seq(along=olevels)){
-      y[x == olevels[i]] <- max.y + i
-    }
-    y <- factor(y,levels=1:max(y),labels=c(newcodes,olevels))
-  }
-  else if(is.character(otherwise)){
-    max.y <- max(y)
-    y[y == 0] <- max.y + 1
-    y <- factor(y,levels=1:max(y),labels=c(newcodes,otherwise[1]))
+  if(to_factor){
+      y <- integer(length=length(x))
+      for(i in 1:ncol(torecode)){
+          y[torecode[,i]] <- i
+      }
+      if(copy){
+          olevels <- levels(unique(x[y==0,drop=TRUE]))
+          max.y <- max(y)
+          for(i in seq(along=olevels)){
+              y[x == olevels[i]] <- max.y + i
+          }
+          y <- factor(y,levels=1:max(y),labels=c(newcodes,olevels))
+      }
+      else if(is.character(otherwise)){
+          max.y <- max(y)
+          y[y == 0] <- max.y + 1
+          y <- factor(y,levels=1:max(y),labels=c(newcodes,otherwise[1]))
+      }
+      else {
+          y <- factor(y,levels=1:max(y),labels=newcodes)
+          recoded <- as.logical(rowSums(torecode))
+          nNA <- sum(is.na(y[!recoded]) & !is.na(x[!recoded]))
+          if(nNA > 0)
+              warning("recoding created ",nNA," NAs")
+      }
   }
   else {
-    y <- factor(y,levels=1:max(y),labels=newcodes)
-    recoded <- as.logical(rowSums(torecode))
-    nNA <- sum(is.na(y[!recoded]) & !is.na(x[!recoded]))
-    if(nNA > 0)
-      warning("recoding created ",nNA," NAs")
+      y <- vector(mode=storage.mode(newcodes),
+                  length=length(x))
+      for(i in 1:ncol(torecode))
+          y[torecode[,i]] <- newcodes[i]
+      recoded <- as.logical(rowSums(torecode))
+      recoded[is.na(recoded)] <- TRUE
+      tmp <- as.vector(otherwise,mode=storage.mode(y))
+      length(otherwise) <- length(y)
+      otherwise[] <- tmp
+      y[!recoded] <- otherwise[!recoded]      
+      nNA <- sum(is.na(y[!recoded]) & !is.na(x[!recoded]))
+      if(nNA > 0)
+          warning("recoding created ",nNA," NAs")
   }
   return(y)
 })

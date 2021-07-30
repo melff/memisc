@@ -196,6 +196,7 @@
            as distinct statistics.
      \item \code{recode()} has a new optional argument \code{code=}. If
            \code{TRUE}, existing codes (and labels) are retained.
+     \item \code{recode()} now allows to recode factors into numeric vectors.
      \item If the change in codes done by \code{recode()} merely
            reorders codes, labels are reordered accordingly.
      \item \code{subset()} is S3-generic again, as this allows for lazy
@@ -204,7 +205,7 @@
           case condition is \code{TRUE} this leads to a non-\code{NA} 
           result even if other conditions evaluate to \code{FALSE}, if
           \code{cases()} is called with \code{na.rm=TRUE} (the default). 
-   }
+    }
  }
   \subsection{BUGFIXES}{
   \itemize{

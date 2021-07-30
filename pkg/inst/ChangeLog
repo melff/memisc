@@ -1,3 +1,6 @@
+2021-07-31:
+   - Enable recoding from factor (or character) to numeric
+
 2021-07-26:
    - Fixed handling of missing values in 'Means()'
    - Handle 'cbind()' in 'Means()' nicely
