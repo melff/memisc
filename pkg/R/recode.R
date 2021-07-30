@@ -6,6 +6,8 @@ setMethod("recode","item",function(x,...,
                                    otherwise=NA){
   recodings <- match.call(expand.dots=FALSE)$...
   recodings <- recodings[nzchar(sapply(recodings,paste,collapse=""))]
+
+  if(length(otherwise)!=1) stop("otherwise= argument must have length 1")
   
   if(any(sapply(sapply(recodings,"[[",1),paste)!="<-"))
     stop("invalid recoding request")
@@ -137,6 +139,9 @@ setMethod("recode","vector",function(x,...,
                                      copy=getOption("recode_copy",identical(otherwise,"copy")),
                                      otherwise=NA){
     call <- match.call()
+
+    if(length(otherwise)!=1) stop("otherwise= argument must have length 1")
+
     if("recodes" %in% names(call)
        || is.character(call[[3]])
        ) {
@@ -229,6 +234,9 @@ setMethod("recode","vector",function(x,...,
 setMethod("recode","factor",function(x,...,copy=getOption("recode_copy",identical(otherwise,"copy")),
                                      otherwise=NA){
   recodings <- match.call(expand.dots=FALSE)$...
+
+  if(length(otherwise)!=1) stop("otherwise= argument must have length 1")
+
   if("to.factor" %in% names(recodings)
     && is.logical(recodings[["to.factor"]])
     ) {
