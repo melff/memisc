@@ -92,13 +92,14 @@ setMethod("recode","item",function(x,...,
   lab.y <- lab.x <- labels(x)
   if(!is.list(oldcodes)){
       # This happens only in one-to-one recodings
-      if(all(newcodes %in% oldcodes)){
+      if(length(oldcodes) == length(newcodes) &&
+          all(oldcodes %in% newcodes)){
           if(copy) bijective <- TRUE
           else if(length(lab.x) && all(lab.x@values %in% oldcodes))
               bijective <- TRUE
       }
   }
-  if(length(lab.x) && bijective){
+  if(length(lab.x) && bijective && !length(names(newcodes))){
       ii <- match(oldcodes,lab.x@values)
       jj <- match(newcodes,lab.y@values)
       lab.y@.Data[jj] <- lab.x@.Data[ii]

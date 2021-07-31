@@ -1,3 +1,6 @@
+2021-08-01:
+   - Improved handling of labels in 'recode()'
+
 2021-07-31:
    - Enable recoding from factor (or character) to numeric
 

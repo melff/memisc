@@ -104,6 +104,19 @@ codebook(
            b = 2 <- 4:6,
            copy = TRUE))
 
+# Note the handling of labels if the recoding rules are bijective
+codebook(
+    recode(x,
+           1 <- 2,
+           2 <- 1,
+           copy=TRUE))
+
+codebook(
+    recode(x,
+           a = 1 <- 2,
+           b = 2 <- 1,
+           copy=TRUE))
+
 
 # A recoded version of x is returned
 # containing the values 1, 2, 3, which are

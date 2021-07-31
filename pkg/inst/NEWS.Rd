@@ -198,7 +198,8 @@
            \code{TRUE}, existing codes (and labels) are retained.
      \item \code{recode()} now allows to recode factors into numeric vectors.
      \item If the change in codes done by \code{recode()} merely
-           reorders codes, labels are reordered accordingly.
+           reorders codes, labels are reordered accordingly, unless
+           labels are explicitly given.
      \item \code{subset()} is S3-generic again, as this allows for lazy
            evaluation of its arguments.
     \item \code{cases()} handles \code{NAs} more sensibly - if a
