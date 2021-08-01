@@ -153,7 +153,10 @@ SEXP countlines(SEXP s_file){
       Rprintf("Actual line length: %d\n",strlen(buffer));
       Rprintf("Buffer: >>%s<<\n",buffer);
 #endif    
-      n = i;
+      if(cur_len > 0)
+         n = i + 1;
+      else 
+         n = i;
       break;
     }
   }

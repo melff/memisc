@@ -1,5 +1,6 @@
 2021-08-01:
    - Improved handling of labels in 'recode()'
+   - Corrected counting of cases in SPSS fixed format files
 
 2021-07-31:
    - Enable recoding from factor (or character) to numeric
