@@ -7,6 +7,7 @@ setAs(from="list",to="missing.values",function(from,to)new(to,filter=from$values
 
 is.valid2 <- function(x,filter){
   is.na.x <- is.na(x)
+  x <- x@.Data
   if(!length(filter)) !is.na.x
   else switch(class(filter),
       valid.values = !is.na.x & (x %in% filter@filter),
@@ -22,6 +23,7 @@ is.valid2 <- function(x,filter){
 
 is.missing2 <- function(x,filter){
   is.na.x <- is.na(x)
+  x <- x@.Data
   if(!length(filter)) is.na.x
   else switch(class(filter),
       valid.values = is.na.x | x %nin% filter@filter,
@@ -62,7 +64,7 @@ setMethod("valid.values",signature(x="item.vector"),function(x){
   if(!length(filter)) return(new("valid.values",filter=sort(unique(x@.Data))))
   vals <- switch(class(filter),
     valid.values=return(filter),
-    valid.range=sort(unique(x@.Data[x >= filter@filter[1] & x <= filter@filter[2]])),
+    valid.range=sort(unique(x@.Data[x@.Data >= filter@filter[1] & x@.Data <= filter@filter[2]])),
     missing.values=sort(unique(x@.Data[!is.missing2(x,filter)]))
     )
   new("valid.values",filter=vals)
@@ -74,8 +76,8 @@ setMethod("missing.values",signature(x="item.vector"),function(x){
   filter <- x@value.filter
   if(!length(filter)) return(NULL)
   vals <- switch(class(filter),
-    valid.values=sort(unique(x@.Data[x %nin% filter@filter])),
-    valid.range=sort(unique(x@.Data[x < filter@filter[1] | x > filter@filter[2]])),
+    valid.values=sort(unique(x@.Data[x@.Data %nin% filter@filter])),
+    valid.range=sort(unique(x@.Data[x@.Data < filter@filter[1] | x@.Data > filter@filter[2]])),
     missing.values=return(filter)
     )
   new("missing.values",filter=vals)
@@ -87,10 +89,10 @@ setMethod("valid.range",signature(x="item.vector"),function(x){
   filter <- x@value.filter
   if(!length(filter)) return(new("valid.range",filter=range(range(x@.Data))))
   vals <- switch(class(filter),
-    valid.values=range(x[x %in% filter@filter]),
+    valid.values=range(x@.Data[x@.Data %in% filter@filter]),
     valid.range=return(filter),
     missing.values={
-        rgn <- range(x[!is.missing2(x,filter)])
+        rgn <- range(x@.Data[!is.missing2(x,filter)])
         mv <- filter@filter
         if(any(mv >= rgn[1] & mv <= rgn[2])) stop("cannot make a valid range from this missing values definition")
         rgn

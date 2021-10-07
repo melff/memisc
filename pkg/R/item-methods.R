@@ -346,7 +346,7 @@ setMethod("as.character","item.vector",function(x,use.labels=TRUE,include.missin
     d <- description(x)
     ism <- is.missing(x) & !isTRUE(include.missings)
     if(use.labels && length(vl <- labels(x))){
-        i <- match(x,vl@values)
+        i <- match(x@.Data,vl@values)
         y <- vl@.Data[i]
         y[is.na(y)] <- as.character(x@.Data[is.na(y)])
         if(length(d))
