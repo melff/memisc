@@ -1,7 +1,7 @@
 # memisc 
 ### Tools for Managing Survey Data and Creating Tables of Estimates and Data Summaries
 
-[![Travis build status](https://api.travis-ci.com/melff/memisc.svg?branch=master)](https://travis-ci.org/melff/memisc) 
+[![Travis build status](https://api.travis-ci.com/melff/memisc.svg?branch=master)](https://app.travis-ci.com/github/melff/memisc) 
 [![Current release on GitHub](http://img.shields.io/github/release/melff/memisc.svg)](http://github.com/melff/memisc/releases/)
 [![CRAN](http://www.r-pkg.org/badges/version-last-release/memisc)](http://cran.r-project.org/package=memisc)
 [![Total downloads from RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/memisc)](http://cran.r-project.org/web/packages/memisc/index.html)
