@@ -60,8 +60,10 @@ bracket.importer <- function(x,Nargs,i,j,drop=TRUE,compress.storage.modes=FALSE,
   if(is.logical(i)){
     rows <- i
     ui <- which(i)
+    row.nums <- ui
   } else if(is.numeric(i)){
     i <- as.integer(i)
+    row.nums <- i
     ui <- sort(unique(i))
     rows <- logical(max(ui))
     rows[ui] <- TRUE
@@ -91,14 +93,14 @@ bracket.importer <- function(x,Nargs,i,j,drop=TRUE,compress.storage.modes=FALSE,
       x
       })
   names(res) <- names[cols]
-  attr(res,"row.names") <- ui
   class(res) <- "data.frame"
   if(is.numeric(i)){
     ii <- match(i,ui)
     res <- res[ii,,drop=FALSE]
   }
+  attr(res,"row.names") <- as.integer(row.nums)
   if(drop && length(res)==1) res[[1]]
-  else new("data.set",res)
+         new("data.set",res)
 }
 
 setMethod("[",signature(x="importer",i="atomic",j="atomic",drop="ANY"),
@@ -177,6 +179,8 @@ subset.importer <- function (x, subset, select, drop = FALSE,
         chunk.cols <- chunk.names %in% select.vars
         res <- x@.Data[select.cols]
         res.nobs <- 0
+        row.nums <- integer(0)
+        nobs.visited <- 0
         for(i in 1:m){
             chunk <- readChunk(x,nrows=cs,cols=cols)
             names(chunk) <- chunk.names
@@ -187,7 +191,11 @@ subset.importer <- function (x, subset, select, drop = FALSE,
                 chunk <- chunk[chunk.cols]
                 chunk <- lapply(chunk,"[",use.obs)
                 res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
+                row.nums.i <- seq.int(cs)[use.obs]
+                row.nums.i <- nobs.visited + row.nums.i
+                row.nums <- c(row.nums,row.nums.i)
             }
+            nobs.visited <- nobs.visited + cs
         }
         if(r > 0){
             chunk <- readChunk(x,nrows=r,cols=cols)
@@ -199,14 +207,19 @@ subset.importer <- function (x, subset, select, drop = FALSE,
                 chunk <- chunk[chunk.cols]
                 chunk <- lapply(chunk,"[",use.obs)
                 res <- mapply(c_Data,res,chunk,SIMPLIFY=FALSE)
+                row.nums.i <- seq.int(r)[use.obs]
+                row.nums.i <- nobs.visited + row.nums.i
+                row.nums <- c(row.nums,row.nums.i)
             }
+            nobs.visited <- nobs.visited + r
         }
+        stopifnot(nobs.visited == nobs)
         for(j in 1:length(res)){
             attributes(res[[j]]) <- attributes(chunk[[j]])
         }
         names(res) <- names(x)[select.cols]
         res <- res[select.vars]
-        attr(res,"row.names") <- 1:res.nobs
+        attr(res,"row.names") <- as.integer(row.nums)
     }
     new.names <- names(select.vars)
     if(length(new.names) && any(nzchar(new.names))){

@@ -1,5 +1,6 @@
 2021-01-06:
    - Add format method for "data.set" objects.
+   - Fix row names of subsets of importer objects.
 
 2021-10-07:
    - 'unclass' "item.vector" objects in 'as.character()' to

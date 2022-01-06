@@ -82,7 +82,12 @@ setLength <- function(x,n){
 setMethod("initialize","data.set",function(.Object,...,row.names=NULL,document=character()){
 
   args <- list(...)
-  if(is.list(args[[1]])) args <- unclass(args[[1]])
+  if(inherits(args[[1]],"data.frame") && missing(row.names)){
+      row.names <- rownames(args[[1]])
+  }
+  if(is.list(args[[1]])) {
+      args <- unclass(args[[1]])
+  }
   nr <- max(sapply(args,length))
   args <- lapply(args,setLength,n=nr)
   args <- lapply(args,as.item)

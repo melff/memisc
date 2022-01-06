@@ -205,7 +205,11 @@
     \item \code{cases()} handles \code{NAs} more sensibly - if a
           case condition is \code{TRUE} this leads to a non-\code{NA} 
           result even if other conditions evaluate to \code{FALSE}, if
-          \code{cases()} is called with \code{na.rm=TRUE} (the default). 
+          \code{cases()} is called with \code{na.rm=TRUE} (the
+          default). 
+    \item The result of \code{subset} and of the bracket-operator (\code{[]})
+          applied to importer objects has row names that indicate the rows
+          selected from the full data.
     }
  }
   \subsection{BUGFIXES}{
