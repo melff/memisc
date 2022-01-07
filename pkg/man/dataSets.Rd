@@ -5,6 +5,7 @@
 \alias{is.data.set}
 \alias{within,data.set-method}
 \alias{print,data.set-method}
+\alias{format,data.set-method}
 \alias{show,data.set-method}
 \alias{summary,data.set-method}
 \alias{as.data.frame.data.set}
