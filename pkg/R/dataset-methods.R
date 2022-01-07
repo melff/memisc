@@ -489,13 +489,16 @@ fapply.data.set <- function(formula,data,...)
   fapply.default(formula,data=as.data.frame(data,optional=TRUE),...)
   
 setMethod("as.data.set","list",function(x,row.names=NULL,...){
+  n_row <- unique(sapply(x,length))
+  if(length(n_row)>1)
+      stop("list elements must have same length")
   class(x) <- "data.frame"
   if(length(row.names)){
     if(length(row.names)!=nrow(x)) stop("row.names argument has wrong length")
     attr(x,"row.names") <- row.names
   }
   else
-    attr(x,"row.names") <- seq_len(nrow(x))
+    attr(x,"row.names") <- 1:n_row
   new("data.set",x)
 })
 
