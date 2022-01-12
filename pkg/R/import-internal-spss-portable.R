@@ -140,9 +140,6 @@ readDocumentPorStream <- function(stream){
 
 parseHeaderPorStream <- function(stream){
   header <- list()
-  ident <- readPorStream(stream,start=40,n=40)
-  if(!length(grep("SPSS PORT",ident,fixed=TRUE))) stop("not a portable file or not ascii encoded")
-  header$encoding <- split(ident," ")[[1]][1]
   header$control <- readRangePorStream(stream,200 + c(0,60))
   header$digits <- readRangePorStream(stream,200 + c(64,73))
   header$cletters <- readRangePorStream(stream,200 + c(74,99))
