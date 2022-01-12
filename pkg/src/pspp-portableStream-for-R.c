@@ -262,6 +262,8 @@ typedef struct {
   unsigned char buf[BUFSIZE];
   int pos;
   int line;
+  int line_size;
+  int nl_size; /* Number of characters that represent a newline (1 or 2)*/
   unsigned char translate[256];
   Rboolean at_end;
 } porStreamBuf;
@@ -276,6 +278,8 @@ void initPorStreamBuf(porStreamBuf *b){
   b->pos = 0;
   b->line = 0;
   b->at_end = FALSE;
+  b->line_size = 82;  /* 80 chars + newline character(s) */
+  b->nl_size = 2; /* Number of characters that represent a newline (1 or 2)*/
 }
 
 /*
@@ -300,10 +304,9 @@ void por_make_trans(porStreamBuf *b, const char *in){
 }
 // #undef DEBUG
 
-// #define DEBUG
 int fillPorStreamBuf(porStreamBuf *b) {
 #ifdef DEBUG
-  Rprintf("\nfillPorStreamBuf");
+  Rprintf("\n\n\n == fillPorStreamBuf ===");
   Rprintf("\nb = %d",b);
   Rprintf("\nb->buf = %d",b->buf);
 #endif
@@ -326,32 +329,39 @@ int fillPorStreamBuf(porStreamBuf *b) {
   }
 
 #ifdef DEBUG
+  Rprintf("\nline no = %d",b->line);
   Rprintf("\nbuffer = |%s|",b->buf);
 #endif
-  int i, len = (int)strlen((char *)b->buf), prtlen = 0;
-  for(i = 0; i < len; i++) b->buf[i] = b->translate[(int)b->buf[i]];
-  /* The following is for buggy portable files with short lines */
+  int i, len = (int)strlen((char *)b->buf);
+  for(i = 0; i < len; i++) 
+    b->buf[i] = b->translate[(int)b->buf[i]];
 
-  for(i = len-1; i >= 0; i--){
-    /*if(i >= BUFSIZE) error("out of bounds error");*/
-    if (b->buf[i] >= 32) /* found a printable character*/ {
-      prtlen = i+1;
-      break;
-    }
+  /* The following is for buggy portable files with short lines */
+  if(len < b->line_size){
+    for(i = len; i < 80; i++)
+      b->buf[i] = 32; /* The code for space */
   }
-  if(80 - prtlen > 0){ /* pad short lines with spaces */
-    warning("short line encountered");
-    memset(b->buf+prtlen-1,' ',80 - prtlen);
-    }
-  memset(b->buf+80,'\0',BUFSIZE - 80 - 1);
+  
 #ifdef DEBUG
-  Rprintf("\ncooked buffer = |%s|",b->buf);
+  Rprintf("\nreported length = %d",len);
 #endif
+  for(i = 80; i < BUFSIZE; i++)
+    b->buf[i] = 0; /* Inefficient, but better safe than sorry ... */
+#ifdef DEBUG
+  Rprintf("\ncorrected length = %d",strlen((char *)b->buf));
+#endif
+#ifdef DEBUG
+  /* Rprintf("\nline no = %d",b->line); */
+  Rprintf("\ncooked buffer = |%s|\nlength = %d");
+   /* if(prtlen < 80) {
+    *   Rprintf("\nShort line encountered, length =%d at line %d",prtlen,b->line);
+    * }  */
+#endif
+#undef DEBUG
   b->pos = 0;
   b->line++;
-  return prtlen;
+  return strlen((char *)b->buf);
 }
-// #undef DEBUG
 
 /** Internal functions to read from a porStreamBuf **/
 
@@ -410,7 +420,7 @@ Rboolean atEndPorStream(porStreamBuf *b){
 }
 
 
-#define HardMaxRead 5*80
+#define HardMaxRead 5*82
 
 char *readPorStream1(porStreamBuf *b, int n) {
 #ifdef DEBUG
@@ -420,7 +430,7 @@ char *readPorStream1(porStreamBuf *b, int n) {
   Rprintf("\nbuffer = |%s|",b->buf);
   Rprintf("\nn = %d",n);
 #endif
-  if(n > HardMaxRead) n = HardMaxRead;
+  if(n > HardMaxRead || n < 0) n = HardMaxRead;
   if(b->pos == 80) fillPorStreamBuf(b);
   char *ans = S_alloc(n+1,1);
   if(b->pos + n <= 80){
@@ -460,7 +470,7 @@ char *readPorStream1(porStreamBuf *b, int n) {
 }
 
 int readPorStreamTo(porStreamBuf *b, char *target, int n) {
-  if(n > HardMaxRead) n = HardMaxRead;
+  if(n > HardMaxRead || n < 0) n = HardMaxRead;
   if(b->pos == 80) fillPorStreamBuf(b);
   if(b->pos + n <= 80){
     memcpy(target, b->buf + b->pos, n);
@@ -666,11 +676,11 @@ char* readStringPorStream1(porStreamBuf *b){
 #endif
     char *ans = readPorStream1(b,len);
 #ifdef DEBUG
-    Rprintf("\nString: %s",ans);
+    Rprintf("\nString: '%s'",ans);
 #endif
     return ans;
 }
-
+#undef DEBUG
 
 
 
@@ -698,7 +708,10 @@ SEXP NewPorStream (SEXP name){
     return R_NilValue;
   }
   else {
-    fillPorStreamBuf(b);
+    fillPorStreamBuf(b); /* The first line must not be short */
+    b->line_size = strlen((char *)b->buf);
+    b->nl_size = b->line_size - 80;
+
     SEXP ans = R_MakeExternalPtr(b, install("porStreamBuf"), R_NilValue);
 		PROTECT(ans);
     R_RegisterCFinalizer(ans, (R_CFinalizer_t) closePorStream);
