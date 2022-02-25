@@ -1,5 +1,6 @@
 2022-02-25:
-   - Export S3 methods instead of S4 methods for "format".
+   - Export S3 methods instead of S4 methods for 'format()'.
+   - Allow ':'-operator for ranges of variables in 'foreach()'
 
 2022-01-06:
    - Add format method for "data.set" objects.

@@ -47,7 +47,6 @@ xapply.old <- function(...){
 
 
 
-
 foreach <- function(...){
   args <- match.call(expand.dots=FALSE)$...
   tags <- names(args)
@@ -59,13 +58,46 @@ foreach <- function(...){
   tags <- tags[nzchar(tags)]
   if(!length(expr) || !length(tags))return(invisible(NULL))
   vars <- sapply(vars,function(values){
+      colon <- function(x) {
+          from.name <- as.character(x[[2]])
+          to.name <- as.character(x[[3]])
+          nms <- ls(parent,sorted=FALSE)
+          from <- match(from.name,nms,nomatch=0L)
+          to <- match(to.name,nms,nomatch=0L)
+          if(any(c(from,to)==0))stop("Unknown variable referenced")
+          values <- nms[from:to]
+          lapply(values,as.symbol)
+      }
+      tosymbols <- function(x){
+          x <- as.list(x)
+          isc <- sapply(x,is.call)
+          if(!any(isc))return(x)
+          else {
+              xisc <- x[isc]
+              x[isc] <- lapply(xisc,expcall)   
+          }
+          x
+      }
+      expcall <- function(x){
+        if(as.character(x[[1]]) %in% c("c","list")) tosymbols(x[-1])
+        else if(as.character(x[[1]])==":"){
+            x <- colon(x)
+        }
+        else eval(x,parent)
+      }
+
       values <- if(is.call(values)) {
-        if(as.character(values[[1]]) %in% c("c","list")) as.list(values[-1])
+        if(as.character(values[[1]]) %in% c("c","list")) tosymbols(values[-1])
+        else if(as.character(values[[1]])==":"){
+            value <- colon(values)
+        }
         else eval(values,parent)
         }
       else
         eval(values)
-      valchars <- sapply(values,as.character)
+
+      values <- unlist(values)
+      valchars <- lapply(values,as.character)
       if(!all(nzchar(valchars))) stop("empty element in substitution list")
       values
       })
