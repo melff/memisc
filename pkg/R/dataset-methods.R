@@ -298,14 +298,16 @@ setMethod("annotation","data.set",function(x){
   else NULL
 })
 
-setMethod("format","data.set",function(x,...){
+
+format.data.set <- function(x,...){
     y <- structure(x@.Data,
                    row.names=x@row_names,
                    names=x@names,
                    class="data.frame")
     y[] <- lapply(y[],format,justify="right")
     y
-})
+}
+#setMethod("format","data.set",format.data.set)
 
 print.data.set <- function(x,max.obs=Inf,width=Inf,...){
   frame <- structure(x@.Data,row.names=x@row_names,names=x@names,class="data.frame")

@@ -91,7 +91,7 @@ format.datetime.item <- function(x,justify="right",format="",tz="",usetz=FALSE,.
   if(!nzchar(tz)) tz <- "UTC"
   format(as.POSIXct.datetime.item(x),format=format,tz=tz,usetz=usetz,...)
 }
-setMethod("format","datetime.item",format.datetime.item)
+#setMethod("format","datetime.item",format.datetime.item)
 
 print.datetime.item <- function(x,
     width=getOption("width"),

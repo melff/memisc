@@ -45,7 +45,7 @@ str.Date.item <- function(object,give.head=TRUE,width=getOption("width"),...){
 format.Date.item <- function(x,...){
   format(as.Date.numeric.item(x),...)
 }
-setMethod("format","Date.item",format.Date.item)
+#setMethod("format","Date.item",format.Date.item)
 
 print.Date.item <- function(x,
     width=getOption("width"),

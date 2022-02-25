@@ -540,10 +540,10 @@ Write.codebook <- function(x,file=stdout(),...){
 }
 
 
-setMethod("format","codebookEntry",
-  function(x,name="",width=getOption("width"),
+format.codebookEntry <- function(x,name="",width=getOption("width"),
           toprule=paste(rep("=",width),collapse=""),
-          midrule=paste(rep("-",width),collapse="")
+          midrule=paste(rep("-",width),collapse=""),
+          ...
       ){
       
   annot <- x@annotation
@@ -644,7 +644,10 @@ setMethod("format","codebookEntry",
     "",
     if(length(annot.out)) annot.out
     )
-})
+}
+
+#setMethod("format","codebookEntry",format.codebookEntry)
+
 
 format_cb_table <- function(tab){
     cn <- colnames(tab)

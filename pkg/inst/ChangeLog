@@ -1,4 +1,7 @@
-2021-01-06:
+2022-02-25:
+   - Export S3 methods instead of S4 methods for "format".
+
+2022-01-06:
    - Add format method for "data.set" objects.
    - Fix row names of subsets of importer objects.
 

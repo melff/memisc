@@ -472,7 +472,7 @@ format.item.vector <- function(x,use.labels=getOption("print.use.value.labels"),
   x[ism] <- paste("*",x[ism],sep="")
   format(x,justify=justify,...)
 }
-setMethod("format","item.vector",format.item.vector)
+#setMethod("format","item.vector",format.item.vector)
 
 print.item.vector <- function(x,
     use.labels=isTRUE(getOption("print.use.value.labels")),
