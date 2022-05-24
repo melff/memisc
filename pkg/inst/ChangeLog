@@ -1,3 +1,6 @@
+2022-05-24:
+   - item-more-methods-...: any(ism | isna) not 'any(ism || isna)'
+
 2022-02-25:
    - Export S3 methods instead of S4 methods for 'format()'.
    - Allow ':'-operator for ranges of variables in 'foreach()'

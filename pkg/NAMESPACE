@@ -230,7 +230,6 @@ exportMethods(
     Math,
     Math2,
     Summary,
-    format,
     print,
     show,
     unique,
@@ -500,5 +499,5 @@ S3method(contract,data.set)
 S3method(format,data.set)
 S3method(format,codebookEntry)
 S3method(format,Date.item)
-S3method(format,datatime.item)
+S3method(format,datetime.item)
 S3method(format,item.vector)

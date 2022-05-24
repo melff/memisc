@@ -181,7 +181,7 @@ setMethod("codebookEntry","datetime.item",function(x,weights,...){
   ism <- is.missing(x)
   isna <- is.na(x)
 
-  if(any(ism || isna)){
+  if(any(ism | isna)){
       tab <- missNAtab(ism,isna)
     if(length(weights)){
       wtab <- missNAtab(ism,isna,weights)
