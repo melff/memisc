@@ -598,47 +598,6 @@ dsView <- function(x){
 }
 
 
-
-collect.data.set <- function(...,
-  names=NULL,inclusive=TRUE,fussy=FALSE,warn=TRUE,
-  sourcename=".origin"){
-  args <- list(...)
-  subst <- substitute(list(...))
-  if(length(names)) {
-    if(length(names)!=length(args)) stop("names argument has wrong length")
-  }
-  else {
-    if(length(names(args))) names <- names(args)
-    else {
-      names <- sapply(lapply(subst[-1],deparse),paste,collapse=" ")
-    }
-  }
-  all.vars <- lapply(args,names)
-  common.vars <- reduce(all.vars,intersect)
-  all.vars <- reduce(all.vars,union)
-  other.vars <- setdiff(all.vars,common.vars)
-  source <- rep(seq_along(args),sapply(args,nrow))
-  nrow.items <- sapply(args,nrow)
-  nrow.total <- sum(nrow.items)
-  ix <- split(seq_len(nrow.total),source)
-  res <- lapply(common.vars,function(var){
-                vecs <- lapply(args,function(x)x[[var]])
-                collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
-                })
-  names(res) <- common.vars
-  if(inclusive){
-    res1 <- lapply(other.vars,function(var){
-                  vecs <- lapply(args,function(x)x[[var]])
-                  collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
-                  })
-    names(res1) <- other.vars
-    res <- c(res,res1)
-  }
-  res[[sourcename]] <- factor(source,labels=names)
-  as.data.set(res)
-}
-
-
 ## Copied and modified from base package
 ## Original copyright (C) 1995-2013 The R Core Team
 
