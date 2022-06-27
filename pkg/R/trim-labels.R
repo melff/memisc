@@ -1,5 +1,6 @@
 trim_labels.item <- function(x,...){
     l <- labels(x)
+    if(!length(l)) return(x)
     lData <- l@.Data
     l@.Data <- gsub("[-+]?[0-9]+[.] ","",lData)
     labels(x) <- l
