@@ -103,6 +103,7 @@ collect.table <- function(...,names=NULL,sourcename=".origin",fill=0){
 
 collect.data.frame <- function(...,
   names=NULL,inclusive=TRUE,fussy=FALSE,warn=TRUE,
+  detailed.warnings=FALSE,use.last=FALSE,
   sourcename=".origin"){
   args <- list(...)
   subst <- substitute(list(...))
@@ -125,13 +126,15 @@ collect.data.frame <- function(...,
   ix <- split(seq_len(nrow.total),source)
   res <- lapply(common.vars,function(var){
                 vecs <- lapply(args,function(x)x[[var]])
-                collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
+                collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy,
+                        detailed.warnings=detailed.warnings,use.last=use.last)
                 })
   names(res) <- common.vars
   if(inclusive){
     res1 <- lapply(other.vars,function(var){
                   vecs <- lapply(args,function(x)x[[var]])
-                  collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
+                  collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy,
+                          detailed.warnings=detailed.warnings,use.last=use.last)
                   })
     names(res1) <- other.vars
     res <- c(res,res1)
@@ -142,6 +145,7 @@ collect.data.frame <- function(...,
 
 collect.data.set <- function(...,
   names=NULL,inclusive=TRUE,fussy=FALSE,warn=TRUE,
+  detailed.warnings=FALSE,use.last=FALSE,
   sourcename=".origin"){
   args <- list(...)
   subst <- substitute(list(...))
@@ -164,13 +168,15 @@ collect.data.set <- function(...,
   ix <- split(seq_len(nrow.total),source)
   res <- lapply(common.vars,function(var){
                 vecs <- lapply(args,function(x)x[[var]])
-                collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
+                collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy,
+                        detailed.warnings=detailed.warnings,use.last=use.last)
                 })
   names(res) <- common.vars
   if(inclusive){
     res1 <- lapply(other.vars,function(var){
                   vecs <- lapply(args,function(x)x[[var]])
-                  collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy)
+                  collOne(vecs,source=source,nrow.items=nrow.items,varname=var,fussy=fussy,
+                          detailed.warnings=detailed.warnings,use.last=use.last)
                   })
     names(res1) <- other.vars
     res <- c(res,res1)
@@ -210,30 +216,43 @@ reduce <- function(x,FUN,...){
   return(y)
 }
 
-collOne <- function(vecs,source,nrow.items,varname,fussy=FALSE,warn=TRUE){
+collOne <- function(vecs,source,nrow.items,varname,fussy=FALSE,warn=TRUE,
+                    detailed.warnings=FALSE,use.last=FALSE){
   lens <- sapply(vecs,length)
   has.els <- lens > 0
-  checkAttribs(vecs[which(has.els)],varname=varname,fussy=fussy)
+  checkAttribs(vecs[which(has.els)],varname=varname,fussy=fussy,
+                    detailed.warnings=FALSE)
 #   browser()
-  first.nonempty <- which(has.els)[1]
+  if(use.last)
+      use.attribs <- last(which(has.els))
+  else
+      use.attribs <- first(which(has.els))
   res <- lapply(seq_along(nrow.items),
                   function(i)
                     if(has.els[i]) vecs[[i]]
                     else rep(NA,nrow.items[i])
                   )
   res <- unsplit(res,source)
-  attributes(res) <- attributes(vecs[[first.nonempty]])
-  if(isS4(vecs[[first.nonempty]]))
+  attributes(res) <- attributes(vecs[[use.attribs]])
+  if(isS4(vecs[[use.attribs]]))
       res <- asS4(res)
   res
 }
 
 
-checkAttribs <- function(x,varname,fussy=FALSE,warn=TRUE){
+checkAttribs <- function(x,varname,fussy=FALSE,warn=TRUE,
+                         detailed.warnings=FALSE){
   modes <- sapply(x,mode)
   if(length(unique(modes))>1) stop("modes for ",sQuote(varname)," do not match",call.=FALSE)
   attribs <- lapply(x,attributes)
   attribs.identical <- namedlists.pairwise.identical(attribs)
+  if(!attribs.identical && detailed.warnings && (warn || fussy)){
+      cat("\n==========================================")
+      cat("\nVariable: ",varname,)
+      cat("\n------------------------------------------")
+      cat("\n")
+      print(attribs)
+  }
   if(!attribs.identical && fussy) stop("attributes for ",sQuote(varname)," do not match",call.=FALSE)
   if(!attribs.identical && warn) warning("attributes for ",sQuote(varname)," do not match",call.=FALSE)
 }
