@@ -6,7 +6,6 @@ setMethod("recode","item",function(x,...,
                                    otherwise=NA){
   recodings <- match.call(expand.dots=FALSE)$...
   recodings <- recodings[nzchar(sapply(recodings,paste,collapse=""))]
-
   if(length(otherwise)!=1) stop("otherwise= argument must have length 1")
   
   if(any(sapply(sapply(recodings,"[[",1),paste)!="<-"))
@@ -40,13 +39,13 @@ setMethod("recode","item",function(x,...,
   conditions[has.range] <- lapply(conditions[has.range],
                           function(x)
                           as.call(list(as.symbol("&"),
-                            as.call(list(as.symbol("<="),x[[2]],as.symbol("x"))),
-                            as.call(list(as.symbol("<="),as.symbol("x"),x[[3]]))
+                            as.call(list(as.symbol("<="),x[[2]],quote(x@.Data))),
+                            as.call(list(as.symbol("<="),quote(x@.Data),x[[3]]))
                             )
                           ))
   conditions[!has.range] <- lapply(conditions[!has.range],
                           function(x)
-                          as.call(list(as.symbol("%in%"),as.symbol("x"),x))
+                          as.call(list(as.symbol("%in%"),quote(x@.Data),x))
                           )
   torecode <- sapply(conditions,eval,envir=environment(),enclos=parent.frame())
   if(!is.matrix(torecode)) torecode <- t(torecode)
