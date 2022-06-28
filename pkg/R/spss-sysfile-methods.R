@@ -14,7 +14,8 @@ spss.system.file <- function(
     to.lower=getOption("spss.sav.to.lower",FALSE),
     iconv=TRUE,
     encoded=getOption("spss.sav.encoding","cp1252"),
-    ignore.scale.info = FALSE
+    ignore.scale.info = FALSE,
+    negatives_are_missings = FALSE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -84,10 +85,18 @@ spss.system.file <- function(
 
     if(length(varlabs))
       variables[names(varlabs)] <- mapply("description<-",variables[names(varlabs)],varlabs)
-    if(length(vallabs))
-      suppressWarnings(variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs))
+    if(length(vallabs)){
+        unique_ <- function(x){
+            dup <- duplicated(x)
+            x[!dup]
+        }
+        vallabs <- lapply(vallabs,unique_)
+        suppressWarnings(variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs))
+    }
     if(length(missings))
       variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
+    if(negatives_are_missings)
+      variables <- lapply(variables,`valid.range<-`,c(0,Inf))
 
     ncases <- data.spec$header$ncases
     if(ncases < 0){
