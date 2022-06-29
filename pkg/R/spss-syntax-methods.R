@@ -7,7 +7,8 @@ spss.fixed.file <- function(
     count.cases=TRUE,
     to.lower=getOption("spss.fixed.to.lower",FALSE),
     iconv=TRUE,
-    encoded=getOption("spss.fixed.encoding","cp1252")
+    encoded=getOption("spss.fixed.encoding","cp1252"),
+    negative2missing = FALSE
     ){
     file <- force(file)
     columns.file <- force(columns.file)
@@ -56,6 +57,8 @@ spss.fixed.file <- function(
       for(n in nn)
         missing.values(variables[[n]]) <- missings[[n]]
     } 
+    if(negative2missing)
+      variables <- lapply(variables,`valid.range<-`,c(0,Inf))
 
     nlines <- if(count.cases) {
         rofseek(fptr,pos=0)

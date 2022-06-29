@@ -15,7 +15,7 @@ spss.system.file <- function(
     iconv=TRUE,
     encoded=getOption("spss.sav.encoding","cp1252"),
     ignore.scale.info = FALSE,
-    negatives_are_missings = FALSE
+    negative2missing = FALSE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -95,7 +95,7 @@ spss.system.file <- function(
     }
     if(length(missings))
       variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
-    if(negatives_are_missings)
+    if(negative2missing)
       variables <- lapply(variables,`valid.range<-`,c(0,Inf))
 
     ncases <- data.spec$header$ncases

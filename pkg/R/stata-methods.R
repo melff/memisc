@@ -2,7 +2,7 @@ Stata.file <- function(file,
                        iconv=TRUE,
                        encoded=if(new_format)getOption("Stata.new.encoding","utf-8")
                                else getOption("Stata.old.encoding","cp1252"),
-                       negatives_are_missings = FALSE
+                       negative2missing = FALSE
                        ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -47,7 +47,7 @@ Stata.file <- function(file,
         missings <- missings[sapply(missings,length) > 0]
         if(length(missings))
             variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
-        if(negatives_are_missings)
+        if(negative2missing)
             variables <- lapply(variables,`valid.range<-`,c(0,Inf))
 
         missval_labels <- dta117_missval_labels(types)
@@ -100,7 +100,7 @@ Stata.file <- function(file,
             suppressWarnings(variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs))
         if(length(missings))
             variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
-        if(negatives_are_missings)
+        if(negative2missing)
             variables <- lapply(variables,`valid.range<-`,c(0,Inf))
 
         if(length(missval_labels)){

@@ -1,7 +1,7 @@
 2022-06-28:
    - 'trim_labels()' now handles items without labels gracefully.
    - 'spss.system.file()', 'spss.portable.file()', and 'Stata.file()' get
-     a 'negatives_are_missings' option.
+     a 'negative2missing' option.
    - 'collect.data.frame()' and 'collect.data.frame()' gain a 'use_last'
      and a 'detailed_warnings' option.
 

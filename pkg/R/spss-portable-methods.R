@@ -7,7 +7,7 @@ spss.portable.file <- function(
     to.lower=getOption("spss.por.to.lower",FALSE),
     iconv=TRUE,
     encoded=getOption("spss.por.encoding","cp1252"),
-    negatives_are_missings = FALSE
+    negative2missing = FALSE
     ){
     file <- path.expand(file)
     check.file(file,error=TRUE)
@@ -67,7 +67,7 @@ spss.portable.file <- function(
       suppressWarnings(variables[names(vallabs)] <- mapply("labels<-",variables[names(vallabs)],vallabs))
     if(length(missings))
       variables[names(missings)] <- mapply("missing.values<-",variables[names(missings)],missings)
-    if(negatives_are_missings)
+    if(negative2missing)
       variables <- lapply(variables,`valid.range<-`,c(0,Inf))
     
     if(count.cases){
