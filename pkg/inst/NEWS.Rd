@@ -97,7 +97,10 @@
     \item The function \code{reverse()} allows to reorder the
           codes of a survey item in reverse order.
     \item The generic function \code{Means()} allows to conveniently obtain
-          group means, optionally with standard errors and/or confidence intervals.
+          group means, optionally with standard errors and/or confidence
+          intervals.
+    \item The colon operator (\code{:}) can be used to refer to ranges of
+          variables in \code{foreach()}
     }
   }
   \subsection{IMPROVEMENTS}{
@@ -210,6 +213,15 @@
     \item The result of \code{subset} and of the bracket-operator (\code{[]})
           applied to importer objects has row names that indicate the rows
           selected from the full data.
+    \item A method of \code{format} for data set objects is added.
+    \item The row names of subsets fo importer objects reflect the row numbers in
+          the original data.
+    \item \code{collect.data.frame} and \code{collect.data.set} gain a 
+          \code{use_last} and a \code{detailed_warnings} option
+          to improve handling of variables with different attributes
+          in different objects being collected.
+    \item \code{spss.system.file()}, \code{spss.portable.file()}, and \code{Stata.file()} get
+          an optional \code{negative2missing} argument.
     }
  }
   \subsection{BUGFIXES}{
@@ -254,9 +266,11 @@
     \item \code{as.data.set} works for "tibbles" also when method dispatch
           via class inheritance does not work.
     \item \code{codebook()} now handles character variables in SPSS
-    system files correclty.
-        }
+          system files correclty.
+    \item \code{codebook()} uses the appropriate logical operator in checking
+          for missings.
     }
+  }
   \subsection{USER-VISIBLE CHANGES}{
    \itemize{
      \item All vignettes are now using \emph{knitr}.
