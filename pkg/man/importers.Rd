@@ -67,7 +67,8 @@ spss.fixed.file(file,
   count.cases=TRUE,
   to.lower=getOption("spss.fixed.to.lower",FALSE),
   iconv=TRUE,
-  encoded=getOption("spss.fixed.encoding","cp1252"))
+  encoded=getOption("spss.fixed.encoding","cp1252"),
+  negative2missing = FALSE)
 
 spss.portable.file(file,
   varlab.file=NULL,
@@ -76,7 +77,8 @@ spss.portable.file(file,
   count.cases=TRUE,
   to.lower=getOption("spss.por.to.lower",FALSE),
   iconv=TRUE,
-  encoded=getOption("spss.por.encoding","cp1252"))
+  encoded=getOption("spss.por.encoding","cp1252"),
+  negative2missing = FALSE)
 
 spss.system.file(file,
   varlab.file=NULL,
@@ -86,13 +88,15 @@ spss.system.file(file,
   to.lower=getOption("spss.sav.to.lower",FALSE),
   iconv=TRUE,
   encoded=getOption("spss.sav.encoding","cp1252"),
-  ignore.scale.info = FALSE)
+  ignore.scale.info = FALSE,
+  negative2missing = FALSE)
 
 Stata.file(file,
            iconv=TRUE,
            encoded=if(new_format)
                         getOption("Stata.new.encoding","utf-8")
-                   else getOption("Stata.old.encoding","cp1252"))
+                   else getOption("Stata.old.encoding","cp1252"),
+           negative2missing = FALSE)
 
 ## The most important methods for "importer" objects are:
 \method{subset}{spss.system.importer}(x, subset, select, drop = FALSE, \dots)
@@ -134,6 +138,9 @@ Stata.file(file,
       \code{spss.system.file} this is only a fallback, as the function
       uses the encoding information present in the file if it is
       present.}
+    \item{negative2missing}{logical; should negative values be marked
+      as missing values? This is the convention of some newer data sets that
+      are available e.g. from the GESIS data archive.}
     \item{ignore.scale.info}{logical; should information about measuremnt
       scale levels provided in the file be ignored?}
     \item{x}{an object that inherits from class \code{"importer"}.}

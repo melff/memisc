@@ -18,9 +18,13 @@ collect(\dots,names=NULL,inclusive=TRUE)
 \method{collect}{matrix}(\dots,names=NULL,inclusive=TRUE)
 \method{collect}{table}(\dots,names=NULL,sourcename=".origin",fill=0)
 \method{collect}{data.frame}(\dots,names=NULL,inclusive=TRUE,
-                                  fussy=FALSE,warn=TRUE,sourcename=".origin")
+                                  fussy=FALSE,warn=TRUE,
+                                  detailed.warnings=FALSE,use.last=FALSE,
+                                  sourcename=".origin")
 \method{collect}{data.set}(\dots,names=NULL,inclusive=TRUE,
-                                  fussy=FALSE,warn=TRUE,sourcename=".origin")
+                                  fussy=FALSE,warn=TRUE,
+                                  detailed.warnings=FALSE,use.last=FALSE,
+                                  sourcename=".origin")
 }
 \arguments{
   \item{\dots}{more atomic vectors, arrays, matrices, tables, data.frames or data.sets}
@@ -34,6 +38,16 @@ collect(\dots,names=NULL,inclusive=TRUE)
     names of collected data.frames/data.sets have different attributes?}
   \item{warn}{logical, defaults to TRUE; should an warning be given, if variables with same
     names of collected data.frames/data.sets have different attributes?}
+  \item{detailed.warnings}{logical, whether the attributes of each
+    variable should be printed if they differ, and if \code{warn} or
+    \code{fuzzy} is TRUE.}
+  \item{use.last}{logical, defaults to FALSE. If the function is
+    applied to data frames or similar objects, attributes of variables
+    may differ between data frames (or other objects, respectively). If
+    this argument is TRUE, then the attributes are harmonised based on
+    the variables in the last data frame/object, otherwise the
+    attributes of variables in the first data frame/object are used for harmonisation.
+  }
   \item{sourcename}{name of the factor that identifies the collected data.frames or data.sets}
   \item{fill}{numeric; with what to fill empty table cells, defaults to zero, assuming
     the table contains counts}
