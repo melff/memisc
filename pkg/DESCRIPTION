@@ -1,7 +1,7 @@
 Package: memisc
 Type: Package
 Title: Management of Survey Data and Presentation of Analysis Results
-Version: 0.99.30.11
+Version: 0.99.31
 Date: 2022-06-29
 Author: Martin Elff (with contributions from Christopher N. Lawrence, Dave Atkins, Jason W. Morgan, Achim Zeileis)
 Maintainer: Martin Elff <memisc@elff.eu>
@@ -17,7 +17,7 @@ LazyLoad: Yes
 Depends: R (>= 3.3.0), lattice, stats, methods, utils, MASS
 Suggests: splines, knitr, rmarkdown, sandwich
 Enhances: AER, car, eha, lme4, ordinal, simex, tibble, haven
-Imports: grid, repr, data.table
+Imports: grid, repr, data.table, yaml, jsonlite
 VignetteBuilder: knitr
 URL: http://memisc.elff.eu,https://github.com/melff/memisc/
 BugReports: https://github.com/melff/memisc/issues

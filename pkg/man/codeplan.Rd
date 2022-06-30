@@ -6,12 +6,15 @@
 \alias{codeplan<-}
 \alias{setCodeplan}
 \alias{setCodeplan,data.frame,codeplan-method}
+\alias{setCodeplan,data.frame,NULL-method}
 \alias{setCodeplan,data.set,codeplan-method}
 \alias{setCodeplan,data.set,NULL-method}
 \alias{setCodeplan,item,codeplan-method}
 \alias{setCodeplan,item,NULL-method}
 \alias{setCodeplan,atomic,codeplan-method}
 \alias{setCodeplan,atomic,NULL-method}
+\alias{read_codeplan}
+\alias{write_codeplan}
 \title{Describe structure of Data Sets and Importers}
 \description{
   The function \code{codeplan()} creates a data frame that
@@ -30,6 +33,7 @@ codeplan(x)
 \S4method{codeplan}{item}(x)
 setCodeplan(x,value)
 \S4method{setCodeplan}{data.frame,codeplan}(x,value)
+\S4method{setCodeplan}{data.frame,NULL}(x,value)
 \S4method{setCodeplan}{data.set,codeplan}(x,value)
 \S4method{setCodeplan}{data.set,NULL}(x,value)
 \S4method{setCodeplan}{item,codeplan}(x,value)
@@ -37,29 +41,53 @@ setCodeplan(x,value)
 \S4method{setCodeplan}{atomic,codeplan}(x,value)
 \S4method{setCodeplan}{atomic,NULL}(x,value)
 codeplan(x) <- value
+read_codeplan(filename,type)
+write_codeplan(x,filename,type,pretty)
 }
 \arguments{
   \item{x}{for \code{codeplan(x)} an object that inherits from class \code{"item.list"},
     i.e. can be a \code{"data.set"} object or an \code{"importer"}
-  object, it can also be an object that inherits from class \code{"item"}}
+  object, it can also be an object that inherits from class
+  \code{"item"}.
+   For \code{write_codeplan} an object from class \code{"codeplan"}.}
   \item{value}{an object as it would be returned by \code{codeplan(x)}
-  or \code{NULL}.}
+    or \code{NULL}.}
+  \item{filename}{a character string, the name of the file that is to be
+                  read or to be written.}
+  \item{type}{a character string (either "yaml" or "json") oder NULL (the default), gives the type
+              of the file into which the codeplan is written or from
+              which it is read.
+              If \code{type} is NULL then the file type is inferred from
+              the file name ending (".yaml" or ",yml" for "yaml",
+              ".json" for "json").
+            }
+  \item{pretty}{a logical value, whether the JSON output created by \code{write_codeplan(...)} should be prettified.}
 }
-\value{If applicable, \code{codeplan} returns a data frame with
+\value{If applicable, \code{codeplan} returns a list with
   additional S3 class attribute \code{"codeplan"}. For arguments for
   which the relevant information does not exist, the function returns \code{NULL}.
-Such a data frame has the following variables:
-  \item{\code{name}}{The name of the item/variable in the item list or data set.}
-  \item{\code{description}}{The description/variable label string of the item/variable.}
-  \item{\code{annotation}}{code to recreate the annotation attribute,}
-  \item{\code{labels}}{code to recreate the value labels,}
-  \item{\code{value.filter}}{code to recreate the value filter attribute (declaration of
-          missing values, range of valid values, or an enumeration of valid values.)}
+
+  The list has at least one element or several elements, named after the
+  variable in the "item.list" or "data.set" \code{x}. Each list element
+  is a list itself with the following elements:
+
+  \item{\code{annotation}}{a named character vector,}
+  \item{\code{labels}}{a named list of labels and labelled values}
+  \item{\code{value.filter}}{a list with at least two elements named
+      "class" and "filter", and optionally another element named
+      "range". The "class" element determines the class of the
+      value filter and equals either "missing.values", "valid.values",
+      or "valid.range". An element named "range" may only be needed
+      if "class" is "missing.values", as it is possible (like in SPSS)
+      to have \emph{both} individual missing values and a range of
+      missing values.
+  }
   \item{\code{mode}}{a character string that describes storage mode, such as \code{"character"},
         \code{"integer"}, or \code{"numeric"}.}
   \item{\code{measurement}}{a character string with the measurement level,
         \code{"nominal"}, \code{"ordinal"}, \code{"interval"}, or
         \code{"ratio"}.}
+      
   If \code{codeplan(x)<-value} or \code{setCodeplan(x,value)} is used
   and \code{value} is \code{NULL}, all the special information about
   annotation, labels, value filters, etc. is removed from the resulting
@@ -108,6 +136,7 @@ Data2 <- data.frame(
           income = exp(rnorm(300,sd=.7))*2000
           )
 codeplan(Data2) <- cpData1
+codeplan(Data2)
 codebook(Data2)
 
 # Note the difference between 'as.data.frame' and setting
@@ -116,6 +145,7 @@ Data2df <- as.data.frame(Data2)
 codeplan(Data2) <- NULL
 str(Data2)
 str(Data2df)
+codeplan(Data2) <- NULL # Does not change anything
 
 # Codeplans of survey items can also be inquired and manipulated:
 vote <- Data1$vote
@@ -125,4 +155,9 @@ codeplan(vote) <- NULL
 str(vote)
 codeplan(vote) <- cp.vote
 vote
+
+fn.json <- paste0(tempfile(),".json")
+write_codeplan(codeplan(Data1),filename=fn.json)
+codeplan(Data2) <- read_codeplan(fn.json)
+codeplan(Data2)
 }

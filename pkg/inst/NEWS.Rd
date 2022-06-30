@@ -101,6 +101,8 @@
           intervals.
     \item The colon operator (\code{:}) can be used to refer to ranges of
           variables in \code{foreach()}
+    \item Code plans (objects in class "codeplan") can now be exported
+          to and imported from YAML and JSON files.
     }
   }
   \subsection{IMPROVEMENTS}{

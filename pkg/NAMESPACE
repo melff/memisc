@@ -501,3 +501,7 @@ S3method(format,codebookEntry)
 S3method(format,Date.item)
 S3method(format,datetime.item)
 S3method(format,item.vector)
+
+importFrom(yaml,as.yaml,read_yaml,write_yaml)
+importFrom(jsonlite,read_json,write_json)
+export(read_codeplan,write_codeplan)

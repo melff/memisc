@@ -6,37 +6,32 @@ setMethod("codeplan",
           function(x){
     dat <- x@.Data
     n <- x@names
-    df <- data.frame(name=n,
-               description=sapply(dat,depr_descr),
-               annotation=sapply(dat,depr_annot),
-               labels=sapply(dat,depr_labels),
-               value.filter=sapply(dat,depr_vfilter),
-               mode=sapply(dat,mode),
-               measurement=sapply(dat,measurement),
-               stringsAsFactors=FALSE)
-    structure(df,class=c("codeplan","data.frame"))
+    cp <- lapply(dat,codeplan1)
+    names(cp) <- n
+    structure(cp,
+              class="codeplan")
 })
 
 setMethod("codeplan",
           signature(x="item"),
           function(x){
-    df <- data.frame(
-               description=depr_descr(x),
-               annotation=depr_annot(x),
-               labels=depr_labels(x),
-               value.filter=depr_vfilter(x),
-               mode=mode(x),
-               measurement=measurement(x),
-               stringsAsFactors=FALSE)
-    structure(df,class=c("codeplan","data.frame"))
+              cp <- codeplan1(x)
+              structure(list(cp),class="codeplan")
 })
 
+codeplan1 <- function(x) {
+    l <- list(
+        annotation=depr_annot(x),
+        labels=depr_labels(x),
+        value.filter=depr_vfilter(x),
+        mode=mode(x),
+        measurement=measurement(x)
+    )
+    l[sapply(l,length)>0]
+}
 
-print.codeplan <- function(x,...,width=getOption("width")%/%5){
-    for(i in 1:length(x))
-        x[[i]] <- formatw(x[[i]],width)
-    to.keep <- sapply(x,any.nzchar)
-    print.data.frame(x[to.keep],row.names=FALSE)
+print.codeplan <- function(x,...){
+    cat("\n",as.yaml(unclass(x)),"\n",sep="")
 }
 
 any.nzchar <- function(x) any(nzchar(x))
@@ -49,28 +44,18 @@ formatw <- function(x,width){
     format(x)
 }
 
-depr_descr <- function(x){
-    d <- description(x)
-    if(length(d))d else ""
-}
-
 depr_annot <- function(x){
     a <- annotation(x)
     a <- structure(a@.Data, names=names(a))
-    i <- match("description",names(a))
-    a <- a[-i]
-    if(length(a))
-        paste(deparse(a),collapse=" ")
-    else ""
+    if(length(a)) as.list(a)
+    else NULL
 }
 
 depr_labels <- function(x){
     l <- labels(x)
-    if(length(l)){
-        l <- structure(l@values,names=l@.Data)
-        paste(deparse(l),collapse=" ")
-    }
-    else ""
+    if(length(l))
+        structure(as.list(l@values),names=l@.Data)
+    else NULL
 }
 
 depr_vfilter <- function(x){
@@ -78,22 +63,22 @@ depr_vfilter <- function(x){
     if(length(v)){
         cl <- as.character(class(v))
         if(cl == "missing.values"){
-            cl <- "missing"
-            v <- list(range=v@range,
-                      values=v@filter)
+            res <- list(class=cl,
+                        range=v@range,
+                        values=v@filter)
         }
         else if(cl == "valid.values"){
-            cl <- "valid"
-            v <- list(values=v@filter)
+            res <- list(class=cl,
+                        values=v@filter)
         }
         else if(cl == "valid.range"){
-            cl <- "valid"
-            v <- list(range=v@filter)
+            res <- list(class=cl,
+                        range=v@filter)
         }
-        paste(cl,"=",
-              paste(deparse(v),collapse=" "))
+        else res <- NULL
+        res <- res[sapply(res,length)>0]
     }
-    else ""
+    else NULL
 }
 
 setMethod("setCodeplan",signature(x="data.frame",value="codeplan"),
@@ -102,14 +87,15 @@ function(x,value){
     setCodeplan(x,value)
 })
 
+setMethod("setCodeplan",signature(x="data.frame",value="NULL"),
+function(x,value) x)
+
 setMethod("setCodeplan",signature(x="data.set",value="codeplan"),
 function(x,value){
-    vn <- value$name
-    n <- intersect(names(x),vn)
+    n <- intersect(names(x),names(value))
     if(length(n))
         for(nn in n){
-            i <- match(nn,vn)              
-            x[[nn]] <- setCodeplan1(x[[nn]],value[i,])
+            x[[nn]] <- setCodeplan1(x[[nn]],value[[nn]])
         }
     x
 })
@@ -123,12 +109,12 @@ function(x,value){
 
 setMethod("setCodeplan",signature(x="item",value="codeplan"),
 function(x,value){
-    setCodeplan1(x,value[1,])
+    setCodeplan1(x,value[[1]])
 })
 
 setMethod("setCodeplan",signature(x="atomic",value="codeplan"),
 function(x,value){
-    setCodeplan1(x,value[1,])
+    setCodeplan1(x,value[[1]])
 })
 
 setMethod("setCodeplan",signature(x="item",value="NULL"),
@@ -157,38 +143,70 @@ setCodeplan1 <- function(x,val){
         stop(sprintf("mode conflict: '%s' != '%s'",
                      mode(x),val$mode))
     l <- val$labels
-    if(nzchar(l)){
-        l <- eval(parse(text=l))
+    if(length(l)){
+        l <- unlist(l)
         labels(x) <- l
     }
     m <- val$measurement
     measurement(x) <- m
     a <- val$annotation
-    if(nzchar(a)){
-        annotation(x) <- eval(parse(text=a))
-    }
-    d <- val$description
-    if(nzchar(d)){
-        description(x) <- d
+    if(length(a)){
+        annotation(x) <- unlist(a)
     }
     vf <- val$value.filter
-    if(nzchar(vf)){
-        vf <- paste0("list(",vf,")")
-        vf <- eval(parse(text=vf))
-        cl <- names(vf)
-        vf <- vf[[1]]
-        if(cl=="missing")
-            vf <- new("missing.values",
+    if(length(vf)){
+        cl <- vf$class
+        if(cl=="missing.values")
+            vf <- new(cl,
                       filter=vf$values,
                       range=vf$range
                       )
-        else if(cl=="valid"){
-            if(length(vf$values))
-                vf <- new("valid.values",filter=vf$values)
-            else if(length(vf$range))
-                vf <- new("valid.range",filter=vf$range)
-        }
+        else if(cl=="valid.values")
+            vf <- new(cl,filter=vf$values)
+        else if(cl=="valid.range")
+            vf <- new(cl,filter=vf$range)
         x@value.filter <- vf
     }
     x
+}
+
+write_codeplan <- function(x,filename,
+                           type=NULL,
+                           pretty=FALSE){
+    if(!length(type)){
+        if(endsWith(filename,".yaml") ||
+           endsWith(filename,".yml"))
+            type <- "yaml"
+        else if(endsWith(filename,".json"))
+            type <- "json"
+    }
+
+    if(type=="yaml"){
+        write_yaml(unclass(x),file=filename)
+    }
+    else if(type=="json"){
+        write_json(unclass(x),path=filename,
+                   auto_unbox=TRUE,pretty=pretty)
+    }
+    else stop(sprintf("File type %s not supported (yet)",type))
+}
+
+read_codeplan <- function(filename,
+                          type=NULL){
+    if(!length(type)){
+        if(endsWith(filename,".yaml") ||
+           endsWith(filename,".yml"))
+            type <- "yaml"
+        else if(endsWith(filename,".json"))
+            type <- "json"
+    }
+
+    if(type=="yaml"){
+        structure(read_yaml(file=filename),class="codeplan")
+    }
+    else if(type=="json"){
+        structure(read_json(path=filename, simplifyVector = TRUE),
+                  class="codeplan")
+    }
+    else stop(sprintf("File type %s not supported (yet)",type))
 }
