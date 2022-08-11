@@ -224,6 +224,8 @@
           in different objects being collected.
     \item \code{spss.system.file()}, \code{spss.portable.file()}, and \code{Stata.file()} get
           an optional \code{negative2missing} argument.
+    \item \code{recode()} keeps \code{NA}s as \code{NA}s when an
+          \code{otherwise} argument is given and \code{NA}s are not recoded explicitly.
     }
  }
   \subsection{BUGFIXES}{

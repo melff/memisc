@@ -35,6 +35,7 @@ setMethod("recode","item",function(x,...,
   }
   else
       oldcodes <- sapply(conditions,eval)
+  NA_recoded <- any(unlist(suppressWarnings(sapply(oldcodes,is.na))))
       
   conditions[has.range] <- lapply(conditions[has.range],
                           function(x)
@@ -85,7 +86,9 @@ setMethod("recode","item",function(x,...,
     nNA <-sum(is.na(otherwise[!recoded])) - sum(is.na(x[!recoded]))
     if(nNA > 0)
       warning("recoding created ",nNA," NAs")
-  }
+    if(!NA_recoded)
+      y[is.na(x)] <- NA
+}
   newvlab <- newcodes[nzchar(names(newcodes))]
   bijective <- FALSE
   lab.y <- lab.x <- labels(x)
@@ -161,6 +164,7 @@ setMethod("recode","vector",function(x,...,
     if(!length(recodings)) return(x)
     newcodes <- lapply(recodings,"[[",2)
     oldcodes <- lapply(recodings,"[[",3)
+    NA_recoded <- any(unlist(suppressWarnings(sapply(oldcodes,is.na))))
     has.range <- paste(lapply(oldcodes,"[[",1)) == "range"
     if(any(has.range)){
         has.min <- paste(lapply(oldcodes[has.range],"[[",2)) == "min"
@@ -222,6 +226,8 @@ setMethod("recode","vector",function(x,...,
         nNA <- sum(is.na(otherwise[!recoded])) - sum(is.na(x[!recoded]))
         if(nNA > 0)
             warning("recoding created ",nNA," NAs")
+        if(!NA_recoded)
+            y[is.na(x)] <- NA
     }
     if(is.character(y)) {
         levels <- sort(unique(y[y%nin%newcodes]))

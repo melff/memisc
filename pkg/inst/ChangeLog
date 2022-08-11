@@ -1,3 +1,10 @@
+2022-08-11:
+   - 'recode()' now keeps NAs as NAs unless they are recoded explicitly.
+     (However, this makes a difference only when the 'otherwise' argument is given.)
+
+2022-07-01:
+   - Impremented YAML and JSON import and export of "codeplan" objects.
+
 2022-06-28:
    - 'trim_labels()' now handles items without labels gracefully.
    - 'spss.system.file()', 'spss.portable.file()', and 'Stata.file()' get
