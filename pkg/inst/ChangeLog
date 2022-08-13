@@ -1,3 +1,6 @@
+2022-08-13:
+   - 'codebook()' now fully supports logical vectors.
+
 2022-08-11:
    - 'recode()' now keeps NAs as NAs unless they are recoded explicitly.
      (However, this makes a difference only when the 'otherwise' argument is given.)

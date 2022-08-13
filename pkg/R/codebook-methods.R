@@ -79,59 +79,6 @@ NAtab <- function(isna,weights=NULL){
         Percent=perc)
 }
 
-setMethod("codebookEntry","atomic",function(x,weights,unweighted=TRUE,...){
-
-  if(length(attr(x,"label")))
-      annotation <- c(description=attr(x,"label"))
-  else
-      annotation <- NULL
-
-  spec <- c("Storage mode:"=storage.mode(x))
-  isna <- is.na(x)
-  descr <- Descriptives(x)
-  if(length(weights) && length(descr) > 2){ # There is more than a range
-      wdescr <- Descriptives(x,weights)
-      if(unweighted)
-          descr <- collect(Unweighted=descr,
-                           Weighted=wdescr)
-      else
-          descr <- as.matrix(wdescr)
-  }
-  else 
-      descr <- as.matrix(descr)
-
-  if(any(isna)){
-    tab <- NAtab(isna)
-    if(length(weights)){
-      wtab <- NAtab(isna,weights)
-      if(unweighted)
-          tab <- collect(Unweighted=tab,
-                         Weighted=wtab)
-      else
-          tab <- array(wtab,
-                       dim=c(dim(tab),1),
-                       dimnames=c(dimnames(tab),
-                                  list(NULL)))
-    }
-    else
-      tab <- array(tab,
-                   dim=c(dim(tab),1),
-                   dimnames=c(dimnames(tab),
-                              list(NULL)))
-    attr(tab,"title") <- "Valid and missing values"
-  } else
-    tab <- integer(0)
-
-  stats <- list(tab=tab,
-                descr=descr)
-  
-  new("codebookEntry",
-    spec = spec,
-    stats = stats,
-    annotation = annotation
-  )
-})
-
 
 setMethod("codebookEntry","ANY",function(x,weights,unweighted=TRUE,...){
 
@@ -321,6 +268,72 @@ setMethod("codebookEntry","character",function(x,weights=NULL,unweighted=TRUE,..
     spec = spec,
     stats = stats,
     annotation = NULL
+  )
+})
+
+codebookTable_logical <- function(x,weights=NULL,...){
+
+  if(!length(weights))
+    weights <- rep(1,length(x))
+
+  isna <- is.na(x)
+  counts <- rowsum(weights[!isna],x[!isna])
+  NAs <- sum(weights*isna)
+
+  tab <- cbind(counts,100*counts/sum(counts))
+  if(any(isna)) {
+      labs <- c("FALSE","TRUE","NA")
+      tab <- rbind(tab,c(NAs,NA))
+      counts <- c(counts,NAs)
+      tab <- cbind(tab,100*counts/sum(counts))
+      colnames(tab) <- c("N","Valid","Total")
+    }
+  else {
+      labs <- c("FALSE","TRUE")
+      colnames(tab) <- c("N","Valid")
+  }
+  rownames(tab) <- labs
+  
+
+  return(tab)
+}
+
+setMethod("codebookEntry","logical",function(x,weights=NULL,unweighted=TRUE,...){
+
+  tab <- codebookTable_logical(x)
+  if(length(weights)){
+    wtab <- codebookTable_logical(x,weights=weights)
+    if(unweighted)
+        tab <- collect(Unweighted=tab,
+                       Weighted=wtab)
+    else {
+        tab <- wtab
+        tab.dn <- dimnames(tab)
+        tab.d <- dim(tab)
+        dim(tab) <- c(tab.d,1)
+        dimnames(tab) <- c(tab.dn,list(NULL))
+    }
+  }
+  else{
+    tab.dn <- dimnames(tab)
+    tab.d <- dim(tab)
+    dim(tab) <- c(tab.d,1)
+    dimnames(tab) <- c(tab.dn,list(NULL))
+  }
+  attr(tab,"title") <- "Logical values"
+  
+  if(length(attr(x,"label")))
+      annotation <- c(description=attr(x,"label"))
+  else
+      annotation <- NULL
+    
+  spec <- c("Storage mode:"=storage.mode(x))
+            
+  stats <- list(tab=tab)
+  new("codebookEntry",
+    spec = spec,
+    stats = stats,
+    annotation = annotation
   )
 })
 
