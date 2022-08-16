@@ -149,7 +149,7 @@ subset.importer <- function (x, subset, select, drop = FALSE,
         nl <- as.list(1:nvars)
         names(nl) <- names
         cols <- logical(nvars)
-        if (class(substitute(select)) == 'call') {
+        if (is.call(substitute(select))) {
             cols[eval(substitute(select), nl, parent.frame())] <- TRUE
             select.vars <- sapply(substitute(select)[-1],as.character)
         } else { # As suggested by Diogo Ferrari (https://dioferrari.com/)
