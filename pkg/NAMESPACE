@@ -505,3 +505,7 @@ S3method(format,item.vector)
 importFrom(yaml,as.yaml,read_yaml,write_yaml)
 importFrom(jsonlite,read_json,write_json)
 export(read_codeplan,write_codeplan)
+
+export(format_md)
+S3method(format_md, codebook)
+S3method(format_md, codebookEntry)
