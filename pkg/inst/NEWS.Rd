@@ -103,7 +103,14 @@
           variables in \code{foreach()}
     \item Code plans (objects in class "codeplan") can now be exported
           to and imported from YAML and JSON files.
-    }
+    \item A new generic function \code{format_md()}
+          (contributed by Mael Astrud-Le Souder) allows to format R
+          objects in Markdown. Currently, methods for codebooks (and entries
+          in codebooks) are implemented.
+    \item A new generic function \code{coarsen()} allows to coarsen
+          numeric vectors into factors, based on a given number of
+          categories. 
+  }  
   }
   \subsection{IMPROVEMENTS}{
     \itemize{
