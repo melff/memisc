@@ -70,3 +70,7 @@ setGeneric("codeplan",
 setGeneric("setCodeplan",function(x,value)
   standardGeneric("setCodeplan"))
 
+format_md <- function(x, ...) {
+  UseMethod("format_md")
+}
+
