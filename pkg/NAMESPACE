@@ -509,3 +509,6 @@ export(read_codeplan,write_codeplan)
 export(format_md)
 S3method(format_md, codebook)
 S3method(format_md, codebookEntry)
+
+export(coarsen)
+S3method(coarsen,numeric)
