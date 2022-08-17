@@ -49,8 +49,14 @@ knit_array <- function (x) {
 
 knit_tab <- function (x) {
   tab <- data.frame(x[,,1])
-  tab <- cbind(rownames(tab), tab)
+  row_names <- rownames(tab)
+  values <- regmatches(row_names, regexpr(row_names, pattern = "^[ ]*[0-9]+"))
+  values <- as.numeric(values)
+  missing_value <- grepl(rownames(tab), pattern = " M '")
+  missing_value <- ifelse(missing_value, "M", "")
+  labels <- regmatches(row_names, regexpr(row_names, pattern = "'.*'"))
+  tab <- cbind(values, missing_value, labels, tab)
   rownames(tab) <- NULL
-  colnames(tab)[1] <- "Values and labels"
+  colnames(tab) <- c("", "", "Values and labels", "N", "Valid", "Total")
   knit_counts <- c(knitr::kable(tab))
 }
