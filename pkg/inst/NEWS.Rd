@@ -102,8 +102,12 @@
     \item The colon operator (\code{:}) can be used to refer to ranges of
           variables in \code{foreach()}
     \item Code plans (objects in class "codeplan") can now be exported
-          to and imported from YAML and JSON files.
-    }
+    to and imported from YAML and JSON files.
+    \item There is now a new generic function \code{format_md()}
+          (contributed by Mael Astrud-Le Souder) that allows to format R
+          objects in Markdown. Currently, methods for codebooks (and entries
+          in codebooks) are implemented.
+  }
   }
   \subsection{IMPROVEMENTS}{
     \itemize{
