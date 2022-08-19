@@ -109,7 +109,10 @@
           in codebooks) are implemented.
     \item A new generic function \code{coarsen()} allows to coarsen
           numeric vectors into factors, based on a given number of
-          categories. 
+          categories.
+    \item A new generic function \code{measurement_autolevel()} that
+          allows to automatically select the appropriate measurement
+          level for survey items.
   }  
   }
   \subsection{IMPROVEMENTS}{

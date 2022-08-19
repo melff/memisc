@@ -29,7 +29,10 @@ memisc_env <- environment()
           codebook.chunk.size=1000,
           Simulation.chunk.size=1000,
           print.use.value.labels=TRUE,
-          show.max.obs=25)
+          show.max.obs=25,
+          measurement.adapt.threshold=.75,
+          measurement.adapt.default="nominal"
+  )
 
     names(.SummaryStats) <- paste0("summary.stats.",names(.SummaryStats))
     do.call(options,.SummaryStats)
