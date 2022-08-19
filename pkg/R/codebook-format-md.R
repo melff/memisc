@@ -1,19 +1,11 @@
 format_md.codebook <- function(x, unlist = TRUE, collapse = TRUE, ...) {
-  output <- mapply(format_md, x = x@.Data, name = names(x),
+  out <- mapply(format_md, x = x@.Data, name = names(x),
                    MoreArgs = list(...))
-  names(output) <- names(x)
-  if (unlist) output <- unlist(output)
-  if (collapse && is.list(output)) {
-    output <- lapply(output, paste, collapse = "\n\n")
-    output <- lapply(output, gsub, 
-                     pattern = "|\n\n", replacement = "|\n", fixed = TRUE)
-  }
-  if (collapse && !is.list(output)) {
-    output <- paste(output, collapse = "\n\n")
-    output <- gsub(output,
-                   pattern = "|\n\n", replacement = "|\n", fixed = TRUE)
-  }
-  output
+  names(out) <- names(x)
+  if (unlist) out <- unlist(out)
+  if (collapse && is.list(out)) out <- lapply(out, paste, collapse = "  \n")
+  if (collapse && !is.list(out)) out <- paste(out, collapse = "  \n")
+  out
 }
 
 format_md.codebookEntry <- function(x, name = "", add_lines = TRUE, ...) {
@@ -38,6 +30,7 @@ format_md.codebookEntry <- function(x, name = "", add_lines = TRUE, ...) {
               blank_line,
               knit_tab,
               knit_descr,
+              blank_line,
               remark,
               blank_line
   )
@@ -56,8 +49,14 @@ knit_array <- function (x) {
 
 knit_tab <- function (x) {
   tab <- data.frame(x[,,1])
-  tab <- cbind(rownames(tab), tab)
+  row_names <- rownames(tab)
+  values <- regmatches(row_names, regexpr(row_names, pattern = "^[ ]*[0-9]+"))
+  values <- as.numeric(values)
+  missing_value <- grepl(rownames(tab), pattern = " M '")
+  missing_value <- ifelse(missing_value, "M", "")
+  labels <- regmatches(row_names, regexpr(row_names, pattern = "'.*'"))
+  tab <- cbind(values, missing_value, labels, tab)
   rownames(tab) <- NULL
-  colnames(tab)[1] <- "Values and labels"
+  colnames(tab) <- c("", "", "Values and labels", "N", "Valid", "Total")
   knit_counts <- c(knitr::kable(tab))
 }
