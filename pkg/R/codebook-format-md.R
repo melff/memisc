@@ -1,62 +1,193 @@
-format_md.codebook <- function(x, unlist = TRUE, collapse = TRUE, ...) {
+format_md.codebook <- function(x, ...) {
   out <- mapply(format_md, x = x@.Data, name = names(x),
                    MoreArgs = list(...))
-  names(out) <- names(x)
-  if (unlist) out <- unlist(out)
-  if (collapse && is.list(out)) out <- lapply(out, paste, collapse = "  \n")
-  if (collapse && !is.list(out)) out <- paste(out, collapse = "  \n")
-  out
+  unlist(out)
 }
 
-format_md.codebookEntry <- function(x, name = "", add_lines = TRUE, ...) {
+format_md.codebookEntry <- function(x, name = "", add_rules = TRUE, ...) {
   blank_line <- "\n"
-  horizontal_line <- if (add_lines) "\n---\n" else NULL
-  
+  width <- getOption("width")
+  hrule <- if (add_rules) paste(rep("-",width),collapse="")
+                     else NULL
+
+
   annot <- x@annotation
-  stats <- x@stats
+  description <- annot["description"]
+  wording <- annot["wording"]
+  if(length(annot)) annot <- annot[names(annot) %nin% c("description","wording")]
+
+  title <- strwrap(if(length(description) && !is.na(description))
+                  paste0(name[1]," --- ",sQuote(description))
+                  else name[1] ,width=width,prefix="   ")
   
-  title <- paste0("`", name, "`", " --- ", "'", annot["description"], "'")
-  wording <- if (!is.na(annot["wording"])) paste0("\"", annot["wording"], "\"") else NULL
-  knit_spec <- knit_array(x@spec)
-  knit_tab <- if (!is.null(stats$tab)) knit_tab(stats$tab) else NULL
-  knit_descr <- if (!is.null(stats$descr)) knit_array(stats$descr) else NULL
-  remark <- paste0("Remark: ", annot["Remark"])
+  wording <- if(length(wording) && !is.na(wording))
+                strwrap(dQuote(wording),width=width,prefix="   ")
+             else NULL
+
+  spec <- paste("  ",names(x@spec),x@spec,"   ")
+  tab <- unclass(x@stats$tab)
+  descr <- unclass(x@stats$descr)
   
-  output <- c(horizontal_line,
-              title,
-              wording,
-              horizontal_line,
-              knit_spec,
-              blank_line,
-              knit_tab,
-              knit_descr,
-              blank_line,
-              remark,
-              blank_line
-  )
+  if(length(tab)){
+      
+    tab.title <- attr(tab,"title")
+    tab.d <- dim(tab)
+    tab.dn <- dimnames(tab)
+    tab_md <- apply(tab,3,format_cb_table_md)
+
+    tab_rown <- trimws(rownames(tab))
+    
+    tab_lab <- strsplit(tab_rown," ")
+
+    tab_lab <- lapply(tab_lab,trimws_drpz)
+    
+    tab_has_lab <- sapply(tab_lab,length) > 1
+    tab_has_m <- sapply(sapply(tab_lab,"[",2) == "M",isTRUE)
+    
+    tab_val <- ifelse(tab_has_lab,sapply(tab_lab,"[",1),"")
+    tab_lab <- ifelse(tab_has_lab,lapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
+    
+    tab_m <- ifelse(tab_has_m,"M","")
+    tab_lab <- ifelse(tab_has_m,lapply(tab_lab,"[",-1,drop=FALSE),tab_lab)
+    
+    tab_lab <- sapply(tab_lab,paste,collapse=" ")
+
+    tab_val <- format_col_md(tab_val,
+                             align="r",
+                             colname="Values")
+    tab_m <- format_col_md(tab_m,
+                           align="r",
+                           colname="")
+    tab_lab <- format_col_md(tab_lab,
+                             align="l",
+                             colname="Labels")
+    tab_ldr <- paste0(tab_val,"|",tab_m,"|",tab_lab)
+    tab <- paste0("   |",tab_ldr,tab_md,"|")
+  }
+  if(!is.matrix(descr)) descr <- NULL
+  if(length(descr)){
+    descr.rn <- format(paste(rownames(descr),":",sep=""),justify="left")
+    if(is.numeric(descr[]))  
+       descr[] <- formatC(descr[],format="f",digits=3)
+    descr[] <- gsub("NA","",descr[])
+    if(!length(ncol(descr))) browser()
+    if(ncol(descr) > 1){
+      descr.rn <- c("","",descr.rn)
+      descr <- rbind(colnames(descr),"",descr)
+    }
+    descr <- cbind(descr.rn,descr)
+    descr <- apply(descr,2,format,justify="right")
+    descr <- paste0("   ",apply(descr,1,paste,collapse=" "),"   ")
+  }
+  if(length(tab) && length(descr)){
+    statstab <- format(c(tab,"",descr),justify="left")
+  }
+  else if(length(tab)){
+    statstab <- tab
+  }
+  else if(length(descr)){
+    statstab <- descr
+  }
+  else
+    statstab <- NULL
   
-  output <- output[!sapply(output, is.null)]
+  annot.out <- character()
+  if(length(annot)){
+    for(i in seq_len(length(annot))){
+      annot.i <- annot[i]
+      nm.i <- trimws(names(annot.i))
+      annot.i <- strwrap(annot.i,width=getOption("width")-8-4)
+      annot.i <- c(paste("      ",annot.i),"")
+      if(nzchar(nm.i)){
+        annot.i <- c(
+          paste("   ",nm.i,":",sep=""),
+          annot.i
+          )
+      }
+      annot.out <- c(annot.out,annot.i)
+    }
+  }
+  c(
+    hrule,
+    "",
+    title,
+    if(length(wording)) c(
+        "",
+        wording
+        ),
+    "",
+    hrule,
+    "",
+    spec,
+    "",
+    statstab,
+    "",
+    if(length(annot.out)) annot.out
+    )
+
+  
 }
 
-knit_array <- function (x) {
-  if (!is.matrix(x)) x <- as.matrix(x)
-  df <- data.frame(names = rownames(x), content = unname(x))
-  colnames(df) <- NULL
-  knit_result <- c(knitr::kable(df, format = "simple"))
-  knit_result <- knit_result[-c(1, length(knit_result))]
-  knit_result <- c(knit_result)
+format_cb_table_md <- function(tab){
+    cn <- colnames(tab)
+    if(ncol(tab)>2){
+        if(all(trunc(tab[,1])==tab[,1])){
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="d"),
+                formatC(tab[,2],format="f",digits=1),
+                formatC(tab[,3],format="f",digits=1)
+            )
+        } else {
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="f",digits=1),
+                formatC(tab[,2],format="f",digits=1),
+                formatC(tab[,3],format="f",digits=1)
+            )
+        }
+    }
+    else {
+        if(all(trunc(tab[,1])==tab[,1])){
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="d"),
+                formatC(tab[,2],format="f",digits=1)
+            )
+        } else {
+            tab <- cbind(
+                formatC(tab[,1,drop=FALSE],format="f",digits=1),
+                formatC(tab[,2],format="f",digits=1)
+            )
+        }
+        
+    }
+    tab[tab=="NA"] <- ""
+    tab <- rbind(" "=cn,"",tab)
+    tab <- format(tab,justify="right")
+    tab[] <- paste0(" ",tab," ")
+    specline <- sapply(nchar(tab[2,]),md_tabspec,align="r")
+    tab[2,] <- specline
+    tab <- apply(tab,1,paste,collapse="|")
+    tab <- paste0("|",tab)
+    tab
 }
 
-knit_tab <- function (x) {
-  tab <- data.frame(x[,,1])
-  row_names <- rownames(tab)
-  values <- regmatches(row_names, regexpr(row_names, pattern = "^[ ]*[0-9]+"))
-  values <- as.numeric(values)
-  missing_value <- grepl(rownames(tab), pattern = " M '")
-  missing_value <- ifelse(missing_value, "M", "")
-  labels <- regmatches(row_names, regexpr(row_names, pattern = "'.*'"))
-  tab <- cbind(values, missing_value, labels, tab)
-  rownames(tab) <- NULL
-  colnames(tab) <- c("", "", "Values and labels", "N", "Valid", "Total")
-  knit_counts <- c(knitr::kable(tab))
+# This assumes that the contents are already formatted!
+format_col_md <- function(x,align,colname){
+    if(align=="r")
+        x <- format(x,justify="right")
+    else if(align=="l")
+        x <- format(x,justify="left")
+    x <- c(colname,x)
+    x <- paste0(" ",format(x)," ")
+    n <- nchar(x[1])
+    spec <- md_tabspec(n,align=align)
+    c(x[1],spec,x[-1])
+}
+
+md_tabspec <- function(n,align="l"){
+    spec <- rep("-",n)
+    if(align=="l")
+        spec[1] <- ":"
+    else if(align=="r")
+        spec[n] <- ":"
+    paste(spec,collapse="")
 }
