@@ -1,3 +1,7 @@
+2022-08-26:
+   - Added methods for factors, vectors, lists, and data frames of the
+     'percentages()' generic.
+
 2022-08-20:
    - Refactored 'format_md()' to integrate it better to the existing codebase of
      the package.

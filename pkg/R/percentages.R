@@ -139,6 +139,37 @@ percentages.formula <- function(obj,data=parent.frame(),weights=NULL,...){
   percentages.table(tab,by=by,which=which,...)
 }
 
+percentages.default <- function(obj,weights=NULL,...){
+    lab <- deparse(substitute(obj))
+    percentages1(obj,weights=weights,name=lab,...)
+}
+
+percentages.list <- function(obj,weights=NULL,...){
+    nms <- names(obj)
+    if(!length(nms))
+        nms <- rep("",length(obj))
+    mapply(percentages1,obj,nms,MoreArgs=list(weights=weights,...))
+}
+
+percentages.data.frame <- percentages.list
+
+percentages1 <- function(x,weights=NULL,name,...){
+    if(length(weights))
+    {
+        tab <- rowsum(weights,x)
+        dnm <- dimnames(tab)
+        dim(tab) <- dim(tab)[1]
+        dimnames(tab) <- dnm[1]
+        class(tab) <- "table"
+    }
+    else
+        tab <- table(x)
+    tab <- percentages.table(tab,...)
+    names(dimnames(tab))[1] <- name
+    tab
+}
+
+
 as.data.frame.percentage.table <- function(x,...){
   res <- NextMethod("as.data.frame")
   rename(res,Freq="Percentage")

@@ -1,7 +1,10 @@
 \name{percentages}
 \alias{percentages}
-\alias{percentages.formula}
 \alias{percentages.table}
+\alias{percentages.formula}
+\alias{percentages.default}
+\alias{percentages.data.frame}
+\alias{percentages.list}
 \alias{as.data.frame.percentage.table}
 \alias{as.data.frame.xpercentage.table}
 \title{
@@ -20,10 +23,15 @@ percentages(obj, \dots)
       by=NULL, which=NULL, se=FALSE, ci=FALSE, ci.level=.95, \dots)
 \method{percentages}{formula}(obj,
       data=parent.frame(), weights=NULL, \dots)
+\method{percentages}{default}(obj,
+      weights=NULL, \dots)
+\method{percentages}{data.frame}(obj,
+      weights=NULL, \dots)
+\method{percentages}{list}(obj,
+      weights=NULL, \dots)
 \method{as.data.frame}{percentage.table}(x, \dots)
 \method{as.data.frame}{xpercentage.table}(x, \dots)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{an object; a contingency table or a formula. If
   it is a formula, its left-hand side determines the factor 
@@ -49,8 +57,10 @@ percentages(obj, \dots)
    or a data frame or an object coercable into a data frame.}
   \item{weights}{an optional vector of weights. Should be NULL or a
     numeric vector.}
+  \item{\dots}{Further arguments passed on to the
+    "table" method of \code{percentages} or ignored in case of
+     a call to \code{as.data.frame}.}
   \item{x}{an object coerced into a data frame.}
-  \item{\dots}{Further arguments, ignored.}
 }
 \value{
   An array that inherits classes "percentage.table" and "table". If
@@ -58,28 +68,15 @@ percentages(obj, \dots)
   then the result additionally inherits class "xpercentage.table".
 }
 \examples{
-
-# Two equivalent ways to create the same table
-100*prop.table(UCBAdmissions)
 percentages(UCBAdmissions)
 
-# Three equivalent ways to create the same table
-100*prop.table(UCBAdmissions,c(2,3))
-(p0 <- percentages(UCBAdmissions,by=c("Gender","Dept")))
+# Three equivalent ways to create the same table of conditional
+# percentages
+percentages(Admit~Gender+Dept,data=UCBAdmissions)
+percentages(UCBAdmissions,by=c("Gender","Dept"))
 percentages(UCBAdmissions,which="Admit")
 # Percentage table as data frame
-as.data.frame(p0)
-
-# Three equivalent ways to create the same table
-100*prop.table(margin.table(UCBAdmissions,c(1,2)),2)
-percentages(UCBAdmissions,which="Admit",by="Gender")
-percentages(Admit~Gender,data=UCBAdmissions)
-
-# Three equivalent ways to create the same table
-100*prop.table(margin.table(UCBAdmissions,c(1,3)),2)
-percentages(Admit~Dept,data=UCBAdmissions)
-percentages(Admit~Dept,data=as.data.frame(UCBAdmissions),
-            weights=Freq)
+as.data.frame(percentages(Admit~Gender+Dept,data=UCBAdmissions))
 
 # Standard errors and confidence intervals
 percentages(Admit~Dept,data=UCBAdmissions,se=TRUE)
@@ -88,4 +85,13 @@ percentages(Admit~Dept,data=UCBAdmissions,ci=TRUE)
 
 # An extended table of percentages as data frame
 as.data.frame(p)
+
+# A table of percentages of a factor
+percentages(iris$Species)
+
+UCBA <- as.data.frame(UCBAdmissions)
+percentages(UCBA$Admit,weights=UCBA$Freq)
+
+percentages(UCBA,weights=UCBA$Freq)
+
 }

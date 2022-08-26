@@ -333,6 +333,9 @@ S3method(toLatex,data.set)
 
 S3method(percentages,table)
 S3method(percentages,formula)
+S3method(percentages,default)
+S3method(percentages,list)
+S3method(percentages,data.frame)
 S3method(as.data.frame,percentage.table)
 S3method(as.data.frame,xpercentage.table)
 
