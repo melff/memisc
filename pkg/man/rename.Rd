@@ -36,6 +36,8 @@ rename(x, \dots, gsub = FALSE, fixed = TRUE, warn = TRUE)
 \examples{
   x <- c(a=1, b=2)
   rename(x,a="A",b="B")
+  # Since version 0.99.22 - the following also works:
+  rename(x,a=A,b=B)
   
   str(rename(iris,
                   Sepal.Length="Sepal_Length",
