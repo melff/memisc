@@ -7,6 +7,7 @@
 \alias{labels<-,ANY,NULL-method}
 \alias{labels<-,item,NULL-method}
 \alias{labels<-,vector,ANY-method}
+\alias{labels<-,vector,NULL-method}
 \alias{value.labels-class}
 \alias{initialize,value.labels-method}
 \alias{Arith,value.labels,ANY-method}

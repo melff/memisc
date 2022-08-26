@@ -31,14 +31,14 @@ setMethod("labels<-",signature(x="item",value="ANY"),function(x,value){
   x
 })
 
-setMethod("labels<-",signature(x="ANY",value="NULL"),function(x,value){
-  x
-})
+setMethod("labels<-",signature(x="ANY",value="NULL"),function(x,value) x)
 
 setMethod("labels<-",signature(x="item",value="NULL"),function(x,value){
   x@value.labels<-NULL
   x
 })
+
+setMethod("labels<-",signature(x="vector",value="NULL"),function(x,value) x)
 
 setMethod("labels<-",signature(x="vector",value="ANY"),function(x,value)as.item(x,
   labels=as(value,"value.labels")))
