@@ -32,6 +32,14 @@ description <- function(x){
 }
 setGeneric("description",function(x)standardGeneric("description"))
 
+description.data.frame <- function(x){
+    dict <- lapply(x,attr,"label")
+    structure(dict,class="descriptions")
+}
+
+setMethod("description","data.frame",description.data.frame)
+setMethod("description","tbl_df",description.data.frame)
+
 "description<-" <- function(x,value){
   annotation(x)["description"] <- value
   x

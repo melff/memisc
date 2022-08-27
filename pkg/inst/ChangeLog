@@ -1,6 +1,7 @@
 2022-08-27:
    - Improved the order of variables of the result of 'Reshape(...,direction="wide")'
-
+   - Added 'description()' methods for data frames and tibbles.
+	
 2022-08-26:
    - Added methods for factors, vectors, lists, and data frames of the
      'percentages()' generic.

@@ -12,6 +12,8 @@
 \alias{description}
 \alias{description,data.set-method}
 \alias{description,importer-method}
+\alias{description,data.frame-method}
+\alias{description,tbl_df-method}
 \alias{description<-}
 \alias{wording}
 \alias{wording<-}
@@ -59,6 +61,8 @@ wording(x)<-value
 
 \S4method{description}{data.set}(x)
 \S4method{description}{importer}(x)
+\S4method{description}{data.frame}(x)
+\S4method{description}{tbl_df}(x)
 }
 \arguments{
   \item{x}{an object}
