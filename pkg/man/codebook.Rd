@@ -7,6 +7,7 @@
 \alias{codebook,NULL-method}
 \alias{codebook,atomic-method}
 \alias{codebook,data.frame-method}
+\alias{codebook,tbl_df-method}
 \alias{codebook,factor-method}
 \alias{codebook-class}
 \alias{format,codebookEntry-method}
@@ -28,8 +29,9 @@ codebook(x, weights = NULL, unweighted = TRUE, \dots)
 \S4method{codebook}{atomic}(x, weights = NULL, unweighted = TRUE, \dots)
 \S4method{codebook}{factor}(x, weights = NULL, unweighted = TRUE, \dots)
 \S4method{codebook}{data.set}(x, weights = NULL, unweighted = TRUE, \dots)
-\S4method{codebook}{data.frame}(x, weights = NULL, unweighted = TRUE, \dots)
 \S4method{codebook}{importer}(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{data.frame}(x, weights = NULL, unweighted = TRUE, \dots)
+\S4method{codebook}{tbl_df}(x, weights = NULL, unweighted = TRUE, \dots)
 }
 \arguments{
   \item{x}{an \code{\link{item}}, numeric or character vector, factor,
@@ -93,7 +95,14 @@ codebook(Data)$vote
 codebook(Data)[2]
 
 codebook(Data[2])
-    
+ 
+DataFr <- as.data.frame(Data)
+DataHv <- as_haven(Data,user_na=TRUE)
+
+codebook(DataFr)
+codebook(DataHv)
+
+   
 \dontrun{
 Write(description(Data),
            file="Data-desc.txt")

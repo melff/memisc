@@ -17,6 +17,12 @@ setMethod("codebook","data.frame",function(x,weights,unweighted=TRUE,...){
   new("codebook",cb)
 })
 
+setMethod("codebook","tbl_df",function(x,weights,unweighted=TRUE,...){
+  weights <- eval(substitute(weights),x,parent.frame())
+  cb <- lapply(x,codebookEntry,weights=weights,unweighted=unweighted)
+  new("codebook",cb)
+})
+
 setMethod("codebook","atomic",function(x,weights,unweighted=TRUE,...){
   xname <- paste(deparse(substitute(x)))
   cb <- list(codebookEntry(x,weights=weights,unweighted=unweighted))
