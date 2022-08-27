@@ -128,7 +128,15 @@ Reshape <- function(data,...,id,within_id,drop,direction){
                        idvar=idvar,
                        drop=drop,
                        direction=direction)
-        res[["__tmp__na__"]] <- NULL
+        varying_ <- unname(unlist(varying))
+        nonvar_ <- setdiff(names(res),varying_) 
+        ii <- c(nonvar_,varying_)
+        attr_reshape <- attr(res,"reshapeWide")
+        res <- res[ii]
+        if("__tmp__na__" %in% names(res))
+            res[["__tmp__na__"]] <- NULL
+        else
+            attr(res,"reshapeWide") <- attr_reshape
         if(drop_id)
             res[[idvar]] <- NULL
         class(res) <- cls
