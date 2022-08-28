@@ -1,8 +1,15 @@
+2022-08-28:
+   - Several extensions of the 'foreach()' function: 
+     (1) The colon-argument is better handled, which can be controlled
+         with a new argument '.sorted'
+     (2) It is now possible to select variables using regular expressions.
+   - The function 'xapply()' is similarly extended and exported.  
+
 2022-08-27:
    - Improved the order of variables of the result of 'Reshape(...,direction="wide")'
    - Added 'description()' methods for data frames and tibbles.
    - Added a 'codebook()' method for tibbles.
-	
+
 2022-08-26:
    - Added methods for factors, vectors, lists, and data frames of the
      'percentages()' generic.

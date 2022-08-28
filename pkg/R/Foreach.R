@@ -1,119 +1,107 @@
-foreach.old <- function(...){
-  args <- match.call(expand.dots=FALSE)$...
-  tags <- names(args)
-  
-  vars <- args[nzchar(tags)]
-  expr <- args[!nzchar(tags)][[1]]
-  tags <- tags[nzchar(tags)]
-  if(!length(expr) || !length(tags))return(invisible(NULL))
-  vars <- sapply(vars,function(values){
-      values <- if(as.character(values[[1]]) %in% c("c","list")) 
-        as.list(values[-1])
-      else 
-        as.list(values)
-      valchars <- sapply(values,as.character)
-      if(!all(nzchar(valchars))) stop("empty element in substitution list")
-      values
-      })
-  if(length(tags)==1) {
-    vars <- as.matrix(vars)
-    colnames(vars) <- tags
-  }
-  for(i in seq_len(nrow(vars))){
-    subst <- vars[i,]
-    res <- do.call("substitute",list(expr,subst))
-    eval(res,parent.frame())
+prep.vars <- function(values,parent,sorted){
+
+    colon <- function(x) {
+        if(is.numeric(x[[2]]) && is.numeric(x[[3]]))
+            return(seq.int(from=x[[2]],to=x[[3]]))
+        from.name <- as.character(x[[2]])
+        to.name <- as.character(x[[3]])
+        nms <- ls(parent,sorted=sorted)
+        from <- match(from.name,nms,nomatch=0L)
+        to <- match(to.name,nms,nomatch=0L)
+        if(any(c(from,to)==0))stop("Unknown variable referenced")
+        values <- nms[from:to]
+        lapply(values,as.symbol)
     }
-}
-
-
-xapply.old <- function(...){
-  dots <- match.call(expand.dots=FALSE)$...
-  var.name <- names(dots)[1]
-  values <- dots[[1]]
-  expr <- dots[[2]]
-  parent <- parent.frame()
-  e <- evalq(environment(), list(), parent)
-  if(as.character(values[[1]]) %in% c("c","list")) values <- values[-1]
-  res <- lapply(seq_along(values),function(i){
-    subst <- structure(list(values[[i]]),names=var.name)
-    res <- do.call("substitute",list(expr,subst))
-    eval(res,e)
-    })
-  names(res) <- sapply(values,as.character)
-  res
-}
-
-
-
-
-foreach <- function(...){
-  args <- match.call(expand.dots=FALSE)$...
-  tags <- names(args)
-  parent <- parent.frame()
-  vars <- args[nzchar(tags)]
-  expr <- args[!nzchar(tags)]
-  if(length(expr)) expr <- expr[[1]]
-  else return()
-  tags <- tags[nzchar(tags)]
-  if(!length(expr) || !length(tags))return(invisible(NULL))
-  vars <- sapply(vars,function(values){
-      colon <- function(x) {
-          from.name <- as.character(x[[2]])
-          to.name <- as.character(x[[3]])
-          nms <- ls(parent,sorted=FALSE)
-          from <- match(from.name,nms,nomatch=0L)
-          to <- match(to.name,nms,nomatch=0L)
-          if(any(c(from,to)==0))stop("Unknown variable referenced")
-          values <- nms[from:to]
-          lapply(values,as.symbol)
-      }
-      tosymbols <- function(x){
-          x <- as.list(x)
-          isc <- sapply(x,is.call)
-          if(!any(isc))return(x)
-          else {
-              xisc <- x[isc]
-              x[isc] <- lapply(xisc,expcall)   
-          }
-          x
-      }
-      expcall <- function(x){
+    tosymbols <- function(x){
+        x <- as.list(x)
+        isc <- sapply(x,is.call)
+        if(!any(isc))return(x)
+        else {
+            xisc <- x[isc]
+            x[isc] <- lapply(xisc,expcall)   
+        }
+        x
+    }
+    expcall <- function(x){
         if(as.character(x[[1]]) %in% c("c","list")) tosymbols(x[-1])
+        else if(as.character(x[[1]])=="rx") {
+            rxcall <- x
+            rxcall[[1]] <- as.name("rx2symbols")
+            eval(rxcall)
+        }
         else if(as.character(x[[1]])==":"){
-            x <- colon(x)
+            colon(x)
         }
         else eval(x,parent)
-      }
+    }
+    firstchar <- function(x)substr(x,1,1)
+    lastchar <- function(x){
+        n <- nchar(x)
+        substr(x,n,n)
+    }
+    rx2symbols <- function(pattern){
+        nms <- ls(parent)
+        pattern <- pattern[1]
+        if(firstchar(pattern)!="^") pattern <- paste0("^",pattern)
+        if(lastchar(pattern)!="$") pattern <- paste0(pattern,"$")
+        nms <- grep(pattern=pattern,x=nms,value=TRUE)
+        as.symbols(nms)
+    }
 
-      values <- if(is.call(values)) {
-        if(as.character(values[[1]]) %in% c("c","list")) tosymbols(values[-1])
-        else if(as.character(values[[1]])==":"){
-            value <- colon(values)
-        }
-        else eval(values,parent)
-        }
+    values <- if(is.call(values)) {
+                  if(as.character(values[[1]]) %in% c("c","list")) tosymbols(values[-1])
+                  else if(as.character(values[[1]])=="rx") {
+                      rxcall <- values
+                      rxcall[[1]] <- as.name("rx2symbols")
+                      eval(rxcall)
+                  }
+                  else if(as.character(values[[1]])==":"){
+                      colon(values)
+                  }
+                  else eval(values,parent)
+              }
+              else
+                  eval(values)
+
+    values <- unlist(values)
+    valchars <- lapply(values,as.character)
+    if(!all(nzchar(valchars))) stop("empty element in substitution list")
+    values
+}
+
+
+foreach <- function(...,.sorted){
+  args <- match.call(expand.dots=FALSE)$...
+  tags <- names(args)
+  parent <- parent.frame()
+  vars <- args[nzchar(tags)]
+  expr <- args[!nzchar(tags)]
+  if(length(expr)) expr <- expr[[1]]
+  else return()
+  tags <- tags[nzchar(tags)]
+  if(!length(expr) || !length(tags))return(invisible(NULL))
+  if(missing(.sorted)){
+      if(identical(parent,.GlobalEnv))
+          .sorted <- TRUE
       else
-        eval(values)
-
-      values <- unlist(values)
-      valchars <- lapply(values,as.character)
-      if(!all(nzchar(valchars))) stop("empty element in substitution list")
-      values
-      })
+          .sorted <- FALSE
+  }
+  vars <- sapply(vars,prep.vars,parent=parent,sorted=.sorted)
   if(length(tags)==1) {
     vars <- as.matrix(vars)
     colnames(vars) <- tags
   } else if(!is.matrix(vars)) stop("variables have unequal length")
   for(i in seq_len(nrow(vars))){
     subst <- vars[i,]
+    if(!is.list(subst)) 
+        subst <- structure(as.list(subst),
+                           names=colnames(vars))
     res <- do.call("substitute",list(expr,subst))
     eval(res,parent.frame())
     }
 }
 
-
-xapply <- function(...){
+xapply <- function(...,.sorted,simplify=TRUE,USE.NAMES=TRUE){
   args <- match.call(expand.dots=FALSE)$...
   tags <- names(args)
   parent <- parent.frame()
@@ -125,27 +113,36 @@ xapply <- function(...){
   if(!length(expr) || !length(tags))return(invisible(NULL))
   parent <- parent.frame()
   e <- evalq(environment(), list(), parent)
-  vars <- sapply(vars,function(values){
-      values <- if(is.call(values)) {
-        if(as.character(values[[1]]) %in% c("c","list")) as.list(values[-1])
-        else eval(values,parent)
-        }
+  if(missing(.sorted)){
+      if(identical(parent,.GlobalEnv))
+          .sorted <- TRUE
       else
-        eval(values)
-      valchars <- sapply(values,as.character)
-      if(!all(nzchar(valchars))) stop("empty element in substitution list")
-      values
-      })
+          .sorted <- FALSE
+  }
+  vars <- sapply(vars,prep.vars,parent=parent,sorted=.sorted)
   if(length(tags)==1) {
     vars <- as.matrix(vars)
     colnames(vars) <- tags
   } else if(!is.matrix(vars)) stop("variables have unequal length")
-  res <- lapply(seq_along(vars),function(i){
+  res <- Sapply(seq_len(nrow(vars)),function(i){
     subst <- vars[i,]
+    if(!is.list(subst)) 
+        subst <- structure(as.list(subst),
+                           names=colnames(vars))
     res <- do.call("substitute",list(expr,subst))
     eval(res,e)
-    })
-  names(res) <- sapply(vars,as.character)
+    },simplify=simplify)
+  if(USE.NAMES){
+      if(isTRUE(USE.NAMES)) USE.NAMES <- 1
+      else USE.NAMES <- as.integer(USE.NAMES)
+      nms <- as.character(vars[,USE.NAMES])
+  }
+  if(simplify && is.array(res) && USE.NAMES){
+      ndim <- length(dim(res))
+      dimnames(res)[[ndim]] <- nms
+  } else if(USE.NAMES){
+      names(res) <- nms
+  }
   res
 }
 

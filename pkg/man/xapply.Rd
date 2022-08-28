@@ -1,13 +1,13 @@
-\name{foreach}
-\alias{foreach}
-\title{Loop over Variables in a Data Frame or Environment}
+\name{xapply}
+\alias{xapply}
+\title{Apply a function to ranges of variables}
 \description{
-  \code{foreach} evaluates an expression given as untagged argument by substituting
-  in variables. The expression may also contain assignments, which take effect in
-  the caller's environment.
+  \code{xapply} evaluates an expression given as second argument by substituting
+  in variables. The results are collected in a list or array in a
+  similar way as done by \code{Sapply} or \code{lapply}.  
 }
 \usage{
-  foreach(\dots,.sorted)
+  xapply(\dots,.sorted,simplify=TRUE,USE.NAMES=TRUE)
 }
 \arguments{
   \item{\dots}{tagged and untagged arguments.
@@ -20,8 +20,15 @@
     "\code{:}". Decises whether variable names should be sorted
     alphabetically before the range of variables are created.
 
-    If this argument missing, its default value is TRUE, if \code{foreach()} is called
+    If this argument missing, its default value is TRUE, if \code{xapply()} is called
     in the global environment, otherwise it is FALSE.
+  }
+  \item{simplify}{a logical value; should the result be simplifies in
+    \code{Sapply}?}
+  \item{USE.NAMES}{a logical value or a positive integer. If
+    an integer, determines which variable is used to name
+    the highest dimension of the result (its columns, in case is it a matrix).
+    If TRUE, the first variable is used.
   }
 }
 \examples{
@@ -69,36 +76,60 @@ codebook(ds)
 # The colon-operator respects the order of the variables
 # in the data set, if .sorted=FALSE
 with(ds[c(3,1,2)],
-     foreach(x=a:c,
-             print(description(x))
+     xapply(x=a:c,
+            description(x)
             ))
 
 # Since .sorted=TRUE, the colon operator creates a range 
 # of alphabetically sorted variables.
 with(ds[c(3,1,2)],
-     foreach(x=a:c,
-             print(description(x)),
-             .sorted=TRUE
+     xapply(x=a:c,
+            description(x),
+            .sorted=TRUE
             ))
 
 # The variables in reverse order
 with(ds,
-     foreach(x=c:a,
-             print(description(x))
+     xapply(x=c:a,
+             description(x)
             ))
 
 # The colon operator can be combined with the 
 # concatenation function
 with(ds,
-     foreach(x=c(a:b,c,c,b:a),
-             print(description(x))
+     xapply(x=c(a:b,c,c,b:a),
+             description(x)
             ))
 
 # Variables can also be selected by regular expressions.
 with(ds,
-     foreach(x=rx("[a-b]"),
-             print(description(x))
+     xapply(x=rx("[a-b]"),
+             description(x)
             ))
+
+# Demonstrating the effects of the 'USE.NAMES' argument.
+with(ds,
+     xapply(x=a:c,mean(x)))
+
+with(ds,
+     xapply(x=a:c,mean(x),
+     USE.NAMES=FALSE))
+
+t(with(ds,
+      xapply(i=1:3,
+             x=a:c,
+             c(Index=i,
+               Mean=mean(x)),
+      USE.NAMES=2)))
+
+# Result with 'simplify=FALSE'
+with(ds,
+     xapply(x=a:c,mean(x),
+     simplify=FALSE))
+
+# It is also possible to loop over functions:
+xapply(fun=c(exp,log),
+       fun(1))
 
 }
 \keyword{programming}

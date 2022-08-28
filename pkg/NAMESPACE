@@ -100,6 +100,7 @@ export(
       is.data.set,
       retain,
       foreach,
+      xapply,
       syms,
       as.symbols,
       Substitute,
