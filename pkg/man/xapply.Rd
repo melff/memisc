@@ -7,7 +7,7 @@
   similar way as done by \code{Sapply} or \code{lapply}.  
 }
 \usage{
-  xapply(\dots,.sorted,simplify=TRUE,USE.NAMES=TRUE)
+  xapply(\dots,.sorted,simplify=TRUE,USE.NAMES=TRUE,.outer=FALSE)
 }
 \arguments{
   \item{\dots}{tagged and untagged arguments.
@@ -29,6 +29,12 @@
     an integer, determines which variable is used to name
     the highest dimension of the result (its columns, in case is it a matrix).
     If TRUE, the first variable is used.
+  }
+  \item{.outer}{an optional logical value; if TRUE, each combination of
+    the variables is used to evaluate the expression,
+    if FALSE (the default) then the variables all need to have
+    the same length and the corresponding values of the
+    variables are used in the evaluation of the expression.
   }
 }
 \examples{
@@ -130,6 +136,20 @@ with(ds,
 # It is also possible to loop over functions:
 xapply(fun=c(exp,log),
        fun(1))
+
+# Two demonstrations for '.outer=TRUE'
+with(ds,
+      xapply(x=a:c,
+             y=a:c,
+             cov(x,y),
+             .outer=TRUE))
+
+with(ds,
+      xapply(x=a:c,
+             y=a:c,
+             fun=c(cov,cor),
+             fun(x,y),
+             .outer=TRUE))
 
 }
 \keyword{programming}

@@ -70,7 +70,7 @@ prep.vars <- function(values,parent,sorted){
 }
 
 
-foreach <- function(...,.sorted){
+foreach <- function(...,.sorted,.outer=FALSE){
   args <- match.call(expand.dots=FALSE)$...
   tags <- names(args)
   parent <- parent.frame()
@@ -86,11 +86,22 @@ foreach <- function(...,.sorted){
       else
           .sorted <- FALSE
   }
-  vars <- sapply(vars,prep.vars,parent=parent,sorted=.sorted)
-  if(length(tags)==1) {
-    vars <- as.matrix(vars)
+  vars <- lapply(vars,prep.vars,parent=parent,sorted=.sorted)
+  if(length(vars)==1) {
+    vars <- as.matrix(vars[[1]])
     colnames(vars) <- tags
-  } else if(!is.matrix(vars)) stop("variables have unequal length")
+  } else {
+      l <- sapply(vars,length)
+      if(.outer) {
+          i <- lapply(l,seq.int)
+          i <- do.call('expand.grid',i)
+          vars <- mapply('[',vars,i)
+      } else {
+          if(length(unique(l)) > 1) stop("variables have unequal length")
+          vars <- do.call('cbind',vars)
+      }
+  }
+
   for(i in seq_len(nrow(vars))){
     subst <- vars[i,]
     if(!is.list(subst)) 
@@ -101,7 +112,7 @@ foreach <- function(...,.sorted){
     }
 }
 
-xapply <- function(...,.sorted,simplify=TRUE,USE.NAMES=TRUE){
+xapply <- function(...,.sorted,simplify=TRUE,USE.NAMES=TRUE,.outer=FALSE){
   args <- match.call(expand.dots=FALSE)$...
   tags <- names(args)
   parent <- parent.frame()
@@ -119,11 +130,23 @@ xapply <- function(...,.sorted,simplify=TRUE,USE.NAMES=TRUE){
       else
           .sorted <- FALSE
   }
-  vars <- sapply(vars,prep.vars,parent=parent,sorted=.sorted)
-  if(length(tags)==1) {
-    vars <- as.matrix(vars)
+  vars <- lapply(vars,prep.vars,parent=parent,sorted=.sorted)
+  vars. <- lapply(vars,as.character)
+  if(length(vars)==1) {
+    vars <- as.matrix(vars[[1]])
     colnames(vars) <- tags
-  } else if(!is.matrix(vars)) stop("variables have unequal length")
+  } else {
+      l <- sapply(vars,length)
+      if(.outer) {
+          i <- lapply(l,seq.int)
+          i <- do.call('expand.grid',i)
+          vars <- mapply('[',vars,i)
+      } else {
+          if(length(unique(l)) > 1) stop("variables have unequal length")
+          vars <- do.call('cbind',vars)
+      }
+  }
+
   res <- Sapply(seq_len(nrow(vars)),function(i){
     subst <- vars[i,]
     if(!is.list(subst)) 
@@ -137,9 +160,21 @@ xapply <- function(...,.sorted,simplify=TRUE,USE.NAMES=TRUE){
       else USE.NAMES <- as.integer(USE.NAMES)
       nms <- as.character(vars[,USE.NAMES])
   }
-  if(simplify && is.array(res) && USE.NAMES){
+  if(simplify && is.array(res)){
       ndim <- length(dim(res))
-      dimnames(res)[[ndim]] <- nms
+      dmn <- dimnames(res)
+      if(.outer){
+          dim(res) <- c(dim(res)[-ndim],l)
+          ll <- length(l)
+          if(USE.NAMES){
+              dimnames(res) <- c(dmn[-ndim],vars.)
+          }
+          else {
+              dimnames(res) <- c(dmn[-ndim],rep(list(NULL),ll))
+          }
+      }
+      else if(USE.NAMES) 
+          dimnames(res)[[ndim]] <- nms
   } else if(USE.NAMES){
       names(res) <- nms
   }

@@ -7,7 +7,7 @@
   the caller's environment.
 }
 \usage{
-  foreach(\dots,.sorted)
+  foreach(\dots,.sorted,.outer=FALSE)
 }
 \arguments{
   \item{\dots}{tagged and untagged arguments.
@@ -22,6 +22,12 @@
 
     If this argument missing, its default value is TRUE, if \code{foreach()} is called
     in the global environment, otherwise it is FALSE.
+  }
+  \item{.outer}{an optional logical value; if TRUE, each combination of
+    the variables is used to evaluate the expression,
+    if FALSE (the default) then the variables all need to have
+    the same length and the corresponding values of the
+    variables are used in the evaluation of the expression.
   }
 }
 \examples{
@@ -99,6 +105,12 @@ with(ds,
      foreach(x=rx("[a-b]"),
              print(description(x))
             ))
+
+# A demonstration for '.outer=TRUE'
+foreach(l=letters[1:2],
+        i=1:3,
+        cat(paste0(l,i,"\n")),
+        .outer=TRUE)
 
 }
 \keyword{programming}

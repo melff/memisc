@@ -4,6 +4,8 @@
          with a new argument '.sorted'
      (2) It is now possible to select variables using regular expressions.
    - The function 'xapply()' is similarly extended and exported.  
+   - Both 'foreach()' and 'xapply()' can be used like an "outer product", 
+     by setting the argument '.outer' to TRUE.
 
 2022-08-27:
    - Improved the order of variables of the result of 'Reshape(...,direction="wide")'
