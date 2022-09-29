@@ -148,7 +148,11 @@ setMethod("codebookEntry","Date.item",function(x){
   )
 })
 
+## Methods for auxiliar functions
+
 xtfrm.Date.item <- function(x) x@.Data
+mtfrm.Date.item <- function(x) x@.Data
+
 setMethod("as.character","Date.item",function(x,...)
    format(as.Date.numeric.item(x))
 )

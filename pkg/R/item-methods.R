@@ -582,12 +582,19 @@ setMethod("%in%",signature(x="numeric.item",table="character"),function(x,table)
    x %in% table
 })
 
-## Methods for the auxiliary helper function for 'sort' and 'order'
+## Methods for the auxiliary function for 'sort' and 'order'
 
 xtfrm.integer.item <- function(x) x@.Data
 xtfrm.numeric.item <- function(x) x@.Data
 xtfrm.double.item <- function(x) x@.Data
 xtfrm.character.item <- function(x) as.integer(as.factor(x@.Data))
+
+## Methods for the auxiliary function for 'match'
+
+mtfrm.integer.item <- function(x) x@.Data
+mtfrm.numeric.item <- function(x) x@.Data
+mtfrm.double.item <- function(x) x@.Data
+mtfrm.character.item <- function(x) as.integer(as.factor(x@.Data))
 
 ## rep
 

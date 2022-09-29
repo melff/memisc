@@ -216,8 +216,11 @@ setMethod("codebookEntry","datetime.item",function(x,weights,...){
   )
 })
 
+## Methods for auxiliar functions
 
 xtfrm.datetime.item <- function(x) x@.Data
+mtfrm.datetime.item <- function(x) x@.Data
+
 setMethod("as.character","datetime.item",function(x,...)
    format(as.POSIXct.datetime.item(x))
 )
