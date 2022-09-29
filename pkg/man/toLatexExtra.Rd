@@ -144,7 +144,7 @@
      \item{row.names}{logical, whether row names should be included in
 			 exported LaTeX code.}
      \item{NAas}{character string, how missing values should be represented.}
-     \item{toLatex.escape.tex}{logical, should symbols \$, \_, and \^ be
+     \item{toLatex.escape.tex}{logical, should symbols "$", "_", and "^" be
 	   escaped with backslashes?}
      \item{fold.leaders}{logical, if \code{TRUE}, factor levels of row
        variables are not distributed into different columns, but

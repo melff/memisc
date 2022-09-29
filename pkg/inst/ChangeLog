@@ -1,6 +1,7 @@
 2022-09-29:
    - Added new 'mtfrm' methods for compatibility with changes in 'match' as
      suggested by Kurt Hornik
+   - Removed extraneous backslashes from documentation
 
 2022-08-28:
    - Several extensions of the 'foreach()' function: 
