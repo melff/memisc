@@ -324,11 +324,15 @@ S3method(xtfrm,character.item)
 S3method(xtfrm,datetime.item)
 S3method(xtfrm,Date.item)
 
-S3method(mtfrm,integer.item)
-S3method(mtfrm,double.item)
-S3method(mtfrm,character.item)
-S3method(mtfrm,datetime.item)
-S3method(mtfrm,Date.item)
+if (getRversion() >= "4.2.0") {
+    
+    S3method(mtfrm,integer.item)
+    S3method(mtfrm,double.item)
+    S3method(mtfrm,character.item)
+    S3method(mtfrm,datetime.item)
+    S3method(mtfrm,Date.item)
+}
+
 
 S3method(unique,integer.item)
 S3method(unique,double.item)
