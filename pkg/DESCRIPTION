@@ -18,7 +18,7 @@ LazyLoad: Yes
 Depends: R (>= 3.3.0), lattice, stats, methods, utils, MASS
 Suggests: splines, knitr, rmarkdown, sandwich
 Enhances: AER, car, eha, lme4, ordinal, simex, tibble, haven
-Imports: grid, repr, data.table, yaml, jsonlite
+Imports: grid, data.table, yaml, jsonlite
 VignetteBuilder: knitr
 URL: http://memisc.elff.eu,https://github.com/melff/memisc/
 BugReports: https://github.com/melff/memisc/issues

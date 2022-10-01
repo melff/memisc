@@ -1,3 +1,6 @@
+2022-10-01:
+   - Removed dependency on 'repr' package.
+	
 2022-09-29:
    - Added new 'mtfrm' methods for compatibility with changes in 'match' as
      suggested by Kurt Hornik

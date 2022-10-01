@@ -406,17 +406,6 @@ S3method(vcov,withVCov)
 S3method(summary,withVCov)
 S3method(summary,withVCov.lm)
 
-importFrom(repr,
-           repr_html,
-           repr_latex)
-S3method(repr_html,memisc_mtable)
-S3method(repr_html,ftable)
-S3method(repr_html,ftable_matrix)
-S3method(repr_html,html_elem)
-S3method(repr_html,html_group)
-
-S3method(repr_latex,memisc_mtable)
-
 export(codeplan,
        setCodeplan,
        "codeplan<-")
