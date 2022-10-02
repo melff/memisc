@@ -1,6 +1,8 @@
 2022-10-02:
    - Added 'as.nominal()', 'as.ordinal()', 'as.interval()', and 'as.ratio()'
      functions.
+   - Improved comparison of labelled survey items.
+
 2022-10-01:
    - Removed dependency on 'repr' package.
 	

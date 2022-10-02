@@ -524,17 +524,25 @@ setMethod("Compare",signature(e1="numeric.item",e2="character"),
     if(length(e1@value.labels))
       switch(.Generic,
         "=="=,
-        "!="=Compare_lvc1(.Generic,e1,e2),
-        callNextMethod()
+        "!="=,
+        ">"=,
+        "<"=,
+        ">="=,
+        "<="=Compare_lvc1(.Generic,e1,e2),
+        stop("Comparison not supported")
         )
      else callNextMethod()
 })
 setMethod("Compare",signature(e1="character",e2="numeric.item"),
   function(e1,e2){
-    if(length(e1@value.labels))
+    if(length(e2@value.labels))
       switch(.Generic,
         "=="=,
         "!="=Compare_lvc1(.Generic,e2,e1),
+        ">"=Compare_lvc1("<",e2,e1),
+        "<"=Compare_lvc1(">",e2,e1),
+        ">="=Compare_lvc1("<=",e2,e1),
+        "<="=Compare_lvc1(">=",e2,e1),
         callNextMethod()
         )
      else callNextMethod()
