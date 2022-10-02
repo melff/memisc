@@ -38,4 +38,5 @@ measurement_autolevel(x, \dots)
  exvect <- as.item(rep(1:2,5))
  labels(exvect) <- c(a=1,b=2)
  codebook(exvect)
+ codebook(measurement_autolevel(exvect))
 }

@@ -516,3 +516,6 @@ S3method(format_md, codebookEntry)
 
 export(coarsen)
 S3method(coarsen,numeric)
+
+export(measurement_autolevel)
+exportMethods(measurement_autolevel)
