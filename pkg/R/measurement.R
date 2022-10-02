@@ -16,8 +16,8 @@ setReplaceMethod("measurement","item",function(x,value){
 setMethod("as.measurement.level","character",function(x=c("interval","nominal","ordinal","ratio")) match.arg(x))
 setMethod("as.measurement.level","NULL",function(x) "interval")
 
-is.ordinal <- function(x) measurement(x) == "ordinal"
 is.nominal <- function(x) measurement(x) == "nominal"
+is.ordinal <- function(x) measurement(x) == "ordinal"
 is.interval <- function(x) measurement(x) == "interval"
 is.ratio <- function(x) measurement(x) == "ratio"
 
@@ -50,4 +50,24 @@ set_measurement <- function(x,...){
         }
     }
     return(x)
+}
+
+as.nominal <- function(x){
+    measurement(x) <- "nominal"
+    invisible(x)
+}
+
+as.ordinal <- function(x){
+    measurement(x) <- "ordinal"
+    invisible(x)
+}
+
+as.interval <- function(x){
+    measurement(x) <- "interval"
+    invisible(x)
+}
+
+as.ratio <- function(x){
+    measurement(x) <- "ratio"
+    invisible(x)
 }
