@@ -11,6 +11,10 @@
 \alias{is.ordinal}
 \alias{is.interval}
 \alias{is.ratio}
+\alias{as.nominal}
+\alias{as.ordinal}
+\alias{as.interval}
+\alias{as.ratio}
 \title{Levels of Measurement of Survey Items}
 \description{
   The measurement level of a \code{"item"} object, which is one of "nominal", "ordinal", "interval", "ratio",
@@ -30,6 +34,10 @@ is.nominal(x)
 is.ordinal(x)
 is.interval(x)
 is.ratio(x)
+as.nominal(x)
+as.ordinal(x)
+as.interval(x)
+as.ratio(x)
 set_measurement(x,\dots)
 }
 \arguments{
@@ -51,7 +59,10 @@ set_measurement(x,\dots)
 \value{
   The \code{item} method of \code{measurement(x)} returns a character
   string, the \code{data.set} method returns a named character vector,
-  where the name of each element is a variable name and each  
+  where the name of each element is a variable name and each.
+
+  \code{as.nominal}, \code{as.ordinal}, \code{as.interval}, \code{as.ratio}
+  return an item with the requested level of measurement setting.
   
   \code{is.nominal}, \code{is.ordinal}, \code{is.interval}, \code{is.ratio}
   return a logical value.
@@ -71,6 +82,8 @@ labels(vote) <- c(Conservatives         =  1,
 missing.values(vote) <- c(8,9)
 as.data.frame(vote)[[1]]
 measurement(vote) <- "interval"
+as.data.frame(vote)[[1]]
+vote <- as.nominal(vote)
 as.data.frame(vote)[[1]]
 group <- sample(c(1,2),size=30,replace=TRUE)
 labels(group) <- c(A=1,B=2)
