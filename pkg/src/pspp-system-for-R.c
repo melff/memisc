@@ -31,7 +31,7 @@ typedef union {
   char as_char[8];
 } sys_word;
 
-static double second_lowest_double_val();
+static double second_lowest_double_val(void);
 #define SYSMIS -DBL_MAX
 #define HIGHEST DBL_MAX
 #define LOWEST second_lowest_double_val()
@@ -1288,7 +1288,7 @@ SEXP check_pointer(SEXP ptr){
  * from an older version of PSPP
 */
 static double
-second_lowest_double_val()
+second_lowest_double_val(void)
 {
   /* PORTME: Set the value for second_lowest_value, which is the
      "second lowest" possible value for a double.  This is the value
