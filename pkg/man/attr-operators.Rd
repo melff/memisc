@@ -1,9 +1,9 @@
-\name{syntactic-sugar}
+\name{attr-operators}
 \alias{\%#\%}
 \alias{\%##\%}
 \alias{\%@\%}
 \alias{\%@\%<-}
-\title{Syntactic Sugar for Setting Annotations and Attributes}
+\title{Operators for Setting Annotations and Attributes}
 \description{The operator \code{\%#\%} can be used to attach a
   \code{\link{description}} annotation to an object. \code{\%##\%} can be
   used to attach a character vector of annotations to an object.
