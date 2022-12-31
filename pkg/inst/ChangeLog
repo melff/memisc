@@ -1,3 +1,7 @@
+2022-12-31:
+   - Added '%$%' and '%$$%' operators to simplify data transformations and reports
+     usually done with 'with()' or 'within()'.
+
 2022-12-30:
    - Added '%if%' operator for conditional assignment to variables.
 

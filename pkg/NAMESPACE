@@ -526,4 +526,8 @@ exportMethods(measurement_autolevel)
 
 export(
     "%if%",
+    "%$%",
+    "%$$%",
+    Within
 )
+S3method(Within,data.frame)
