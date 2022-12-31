@@ -1,3 +1,6 @@
+2022-12-30:
+   - Added '%if%' operator for conditional assignment to variables.
+
 2022-10-02:
    - Added 'as.nominal()', 'as.ordinal()', 'as.interval()', and 'as.ratio()'
      functions.

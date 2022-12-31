@@ -523,3 +523,7 @@ S3method(coarsen,numeric)
 
 export(measurement_autolevel)
 exportMethods(measurement_autolevel)
+
+export(
+    "%if%",
+)
