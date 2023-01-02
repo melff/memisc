@@ -20,7 +20,9 @@ Within(data,expr,\dots)
 \arguments{
   \item{data}{a data frame or similar object, see \code{\link{with}} and \code{\link{within}}}
   \item{expr}{a single or compound expression (i.e. several expressions
-  enclosed in curly braces), see \code{\link{with}} and \code{\link{within}}}
+  enclosed in curly braces), see \code{\link{with}} and
+  \code{\link{within}}}
+  \item{\dots}{Further arguments, currently ignored}
 }
 \seealso{\code{\link{with}} and \code{\link{within}} in package "base".} 
 \examples{

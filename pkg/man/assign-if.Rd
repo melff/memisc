@@ -1,5 +1,6 @@
 \name{assign_if}
 \alias{assign_if}
+\alias{\%if\%}
 \title{Assign a values to a variable for instances where a condition is
   met}
 \description{
@@ -10,7 +11,7 @@
 \usage{
 expr \%if\% condition
 # For example
-(variable <- value) \%if\% (other_variable == 0)
+# (variable <- value) \%if\% (other_variable == 0)
 }
 \arguments{
   \item{expr}{An expression that assigns a value to variable}

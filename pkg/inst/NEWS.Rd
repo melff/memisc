@@ -113,7 +113,7 @@
     \item A new generic function \code{measurement_autolevel()} 
           allows to automatically select the appropriate measurement
           level for survey items.
-    \item A new operator \code{%if%} allows to assign values to a variable
+    \item A new operator \code{\%if\%} allows to assign values to a variable
           for observations that satisfy a condition.      
         }  
   }
