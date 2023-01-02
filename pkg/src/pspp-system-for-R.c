@@ -408,7 +408,7 @@ SEXP read_sysfile_var(SEXP SysFile){
       Rprintf("%s\n",&curr_var.rec_type);
       #endif
       /* error("expecting a variable record"); */
-      fseek(s->f,-sizeof(R_int32),SEEK_CUR);
+      fseek(s->f,-4,SEEK_CUR);
       return R_NilValue;
   }
   sys_read_int(&curr_var.type,s);
