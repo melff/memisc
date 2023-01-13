@@ -52,6 +52,6 @@ coarsen.numeric <- function(x,
     f <- cut(x,breaks=breaks,include.lowest=TRUE)
     if(length(labels)!=nlevels(f))
         stop("Number of labels does not match the number of levels.")
-    f <- factor(f,labels=labels)
+    f <- factor(f,levels=levels(f),labels=labels)
     f
 }

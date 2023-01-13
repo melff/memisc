@@ -1,3 +1,6 @@
+2023-01-14:
+   - Made 'coarsen()' more stable.
+
 2022-12-31:
    - Added '%$%' and '%$$%' operators to simplify data transformations and reports
      usually done with 'with()' or 'within()'.
@@ -12,7 +15,7 @@
 
 2022-10-01:
    - Removed dependency on 'repr' package.
-	
+
 2022-09-29:
    - Added new 'mtfrm' methods for compatibility with changes in 'match' as
      suggested by Kurt Hornik
