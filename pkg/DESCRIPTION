@@ -1,10 +1,10 @@
 Package: memisc
 Type: Package
 Title: Management of Survey Data and Presentation of Analysis Results
-Version: 0.99.31.5
-Date: 2023-01-14
+Version: 0.99.31.6
+Date: 2023-03-05
 Author: Martin Elff (with contributions from Christopher N. Lawrence, Dave Atkins, 
-        Jason W. Morgan, Achim Zeileis, Mael Astruc-Le Souder)
+        Jason W. Morgan, Achim Zeileis, Mael Astruc-Le Souder, Kiril Müller, and Pieter Schoonees)
 Maintainer: Martin Elff <memisc@elff.eu>
 Description: An infrastructure for the management of survey data including
         value labels, definable missing values, recoding of variables,
@@ -13,7 +13,7 @@ Description: An infrastructure for the management of survey data including
         tables and data frames of arbitrary descriptive statistics and
         (almost) publication-ready tables of regression model
         estimates, which can be exported to 'LaTeX' and HTML.
-License: GPL-2
+License: GPL-2 | GPL-3
 LazyLoad: Yes
 Depends: R (>= 3.3.0), lattice, stats, methods, utils, MASS
 Suggests: splines, knitr, rmarkdown, sandwich
