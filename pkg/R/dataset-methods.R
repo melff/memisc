@@ -598,8 +598,19 @@ dsView <- function(x){
 }
 
 
-## Copied and modified from base package
-## Original copyright (C) 1995-2013 The R Core Team
+## Copied and modified from 'summary.R' of the package 'base'.
+## The original copyright notice says:
+##  """
+##  File src/library/base/R/summary.R
+##  Part of the R package, https://www.R-project.org
+##
+##  Copyright (C) 1995-2022 The R Core Team
+##
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; either version 2 of the License, or
+##  (at your option) any later version.
+##  """
 
 setMethod("summary","data.set",
   function(object, maxsum = 7, digits = max(3, getOption("digits") -3), ...){

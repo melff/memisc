@@ -9,8 +9,19 @@
 
 /** Code translation **/ 
 /* 
-  The following 6 lines are copied verbatim from pfm-read.c of the 'foreign package'.
-  Original copyright Copyright (C) 1997-9, 2000, 2001 Free Software Foundation, Inc.
+  The following translation table appears under the name 'spss2ascii' in
+  file 'pfm-read.c' of the foreign packge. The orginal copyright is:
+  """
+  PSPP - computes sample statistics.
+  Copyright (C) 1997-9, 2000, 2001 Free Software Foundation, Inc.
+  Written by Ben Pfaff <blp@gnu.org>.
+  Modified for R foreign library by Saikat DebRoy <saikat@stat.wisc.edu>.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation; either version 2 of the
+  License, or (at your option) any later version.
+  """
 */
 static const unsigned char latin1_tab[256] = {
     "                                                                "

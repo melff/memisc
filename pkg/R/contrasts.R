@@ -49,9 +49,19 @@ setMethod("contrasts","item",function(x,contrasts=TRUE,...)
     ctr
 })
 
-## copied from stats:contrasts<- and modified 
-## Original copyright (C) 1995-2013 The R Core Team
-
+## Copied and mobified from file 'contrasts.R' in the R package 'stats'.
+## The original copyright notice says:
+## """
+##  File src/library/stats/R/contrast.R
+##  Part of the R package, https://www.R-project.org
+##
+##  Copyright (C) 1995-2021 The R Core Team
+##
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; either version 2 of the License, or
+##  (at your option) any later version.
+## """
 setMethod("contrasts<-","item",function(x,how.many,value){
     if(measurement(x) %nin% c("nominal","ordinal"))
       warning("contrasts(x,...) called with non-categorical x")
@@ -94,9 +104,19 @@ setMethod("contrasts<-","item",function(x,how.many,value){
     x
 })
 
-## copied from stats:contr.treatment and modified
-## Original copyright (C) 1995-2013 The R Core Team
-
+## Copied and mobified from file 'contrasts.R' in the R package 'stats'.
+## The original copyright notice says:
+## """
+##  File src/library/stats/R/contrast.R
+##  Part of the R package, https://www.R-project.org
+##
+##  Copyright (C) 1995-2021 The R Core Team
+##
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; either version 2 of the License, or
+##  (at your option) any later version.
+## """
 contr.treatment <- function (n, base = 1, contrasts = TRUE)
 {
     if (is.numeric(n) && length(n) == 1) {
@@ -125,9 +145,19 @@ contr.treatment <- function (n, base = 1, contrasts = TRUE)
     contr
 }
 
-## copied from stats:contr.sum and modified
-## Original copyright (C) 1995-2013 The R Core Team
-
+## Copied and mobified from file 'contrasts.R' in the R package 'stats'.
+## The original copyright notice says:
+## """
+##  File src/library/stats/R/contrast.R
+##  Part of the R package, https://www.R-project.org
+##
+##  Copyright (C) 1995-2021 The R Core Team
+##
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; either version 2 of the License, or
+##  (at your option) any later version.
+## """
 contr.sum <- function (n, base = NULL, contrasts = TRUE)
 {
     if (is.numeric(n) && length(n) == 1)
@@ -154,9 +184,17 @@ contr.sum <- function (n, base = NULL, contrasts = TRUE)
     contr
 }
 
-## copied from MASS:contr.sdif and modified
-## Original copyright (C) Brian Ripley
-
+## Copied and mobified from file 'contr.sdif.R' in the R package 'stats'.
+## The original copyright notice says:
+## """
+## file MASS/R/contr.sdif.R
+## copyright (C) 1994-2015 W. N. Venables and B. D. Ripley
+##
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; either version 2 or 3 of the License
+##  (at your option).
+## """
 contr.sdif <- function (n, contrasts = TRUE)
 {
     if (is.numeric(n) && length(n) == 1) {
