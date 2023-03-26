@@ -5,8 +5,7 @@ getSummary.lm <- function(obj,
   smry <- summary(obj)
   coef <- smry$coef
 
-  numdf <- unname(smry$fstatistic[2])
-  dendf <- unname(smry$fstatistic[3])
+  dendf <- smry$df[2]
 
   lower <- coef[,1] + coef[,2]*qt(p=alpha/2,df=dendf)
   upper <- coef[,1] + coef[,2]*qt(p=1-alpha/2,df=dendf)
@@ -24,8 +23,18 @@ getSummary.lm <- function(obj,
   sigma <- smry$sigma
   r.squared <- smry$r.squared
   adj.r.squared <- smry$adj.r.squared
-  F <- unname(smry$fstatistic[1])
-  p <- pf(F,numdf,dendf,lower.tail=FALSE)
+
+  if(length(smry$fstatistic)){
+      F <- unname(smry$fstatistic[1])
+      numdf <- unname(smry$fstatistic[2])
+      p <- pf(F,numdf,dendf,lower.tail=FALSE)
+  }
+  else {
+      F <- 0
+      numdf <- 0
+      p <- 1
+  }
+
   N <- sum(smry$df[1:2])
   ll <- logLik(obj)
   deviance <- deviance(obj)

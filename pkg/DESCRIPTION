@@ -1,8 +1,8 @@
 Package: memisc
 Type: Package
 Title: Management of Survey Data and Presentation of Analysis Results
-Version: 0.99.31.6
-Date: 2023-03-07
+Version: 0.99.31.7
+Date: 2023-03-25
 Author: Martin Elff (with contributions from Christopher N. Lawrence, Dave Atkins, 
         Jason W. Morgan, Achim Zeileis, Mael Astruc-Le Souder, Kiril Müller, and Pieter Schoonees)
 Maintainer: Martin Elff <memisc@elff.eu>
