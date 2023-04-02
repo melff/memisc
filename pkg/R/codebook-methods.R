@@ -103,6 +103,8 @@ setMethod("codebookEntry","ANY",function(x,weights,unweighted=TRUE,...){
 
   if(mode(x) == "numeric"){
     descr <- Descriptives(x)
+    if(length(descr) > 4)
+        descr <- descr[1:4]
     if(length(weights) && length(descr) > 2){ # There is more than a range
       wdescr <- Descriptives(x,weights)
       if(unweighted)
