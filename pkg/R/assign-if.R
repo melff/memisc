@@ -13,11 +13,11 @@
     lhs <- expr[[2]]
     rhs_val <- eval(expr[[3]],envir=parent.frame())
     lhs_val <- if(exists(lhs,envir=parent.frame())) eval(lhs,envir=parent.frame())
-               else NA
+               else rep(NA,length(condition))
     if(length(lhs_val) > 1 && length(rhs_val) > 1 &&
        length(rhs_val) != sum(condition) &&
        length(rhs_val) != length(lhs_val))
         warning("Non-matching lengths in assignment")
-    lhs_val <- ifelse(condition,rhs_val,lhs_val)
+    lhs_val[] <- ifelse(condition,rhs_val,lhs_val)
     assign(as.character(lhs),value=lhs_val,envir=parent.frame())
 }
