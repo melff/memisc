@@ -1,6 +1,9 @@
+2023-04-20:
+   - Added 'keep' argument to 'Reshape()'
+
 2023-03-26:
    - Made 'getSummary.lm()' work with models without intercept
-	
+
 2023-03-07:
    - Added licence statements to copied code.
 

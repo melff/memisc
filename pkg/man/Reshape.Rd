@@ -5,7 +5,7 @@
   wrapper around \code{\link[stats]{reshape}} with a somewhat simpler
   syntax.}
 \usage{
-Reshape(data,\dots,id,within_id,drop,direction)
+Reshape(data,\dots,id,within_id,drop,keep,direction)
 }
 \arguments{
   \item{data}{a data frame or data set to be reshaped.}
@@ -36,6 +36,11 @@ Reshape(data,\dots,id,within_id,drop,direction)
   \item{drop}{a variable name or a concatenation of variable names
       (either as character strings or as unquoted symbols), thast specifies
       the variables to be dropped before reshaping.
+  }
+  \item{keep}{a variable name or a concatenation of variable names
+      (either as character strings or as unquoted symbols), thast specifies
+      the variables to be kept after reshaping (including the ones
+      used to define the reshaping).
   }
   \item{direction}{a character string, should be either equal "long"
     or "wide".}

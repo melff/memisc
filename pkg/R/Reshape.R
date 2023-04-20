@@ -28,7 +28,7 @@ all_in_names <- function(x,names){
     all(!nzchar(x) | x %in% names)
 }
 
-Reshape <- function(data,...,id,within_id,drop,direction){
+Reshape <- function(data,...,id,within_id,drop,keep,direction){
 
     mycall <- match.call(expand.dots=FALSE)
 
@@ -90,6 +90,12 @@ Reshape <- function(data,...,id,within_id,drop,direction){
         idvar <- "id"
         ii <- order(res[[idvar]],res[[timevar]])
         res <- res[ii,]
+        if(!missing(keep)){
+            keep <- intersect(get_vnames(mycall$keep,envir=data),names(data))
+            keep <- union(keep,c(v.names,timevar))
+            keep <- intersect(keep,names(res))
+            res <- res[keep]
+        }
         class(res) <- cls
 
     } else {
@@ -133,6 +139,12 @@ Reshape <- function(data,...,id,within_id,drop,direction){
         ii <- c(nonvar_,varying_)
         attr_reshape <- attr(res,"reshapeWide")
         res <- res[ii]
+        if(!missing(keep)){
+            keep <- intersect(get_vnames(mycall$keep,envir=data),names(data))
+            keep <- union(keep,c(unlist(varying),times))
+            keep <- intersect(keep,names(res))
+            res <- res[keep]
+        }
         if("__tmp__na__" %in% names(res))
             res[["__tmp__na__"]] <- NULL
         else
