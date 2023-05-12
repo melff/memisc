@@ -531,3 +531,5 @@ export(
     Within
 )
 S3method(Within,data.frame)
+
+export(neg2mis)
