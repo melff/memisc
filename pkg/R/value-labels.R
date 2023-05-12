@@ -7,6 +7,8 @@ setMethod("initialize","value.labels",function(.Object,...){
   ii <- order(values)
   values <- values[ii]
   labels <- labels[ii]
+  labels <- iconv(labels,from="",to="UTF-8")
+  Encoding(labels) <- "UTF-8"
   .Object@.Data <- labels
   .Object@values <- values
   if(validObject(.Object)) return(.Object)

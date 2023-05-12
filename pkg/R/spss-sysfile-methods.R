@@ -162,8 +162,8 @@ spss.system.file <- function(
     }
 
     if(iconv){
-        message(sprintf("Converting character set to the local '%s'.",tolower(localeToCharset()[1])))
-        variables <- lapply(variables,Iconv,from=encoding,to="")
+        message(sprintf("Converting character set to UTF-8."))
+        variables <- lapply(variables,Iconv,from=encoding,to="UTF-8")
     }
     
     warn_if_duplicate_labels(variables)

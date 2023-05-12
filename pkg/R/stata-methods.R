@@ -65,7 +65,7 @@ Stata.file <- function(file,
         }
 
         if(iconv)
-            variables <- lapply(variables,Iconv,from=encoded,to="")
+            variables <- lapply(variables,Iconv,from=encoded,to="UTF-8")
         else
             encoded = ""
         
@@ -115,7 +115,7 @@ Stata.file <- function(file,
         }
 
         if(iconv)
-            variables <- lapply(variables,Iconv,from=encoded,to="")
+            variables <- lapply(variables,Iconv,from=encoded,to="UTF-8")
         else
             encoded <- ""
 

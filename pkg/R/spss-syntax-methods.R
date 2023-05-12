@@ -71,6 +71,11 @@ spss.fixed.file <- function(
       names(variables) <- tolower(names(variables))
     }
 
+    if(iconv)
+        variables <- lapply(variables,Iconv,from=encoded,to="UTF-8")
+    else
+        encoded = ""
+
     warn_if_duplicate_labels(variables)
     
     new("spss.fixed.importer",
