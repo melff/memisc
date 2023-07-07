@@ -28,7 +28,16 @@ all_in_names <- function(x,names){
     all(!nzchar(x) | x %in% names)
 }
 
+
 Reshape <- function(data,...,id,within_id,drop,keep,direction){
+
+    if(inherits(data,"data.set")){
+        cdpl <- codeplan(data)
+        reshape_attr <- attributes(data)[c("reshapeLong","reshapeWide")]
+        codeplan(data) <- NULL
+        attributes(data)[c("reshapeLong","reshapeWide")] <- reshape_attr
+    }
+    else cdpl <- NULL
 
     mycall <- match.call(expand.dots=FALSE)
 
@@ -154,6 +163,12 @@ Reshape <- function(data,...,id,within_id,drop,keep,direction){
         class(res) <- cls
     }
     
+    if(length(cdpl)){
+        reshape_attr <- attributes(res)[c("reshapeLong","reshapeWide")]
+        codeplan(res) <- cdpl
+        attributes(res)[c("reshapeLong","reshapeWide")] <- reshape_attr
+    }
+
     res
 }
 
