@@ -1,0 +1,4 @@
+url: https://melff.github.io/mclogit
+template:
+  bootstrap: 5
+  bootswatch: sandstone
