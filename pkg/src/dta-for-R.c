@@ -504,52 +504,6 @@ SEXP dta_read_labels (SEXP s_dta_file, SEXP s_lbl_len, SEXP s_padding){
   return ans;
 }
 
-/* Old test version */
-SEXP _dta_read_labels (SEXP s_dta_file, SEXP s_lbl_len, SEXP s_padding){
-  dta_file *dtaf = get_dta_file(s_dta_file);
-  int l_lbl = asInteger(s_lbl_len) + 1 + asInteger(s_padding);
-  int len = dta_read_int(dtaf);
-  Rprintf("len=%d\n",len);
-  char *lbl;
-  lbl = R_alloc(l_lbl,1);
-  dta_read_string(dtaf,lbl,l_lbl);
-  Rprintf(lbl);
-  int i,n = dta_read_int(dtaf);
-  Rprintf("\nn=%d",n);
-  int txtlen = dta_read_int(dtaf);
-  Rprintf("\ntxtlen=%d\n",n);
-  char *txtbuf = R_alloc(txtlen,1);
-  SEXP ans, off, val, names;
-  PROTECT(ans = allocVector(VECSXP,4));
-  PROTECT(off = allocVector(INTSXP,n));
-  PROTECT(val = allocVector(INTSXP,n));
-  PROTECT(names = allocVector(STRSXP,4));
-  for(i = 0; i < n; i++)
-    INTEGER(off)[i] = dta_read_int(dtaf);
-  for(i = 0; i < n; i++)
-    INTEGER(val)[i] = dta_read_int(dtaf);
-  dta_read_string(dtaf,txtbuf,txtlen);
-  char *tmp;
-  for(i=0; i < n; i++){
-    tmp = txtbuf + INTEGER(off)[i];
-    Rprintf("%s\n",tmp);
-  }
-/*  for(i = 0; i < txtlen;i++)
-    if(txtbuf[i] == 0)txtbuf[i] = '\n';*/
-//   PrintValue(off);
-//   PrintValue(val);
-  SET_VECTOR_ELT(ans,0,mkString(lbl));
-  SET_VECTOR_ELT(ans,1,off);
-  SET_VECTOR_ELT(ans,2,val);
-  SET_VECTOR_ELT(ans,3,mkString(txtbuf));
-  SET_STRING_ELT(names,0,mkChar("varname"));
-  SET_STRING_ELT(names,1,mkChar("offsets"));
-  SET_STRING_ELT(names,2,mkChar("values"));
-  SET_STRING_ELT(names,3,mkChar("lbltext"));
-  SET_NAMES(ans,names);
-  UNPROTECT(4);
-  return ans;
-}
 
 
 SEXP dta_read_slice(SEXP s_dta_file, SEXP what, SEXP vars, SEXP obs, SEXP s_types){
