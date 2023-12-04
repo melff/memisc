@@ -248,14 +248,21 @@ html_afterDec <- css("text-align"="left",
                             "padding-left"="0px",
                             "padding-right"="0.3em")
 
-html_td_spltDec <- function(x,style=character(),...,linebreak=FALSE){
-  html_beforeDec <- css(style,html_beforeDec)
-  html_dotDec <- css(style,html_dotDec)
-  html_afterDec <- css(style,html_afterDec)
+html_td_spltDec <- function(x,style=character(),...,linebreak=FALSE,add_CSS=TRUE){
   y <- matrix(x,nrow=3)
-  y1 <- html_td(y[1,],style=html_beforeDec,...,vectorize=TRUE)
-  y2 <- html_td(y[2,],style=html_dotDec,...,vectorize=TRUE)
-  y3 <- html_td(y[3,],style=html_afterDec,...,vectorize=TRUE,linebreak=linebreak)
+  if(add_CSS){
+      html_beforeDec <- css(style,html_beforeDec)
+      html_dotDec <- css(style,html_dotDec)
+      html_afterDec <- css(style,html_afterDec)
+      y1 <- html_td(y[1,],style=html_beforeDec,...,vectorize=TRUE)
+      y2 <- html_td(y[2,],style=html_dotDec,...,vectorize=TRUE)
+      y3 <- html_td(y[3,],style=html_afterDec,...,vectorize=TRUE,linebreak=linebreak)
+  }
+  else {
+      y1 <- html_td(y[1,],...,vectorize=TRUE)
+      y2 <- html_td(y[2,],...,vectorize=TRUE)
+      y3 <- html_td(y[3,],...,vectorize=TRUE,linebreak=linebreak)
+  }
   y <- mapply(list,y1,y2,y3,SIMPLIFY=FALSE)
   y <- lapply(y,as.html_group)
   structure(y,class="html_group")

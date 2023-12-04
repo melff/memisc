@@ -26,6 +26,7 @@ show_html <- function(x,output=NULL,...){
     
     tf <- tempfile()
     tf <- paste0(tf,".html")
+    ht <- paste0("<!DOCTYPE html>\n",ht)  
     cat(ht,file=tf)
     
     output(tf)
@@ -39,6 +40,7 @@ show_html <- function(x,output=NULL,...){
     
     tf <- tempfile()
     tf <- paste0(tf,".html")
+    ht <- paste0("<!DOCTYPE html>\n",ht)  
     cat(ht,file=tf)
     
     if(output=="file-show")
