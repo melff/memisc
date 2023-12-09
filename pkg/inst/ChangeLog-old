@@ -1,0 +1,1127 @@
+2023-05-12:
+   - Added 'neg2mis()' function that marks negative values of variables in a
+     data set as missing.
+
+2023-04-20:
+   - Added 'keep' argument to 'Reshape()'
+
+2023-03-26:
+   - Made 'getSummary.lm()' work with models without intercept
+
+2023-03-07:
+   - Added licence statements to copied code.
+
+2023-01-14:
+   - Made 'coarsen()' more stable.
+
+2022-12-31:
+   - Added '%$%' and '%$$%' operators to simplify data transformations and reports
+     usually done with 'with()' or 'within()'.
+
+2022-12-30:
+   - Added '%if%' operator for conditional assignment to variables.
+
+2022-10-02:
+   - Added 'as.nominal()', 'as.ordinal()', 'as.interval()', and 'as.ratio()'
+     functions.
+   - Improved comparison of labelled survey items.
+
+2022-10-01:
+   - Removed dependency on 'repr' package.
+
+2022-09-29:
+   - Added new 'mtfrm' methods for compatibility with changes in 'match' as
+     suggested by Kurt Hornik
+   - Removed extraneous backslashes from documentation
+
+2022-08-28:
+   - Several extensions of the 'foreach()' function: 
+     (1) The colon-argument is better handled, which can be controlled
+         with a new argument '.sorted'
+     (2) It is now possible to select variables using regular expressions.
+   - The function 'xapply()' is similarly extended and exported.  
+   - Both 'foreach()' and 'xapply()' can be used like an "outer product", 
+     by setting the argument '.outer' to TRUE.
+
+2022-08-27:
+   - Improved the order of variables of the result of 'Reshape(...,direction="wide")'
+   - Added 'description()' methods for data frames and tibbles.
+   - Added a 'codebook()' method for tibbles.
+
+2022-08-26:
+   - Added methods for factors, vectors, lists, and data frames of the
+     'percentages()' generic.
+
+2022-08-20:
+   - Refactored 'format_md()' to integrate it better to the existing codebase of
+     the package.
+
+2022-08-19:
+   - Defined new generic 'measurement_autolevel()' to automatically select the
+     most suitable measurement level for survey items.
+
+2022-08-17:
+   - Added 'format_md()' S3-generic function to format codebooks in Markdown
+   - Defined a new generic 'coarsen()' function.
+
+2022-08-13:
+   - 'codebook()' now fully supports logical vectors.
+
+2022-08-11:
+   - 'recode()' now keeps NAs as NAs unless they are recoded explicitly.
+     (However, this makes a difference only when the 'otherwise' argument is given.)
+
+2022-07-01:
+   - Impremented YAML and JSON import and export of "codeplan" objects.
+
+2022-06-28:
+   - 'trim_labels()' now handles items without labels gracefully.
+   - 'spss.system.file()', 'spss.portable.file()', and 'Stata.file()' get
+     a 'negative2missing' option.
+   - 'collect.data.frame()' and 'collect.data.frame()' gain a 'use_last'
+     and a 'detailed_warnings' option.
+
+2022-05-24:
+   - item-more-methods-...: any(ism | isna) not 'any(ism || isna)'
+
+2022-02-25:
+   - Export S3 methods instead of S4 methods for 'format()'.
+   - Allow ':'-operator for ranges of variables in 'foreach()'
+
+2022-01-06:
+   - Add format method for "data.set" objects.
+   - Fix row names of subsets of importer objects.
+
+2021-10-07:
+   - 'unclass' "item.vector" objects in 'as.character()' to
+     avoid infinite recursion and stack overflow (as suggested by Kurt Hornik)
+
+2021-08-01:
+   - Improved handling of labels in 'recode()'
+   - Corrected counting of cases in SPSS fixed format files
+
+2021-07-31:
+   - Enable recoding from factor (or character) to numeric
+
+2021-07-26:
+   - Fixed handling of missing values in 'Means()'
+   - Handle 'cbind()' in 'Means()' nicely
+
+2021-05-24:
+   - Fixed use of file-supplied encoding information.
+
+2021-05-03:
+   - Fixed handling of missing values (NA) in 'cases()'.
+
+2021-04-06:
+   - Added a new 'Means()' generic function for the convenient computation of 
+     group means.
+
+2021-02-14:
+   - Renamed 'reverse_codes()' to 'reversed()', which now leaves missing
+     values unchanged.
+
+2021-01-25:
+   - Made function 'reorder_codes()' redundant and memoved it.
+
+2021-01-23:
+   - Made the subset methods use S3-methods (again).
+
+2021-01-17:
+   - Make copying of labels while recoding work again.
+   - Make 'recode()' warn about NAs being created.
+   - Add a new optional '.default' and '.complete' arguments to 'cases()'.
+
+2021-01-16:
+   - Added functions 'reorder_codes()' and 'trim_labels()'.
+
+2020-12-15:
+   - Fixed creation of codebooks for character vectors.
+
+2020-11-18:
+   - Fixed error caused by a change in 'getS3method()' introduced by R r79435:
+     'getS3method()' now enforces a the hitherto undocumented restriction that
+     the 'cls' argument must have length 1.
+   - Added 'title' metadata to Rmarkdown vignettes.
+
+2020-11-01:
+   - Fixed 'as.item()' methods for "haven_labelled" objects etc.
+   - Variance component estimates of "merMod" and "clmm" objects are reported
+     as distinct statistics.
+   - An attempt to coerce an "importer" object into a data frame directly is now flagged
+     as an error.
+   - Change some http-urls in the DESCRRIPTION and the documentation to https-urls. 
+
+2020-10-10:
+   - 'codebook()' better handles character variables in SPSS system files.
+   - 'spss.system.file()' uses information in the file about the intended
+     measurement level of the variables, however, this is optional and can be
+     switched off.
+
+2020-08-21:
+   - Added new option 'fold.leaders' to 'toLatex' method for 'ftable' objects
+
+2020-08-16:
+   - Added support for compressing output regarding control variables in 'mtable()'.
+
+2020-08-12:
+   - Some 'setOldClass()' calls are now conditional on the absence of certain
+     packages.
+   - A general 'getSummary_expcoef()' default method is now provided,
+     which is widely applicable as it builds on 'getSummary()'.
+
+2020-08-10:
+   - Minor fix in documentation for 'collect()'.
+
+2020-08-05:
+   - Bugfix: 'genTable()' and 'Aggregate()' now correctly handle implicit
+     frequency weights
+
+2020-07-30:
+   - Bugfix: Make 'codebook()' work with factors that have empty levels (i.e. no
+     observations for certain levels).
+
+2020-07-28:
+   - Added 'mtable' support for 'clmm' objects (package "ordinal"") and improved
+     support for 'merMod' objects (package "lme4").
+
+2020-07-14:
+   - Made sure that variable labels are retained by 'as.vector' and
+     'as.data.frame' even for items with 'interval' or 'ratio' level of
+     measurement.
+
+2020-07-05:
+   - Made 'deduplicate_labels' methods for "data.set"-objects a bit more
+     resilient
+
+2020-07-05:
+   - Fixed bug in the creation of codebooks
+
+2020-06-27:
+   - Fix warnings about 'Non-file package-anchored link(s) in documentation
+     object'
+
+2020-06-19:
+   - Added documentation about coercion of items into vectors, etc.
+
+2020-06-18:
+   - Fixed 'as.data.frame()' method for extended tables of percentages (i.e.
+     those that include standard errors or confidence intervals).
+
+2020-06-17:
+   - Add 'include.missings' option to 'as.character()' coercion method for
+     "item.vector" objects.
+
+2020-06-16:
+   - Added an explicit 'as.data.set()' method for "tibbles", which seems to be
+     necessary, because under some circumstances method dispatch via inheritence
+     does not seem to work.
+   - Added methods to apply 'codeplan()' to individual survey items and to set
+     'codeplan()' to NULL.
+
+2020-06-09:
+   - 'as.item()' and 'codebookEntry()' methods are added for objects of class
+     "labelled" as they occur in some imported tibbles.
+   - 'as.item()' now drops non-unique labelled values when applied to a
+     "labelled", "haven_labelled", or "haven_labelled_spss" object.
+
+2020-06-05:
+   - With 'codebook()' it is now possible to disable the display of unweighted
+     data summaries.
+   - In accordance to future deprecation of the function
+     'default.stringsAsFactors()' the default value of the 'stringsAsFactor'
+     argument is now FALSE.
+
+2020-05-26:
+   - The character set encoding in an SPSS file is now detected (if information
+     is available) and used to translate the variable labels and value labels.
+
+2020-05-25:
+   - Added support for weighted codebooks from importer objects
+   - Added documentation about use of weights
+   - Added support for subsetting codebooks with '$', '[', and  '[['
+   - Fixed a bug that prevented 'genTable' and 'Aggregate' to work as expected
+     with data.set objects
+   - Measurement levels of variables in 'data.set' objects are now obtained from
+     the metadata in the SPSS file (if available)
+
+2020-05-24:
+   - Drop skewness and kurtosis from codebook output
+
+2020-05-19:
+   - Added support for weighted codebooks from in-memory data.set objects
+
+2020-03-14:
+   - Added 'deduplicate_labels()' function to deal with duplicated value labels.
+
+2020-01-02:
+   - Added convenience wrappers 'Mean()', 'Var()', etc. to basic stats
+     functions such as 'mean()', 'var()', etc.
+   - 'rename()', 'relabel()', 'dimrename()', etc. now also work without
+     quoting the new labels, i.e. 'rename(x,a=A)' now works like 'rename(x,a="A")'.
+
+2019-12-31:
+   - Changed 'Groups' from S4-generic to S3-generic
+
+2019-12-30:
+   - 'n_', 'N_', and 'i_'are  available in 'with(Groups)' and 'within(Groups())'
+   - 'N_' is available in 'within' for data.sets
+
+2019-12-29:
+   - 'genTable' and 'Aggregate' now internally use 'with(Groups(...),...)
+
+2019-12-24:
+   - 'withGroups', 'withinGroups', as well as 'with' and 'within' for
+     grouped data is now considerably more time efficient. 
+
+2019-12-17:
+   - 'codebook' now makes use of the "label" attribute of variables if the
+     attribute is present.
+
+2019-12-15:
+   - 'measurement<-' can be used to change the measurement level of several
+     variables in a 'data.set' object. Also a 'set_measurement' function is
+     defined for the same purpose.
+
+2019-12-14:
+   - Added 'as.data.table' method to 'data.set' objects, to allow export of
+     'data.set' objects into data.tables.
+
+2019-12-10:
+   - Further improvements of 'Reshape', added the possibility to
+     specify identifier variables.
+
+2019-12-09:
+   - Symplified further the call-syntax of 'Reshape'
+
+2019-12-08:
+   - Handle SPSS files created with ReadStat/haven, that lack information 
+     about the number of variables in the header.
+   - Added support for SPSS syntax file with different encoding
+   - Added methods for NULL for 'labels', 'value.filter', 'codebook'
+     and 'codeplan' generics.
+
+2019-12-01:
+   - Declared 'charbuf' static in R-for-dta.c and R-for-dta117.c to avoid
+     compilation error with GCC 10.
+
+2019-11-28:
+   - Added new function 'view_html' for use with 'view'.
+
+2019-11-21:
+   - Added sensible 'head' and 'tail' methods for "data.set" and "importer"
+     objects.
+   - The function 'recode' is made to behave more coherently: If a labelled
+     vector is the result of 'recode' it gets the measurement level
+     "nominal". Factor levels explictly created first come first in the order of
+     factor levels.
+
+2019-11-20:
+   - Added an extensible 'view' function which internally uses a generic
+     function 'viewPrep' to make it work with objects that are not (yet)
+     supported by the implementation of 'View' in base R or RStudio.
+
+2019-11-19:
+   - Added a 'as.data.frame' method for "description" objects, as they are
+     returned by 'description' applied to "importer" and "data.set" objects.
+
+2019-11-17:
+   - Added 'as_tibble' and 'as_haven' methods for "data.set" objects.
+   - 'as.data.set' and 'as.item' now handle attributes of variables in tibbles
+     imported with the 'haven' package. 'as.item' methods handle vectors with
+     class "haven_labelled" or "haven_labelled_spss".
+   - Methods of 'as.orders', 'as.factor' 'as.vector', 'as.character' for "item"
+     objects attach "description" annotations as "label" attributes to their
+     results. 
+
+2019-11-10:
+   - Improved handling of missing values in grouping factors in 'Groups',
+     'withinGroups', etc.
+   - Added 'encoded' and 'iconv' arguments to importer methods that allow to
+     re-encode variable labels and value labels while importing SPSS and Stata
+     files.
+   - Added a 'spss.file' function that can be used to import both SPSS
+     "portable" and "system" files.
+   - SPSS file importers do no longer change variable names to lowercase by
+     default. The ANES 1948 vignette is changed accordingly.
+
+2019-11-09:
+   - Added support for added missing values in Stata files prior to rev. 117.
+   - Improved 'codebook' output:
+     - Added a designated function to create tables of counts in codebook
+       entries.
+     - Codebook shows user-defined missing values in a table separate from
+       discrete statistics.
+     - Description of user-defined missing values is made a bit more stringent.
+   - Added support for setting annotations, value labels, or value filters to
+     NULL even if they are not of class "item"
+
+2019-11-07:
+   - Added user-level support for Stata files in the newer format of rev. 117,
+     118 and 119.
+
+2019-11-06:
+   - Fixed ecoding problems in value labels of Stata files: 'nzchar' is used
+     instead of 'nchar' to check for existence of value labels.
+   - Added low-level support for Stata files in the newer format of rev. 117,
+     118 and 119.
+   - Avoid deletion of empty pointers
+	
+2019-10-31:
+   - Created and documented a 'Reshape' function as convenience wrapper for 'reshape'.
+
+2019-10-27:
+   - Implemented classes and methods for data manipulation within groups
+     of rows of data frames and data sets.
+
+2019-10-12:
+   - Implemented 'List' function that names element like 'data.frame()'
+   
+2019-04-05:
+   - Fixed handling of S4 objects in collect(): If the first couple of
+     elements are NA and the non-NA element is an S4 object (e.g. of class
+     "item"), the result is now made sure to be an S4 object.
+
+2019-03-16:
+   - Added syntactical sugar to manipulate annotations and attributes.
+
+2019-03-16:
+   - Fixed import of value labels for string variables in 'spss.system.file'
+   - Fixed codebook representation of datetime items in SPSS system and portable files
+   - Support for date or datetime import added to 'spss.portable.file' 
+
+2019-03-15:
+   - Support for date or datetime import added to 'spss.system.file' 
+   - Minor bugfix in printing of 'datetime.item's - added bracket method for
+     this class of objects
+
+2019-03-14:
+   - Fixed issues flagged by Tomas Kalibera's rchk utility
+
+2018-11-17:
+   - Added 'dublicated_labels()' function to show and describe duplicated
+     labels
+   - Let importers give more useful warnings about duplicated labels  
+
+2018-11-01:
+   - Fix formatting of results of 'mtable' without summary statistics
+   - Warn if 'toLatex' output of 'mtable' results creates unescaped TeX specials
+   - Define sensible defaults for the selection of summary statistics in 'mtable'
+
+2018-10-26:
+   - Allow to select summary statistics for models in 'mtable' via options or
+     list arguments.
+
+2018-10-23:
+   - Handle visibility of binary code symbols correctly for R releases 3.3.0 through 3.3.3
+
+2018-10-22:
+   - Defined dollar and double-bracket operators for 'importer' objects to facilitate
+     creating codebooks for individual variables.
+
+2018-10-20:
+   - The 'subset' method for 'importer' objects now accepts the names of
+     variables to be selected also as a character vector.
+   - Fixed 'format_html' for codebooks of data frames with factors.
+
+2018-10-15:
+   - A 'setCodeplan' and 'codeplan<-' assignment function is created that
+     can be used to copy the "item structure" or code plan from one object
+     to another.
+
+2018-10-14:
+   - A 'codeplan' function creates a data frame that
+     describes the structure of an "importer" or "data.set" object.
+
+2018-10-05:
+   - 'mtable' objects exported to HTML now include a legend for significance symbols.
+
+2018-10-04:
+   - 'mtable' objects exported to LaTeX now include a legend for significance symbols.
+
+2018-09-30:
+   - Adapt 'spss.fixed.file' to data files with lines that are "too long".
+   - Export C-function 'readfixedslice'.
+
+2018-09-07:
+   - Define double() only if R version is < 3.6.0
+   - Remove crossrefs to 'car' package to escape the depency hell created by
+     that package
+
+2018-07-10:
+   - Handle SPSS "Portable files" with weights and empty value labels
+
+2017-12-20:
+   - Explicitly allow installation with R versions from 3.3.0
+   - Fixed warning about tautological comparisons shown by check with
+     flavor 'r-devel-linux-x86_64-fedora-clang'.
+
+2017-12-19:
+   - Fix compilation problems with R version < 3.4
+
+2017-12-11:
+   - Made bracket subsetting of mtable results safer and more coherent.
+
+2017-12-10:
+   - Allow package to be installed and run with R versions < to 3.4
+
+2017-12-01:
+   - Set a more sensible default for optional argument "show.eqnames" and
+     global option "mtable.show.eqnames".
+
+2017-11-19:
+   - Fixed obscure bug affecting import of spss system files under 32bit Windows.
+     This bug was caused by excessive optimisation of for loops by the C compiler.
+
+2017-11-11:
+   - 'print' method for 'mtable' objects now shows a legend for significance symbols.
+
+2017-11-05:
+   - Made the display of left-hand sides of model equations optional in the
+     output of `mtable()` by providing an optional argument "show.eqnames"
+     and a global option "mtable.show.eqnames".
+
+2017-10-31:
+   - Fixed (internal) `readChunk` method for fixed-format files with SPSS meta data.
+
+2017-10-21:
+   - Implemented explicit option to control whether equation titles
+     (or names of dept. variables) are printed from `mtable'.
+
+2017-10-11:
+   - Made 'toLatex.escape.tex' an explicit option for 'toLatex' methods
+     provided by the package
+
+2017-09-30:
+   - Included 'read_sysfile_slice' in 'CallMethods'
+   - Removed some potentially stale links from vignette 'mtable-html'
+
+2017-09-08:
+   - Empty cells in HTML tables (which break their formatting by 'pandoc' if included
+     in markdown format files) are now avoided
+
+2017-09-06:
+   - Lines without contents from 'mtable()' results are now automatically dropped
+   - Added support for additional statitics without standard errors in 'mtable()'
+   - Improved mtable support for merMod objects (created by package "lme4")
+
+2017-09-03:
+   - Completed list of exported C functions in 'CallMethods'
+   - Removed getSummary support for long obsolete class 'mer'
+   - Adapted getSummary support for class 'merMod'
+   - Removed 'varPar.as.coef' argument from 'getSummary.merMod'
+
+2017-09-02:
+   - Moved basic getSummary methods into specific file
+   - Made excaping of '$', '_', '^' optional when exporting to LaTeX
+   - Adapted getSummary methods contributed by Christopher Lawrence (polr, clm, simex) to new version of 'mtable'
+   - Adapted getSummary methods contributed by Jason W Morgan to new version of 'mtable'
+   - Adapted getSummary methods contributed by Dave Atkins to new version of 'mtable'
+
+2017-09-02:
+   - Adapted getSummary methods contributed by Achim Zeileis (ivreg, tobit, hurdle, zeroinfl,
+     betareg, multinom) to new version of 'mtable'
+
+2017-08-18:
+   - Improved array semantics of 'mtable' objects. Reordering
+     of coefficients should work as expected  after regression introduced
+     by last refactoring.
+   - Standard getsummary methods now report name of dependent variables
+   - 'mtable' now reports dependent variables of single equation models,
+     if they differ (and the 'getSummary' methods support this)
+   - Fixed relabeling of 'mtable' results after regression introduced
+     by last refactoring.
+   - 'mtable' optionally shows dependent variables even if they
+     are the same in all models.
+
+2017-08-16:
+   - Make sure that 'PrettyNames' is always applied when an 'mtable' object is
+     formatted.
+   - Escape TeX active chars '$', '_', '^' in toLatex methods etc.
+
+2017-07-29:
+  - Fix refactoring: `c.memisc_mtable` and `[.memisc_mtable` now return objects
+    with the correct class attribute.
+  - Make package depend on R version 3.4
+
+2017-07-13:
+  - Fix handling of matrices contained in data frames by `toLatex()`
+  - `useDcolumn` and `useBooktabs` arguments of `toLatex()` methods now have
+    global options as defaults
+
+2017-07-11:
+  - Restrict visibility of object code symbols to package initialisation routine
+
+2017-07-10:
+  - Deal with PROJECT issues reported by Tomas Kalibera: Add PROTECT to objects
+    for which attributes are set
+  - Provide Call method registration for functions called from C-code
+
+2017-07-09:
+  - Bugfixes for `repr_html()` methods
+  - Eliminate dependence on IRdisplay package
+
+2017-07-03:
+  - Change class of objects created by `mtable()` from "mtable" to "memisc_mtable"
+    to avoid name clash with objects created by `model.table()` from package
+    "stats".
+
+2017-07-02:
+  - Support for output in Jupyter notebooks.
+
+2017-06-02:
+  - Completed support for output as print, LaTeX, and HTML for new mtable
+    architecture.
+
+2017-05-30:
+  - Introduced support for multi-line headers.
+
+2017-05-26:
+  - Architectural change for objects produced by `mtable()`. This allows
+    several types of parameters, such as coefficients and variances.
+
+2017-05-26:
+  - Adapted `show_html()` to use within Jupyter Notebooks
+
+2017-05-19:
+  - Created methods for `repr_html()` to support HTML output in Jupyter
+    notebooks
+
+2017-03-05:
+  - Fixed handling of empty summaries in `mtable()`
+  - Better "splash screen" section of LaTeX formatted mtable objects.
+
+2017-02-03:
+  - Fixed a bug in `relabel` method for `item'
+    objects. `relabel(x,...,gsub=TRUE)` should now work as expected.
+  - Fixed a bug in `readLabPorStream`, coming from wrong assumptions about the
+    encoding of value labels of character string variables in "portable"
+    files. Some more SPSS "portable" files should now read into R.
+
+2016-12-24:
+  - New `withVCov` and `withSE` generic functions to more
+    conveniently provide sandwich estimates of variances and standard
+    errors
+
+2016-09-28:
+  - More efficient 'subset' method for large external data sets
+
+2016-07-09:
+  - No 'useRs' in DESCRIPTION and software names in single quotes
+
+2016-07-08:
+  - Suggest 'rmarkdown' package
+
+2016-07-02:
+  - Fix type that crept in while fixing bug in parseSysHeader
+
+2016-06-05:
+  - Fix 'felicity' issue pointed out by Martin Maechler
+  - Make formatting of codebooks a bit more robust
+
+2016-04-30:
+  - Fix issue #8 - `toLatex.ftable()` does no longer attempt to show
+    titles if they are not available.
+  - Fix issue #1 (error in 'parseSysHeader')
+
+2016-04-29:
+  - Make `cases()` robust with respect to NA conditions.
+
+2016-04-17:
+  - Fix extracolsep in `toLatex.ftable()` as suggested by Kirill Müller
+
+2016-02-21:
+  - Make the use of ampersand-escapes in HTML output optional and use unicode characters
+    by default. (So that pandoc will not escape them.)
+  - Minor improvenent of `c.mtable()`.
+
+2016-02-07:
+  - Unified headlines in vignettes.
+
+2016-02-02:
+  - Implemented "Date.item" class, which allows to use `data.set` or `as.data.set`,
+    etc. with "Date" objects.
+
+2016-01-29:
+  - Use `any(is.na(...))` instead of `anyNA(...)` in `[.mtable`.
+
+2016-01-27:
+  - Fixed `show` and `codebookEntry` methods for "datetime.item" class.
+
+2016-01-24:
+  - Do not wrap HTML tables and list in HTML paragraphs in `format_html.CodebookEntry`.
+
+2016-01-21:
+  - Correct spelling and case of vignette titles.
+
+2016-01-16:
+  - Use "html_viewer" option instead of "show_html.output".
+
+2016-01-04:
+  - Deleted last sentence in package description.
+  - Put back vignette for `ftable-matrix`.
+  - `show_html` can be used with arbitrary output functions, e.g. `rstudio::viewer`.
+
+2016-01-03:
+  - Removed `UnZip` from package, which has been redundant for some time.
+  - Use `knitr::rmarkdown` instead of `knitr::knit` in vignettes.
+  - Added vignette for `ftable_matrix`.
+  - `show_html` can be used with arbitrary output functions, e.g. `rstudio::viewer`.
+
+2016-01-02:
+  - Small vignette update.
+  - New maintainer address
+
+2015-12-31:
+  - R-dependency should be >= 3.0, because this is needed for knitr vignettes.
+  - Some improvements of ANES vignette.
+  - Improvements for variable descriptions in data sets and importers, 
+    including HTML formatting.
+  - Added explanation of `tolower` to ANES Vignette.
+  - New argument `margin` of `format_html` method functions, 
+    which determines the positioning of the HTML tables. By default it centers the table horizontally.
+  - Export `format_html` cell standard styles.
+  - Renamed `html_style` into `css`, etc.
+  - Automatic HTML output in ANES vignette.
+  - Remove LaTeX/PDF Vignette
+  - Added documentation for `html()` and friends. 
+    Implemented `show_html()` method function for HTML code.
+
+2015-12-30:
+  - Make concatenation of html-elements safer
+
+2015-12-29:
+  - Added documentation for `toLatex` method for "ftable_matrix" objects
+  - No longer make a fuss about duplicate model names in `combine_mtables`
+
+2015-12-28:
+  - Added example for named model groups in `mtables`.
+  - Added documentation of `format_html.ftable_matrix`.
+  - Updated documentation of `mtable_format_latex`
+  - Create and use `Write` method function for `ftable_matrix` objects.
+  - Added documentation of `ftable_matrix` objects
+
+2015-12-18:
+  - Added support for with model groups in `mtable`. `c.mtable` now creates 
+    groups of models, if arguments are tagged.
+
+2015-12-16:
+  - Fixed issues shown by R CMD check
+  - Adapt `format_html.ftable_matrix` to html-objects infrastructure.
+
+2015-12-13:
+  - Enable automatic insertion of linebreaks into HTML code.
+  - Export methods for html objects etc.
+
+2015-12-12:
+  - Adapted HTML formatting of 'codebook's to new HTML infrastructure.
+  - Added syntactic sugar to 'html()'. Corrected formatting of fixed-point numbers.
+  - Made formatting of value filters safer.
+
+2015-12-07:
+  - Encapsulate fixed-point numbers into "html_group" objects
+  - Update version number
+
+2015-12-06:
+  - Start object-oriented infrastructure for the creation of HTML code.
+
+2015-11-13:
+  - Import 'str' and 'ls.str' from 'utils' package to prevent a NOTE in R CMD check
+
+2015-11-09:
+  - Make `percentages()` a little more robust against empty cells in marginal tables.
+
+2015-09-24:
+  - Fixed Latex output of data frames.
+
+2015-09-13:
+  - Fix regressions caused by `rbind()` and `cbind()` methods for "ftable" objects.
+
+2015-09-12:
+  - Added some new `relabel()` methods.
+
+2015-09-06:
+  - Fixed treatment of value labels in HTML formatting of codebooks.
+
+2015-09-03:
+  - Added basic HTML formatting of `ftable_matrix` objects. (LaTeX formatting was already implemented.)
+
+2015-08-29:
+   - Fix CSS class of ftable formatted in HTML
+   - Implement `ftable_matrix` objects - objects composed from several `ftable`s.
+
+2015-08-26:
+  - Added `percentages` function to easily create tables of percentages.
+
+2015-08-18:
+  - Fix bug that presented Stata 9-10 files to be successfully imported.
+
+2015-08-16:
+  - Fix that allows to import ANES 2008 data with the provided buggy SPSS script files.
+
+2015-08-03:
+  - Allow specification of `show.baselevel=`, and `baselevel.sep=` as arguments of `mtable()`
+
+2015-07-21:
+  - Make `write.mtable` more coherent.
+
+2015-07-20:
+  - Eliminate buglino that causes knitr to gobble up stars (not those in the sky, 
+    but those used to indicate levels of statistical significance)
+
+2015-07-18:
+  - New `signif.symbols` argument to `mtable`, that allows to change
+    the "level of significance symbols"
+  - Implemented `[` operator for `mtable` results as well as
+    the `c` (concatenation) operator.
+
+2015-07-15:
+  - New `gs.options=` argument to `mtable`, that allows to pass optional
+    arguments to getSummary.
+
+2015-07-14:
+  - Added vignette about survey items (objects of class "item")
+
+2015-07-13:
+  - Add basic documentation for 'summaryTemplate' generic function.
+  - Add documentation for 'dsView'.
+  - Fix codoc mismatches pointed out by R CMD check.
+  - 'spss.fixed.file' now checks whether there are undefined variables in 'varlab.file' etc.
+
+2015-07-10:
+  - Correct `sourcename` default argument of `collect` methods.
+  - Get rid of duplicate aliases in documentation.
+  - FIX: `coef.tab` not `coef.table`
+  - Add documentation for `datetime.item` objects (merged from an earlier development branch)
+  - Add documentation for data set manipulation (`merge` etc.)
+  - Make `cases` more fussy about logical conditions.
+
+2015-07-02:
+  - Provide HTML formatting of data frames.
+
+2015-06-15:
+  - New option 'show.baselevel' for function 'mtable' that allows to decised whether the baseline category of 
+    dummy variable shows up in the table.
+
+2015-06-13:
+  - Scalars created by 'within' expression are now retained constant items in data.sets
+  - 'sourcename' argument of collect methods for data frames and data.sets now has a 
+    coherent default.
+
+2015-06-08:
+  - 'mtable_format_html' works again
+  - Slight reorganisation of 'mtable' and associated formatting functions.
+  - Nicer grouping of coefficients of multiple-equation models
+  - 'applyTemplate' now returns empty strings for undefined quantities.
+
+2015-06-02:
+  - Moved 'toLatex' method for 'data.set' objects into different file. Added 'toLatex' method for data frames.
+
+2015-06-01:
+  - Completely refactored 'mtable' - more flexible handling of models with varying numbers of equations; 
+    some formatting is delayed and moved to the 'mtable_format' functions.
+
+2015-05-31:
+  - Added toLatex-method for data.set objects.
+
+2015-05-28:
+  - Added missing 'drop=FALSE' in format_html.codebookEntry
+  - 'codebookEntry' can now deal with factors that have no non-missing levels
+
+2015-05-16:
+  - 2015-05-16: Added support for date-time "item" objects (from former 'codebooks' package)
+  - dsView, cbind, rbind, collect, and merge methods for "data.set" objects copied from former 
+    'codebooks' package to 'memisc'.
+
+2015-05-14:
+  - Fixed bugs introduced by rewrite of 'import-internal-spss-syntax.R'.
+    Dependency 'MicroDatosEs' should work okay now.
+
+2015-05-12:
+  - Fixed a bug introduced by side-effects of manipulating the arguments of 'readfixed'. 
+  - Make sure that codebook entries for items in external data sources are complete.
+  - Add dots to 'format_html.codebookEntry' formal arguments.
+  - Improved `toLatex` formatting of `ftable`s
+  - Set version number to 0.98.1
+
+2015-05-11: Make memisc:::trimws work without changing locale
+  - Complete rewrite of major parts of 'import-internal-spss-syntax.R': 
+    Handling of SPSS syntax files for fixed format data files is changed from a presumptious vectorising approach
+    to an old-school but more flexible and stable Turing approach. 
+  - 'spss.fixed.file()' should work for a wider range of situations.
+
+2015-05-10:
+  - Use endash in HTML format of codebooks, correct removal extra styling of variable names
+
+2015-05-09:
+  - Remove hardcoded styling of variable names in codebook entries.
+  - Codebook support for numeric vectors and factors
+  - Fix console output of data.set objects
+
+2015-04-29:
+  - Step up version number and date.
+  - Removed functions panel.errbars, Termplot, Simulate, and associated stuff (buckets etc.)
+
+2015-04-28:
+  - Documented 'format_html' method for codebooks
+  - Added HTML formatting of codebooks.
+  - Bugfix in 'codebook-methods.R': specify sensible defauls for 'toprule' and 'midrule' in format,codebookEntry-method.
+  - Added dumentation for 'format_html' methods for "ftable" and "mtable" objects.
+  - Added documentation for 'format_html' function
+  - Documented 'wild.codes' function
+  - Fixed as.data.set,list-method, added documentation for as.data.set,list-method
+
+2015-04-26:
+  - Changed vignette engine to 'rmarkdown' as this gives better output.
+  - Added html vignette 'ANES 1948'
+  - Fix html formatting of mtables
+  - Bugfix of format_html.ftable: Now digits after the dot are handled correctly.
+  - Some adjustments of HTML formatting of "mtables"
+  - Support for HTML formatting of "ftables"
+  - Added function 'wild.codes' to find, well, wild codes.
+
+2015-04-20:
+  - Fix collect method of "data.set" objects, by providing "as.data.set" method for lists.
+
+2015-04-09:
+  - Improvement of header formatting of mtables for LaTeX
+
+2015-04-07:
+  - Shorter vignette for html output of mtable results.
+  - Update README.md
+  - Create README.md
+  - More modular code for HTML formatting
+  - Added knitr vignette for HTML output example 
+  - Corrected NEWS.Rd
+  - Minor correction of format of ANES48 vignette
+
+2015-04-06:
+  - Improved HTML output of 'mtable' results  - alignment on decimal signs and straight borders. 
+  - Updated documentation of 'mtable' results.
+
+2015-04-05:
+  - New coefficient style - confidence intervals right of estimates
+  - Some cleanup in mtable; special formatting functions for mtable objects (needs testing)
+
+2015-03-07:
+  - Renamed 'getSummary.expCoef' into 'getSummary_expCoef' to avoid R CMD check fussiness.
+
+2015-02-14:
+  - Modified file structure somewhat and added some lines do clarify credit for code.
+  - Added documentation for 'as.character' method for 'codebook' objects.
+  - Implemented 'Write()' convenience function for 'descriptions' objects.
+
+2015-02-13:
+  - Removed 'aggregate.formula' method as it conflicts with a method of the name that was included
+    into the 'base' R package more or less recenlty.
+  - Removed 'include' and 'uninclude' since it modifies (in a benign way though) the global namespace,
+    which is discouraged by recently changed CRAN policies.
+
+2015-01-26:
+  - Added 'as.character' method for 'codebook' objects, to allow conveniently write the to files using 'writeLines'
+
+2015-01-25:
+  - Explicitly export S3 method as required by package check by more recent R version
+  - Added github URL
+  - Listed packages that are 'enhanced' by supporting them for `mtable`
+
+2014-12-14:
+  - Correct buglet in 'recode' method for numeric vectors
+
+2014-11-04:
+  - Fixed silly bug introduced in recent update: Long variable names in SPSS "sav" files should work again now.
+
+2014-10-11:
+  - added method for "merMod" objects to the getSummary() generic function. mtable() now 
+    should be able (again) to handle estimation results produced by lmer() and glmer() from 
+    package 'lme4'.
+  - recode() handles character vectors in a more convenient way: They are converted
+    into factors with sorted unique values (after recoding) as levels.
+
+2014-09-08:
+  - 'getSummary.glm' now takes care of missing values in weights of glm objects.
+
+2014-08-19:
+  - modified some code that Prof Ripley thinks looks 'suspicious'.
+
+2014-06-24:
+  - Change of SPSS variable names to lower case is now optional (but still the default).
+
+2014-03-10:
+  - Removed modification to getSummary.clm that slipped in from a development branch.
+
+2013-12-06:
+  - fixes out-of-bound error and memory leak in 'pspp-portableStream-for-R.c'
+    reported by Prof. Ripley.  Eliminated calls to non-exported functions from 'lattice'.
+    Marked all example code of 'Simulate' as 'dontrun' to save time during package checks.
+    Also did some cosmetic changes to the package vignette 'anes48'.
+
+2013-09-19:
+  - fixes of some namespace import issues.
+
+2013-07-28:
+  - fix of 'data.set()' and 'Table()' functions.
+    Thanks to Gabor Grothendiek and Jeremy Jackson 
+
+2013-03-20:
+  - getSummary method for "mer" objects was broken and now is fixed.
+
+2013-02-10:
+  - getSummary methods for "ivreg", "tobit" (from package "AER"),
+    "hurdle", "zeroinfl" (from package "pscl"),
+    "betareg" (from package "betareg"),
+    "multinom" (from package "nnet"),
+    contributed by Achim Zeileis,
+    were included into the package, but had not been exported yet
+    from the package namespace.
+    This is now fixed.
+
+2013-01-27:
+  - Minor improvement of 'codebook' output for external SPSS data sets.
+  - Fixed a bug in 'dumbswap.c' discovered while building a windows binary.
+
+2013-01-26:
+  - Included getSummary methods
+     - for objects of classes "ivreg", "tobit" (from package "AER"),
+                              "hurdle", "zeroinfl" (from package "pscl"),
+                              "betareg" (from package "betareg"),
+                              "multinom" (from package "nnet"),
+                              contributed by Achim Zeileis
+    - for objects of classes "polr" (from package "MASS"),
+                             "clm" (from package "ordinal"),
+                             "simex" (from package "simex"),
+                             contributed by Christopher N. Lawrence
+    - for objects of classes "coxph", "survreg" (from package "survival"),
+                             "aftreg", "phreg", "weibreg" (from package "eha"),
+                             contributed by Jason W. Morgan,
+    - for exponentiated coefficients in glm-models,
+                             contributed by Dave Atkins.
+  - Made the 'spss.fixed.file' importer function more robust:
+      - It works now, even if 'varlab.file', 'codes.file',
+        or 'missval.file' arguments are missing. (This was broken by an earlier revision.)
+      - It now handles value labels of character string variables correctly.
+
+2013-01-04:
+  - Updated contact email address. Corrected "initialize" method for "data.set" objects.
+
+2012-02-14:
+  - Replaced calls to .Internal(sample()) by calls to sample.int() and eliminated
+    call to .Internal(int.unzip()). The package now depends on R >= 2.9.0
+
+2012-01-25:
+  - Fixed reading of value labels from SPSS system files - no garbage at the end of the labels.
+
+2011-12-07:
+  - Fixed "getSummary" and "getSummary.expcoef" S3-generic functions.
+
+2011-11-06:
+  - Added a 'rep' method for 'item.vector' objects.
+  - Applied patch sent by Masahiro Hayashi <rinm884@gmail.com> to fix bugs
+    in 'vector' method of 'recode'.
+
+2011-10-05:
+  - Adapted the package to R 2.14.0 (by eliminating calls to 'require'
+    in the '.onLoad' function)
+  - Changed the methods for data frames, 'data.set' and 'importer' objects
+    of the function 'sort' from S3 to S4
+
+2011-08-26:
+  - Fixed a bug in internal function 'compress.storage.mode.double' that caused
+    it to create NA's where it should not.
+  - Fixed a bug in the print method for items that caused it to report their length
+    incorrectly
+
+2011-08-15:
+  - Made internal functions of 'spss.fixed.file' robuster against syntax errors
+    in the spss-controls files (codes.file, labels.file, etc.)
+
+2011-06-17:
+  - Removed mkHelpDir() that has not worked for a while because of architectural
+    changes in R.
+  - Removed some unused variables from the C-code that caused warnings.
+  - Corrected a bug in format.mtable() misusing the function character()
+    and some other buglets reported by NOTE's in automatic runs by CRAN.
+
+2011-05-29:
+  - Applied patch sent by Christopher N. Lawrence, Ph.D. <c.n.lawrence@gmail.com>:
+    Added support to mtable() for clm and clmm ordinal models in the ordinal package.
+    Updates getSummary to support mer objects as generated by recent versions of the lme4 package.
+    Adds the Aldrich & Nelson pseudo-R2 (Aldrich and Nelson 1984)
+    to mtable output for various categorical models.
+
+2011-05-14:
+
+  - Fixed problems with SPSS system files that do not contain an 'info_flt64' record. This problem led to zeroes in the data section of the file being erroneously interpreted as *sysmis*.
+  - Fixed 'show' and 'print' methods for 'data.set' objects - they no do fit the width set by options(width=...), without ugly line breaks.
+  - Changed the default value of the 'compress.storage.modes' option for the
+    subset and bracket methods o 'importer' objects to FALSE, which is much
+    more safer.
+
+2010-07-16:
+  - fixed a bug in 'Simulate' that caused it to fail in certain situations
+    in R version >= 2.11.
+
+2010-04-12:
+  - 'toLatex(mtable(<something>),useDcolumn=FALSE)' should now produce useable
+    LaTeX output ($'s are added to the table entries).
+
+2010-04-09:
+  - 'By' works now with 'genTable' and 'aggregate.formula'. It gains a 'data.frame'
+    method, which better cooperates with calls to 'lm'-like functions. Their results
+    get a 'data' component containing the subset of the data frame that was given
+    as 'data' argument to the call of 'By'.
+
+2010-04-08:
+  - fixed bug in 'cases'. It works now with target expressions even with 'within'.
+  - 'write.mtable' now handles a 'forLaTeX=TRUE' option in a more convenient way.
+  - 'mtable' now handles objects of classes "polr" and "simex", thanks to a contribution
+    from Christopher N. Lawrence (Texas A&M International University)
+  - support for 'mtable' output for "glm" objects with exponentiated coefficients
+    and prelininary support for "lmer" object added, thanks to a contribution from
+    Dave Atkins (Unversity of Washington). Also the coef.styles are changed to be
+    more convenient.
+
+2010-04-07:
+  - fixed bug in C-level function 'read_sysfile_subset' that caused spurious errors
+    while importing SPSS 'system' files with long strings.
+
+2010-03-18:
+  - patch to trimws to make it locale-neutral
+
+2010-03-11:
+  - fixed bugs in mtable and format.mtable. Short 'summary.stats'
+    arguments or 'summary.stats=FALSE' should work now.
+
+2010-03-06:
+  - fixed bug in genTable/percentage: total counts disappeared if
+    a factor level had the same name as the name given to the total count
+  - changed the default value of the 'digits' option of the matrix method
+    of the toLatex generic to the more sensible getOption("digits")
+  - the matrix method of the toLatex generic gains new optional arguments
+    'show.vars', 'show.xvar', and 'show.yvar', which determine whether
+    the name of the row and/or the column variable should be shown if
+    the matrix is a 2-dimensional table.
+
+2010-03-02:
+  - fixed minor bug in 'cases' function
+
+2009-11-11:
+  - correction bug in .unLoad function.
+
+2009-10-14:
+  - removed 'extended' arguments from calls to 'regexpr' and 'sub' etc. (for compatibility
+    with R 2.11)
+
+2009-08-19:
+  - corrected documentation for mtable (\usepackage instead of usepackage)
+  - completed documentation for contrasts generic
+  - fixed bug in the internals for 'spss.portable.file':
+    'SPSS Por' to ascii and 'SPSS Por' to integer translation tables
+    were one item too short.
+
+2009-06-02:
+  - as.factor methods for item vectors adapted to new factor function
+    in R 2.10.0
+  - Fixed bug in sample.data.frame and sample.data.set methods:
+    Samples were drawn only from the first m observations, where m is
+    the number of variables in the data frame/data set.

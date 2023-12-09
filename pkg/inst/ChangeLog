@@ -1,1127 +1,3946 @@
-2023-05-12:
-   - Added 'neg2mis()' function that marks negative values of variables in a
-     data set as missing.
-
-2023-04-20:
-   - Added 'keep' argument to 'Reshape()'
-
-2023-03-26:
-   - Made 'getSummary.lm()' work with models without intercept
-
-2023-03-07:
-   - Added licence statements to copied code.
+2023-12-09  Martin Elff <memisc@elff.eu>
 
-2023-01-14:
-   - Made 'coarsen()' more stable.
+	* pkg/DESCRIPTION, pkg/inst/NEWS.Rd: Bump to 0.99.31.8
 
-2022-12-31:
-   - Added '%$%' and '%$$%' operators to simplify data transformations and reports
-     usually done with 'with()' or 'within()'.
+2023-12-09  Martin Elff <memisc@elff.eu>
 
-2022-12-30:
-   - Added '%if%' operator for conditional assignment to variables.
-
-2022-10-02:
-   - Added 'as.nominal()', 'as.ordinal()', 'as.interval()', and 'as.ratio()'
-     functions.
-   - Improved comparison of labelled survey items.
+	* pkg/NAMESPACE, pkg/R/HTML.R, pkg/R/codebook-format-html.R,
+	pkg/R/format-html-dataframe.R, pkg/R/format-html-ftable-matrix.R,
+	pkg/R/format-html-ftable.R, pkg/R/format-html-matrix.R,
+	pkg/R/format-html-other.R, pkg/R/mtable-format-html.R: Use <style>
+	elements instead of hardcoded styling in html output
 
-2022-10-01:
-   - Removed dependency on 'repr' package.
+2023-12-09  Martin Elff <memisc@elff.eu>
 
-2022-09-29:
-   - Added new 'mtfrm' methods for compatibility with changes in 'match' as
-     suggested by Kurt Hornik
-   - Removed extraneous backslashes from documentation
+	* pkg/R/html-tools.R: Add !DOCTYPE header to standalone HTML files
 
-2022-08-28:
-   - Several extensions of the 'foreach()' function: 
-     (1) The colon-argument is better handled, which can be controlled
-         with a new argument '.sorted'
-     (2) It is now possible to select variables using regular expressions.
-   - The function 'xapply()' is similarly extended and exported.  
-   - Both 'foreach()' and 'xapply()' can be used like an "outer product", 
-     by setting the argument '.outer' to TRUE.
+2023-12-04  Martin Elff <memisc@elff.eu>
 
-2022-08-27:
-   - Improved the order of variables of the result of 'Reshape(...,direction="wide")'
-   - Added 'description()' methods for data frames and tibbles.
-   - Added a 'codebook()' method for tibbles.
-
-2022-08-26:
-   - Added methods for factors, vectors, lists, and data frames of the
-     'percentages()' generic.
-
-2022-08-20:
-   - Refactored 'format_md()' to integrate it better to the existing codebase of
-     the package.
-
-2022-08-19:
-   - Defined new generic 'measurement_autolevel()' to automatically select the
-     most suitable measurement level for survey items.
-
-2022-08-17:
-   - Added 'format_md()' S3-generic function to format codebooks in Markdown
-   - Defined a new generic 'coarsen()' function.
-
-2022-08-13:
-   - 'codebook()' now fully supports logical vectors.
-
-2022-08-11:
-   - 'recode()' now keeps NAs as NAs unless they are recoded explicitly.
-     (However, this makes a difference only when the 'otherwise' argument is given.)
-
-2022-07-01:
-   - Impremented YAML and JSON import and export of "codeplan" objects.
-
-2022-06-28:
-   - 'trim_labels()' now handles items without labels gracefully.
-   - 'spss.system.file()', 'spss.portable.file()', and 'Stata.file()' get
-     a 'negative2missing' option.
-   - 'collect.data.frame()' and 'collect.data.frame()' gain a 'use_last'
-     and a 'detailed_warnings' option.
-
-2022-05-24:
-   - item-more-methods-...: any(ism | isna) not 'any(ism || isna)'
-
-2022-02-25:
-   - Export S3 methods instead of S4 methods for 'format()'.
-   - Allow ':'-operator for ranges of variables in 'foreach()'
-
-2022-01-06:
-   - Add format method for "data.set" objects.
-   - Fix row names of subsets of importer objects.
-
-2021-10-07:
-   - 'unclass' "item.vector" objects in 'as.character()' to
-     avoid infinite recursion and stack overflow (as suggested by Kurt Hornik)
-
-2021-08-01:
-   - Improved handling of labels in 'recode()'
-   - Corrected counting of cases in SPSS fixed format files
-
-2021-07-31:
-   - Enable recoding from factor (or character) to numeric
+	* pkg/.Rbuildignore: Add .Rbuildignore
 
-2021-07-26:
-   - Fixed handling of missing values in 'Means()'
-   - Handle 'cbind()' in 'Means()' nicely
+2023-12-04  Martin Elff <memisc@elff.eu>
 
-2021-05-24:
-   - Fixed use of file-supplied encoding information.
+	* pkg/R/HTML.R, pkg/R/html-tools.R, pkg/R/mtable-format-html.R: Fix
+	html output of model tables
 
-2021-05-03:
-   - Fixed handling of missing values (NA) in 'cases()'.
+2023-11-28  Martin Elff <memisc@elff.eu>
 
-2021-04-06:
-   - Added a new 'Means()' generic function for the convenient computation of 
-     group means.
-
-2021-02-14:
-   - Renamed 'reverse_codes()' to 'reversed()', which now leaves missing
-     values unchanged.
-
-2021-01-25:
-   - Made function 'reorder_codes()' redundant and memoved it.
-
-2021-01-23:
-   - Made the subset methods use S3-methods (again).
-
-2021-01-17:
-   - Make copying of labels while recoding work again.
-   - Make 'recode()' warn about NAs being created.
-   - Add a new optional '.default' and '.complete' arguments to 'cases()'.
-
-2021-01-16:
-   - Added functions 'reorder_codes()' and 'trim_labels()'.
-
-2020-12-15:
-   - Fixed creation of codebooks for character vectors.
-
-2020-11-18:
-   - Fixed error caused by a change in 'getS3method()' introduced by R r79435:
-     'getS3method()' now enforces a the hitherto undocumented restriction that
-     the 'cls' argument must have length 1.
-   - Added 'title' metadata to Rmarkdown vignettes.
-
-2020-11-01:
-   - Fixed 'as.item()' methods for "haven_labelled" objects etc.
-   - Variance component estimates of "merMod" and "clmm" objects are reported
-     as distinct statistics.
-   - An attempt to coerce an "importer" object into a data frame directly is now flagged
-     as an error.
-   - Change some http-urls in the DESCRRIPTION and the documentation to https-urls. 
-
-2020-10-10:
-   - 'codebook()' better handles character variables in SPSS system files.
-   - 'spss.system.file()' uses information in the file about the intended
-     measurement level of the variables, however, this is optional and can be
-     switched off.
-
-2020-08-21:
-   - Added new option 'fold.leaders' to 'toLatex' method for 'ftable' objects
-
-2020-08-16:
-   - Added support for compressing output regarding control variables in 'mtable()'.
-
-2020-08-12:
-   - Some 'setOldClass()' calls are now conditional on the absence of certain
-     packages.
-   - A general 'getSummary_expcoef()' default method is now provided,
-     which is widely applicable as it builds on 'getSummary()'.
-
-2020-08-10:
-   - Minor fix in documentation for 'collect()'.
-
-2020-08-05:
-   - Bugfix: 'genTable()' and 'Aggregate()' now correctly handle implicit
-     frequency weights
-
-2020-07-30:
-   - Bugfix: Make 'codebook()' work with factors that have empty levels (i.e. no
-     observations for certain levels).
-
-2020-07-28:
-   - Added 'mtable' support for 'clmm' objects (package "ordinal"") and improved
-     support for 'merMod' objects (package "lme4").
-
-2020-07-14:
-   - Made sure that variable labels are retained by 'as.vector' and
-     'as.data.frame' even for items with 'interval' or 'ratio' level of
-     measurement.
-
-2020-07-05:
-   - Made 'deduplicate_labels' methods for "data.set"-objects a bit more
-     resilient
-
-2020-07-05:
-   - Fixed bug in the creation of codebooks
-
-2020-06-27:
-   - Fix warnings about 'Non-file package-anchored link(s) in documentation
-     object'
-
-2020-06-19:
-   - Added documentation about coercion of items into vectors, etc.
-
-2020-06-18:
-   - Fixed 'as.data.frame()' method for extended tables of percentages (i.e.
-     those that include standard errors or confidence intervals).
-
-2020-06-17:
-   - Add 'include.missings' option to 'as.character()' coercion method for
-     "item.vector" objects.
-
-2020-06-16:
-   - Added an explicit 'as.data.set()' method for "tibbles", which seems to be
-     necessary, because under some circumstances method dispatch via inheritence
-     does not seem to work.
-   - Added methods to apply 'codeplan()' to individual survey items and to set
-     'codeplan()' to NULL.
-
-2020-06-09:
-   - 'as.item()' and 'codebookEntry()' methods are added for objects of class
-     "labelled" as they occur in some imported tibbles.
-   - 'as.item()' now drops non-unique labelled values when applied to a
-     "labelled", "haven_labelled", or "haven_labelled_spss" object.
-
-2020-06-05:
-   - With 'codebook()' it is now possible to disable the display of unweighted
-     data summaries.
-   - In accordance to future deprecation of the function
-     'default.stringsAsFactors()' the default value of the 'stringsAsFactor'
-     argument is now FALSE.
-
-2020-05-26:
-   - The character set encoding in an SPSS file is now detected (if information
-     is available) and used to translate the variable labels and value labels.
-
-2020-05-25:
-   - Added support for weighted codebooks from importer objects
-   - Added documentation about use of weights
-   - Added support for subsetting codebooks with '$', '[', and  '[['
-   - Fixed a bug that prevented 'genTable' and 'Aggregate' to work as expected
-     with data.set objects
-   - Measurement levels of variables in 'data.set' objects are now obtained from
-     the metadata in the SPSS file (if available)
-
-2020-05-24:
-   - Drop skewness and kurtosis from codebook output
-
-2020-05-19:
-   - Added support for weighted codebooks from in-memory data.set objects
-
-2020-03-14:
-   - Added 'deduplicate_labels()' function to deal with duplicated value labels.
-
-2020-01-02:
-   - Added convenience wrappers 'Mean()', 'Var()', etc. to basic stats
-     functions such as 'mean()', 'var()', etc.
-   - 'rename()', 'relabel()', 'dimrename()', etc. now also work without
-     quoting the new labels, i.e. 'rename(x,a=A)' now works like 'rename(x,a="A")'.
-
-2019-12-31:
-   - Changed 'Groups' from S4-generic to S3-generic
-
-2019-12-30:
-   - 'n_', 'N_', and 'i_'are  available in 'with(Groups)' and 'within(Groups())'
-   - 'N_' is available in 'within' for data.sets
-
-2019-12-29:
-   - 'genTable' and 'Aggregate' now internally use 'with(Groups(...),...)
-
-2019-12-24:
-   - 'withGroups', 'withinGroups', as well as 'with' and 'within' for
-     grouped data is now considerably more time efficient. 
-
-2019-12-17:
-   - 'codebook' now makes use of the "label" attribute of variables if the
-     attribute is present.
-
-2019-12-15:
-   - 'measurement<-' can be used to change the measurement level of several
-     variables in a 'data.set' object. Also a 'set_measurement' function is
-     defined for the same purpose.
-
-2019-12-14:
-   - Added 'as.data.table' method to 'data.set' objects, to allow export of
-     'data.set' objects into data.tables.
-
-2019-12-10:
-   - Further improvements of 'Reshape', added the possibility to
-     specify identifier variables.
-
-2019-12-09:
-   - Symplified further the call-syntax of 'Reshape'
-
-2019-12-08:
-   - Handle SPSS files created with ReadStat/haven, that lack information 
-     about the number of variables in the header.
-   - Added support for SPSS syntax file with different encoding
-   - Added methods for NULL for 'labels', 'value.filter', 'codebook'
-     and 'codeplan' generics.
-
-2019-12-01:
-   - Declared 'charbuf' static in R-for-dta.c and R-for-dta117.c to avoid
-     compilation error with GCC 10.
-
-2019-11-28:
-   - Added new function 'view_html' for use with 'view'.
-
-2019-11-21:
-   - Added sensible 'head' and 'tail' methods for "data.set" and "importer"
-     objects.
-   - The function 'recode' is made to behave more coherently: If a labelled
-     vector is the result of 'recode' it gets the measurement level
-     "nominal". Factor levels explictly created first come first in the order of
-     factor levels.
-
-2019-11-20:
-   - Added an extensible 'view' function which internally uses a generic
-     function 'viewPrep' to make it work with objects that are not (yet)
-     supported by the implementation of 'View' in base R or RStudio.
-
-2019-11-19:
-   - Added a 'as.data.frame' method for "description" objects, as they are
-     returned by 'description' applied to "importer" and "data.set" objects.
-
-2019-11-17:
-   - Added 'as_tibble' and 'as_haven' methods for "data.set" objects.
-   - 'as.data.set' and 'as.item' now handle attributes of variables in tibbles
-     imported with the 'haven' package. 'as.item' methods handle vectors with
-     class "haven_labelled" or "haven_labelled_spss".
-   - Methods of 'as.orders', 'as.factor' 'as.vector', 'as.character' for "item"
-     objects attach "description" annotations as "label" attributes to their
-     results. 
-
-2019-11-10:
-   - Improved handling of missing values in grouping factors in 'Groups',
-     'withinGroups', etc.
-   - Added 'encoded' and 'iconv' arguments to importer methods that allow to
-     re-encode variable labels and value labels while importing SPSS and Stata
-     files.
-   - Added a 'spss.file' function that can be used to import both SPSS
-     "portable" and "system" files.
-   - SPSS file importers do no longer change variable names to lowercase by
-     default. The ANES 1948 vignette is changed accordingly.
-
-2019-11-09:
-   - Added support for added missing values in Stata files prior to rev. 117.
-   - Improved 'codebook' output:
-     - Added a designated function to create tables of counts in codebook
-       entries.
-     - Codebook shows user-defined missing values in a table separate from
-       discrete statistics.
-     - Description of user-defined missing values is made a bit more stringent.
-   - Added support for setting annotations, value labels, or value filters to
-     NULL even if they are not of class "item"
-
-2019-11-07:
-   - Added user-level support for Stata files in the newer format of rev. 117,
-     118 and 119.
-
-2019-11-06:
-   - Fixed ecoding problems in value labels of Stata files: 'nzchar' is used
-     instead of 'nchar' to check for existence of value labels.
-   - Added low-level support for Stata files in the newer format of rev. 117,
-     118 and 119.
-   - Avoid deletion of empty pointers
-	
-2019-10-31:
-   - Created and documented a 'Reshape' function as convenience wrapper for 'reshape'.
-
-2019-10-27:
-   - Implemented classes and methods for data manipulation within groups
-     of rows of data frames and data sets.
-
-2019-10-12:
-   - Implemented 'List' function that names element like 'data.frame()'
-   
-2019-04-05:
-   - Fixed handling of S4 objects in collect(): If the first couple of
-     elements are NA and the non-NA element is an S4 object (e.g. of class
-     "item"), the result is now made sure to be an S4 object.
-
-2019-03-16:
-   - Added syntactical sugar to manipulate annotations and attributes.
-
-2019-03-16:
-   - Fixed import of value labels for string variables in 'spss.system.file'
-   - Fixed codebook representation of datetime items in SPSS system and portable files
-   - Support for date or datetime import added to 'spss.portable.file' 
-
-2019-03-15:
-   - Support for date or datetime import added to 'spss.system.file' 
-   - Minor bugfix in printing of 'datetime.item's - added bracket method for
-     this class of objects
-
-2019-03-14:
-   - Fixed issues flagged by Tomas Kalibera's rchk utility
-
-2018-11-17:
-   - Added 'dublicated_labels()' function to show and describe duplicated
-     labels
-   - Let importers give more useful warnings about duplicated labels  
-
-2018-11-01:
-   - Fix formatting of results of 'mtable' without summary statistics
-   - Warn if 'toLatex' output of 'mtable' results creates unescaped TeX specials
-   - Define sensible defaults for the selection of summary statistics in 'mtable'
-
-2018-10-26:
-   - Allow to select summary statistics for models in 'mtable' via options or
-     list arguments.
-
-2018-10-23:
-   - Handle visibility of binary code symbols correctly for R releases 3.3.0 through 3.3.3
-
-2018-10-22:
-   - Defined dollar and double-bracket operators for 'importer' objects to facilitate
-     creating codebooks for individual variables.
-
-2018-10-20:
-   - The 'subset' method for 'importer' objects now accepts the names of
-     variables to be selected also as a character vector.
-   - Fixed 'format_html' for codebooks of data frames with factors.
-
-2018-10-15:
-   - A 'setCodeplan' and 'codeplan<-' assignment function is created that
-     can be used to copy the "item structure" or code plan from one object
-     to another.
-
-2018-10-14:
-   - A 'codeplan' function creates a data frame that
-     describes the structure of an "importer" or "data.set" object.
-
-2018-10-05:
-   - 'mtable' objects exported to HTML now include a legend for significance symbols.
-
-2018-10-04:
-   - 'mtable' objects exported to LaTeX now include a legend for significance symbols.
-
-2018-09-30:
-   - Adapt 'spss.fixed.file' to data files with lines that are "too long".
-   - Export C-function 'readfixedslice'.
-
-2018-09-07:
-   - Define double() only if R version is < 3.6.0
-   - Remove crossrefs to 'car' package to escape the depency hell created by
-     that package
-
-2018-07-10:
-   - Handle SPSS "Portable files" with weights and empty value labels
-
-2017-12-20:
-   - Explicitly allow installation with R versions from 3.3.0
-   - Fixed warning about tautological comparisons shown by check with
-     flavor 'r-devel-linux-x86_64-fedora-clang'.
-
-2017-12-19:
-   - Fix compilation problems with R version < 3.4
-
-2017-12-11:
-   - Made bracket subsetting of mtable results safer and more coherent.
-
-2017-12-10:
-   - Allow package to be installed and run with R versions < to 3.4
-
-2017-12-01:
-   - Set a more sensible default for optional argument "show.eqnames" and
-     global option "mtable.show.eqnames".
-
-2017-11-19:
-   - Fixed obscure bug affecting import of spss system files under 32bit Windows.
-     This bug was caused by excessive optimisation of for loops by the C compiler.
-
-2017-11-11:
-   - 'print' method for 'mtable' objects now shows a legend for significance symbols.
-
-2017-11-05:
-   - Made the display of left-hand sides of model equations optional in the
-     output of `mtable()` by providing an optional argument "show.eqnames"
-     and a global option "mtable.show.eqnames".
-
-2017-10-31:
-   - Fixed (internal) `readChunk` method for fixed-format files with SPSS meta data.
-
-2017-10-21:
-   - Implemented explicit option to control whether equation titles
-     (or names of dept. variables) are printed from `mtable'.
-
-2017-10-11:
-   - Made 'toLatex.escape.tex' an explicit option for 'toLatex' methods
-     provided by the package
-
-2017-09-30:
-   - Included 'read_sysfile_slice' in 'CallMethods'
-   - Removed some potentially stale links from vignette 'mtable-html'
-
-2017-09-08:
-   - Empty cells in HTML tables (which break their formatting by 'pandoc' if included
-     in markdown format files) are now avoided
-
-2017-09-06:
-   - Lines without contents from 'mtable()' results are now automatically dropped
-   - Added support for additional statitics without standard errors in 'mtable()'
-   - Improved mtable support for merMod objects (created by package "lme4")
-
-2017-09-03:
-   - Completed list of exported C functions in 'CallMethods'
-   - Removed getSummary support for long obsolete class 'mer'
-   - Adapted getSummary support for class 'merMod'
-   - Removed 'varPar.as.coef' argument from 'getSummary.merMod'
-
-2017-09-02:
-   - Moved basic getSummary methods into specific file
-   - Made excaping of '$', '_', '^' optional when exporting to LaTeX
-   - Adapted getSummary methods contributed by Christopher Lawrence (polr, clm, simex) to new version of 'mtable'
-   - Adapted getSummary methods contributed by Jason W Morgan to new version of 'mtable'
-   - Adapted getSummary methods contributed by Dave Atkins to new version of 'mtable'
-
-2017-09-02:
-   - Adapted getSummary methods contributed by Achim Zeileis (ivreg, tobit, hurdle, zeroinfl,
-     betareg, multinom) to new version of 'mtable'
-
-2017-08-18:
-   - Improved array semantics of 'mtable' objects. Reordering
-     of coefficients should work as expected  after regression introduced
-     by last refactoring.
-   - Standard getsummary methods now report name of dependent variables
-   - 'mtable' now reports dependent variables of single equation models,
-     if they differ (and the 'getSummary' methods support this)
-   - Fixed relabeling of 'mtable' results after regression introduced
-     by last refactoring.
-   - 'mtable' optionally shows dependent variables even if they
-     are the same in all models.
-
-2017-08-16:
-   - Make sure that 'PrettyNames' is always applied when an 'mtable' object is
-     formatted.
-   - Escape TeX active chars '$', '_', '^' in toLatex methods etc.
-
-2017-07-29:
-  - Fix refactoring: `c.memisc_mtable` and `[.memisc_mtable` now return objects
-    with the correct class attribute.
-  - Make package depend on R version 3.4
-
-2017-07-13:
-  - Fix handling of matrices contained in data frames by `toLatex()`
-  - `useDcolumn` and `useBooktabs` arguments of `toLatex()` methods now have
-    global options as defaults
-
-2017-07-11:
-  - Restrict visibility of object code symbols to package initialisation routine
-
-2017-07-10:
-  - Deal with PROJECT issues reported by Tomas Kalibera: Add PROTECT to objects
-    for which attributes are set
-  - Provide Call method registration for functions called from C-code
-
-2017-07-09:
-  - Bugfixes for `repr_html()` methods
-  - Eliminate dependence on IRdisplay package
-
-2017-07-03:
-  - Change class of objects created by `mtable()` from "mtable" to "memisc_mtable"
-    to avoid name clash with objects created by `model.table()` from package
-    "stats".
-
-2017-07-02:
-  - Support for output in Jupyter notebooks.
-
-2017-06-02:
-  - Completed support for output as print, LaTeX, and HTML for new mtable
-    architecture.
-
-2017-05-30:
-  - Introduced support for multi-line headers.
-
-2017-05-26:
-  - Architectural change for objects produced by `mtable()`. This allows
-    several types of parameters, such as coefficients and variances.
-
-2017-05-26:
-  - Adapted `show_html()` to use within Jupyter Notebooks
-
-2017-05-19:
-  - Created methods for `repr_html()` to support HTML output in Jupyter
-    notebooks
-
-2017-03-05:
-  - Fixed handling of empty summaries in `mtable()`
-  - Better "splash screen" section of LaTeX formatted mtable objects.
-
-2017-02-03:
-  - Fixed a bug in `relabel` method for `item'
-    objects. `relabel(x,...,gsub=TRUE)` should now work as expected.
-  - Fixed a bug in `readLabPorStream`, coming from wrong assumptions about the
-    encoding of value labels of character string variables in "portable"
-    files. Some more SPSS "portable" files should now read into R.
-
-2016-12-24:
-  - New `withVCov` and `withSE` generic functions to more
-    conveniently provide sandwich estimates of variances and standard
-    errors
-
-2016-09-28:
-  - More efficient 'subset' method for large external data sets
-
-2016-07-09:
-  - No 'useRs' in DESCRIPTION and software names in single quotes
-
-2016-07-08:
-  - Suggest 'rmarkdown' package
-
-2016-07-02:
-  - Fix type that crept in while fixing bug in parseSysHeader
-
-2016-06-05:
-  - Fix 'felicity' issue pointed out by Martin Maechler
-  - Make formatting of codebooks a bit more robust
-
-2016-04-30:
-  - Fix issue #8 - `toLatex.ftable()` does no longer attempt to show
-    titles if they are not available.
-  - Fix issue #1 (error in 'parseSysHeader')
-
-2016-04-29:
-  - Make `cases()` robust with respect to NA conditions.
-
-2016-04-17:
-  - Fix extracolsep in `toLatex.ftable()` as suggested by Kirill Müller
-
-2016-02-21:
-  - Make the use of ampersand-escapes in HTML output optional and use unicode characters
-    by default. (So that pandoc will not escape them.)
-  - Minor improvenent of `c.mtable()`.
-
-2016-02-07:
-  - Unified headlines in vignettes.
-
-2016-02-02:
-  - Implemented "Date.item" class, which allows to use `data.set` or `as.data.set`,
-    etc. with "Date" objects.
-
-2016-01-29:
-  - Use `any(is.na(...))` instead of `anyNA(...)` in `[.mtable`.
-
-2016-01-27:
-  - Fixed `show` and `codebookEntry` methods for "datetime.item" class.
-
-2016-01-24:
-  - Do not wrap HTML tables and list in HTML paragraphs in `format_html.CodebookEntry`.
-
-2016-01-21:
-  - Correct spelling and case of vignette titles.
-
-2016-01-16:
-  - Use "html_viewer" option instead of "show_html.output".
-
-2016-01-04:
-  - Deleted last sentence in package description.
-  - Put back vignette for `ftable-matrix`.
-  - `show_html` can be used with arbitrary output functions, e.g. `rstudio::viewer`.
-
-2016-01-03:
-  - Removed `UnZip` from package, which has been redundant for some time.
-  - Use `knitr::rmarkdown` instead of `knitr::knit` in vignettes.
-  - Added vignette for `ftable_matrix`.
-  - `show_html` can be used with arbitrary output functions, e.g. `rstudio::viewer`.
-
-2016-01-02:
-  - Small vignette update.
-  - New maintainer address
-
-2015-12-31:
-  - R-dependency should be >= 3.0, because this is needed for knitr vignettes.
-  - Some improvements of ANES vignette.
-  - Improvements for variable descriptions in data sets and importers, 
-    including HTML formatting.
-  - Added explanation of `tolower` to ANES Vignette.
-  - New argument `margin` of `format_html` method functions, 
-    which determines the positioning of the HTML tables. By default it centers the table horizontally.
-  - Export `format_html` cell standard styles.
-  - Renamed `html_style` into `css`, etc.
-  - Automatic HTML output in ANES vignette.
-  - Remove LaTeX/PDF Vignette
-  - Added documentation for `html()` and friends. 
-    Implemented `show_html()` method function for HTML code.
-
-2015-12-30:
-  - Make concatenation of html-elements safer
-
-2015-12-29:
-  - Added documentation for `toLatex` method for "ftable_matrix" objects
-  - No longer make a fuss about duplicate model names in `combine_mtables`
-
-2015-12-28:
-  - Added example for named model groups in `mtables`.
-  - Added documentation of `format_html.ftable_matrix`.
-  - Updated documentation of `mtable_format_latex`
-  - Create and use `Write` method function for `ftable_matrix` objects.
-  - Added documentation of `ftable_matrix` objects
-
-2015-12-18:
-  - Added support for with model groups in `mtable`. `c.mtable` now creates 
-    groups of models, if arguments are tagged.
-
-2015-12-16:
-  - Fixed issues shown by R CMD check
-  - Adapt `format_html.ftable_matrix` to html-objects infrastructure.
-
-2015-12-13:
-  - Enable automatic insertion of linebreaks into HTML code.
-  - Export methods for html objects etc.
-
-2015-12-12:
-  - Adapted HTML formatting of 'codebook's to new HTML infrastructure.
-  - Added syntactic sugar to 'html()'. Corrected formatting of fixed-point numbers.
-  - Made formatting of value filters safer.
-
-2015-12-07:
-  - Encapsulate fixed-point numbers into "html_group" objects
-  - Update version number
-
-2015-12-06:
-  - Start object-oriented infrastructure for the creation of HTML code.
-
-2015-11-13:
-  - Import 'str' and 'ls.str' from 'utils' package to prevent a NOTE in R CMD check
-
-2015-11-09:
-  - Make `percentages()` a little more robust against empty cells in marginal tables.
-
-2015-09-24:
-  - Fixed Latex output of data frames.
-
-2015-09-13:
-  - Fix regressions caused by `rbind()` and `cbind()` methods for "ftable" objects.
-
-2015-09-12:
-  - Added some new `relabel()` methods.
-
-2015-09-06:
-  - Fixed treatment of value labels in HTML formatting of codebooks.
-
-2015-09-03:
-  - Added basic HTML formatting of `ftable_matrix` objects. (LaTeX formatting was already implemented.)
-
-2015-08-29:
-   - Fix CSS class of ftable formatted in HTML
-   - Implement `ftable_matrix` objects - objects composed from several `ftable`s.
-
-2015-08-26:
-  - Added `percentages` function to easily create tables of percentages.
-
-2015-08-18:
-  - Fix bug that presented Stata 9-10 files to be successfully imported.
-
-2015-08-16:
-  - Fix that allows to import ANES 2008 data with the provided buggy SPSS script files.
-
-2015-08-03:
-  - Allow specification of `show.baselevel=`, and `baselevel.sep=` as arguments of `mtable()`
-
-2015-07-21:
-  - Make `write.mtable` more coherent.
-
-2015-07-20:
-  - Eliminate buglino that causes knitr to gobble up stars (not those in the sky, 
-    but those used to indicate levels of statistical significance)
-
-2015-07-18:
-  - New `signif.symbols` argument to `mtable`, that allows to change
-    the "level of significance symbols"
-  - Implemented `[` operator for `mtable` results as well as
-    the `c` (concatenation) operator.
-
-2015-07-15:
-  - New `gs.options=` argument to `mtable`, that allows to pass optional
-    arguments to getSummary.
-
-2015-07-14:
-  - Added vignette about survey items (objects of class "item")
-
-2015-07-13:
-  - Add basic documentation for 'summaryTemplate' generic function.
-  - Add documentation for 'dsView'.
-  - Fix codoc mismatches pointed out by R CMD check.
-  - 'spss.fixed.file' now checks whether there are undefined variables in 'varlab.file' etc.
-
-2015-07-10:
-  - Correct `sourcename` default argument of `collect` methods.
-  - Get rid of duplicate aliases in documentation.
-  - FIX: `coef.tab` not `coef.table`
-  - Add documentation for `datetime.item` objects (merged from an earlier development branch)
-  - Add documentation for data set manipulation (`merge` etc.)
-  - Make `cases` more fussy about logical conditions.
-
-2015-07-02:
-  - Provide HTML formatting of data frames.
-
-2015-06-15:
-  - New option 'show.baselevel' for function 'mtable' that allows to decised whether the baseline category of 
-    dummy variable shows up in the table.
-
-2015-06-13:
-  - Scalars created by 'within' expression are now retained constant items in data.sets
-  - 'sourcename' argument of collect methods for data frames and data.sets now has a 
-    coherent default.
-
-2015-06-08:
-  - 'mtable_format_html' works again
-  - Slight reorganisation of 'mtable' and associated formatting functions.
-  - Nicer grouping of coefficients of multiple-equation models
-  - 'applyTemplate' now returns empty strings for undefined quantities.
-
-2015-06-02:
-  - Moved 'toLatex' method for 'data.set' objects into different file. Added 'toLatex' method for data frames.
-
-2015-06-01:
-  - Completely refactored 'mtable' - more flexible handling of models with varying numbers of equations; 
-    some formatting is delayed and moved to the 'mtable_format' functions.
-
-2015-05-31:
-  - Added toLatex-method for data.set objects.
-
-2015-05-28:
-  - Added missing 'drop=FALSE' in format_html.codebookEntry
-  - 'codebookEntry' can now deal with factors that have no non-missing levels
-
-2015-05-16:
-  - 2015-05-16: Added support for date-time "item" objects (from former 'codebooks' package)
-  - dsView, cbind, rbind, collect, and merge methods for "data.set" objects copied from former 
-    'codebooks' package to 'memisc'.
-
-2015-05-14:
-  - Fixed bugs introduced by rewrite of 'import-internal-spss-syntax.R'.
-    Dependency 'MicroDatosEs' should work okay now.
-
-2015-05-12:
-  - Fixed a bug introduced by side-effects of manipulating the arguments of 'readfixed'. 
-  - Make sure that codebook entries for items in external data sources are complete.
-  - Add dots to 'format_html.codebookEntry' formal arguments.
-  - Improved `toLatex` formatting of `ftable`s
-  - Set version number to 0.98.1
-
-2015-05-11: Make memisc:::trimws work without changing locale
-  - Complete rewrite of major parts of 'import-internal-spss-syntax.R': 
-    Handling of SPSS syntax files for fixed format data files is changed from a presumptious vectorising approach
-    to an old-school but more flexible and stable Turing approach. 
-  - 'spss.fixed.file()' should work for a wider range of situations.
-
-2015-05-10:
-  - Use endash in HTML format of codebooks, correct removal extra styling of variable names
-
-2015-05-09:
-  - Remove hardcoded styling of variable names in codebook entries.
-  - Codebook support for numeric vectors and factors
-  - Fix console output of data.set objects
-
-2015-04-29:
-  - Step up version number and date.
-  - Removed functions panel.errbars, Termplot, Simulate, and associated stuff (buckets etc.)
-
-2015-04-28:
-  - Documented 'format_html' method for codebooks
-  - Added HTML formatting of codebooks.
-  - Bugfix in 'codebook-methods.R': specify sensible defauls for 'toprule' and 'midrule' in format,codebookEntry-method.
-  - Added dumentation for 'format_html' methods for "ftable" and "mtable" objects.
-  - Added documentation for 'format_html' function
-  - Documented 'wild.codes' function
-  - Fixed as.data.set,list-method, added documentation for as.data.set,list-method
-
-2015-04-26:
-  - Changed vignette engine to 'rmarkdown' as this gives better output.
-  - Added html vignette 'ANES 1948'
-  - Fix html formatting of mtables
-  - Bugfix of format_html.ftable: Now digits after the dot are handled correctly.
-  - Some adjustments of HTML formatting of "mtables"
-  - Support for HTML formatting of "ftables"
-  - Added function 'wild.codes' to find, well, wild codes.
-
-2015-04-20:
-  - Fix collect method of "data.set" objects, by providing "as.data.set" method for lists.
-
-2015-04-09:
-  - Improvement of header formatting of mtables for LaTeX
-
-2015-04-07:
-  - Shorter vignette for html output of mtable results.
-  - Update README.md
-  - Create README.md
-  - More modular code for HTML formatting
-  - Added knitr vignette for HTML output example 
-  - Corrected NEWS.Rd
-  - Minor correction of format of ANES48 vignette
-
-2015-04-06:
-  - Improved HTML output of 'mtable' results  - alignment on decimal signs and straight borders. 
-  - Updated documentation of 'mtable' results.
-
-2015-04-05:
-  - New coefficient style - confidence intervals right of estimates
-  - Some cleanup in mtable; special formatting functions for mtable objects (needs testing)
-
-2015-03-07:
-  - Renamed 'getSummary.expCoef' into 'getSummary_expCoef' to avoid R CMD check fussiness.
-
-2015-02-14:
-  - Modified file structure somewhat and added some lines do clarify credit for code.
-  - Added documentation for 'as.character' method for 'codebook' objects.
-  - Implemented 'Write()' convenience function for 'descriptions' objects.
-
-2015-02-13:
-  - Removed 'aggregate.formula' method as it conflicts with a method of the name that was included
-    into the 'base' R package more or less recenlty.
-  - Removed 'include' and 'uninclude' since it modifies (in a benign way though) the global namespace,
-    which is discouraged by recently changed CRAN policies.
-
-2015-01-26:
-  - Added 'as.character' method for 'codebook' objects, to allow conveniently write the to files using 'writeLines'
-
-2015-01-25:
-  - Explicitly export S3 method as required by package check by more recent R version
-  - Added github URL
-  - Listed packages that are 'enhanced' by supporting them for `mtable`
-
-2014-12-14:
-  - Correct buglet in 'recode' method for numeric vectors
-
-2014-11-04:
-  - Fixed silly bug introduced in recent update: Long variable names in SPSS "sav" files should work again now.
-
-2014-10-11:
-  - added method for "merMod" objects to the getSummary() generic function. mtable() now 
-    should be able (again) to handle estimation results produced by lmer() and glmer() from 
-    package 'lme4'.
-  - recode() handles character vectors in a more convenient way: They are converted
-    into factors with sorted unique values (after recoding) as levels.
-
-2014-09-08:
-  - 'getSummary.glm' now takes care of missing values in weights of glm objects.
-
-2014-08-19:
-  - modified some code that Prof Ripley thinks looks 'suspicious'.
-
-2014-06-24:
-  - Change of SPSS variable names to lower case is now optional (but still the default).
-
-2014-03-10:
-  - Removed modification to getSummary.clm that slipped in from a development branch.
-
-2013-12-06:
-  - fixes out-of-bound error and memory leak in 'pspp-portableStream-for-R.c'
-    reported by Prof. Ripley.  Eliminated calls to non-exported functions from 'lattice'.
-    Marked all example code of 'Simulate' as 'dontrun' to save time during package checks.
-    Also did some cosmetic changes to the package vignette 'anes48'.
-
-2013-09-19:
-  - fixes of some namespace import issues.
-
-2013-07-28:
-  - fix of 'data.set()' and 'Table()' functions.
-    Thanks to Gabor Grothendiek and Jeremy Jackson 
-
-2013-03-20:
-  - getSummary method for "mer" objects was broken and now is fixed.
-
-2013-02-10:
-  - getSummary methods for "ivreg", "tobit" (from package "AER"),
-    "hurdle", "zeroinfl" (from package "pscl"),
-    "betareg" (from package "betareg"),
-    "multinom" (from package "nnet"),
-    contributed by Achim Zeileis,
-    were included into the package, but had not been exported yet
-    from the package namespace.
-    This is now fixed.
-
-2013-01-27:
-  - Minor improvement of 'codebook' output for external SPSS data sets.
-  - Fixed a bug in 'dumbswap.c' discovered while building a windows binary.
-
-2013-01-26:
-  - Included getSummary methods
-     - for objects of classes "ivreg", "tobit" (from package "AER"),
-                              "hurdle", "zeroinfl" (from package "pscl"),
-                              "betareg" (from package "betareg"),
-                              "multinom" (from package "nnet"),
-                              contributed by Achim Zeileis
-    - for objects of classes "polr" (from package "MASS"),
-                             "clm" (from package "ordinal"),
-                             "simex" (from package "simex"),
-                             contributed by Christopher N. Lawrence
-    - for objects of classes "coxph", "survreg" (from package "survival"),
-                             "aftreg", "phreg", "weibreg" (from package "eha"),
-                             contributed by Jason W. Morgan,
-    - for exponentiated coefficients in glm-models,
-                             contributed by Dave Atkins.
-  - Made the 'spss.fixed.file' importer function more robust:
-      - It works now, even if 'varlab.file', 'codes.file',
-        or 'missval.file' arguments are missing. (This was broken by an earlier revision.)
-      - It now handles value labels of character string variables correctly.
-
-2013-01-04:
-  - Updated contact email address. Corrected "initialize" method for "data.set" objects.
-
-2012-02-14:
-  - Replaced calls to .Internal(sample()) by calls to sample.int() and eliminated
-    call to .Internal(int.unzip()). The package now depends on R >= 2.9.0
-
-2012-01-25:
-  - Fixed reading of value labels from SPSS system files - no garbage at the end of the labels.
-
-2011-12-07:
-  - Fixed "getSummary" and "getSummary.expcoef" S3-generic functions.
-
-2011-11-06:
-  - Added a 'rep' method for 'item.vector' objects.
-  - Applied patch sent by Masahiro Hayashi <rinm884@gmail.com> to fix bugs
-    in 'vector' method of 'recode'.
-
-2011-10-05:
-  - Adapted the package to R 2.14.0 (by eliminating calls to 'require'
-    in the '.onLoad' function)
-  - Changed the methods for data frames, 'data.set' and 'importer' objects
-    of the function 'sort' from S3 to S4
-
-2011-08-26:
-  - Fixed a bug in internal function 'compress.storage.mode.double' that caused
-    it to create NA's where it should not.
-  - Fixed a bug in the print method for items that caused it to report their length
-    incorrectly
-
-2011-08-15:
-  - Made internal functions of 'spss.fixed.file' robuster against syntax errors
-    in the spss-controls files (codes.file, labels.file, etc.)
-
-2011-06-17:
-  - Removed mkHelpDir() that has not worked for a while because of architectural
-    changes in R.
-  - Removed some unused variables from the C-code that caused warnings.
-  - Corrected a bug in format.mtable() misusing the function character()
-    and some other buglets reported by NOTE's in automatic runs by CRAN.
-
-2011-05-29:
-  - Applied patch sent by Christopher N. Lawrence, Ph.D. <c.n.lawrence@gmail.com>:
-    Added support to mtable() for clm and clmm ordinal models in the ordinal package.
-    Updates getSummary to support mer objects as generated by recent versions of the lme4 package.
-    Adds the Aldrich & Nelson pseudo-R2 (Aldrich and Nelson 1984)
-    to mtable output for various categorical models.
-
-2011-05-14:
-
-  - Fixed problems with SPSS system files that do not contain an 'info_flt64' record. This problem led to zeroes in the data section of the file being erroneously interpreted as *sysmis*.
-  - Fixed 'show' and 'print' methods for 'data.set' objects - they no do fit the width set by options(width=...), without ugly line breaks.
-  - Changed the default value of the 'compress.storage.modes' option for the
-    subset and bracket methods o 'importer' objects to FALSE, which is much
-    more safer.
-
-2010-07-16:
-  - fixed a bug in 'Simulate' that caused it to fail in certain situations
-    in R version >= 2.11.
-
-2010-04-12:
-  - 'toLatex(mtable(<something>),useDcolumn=FALSE)' should now produce useable
-    LaTeX output ($'s are added to the table entries).
-
-2010-04-09:
-  - 'By' works now with 'genTable' and 'aggregate.formula'. It gains a 'data.frame'
-    method, which better cooperates with calls to 'lm'-like functions. Their results
-    get a 'data' component containing the subset of the data frame that was given
-    as 'data' argument to the call of 'By'.
-
-2010-04-08:
-  - fixed bug in 'cases'. It works now with target expressions even with 'within'.
-  - 'write.mtable' now handles a 'forLaTeX=TRUE' option in a more convenient way.
-  - 'mtable' now handles objects of classes "polr" and "simex", thanks to a contribution
-    from Christopher N. Lawrence (Texas A&M International University)
-  - support for 'mtable' output for "glm" objects with exponentiated coefficients
-    and prelininary support for "lmer" object added, thanks to a contribution from
-    Dave Atkins (Unversity of Washington). Also the coef.styles are changed to be
-    more convenient.
-
-2010-04-07:
-  - fixed bug in C-level function 'read_sysfile_subset' that caused spurious errors
-    while importing SPSS 'system' files with long strings.
-
-2010-03-18:
-  - patch to trimws to make it locale-neutral
-
-2010-03-11:
-  - fixed bugs in mtable and format.mtable. Short 'summary.stats'
-    arguments or 'summary.stats=FALSE' should work now.
-
-2010-03-06:
-  - fixed bug in genTable/percentage: total counts disappeared if
-    a factor level had the same name as the name given to the total count
-  - changed the default value of the 'digits' option of the matrix method
-    of the toLatex generic to the more sensible getOption("digits")
-  - the matrix method of the toLatex generic gains new optional arguments
-    'show.vars', 'show.xvar', and 'show.yvar', which determine whether
-    the name of the row and/or the column variable should be shown if
-    the matrix is a 2-dimensional table.
-
-2010-03-02:
-  - fixed minor bug in 'cases' function
-
-2009-11-11:
-  - correction bug in .unLoad function.
-
-2009-10-14:
-  - removed 'extended' arguments from calls to 'regexpr' and 'sub' etc. (for compatibility
-    with R 2.11)
-
-2009-08-19:
-  - corrected documentation for mtable (\usepackage instead of usepackage)
-  - completed documentation for contrasts generic
-  - fixed bug in the internals for 'spss.portable.file':
-    'SPSS Por' to ascii and 'SPSS Por' to integer translation tables
-    were one item too short.
-
-2009-06-02:
-  - as.factor methods for item vectors adapted to new factor function
-    in R 2.10.0
-  - Fixed bug in sample.data.frame and sample.data.set methods:
-    Samples were drawn only from the first m observations, where m is
-    the number of variables in the data frame/data set.
+	* pkg/src/dta-for-R.c: Remove outdated '_dta_read_labels' which
+	creates offence to clang 17.0.5
+
+2023-11-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/pkgdown/_pkgdown.yml: Sandstone theme for bootstrap in pkgdown
+
+2023-11-23  Martin Elff <memisc@elff.eu>
+
+	* .github/workflows/pkgdown.yml: Add pkgdown workflow for Github
+
+2023-07-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Reshape.R: Make 'Reshape()' work with "data.set" objects
+	(again)
+
+2023-05-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/neg2mis.R,
+	pkg/inst/ChangeLog, pkg/man/neg2mis.Rd: Added 'neg2mis()' function
+	that marks negative values as missing.
+
+2023-05-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/spss-syntax-methods.R,
+	pkg/R/spss-sysfile-methods.R, pkg/R/stata-methods.R,
+	pkg/R/value-labels.R: Make sure that value labels etc. are coded in
+	UTF-8 by standard.
+
+2023-04-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/Reshape.R, pkg/inst/ChangeLog,
+	pkg/man/Reshape.Rd: Added 'keep' argument to 'Reshape()'.
+
+2023-04-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/assign-if.R: '%if%' make sure that lhs of assignment retains
+	its attributes
+
+2023-04-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Always show missing values in codebooks
+	of item, even if NA or unlabelled
+
+2023-04-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Kurtosis and skewness of non-items are
+	no longer shown in codebooks
+
+2023-03-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/xx-getSummary.R, pkg/inst/ChangeLog: Make
+	'getSummary.lm()' work with models w/o intercept
+
+2023-03-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog: Updated ChangeLog
+
+2023-03-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Updated DESCRIPTION
+
+2023-03-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/contrasts.R, pkg/R/dataset-methods.R,
+	pkg/src/pspp-portableStream-for-R.c: Copied licence statements along
+	with code Some lines in 'contrasts.R', 'dataset-methods.R', and
+	'pspp-portableStream-for-R.c' had been copied from other GPLed code.
+	In order to clarify the compatibility of the code with GPL-2 and
+	GPL-3, the relevant licence statements are now copied along with the
+	code and the copyright notices.
+
+2023-03-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update of DESCRIPTION file
+
+2023-01-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/coarsen.R, pkg/inst/ChangeLog: Made
+	'coarsen()' more stabe.
+
+2023-01-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/pspp-system-for-R.c: Fix warning about overflow reported
+	on CRAN
+
+2023-01-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd, pkg/man/assign-if.Rd,
+	pkg/man/within-operators.Rd: Correction of some documentation bugs
+
+2022-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/within-operators.R,
+	pkg/inst/ChangeLog, pkg/man/within-operators.Rd:  Added '%$%' and '%$$%' operators
+
+2022-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/{syntactic-sugar.Rd => attr-operators.Rd}: Renamed help
+	file 'syntactic-sugar' into something more descriptive
+
+2022-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/assign-if.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/assign-if.Rd:  Added '%if%' operator for conditional assignment
+
+2022-10-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/src/pspp-system-for-R.c: Fix 'function
+	declaration isn’t a prototype' warning In newer CRAN checks a warning about "function declaration isn’t a
+	prototype" is flagged: pspp-system-for-R.c:34:1: warning: function declaration isn’t a
+	prototype [-Wstrict-prototypes] pspp-system-for-R.c:1291:1: warning:
+	function declaration isn’t a prototype [-Wstrict-prototypes] This is now fixed
+
+2022-10-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/measurement-autolevel.Rd: Document 'only=' and 'except='
+	arguments of 'measurement_autolevel()'
+
+2022-10-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/measurement.Rd: Add documentation for 'as.ordinal()' etc.
+
+2022-10-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/item-methods.R, pkg/inst/ChangeLog: Improved comparison of
+	labelled items
+
+2022-10-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/measurement.R, pkg/inst/ChangeLog: Added
+	'as.ordinal()' etc. functions
+
+2022-10-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/man/measurement-autolevel.Rd: 
+	Actually export measurement_autolevel
+
+2022-10-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/repr-methods.R,
+	pkg/inst/ChangeLog: Removed dependency on 'repr' package
+
+2022-09-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/man/toLatexExtra.Rd: Remove extraneous
+	backslashes from documentation
+
+2022-09-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE: Make mtfrm exports conditional on R version
+
+2022-09-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/item-methods.R,
+	pkg/R/item-more-methods-Date.R, pkg/R/item-more-methods-datetime.R,
+	pkg/inst/ChangeLog: Added new 'mtfrm' methods as suggested by Kurt
+	Hornik
+
+2022-08-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Foreach.R, pkg/inst/ChangeLog, pkg/man/Foreach.Rd,
+	pkg/man/xapply.Rd: New 'outer' variants of 'foreach()' and
+	'xapply()'
+
+2022-08-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/Foreach.R,
+	pkg/inst/ChangeLog, pkg/man/Foreach.Rd, pkg/man/xapply.Rd: Extended
+	'foreach()' and newly exported 'xapply()' function.
+
+2022-08-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R, pkg/inst/ChangeLog, pkg/man/codebook.Rd: 
+	Added codebook method for tibbles.
+
+2022-08-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/annotation.R, pkg/inst/ChangeLog, pkg/man/annotations.Rd: 
+	Added description methods for data frames and tibbles
+
+2022-08-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/Reshape.R, pkg/inst/ChangeLog: Improved the
+	order of variables in the result of Reshape(...,direction="wide")
+
+2022-08-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/value-labels.R, pkg/man/labels.Rd: Added vector,NULL method
+	for 'labels()<-' generic
+
+2022-08-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/rename.Rd: Tiny update of 'rename' documentation.
+
+2022-08-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/percentages.R,
+	pkg/inst/ChangeLog, pkg/man/percentages.Rd: Added new
+	'percentages()' methods.
+
+2022-08-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/codebook-format-md.R, pkg/inst/ChangeLog,
+	pkg/man/format_md.Rd: Refactored 'format_md()' for better
+	integration into memisc codebase
+
+2022-08-19  Martin Elff <memisc@elff.eu>
+
+	* : commit 403ad34d21881282fb49ec45cdc848e4b4beb924 Author: Martin
+	Elff <memisc@elff.eu> Date:   Fri Aug 19 21:33:16 2022 +0200
+
+2022-08-19  Martin Elff <melff@users.noreply.github.com>
+
+	* : Merge pull request #60 from MaelAstruc/master update 'format_md.codebook()' method for prettier output in all
+	formats
+
+2022-08-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/coarsen.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/coarsen.Rd: Defined a
+	new generic 'coarsen()' function.
+
+2022-08-18  Mael Astruc--Le Souder <mael.astruc@gmail.com>
+
+	* pkg/R/codebook-format-md.R: update 'format_md.codebook()' stats
+	tables Separate the values and labels information
+
+2022-08-17  Mael Astruc--Le Souder <mael.astruc@gmail.com>
+
+	* pkg/R/codebook-format-md.R: update 'format_md.codebook()' markdown
+	output formating Replace linebreak "\n\n" by "  \n" for better output in the
+	different formats
+
+2022-08-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Updated NEWS.Rd and
+	ChangeLog for new 'format_md()' method.
+
+2022-08-17  Martin Elff <melff@users.noreply.github.com>
+
+	* : Merge pull request #59 from MaelAstruc/master Add 'format_md()' S3-generic function to format codebook to Markdown
+
+2022-08-16  Mael Astruc--Le Souder <mael.astruc@gmail.com>
+
+	* pkg/R/importer-methods.R: Fix note class() == 'call'
+
+2022-08-13  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/codebook-methods.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd: 'codebook()' now fully supports logical vectors.
+
+2022-08-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/recode.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd: `recode()` now keeps NAs unless they are
+	explicitly recoded
+
+2022-07-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/codeplan.R,
+	pkg/inst/NEWS.Rd, pkg/man/codeplan.Rd: New structure of codeplan
+	objects, which can be written and read from files
+
+2022-06-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd: Update 'NEWS.Rd' file
+
+2022-06-29  Martin Elff <memisc@elff.eu>
+
+	* : commit 5eda6fcbe42893a1190ec5bafd80a8f562103770 Author: Martin
+	Elff <memisc@elff.eu> Date:   Wed Jun 29 21:42:38 2022 +0200
+
+2022-06-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/spss-syntax-methods.R,
+	pkg/R/spss-sysfile-methods.R, pkg/R/stata-methods.R,
+	pkg/inst/ChangeLog: Change 'negatives_are_missings' argument to
+	'negative2missing' argument
+
+2022-06-29  Martin Elff <melff@users.noreply.github.com>
+
+	* .travis.yml: Update .travis.yml
+
+2022-06-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Bump up version
+
+2022-06-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/spss-sysfile-methods.R,
+	pkg/R/stata-methods.R, pkg/inst/ChangeLog: Importers get a
+	'negatives_are_missings' option
+
+2022-06-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/collect.R: Add 'detailed.warnings' and 'use.last' options to
+	'collect()'
+
+2022-06-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/recode.R: Use 'quote(x@.Data)' instead of 'as.symbol("x")'
+	in 'recode'
+
+2022-06-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R: Remove redundant collect method for
+	data.set objects
+
+2022-06-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/trim-labels.R, pkg/inst/ChangeLog: trim_labels() now handles
+	items without labels gracefully.
+
+2022-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/item-more-methods-Date.R,
+	pkg/R/item-more-methods-datetime.R, pkg/inst/ChangeLog: 
+	item-more-methods-...: any(ism | isna) not 'any(ism || isna)'
+
+2022-02-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Foreach.R, pkg/inst/ChangeLog: Allow ':'-operator for ranges
+	of variables in 'foreach()'
+
+2022-02-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/codebook-methods.R,
+	pkg/R/dataset-methods.R, pkg/R/item-methods.R,
+	pkg/R/item-more-methods-Date.R, pkg/R/item-more-methods-datetime.R,
+	pkg/inst/ChangeLog: Export S3 methods instead of S4 methods for
+	"format".
+
+2022-01-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/pspp-portableStream-for-R.c: Be more robust in dealing
+	with short lines in POR files
+
+2022-01-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-portable.R: Ignore (possibly incorrect)
+	vanity splash at the beginning of a POR file
+
+2022-01-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update version and date
+
+2022-01-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/dataSets.Rd: Include 'format' method in documentation.
+
+2022-01-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R: Make sure that data.set objects have
+	proper row names when created from lists
+
+2022-01-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R, pkg/R/importer-methods.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Fix of row names of subsets of
+	importer objects
+
+2022-01-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R, pkg/inst/ChangeLog: Add format method for
+	"data.set" objects.
+
+2021-10-08  Martin Elff <melff@users.noreply.github.com>
+
+	* README.md: Update README.md
+
+2021-10-08  Martin Elff <melff@users.noreply.github.com>
+
+	* README.md: Update README.md
+
+2021-10-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/item-methods.R, pkg/R/value-filters.R,
+	pkg/inst/ChangeLog: Fix to avoid infinite recursion in R 4.2
+
+2021-08-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/src/readfixed.c: Corrected counting of
+	cases in SPSS fixed format files
+
+2021-08-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/recode.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/recode.Rd: Improved handling of labels in 'recode()'
+
+2021-07-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/recode.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd: Enable recoding from factor to numeric vector.
+
+2021-07-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/recode.R: recode: Check length of 'otherwise=' argument
+
+2021-07-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Means.R: Fix bug introduced by last change
+
+2021-07-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/Means.R, pkg/inst/ChangeLog: Some fixes for
+	'Means()'
+
+2021-06-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/contract.R,
+	pkg/man/contract.Rd: Add 'contract()' generic function
+
+2021-06-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable.R: Make 'mtable' backwards
+	compatible to models with a single equation.
+
+2021-06-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/recode.R: recode: only count *newly created* NAs
+
+2021-06-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/recode.R: Let recode use labels even from
+	'unrealised' rules
+
+2021-05-27  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2021-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/spss-sysfile-methods.R, pkg/inst/ChangeLog: 
+	Fix the way encoding information in SPSS is handled.
+
+2021-05-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/cases.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/cases.Rd: Fixed handling of missing values
+	(NA) in 'cases()'.
+
+2021-04-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R: Moved code for fixing names to the right position
+
+2021-04-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/format-html-dataframe.R,
+	pkg/R/format-html-ftable.R, pkg/R/format-html-matrix.R,
+	pkg/R/mtable-format-html.R: Improved padding of HTML formatted
+	objects
+
+2021-04-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/format-html-matrix.R: Fix HTML format of matrices
+
+2021-04-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R: Fix 'as_haven()' so that 'data.set' objects can
+	be saved as Stata files
+
+2021-04-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Means.R: Make 'Means()' work with 'data.set' objects
+
+2021-04-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/Means.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/Means.Rd: Add and
+	document new 'Means()' generic.
+
+2021-03-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/percentages.R: Make 'percentages.formula'
+	work even without 'data='-argument
+
+2021-03-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/syntactic-sugar.Rd: Syntactic 'sugar' not 'shugar' -
+	arghh!
+
+2021-03-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-delim.R,
+	pkg/R/mtable-format-html.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-format-print.R, pkg/R/mtable-tools-format.R,
+	pkg/R/mtable.R: Fixed support 'mtable()' support for multi-equation
+	models
+
+2021-02-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable.R: Let 'mtable()' function deal with "xlevels"
+	componentes of model objects
+
+2021-02-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update DESCRIPTION (new website)
+
+2021-02-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd: Update NEWS.Rd
+
+2021-02-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-format-print.R: Fix handling of equation headers in
+	mtable if coef.style is "horizontal"
+
+2021-02-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/reorder-codes.R,
+	pkg/R/reversed.R, pkg/inst/ChangeLog, pkg/man/reorder-codes.Rd,
+	pkg/man/reversed.Rd: Renamed 'reverse_codes()' to 'reversed()'.
+
+2021-02-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/recode.R,
+	pkg/R/reorder-codes.R, pkg/inst/ChangeLog, pkg/man/reorder-codes.Rd: 
+	Made function 'reorder_codes()' redundant and memoved it.
+
+2021-01-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/reorder-codes.R, pkg/man/reorder-codes.Rd: New reverse_codes
+	and reorder_codes functions
+
+2021-01-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/dataset-methods.R,
+	pkg/R/importer-methods.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-format-print.R, pkg/R/spss-portable-methods.R,
+	pkg/R/spss-syntax-methods.R, pkg/R/spss-sysfile-methods.R,
+	pkg/R/stata-methods.R, pkg/inst/ChangeLog,
+	pkg/man/dataset-manip.Rd, pkg/man/importers.Rd: Made the subset
+	methods S3-methods (again).
+
+2021-01-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R: Remove redundant "as.data.set" method and
+	setOldClass() call for "tbl_df"
+
+2021-01-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/cases.R, pkg/inst/ChangeLog, pkg/man/cases.Rd: Add a new
+	optional '.default' and '.complete' arguments to 'cases()'
+
+2021-01-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/recode.R, pkg/inst/ChangeLog,
+	pkg/man/recode.Rd: Make 'recode()' warn about NAs being created.
+
+2021-01-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/recode.R, pkg/inst/ChangeLog: Make copying of labels while
+	recoding work again.
+
+2021-01-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/reorder-codes.R,
+	pkg/R/trim-labels.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/reorder-codes.Rd, pkg/man/trim-labels.Rd: Added functions
+	'reorder_codes()' and 'trim_labels()'.
+
+2020-12-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/codebook-methods.R, pkg/inst/ChangeLog: Fix
+	creation of codebooks for character vectors.
+
+2020-11-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/vignettes/anes48.Rmd,
+	pkg/vignettes/ftable-matrix.Rmd, pkg/vignettes/items.Rmd,
+	pkg/vignettes/mtable-html.Rmd: Adds 'title' metadata to Rmarkdown
+	vignettes
+
+2020-11-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable.R: Fixes error caused by a change in
+	'getS3method()' introduced by R r79435
+
+2020-11-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/vignettes/anes48.Rmd: Another correction
+	of an url (www.electionstudies.org -> electionstudies.org)
+
+2020-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/vignettes/anes48.Rmd,
+	pkg/vignettes/items.Rmd: Change some http-urls in the DESCRRIPTION
+	and the documentation to https-urls.
+
+2020-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/importer-methods.R, pkg/inst/ChangeLog: 
+	Trying to coerce an "importer" object into a data frame directly is
+	now an error.
+
+2020-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yz-getSummary-merMod.R, pkg/R/yz-getSummary-ordinal.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Variance component estimates
+	as separate statistics in 'mtable()'
+
+2020-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/tibbles.R, pkg/inst/ChangeLog: Fix
+	'as.item()' methods for "haven_labelled" objects etc.
+
+2020-10-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/spss-sysfile-methods.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/importers.Rd: Using
+	information about measurement levels in SPSS files is now optional.
+
+2020-10-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R: Fix handling by 'codebook()' of
+	character variables in SPSS files.
+
+2020-10-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Quick fix to make codebook() more
+	resilient
+
+2020-08-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tolatex-ftable.R, pkg/inst/ChangeLog,
+	pkg/man/toLatexExtra.Rd: Added new option 'fold.leaders' to
+	'toLatex' method for 'ftable' objects
+
+2020-08-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/formula2names.R,
+	pkg/R/mtable-format-html.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-manip.R, pkg/R/mtable.R, pkg/inst/ChangeLog,
+	pkg/man/mtable.Rd: mtable(): Add support for compress output about
+	control variables
+
+2020-08-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE: Export 'zeroinfl' method of
+	'getSummary()'
+
+2020-08-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/yy-mtable-ext-DaveAtkins.R,
+	pkg/R/yz-getSummary_expcoef.R, pkg/inst/ChangeLog,
+	pkg/man/getSummary.Rd: A general 'getSummary_expcoef()' default
+	method is now provided
+
+2020-08-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R: Improved setOldClass usage
+
+2020-08-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R, pkg/inst/ChangeLog: Some 'setOldClass()' calls
+	are now conditional on the absence of certain packages.
+
+2020-08-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/man/collect.Rd: Minor fix
+	in documentation for 'collect()'.
+
+2020-08-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/genTable.R: (Hopefully) fixed difficult-to-reproduce error flagged by Travis
+
+2020-08-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/Table.R, pkg/R/genTable.R,
+	pkg/inst/ChangeLog: Fix handling of implicit frequency weights in
+	'genTable()'
+
+2020-07-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/codebook-methods.R, pkg/inst/ChangeLog: 
+	Make codebook work with factors that have empty levels
+
+2020-07-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/rabind.R,
+	pkg/R/yz-getSummary-merMod.R, pkg/R/yz-getSummary-ordinal.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Improved 'getSummary()'
+	methods.
+
+2020-07-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-tools-format.R, pkg/R/mtable.R: Fixed a bug in
+	formatting of mtable
+
+2020-07-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yy-mtable-ext-ChristopherNLawrence.R,
+	pkg/R/yz-getSummary-merMod.R, pkg/R/yz-getSummary-ordinal.R: Move
+	getSummary.clm to dedicated file and fix critical bug re variance
+	components
+
+2020-07-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/item-methods.R, pkg/inst/ChangeLog: Improve
+	retention of variable labels in 'as.data.frame()' etc.
+
+2020-07-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog: Update ChangeLog
+
+2020-07-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/dedup-labels.R: Made 'deduplicate_labels'
+	methods for "data.set"-objects a bit more resilient
+
+2020-07-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/codebook-methods.R: Fixed bug in the
+	creation of codebooks
+
+2020-07-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/man/00memisc.Rd, pkg/man/dataset-manip.Rd: 
+	Last currenctions to get the package to CRAN
+
+2020-06-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/NEWS.Rd: Fix 'NEWS.Rd'
+
+2020-06-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/man/00memisc.Rd, pkg/man/Iconv.Rd,
+	pkg/man/contrasts.Rd, pkg/man/dataSets.Rd,
+	pkg/man/dataset-manip.Rd, pkg/man/importers.Rd,
+	pkg/man/reorder.array.Rd: Fix warnings about 'Non-file
+	package-anchored link(s) in documentation object'
+
+2020-06-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update
+	DESCRIPTION, ChangeLog, and NEWS.Rd
+
+2020-06-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/dataSets.Rd, pkg/man/items-to-vectors.Rd,
+	pkg/man/items.Rd: Added documentation about coercion of items into
+	vectors, etc.
+
+2020-06-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R: Add 'SetOldClass("tbl_dbf")'
+
+2020-06-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/percentages.R: Fixed 'as.data.frame()' method for extended
+	tables of percentages
+
+2020-06-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/item-methods.R: Add include.missings option to as.character
+	method for items and fix format method
+
+2020-06-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codeplan.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/codeplan.Rd: Expand 'codeplan()' facilities
+
+2020-06-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R, pkg/man/tibbles.Rd: Add explicit 'as.data.set()'
+	method for "tibbles"
+
+2020-06-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/tibbles.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/tibbles.Rd: Improved support for
+	'labelled', 'haven_labelled', etc. objects.
+
+2020-06-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/dataset-methods.R, pkg/inst/ChangeLog,
+	pkg/man/dataSets.Rd: Eliminate use of 'default.stringsAsFactors()'
+
+2020-06-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/AllGenerics.R,
+	pkg/R/AllInternalGenerics.R, pkg/R/codebook-methods.R,
+	pkg/R/importer-methods.R, pkg/inst/ChangeLog, pkg/man/codebook.Rd: 
+	Add support for weighted data only codebooks.
+
+2020-05-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/value-labels.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 
+	Updated NEWS.Rd and ChangeLog files
+
+2020-05-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/spss-sysfile-methods.R,
+	pkg/man/importers.Rd, pkg/src/pspp-system-for-R.c: Use charset
+	encoding information in SPSS file metadata
+
+2020-05-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-sysfile-methods.R: Obtain measurement levels from SPSS
+	system file if info is available
+
+2020-05-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/genTable.R: Make genTable and Aggregate work again
+
+2020-05-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-format-html.R, pkg/R/codebook-methods.R,
+	pkg/man/codebook.Rd: Support for subsetting codebooks with '$', '[',
+	and '[['
+
+2020-05-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R: Completed support for weighted codebooks
+	from importers
+
+2020-05-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R, pkg/R/importer-methods.R: Partial
+	support for weights in codebooks from importers (categ. items)
+
+2020-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/Descriptives.Rd, pkg/man/codebook.Rd: Add documentation
+	about the new 'weights=' argument of the 'codebook()' function.
+
+2020-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Drop skewness and kurtosis from
+	codebook, as they are rarely needed
+
+2020-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Make codebook entries for character
+	vectors work.
+
+2020-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Made it easier to debug the 'codebook()'
+	function
+
+2020-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: If counts are non-integer due to
+	weighting they are formatted as such
+
+2020-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-format-html.R: Make export of weighted-data
+	codebooks work
+
+2020-05-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Capitalized weighted/unweighted group
+	headings
+
+2020-05-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Make sure that tables of frequencies has
+	the right size
+
+2020-05-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R: Fixed dummy support for weights in
+	importer codebooks
+
+2020-05-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R: Dummy-support for weights in codebooks
+	of importers
+
+2020-05-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/AllGenerics.R,
+	pkg/R/AllInternalGenerics.R, pkg/R/Table.R,
+	pkg/R/codebook-methods.R, pkg/R/item-methods.R,
+	pkg/R/item-more-methods-Date.R, pkg/R/item-more-methods-datetime.R: 
+	Started implementing weights for codebooks
+
+2020-03-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/dedup-labels.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/dedup-labels.Rd: Added
+	new 'deduplicate_labels()' function.
+
+2020-02-13  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update date before submission to CRAN
+
+2020-01-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd: Minor correction in NEWS.Rd
+
+2020-01-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/groupwise.R, pkg/inst/NEWS.Rd,
+	pkg/man/dimrename.Rd, pkg/man/relabel.Rd, pkg/man/rename.Rd: 
+	Document the new facilities of rename, relabe, etc.
+
+2020-01-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/relabel.R, pkg/R/rename.R, pkg/inst/ChangeLog: Make
+	'rename(x,a=A)' etc. work like 'rename(x,a="A")' etc.
+
+2020-01-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/stats-conveniences.R,
+	pkg/inst/ChangeLog, pkg/man/stats-conveniences.Rd: Added a few
+	convenience wrappers around basic stats functions.
+
+2019-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/AllGenerics.R,
+	pkg/R/groupwise.R, pkg/inst/ChangeLog, pkg/man/Groups.Rd: Made
+	'Groups' S3-generic (instead of S4-generic)
+
+2019-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/groupwise.R, pkg/man/Groups.Rd: Added
+	'as.data.frame' and 'as.data.set' methods for 'grouped.data' objects
+
+2019-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/groupwise.R, pkg/man/Groups.Rd: Make 'Groups' work with
+	'grouped.data' objects
+
+2019-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/Groups.Rd: Added documentation for 'n_', 'N_', and 'i_'
+
+2019-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/groupwise.R, pkg/inst/ChangeLog: Made 'n_', 'N_', and 'i_'
+	available in 'with(Groups)' and 'within(Groups())'
+
+2019-12-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R: Made 'N_' available in within for
+	data.sets
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R: Removed undocumented .nobs.,.nvars., .id.
+	in within-method for data.sets.
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/genTable.R: Make 'genTable' find variables
+	not present in data= argument
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/genTable.R: Code clean-up for 'genTable'
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/groupwise.R: Various improvements and regression fixes for
+	grouped data
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/AllClasses.R, pkg/R/groupwise.R: Support
+	grouped data.set objects
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R: Modularize print/show mechanism for
+	data.set objects
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/genTable.Rd: Update docu for 'genTable' and 'Aggregate'
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/Groups.Rd: Update docu for 'grouped.data'
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/percent.Rd: Trivial docu fix for 'percent'
+
+2019-12-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/fapply.R, pkg/man/genTable.Rd, pkg/man/memisc-deprecated.Rd: 
+	Mark 'fapply' as deprecated
+
+2019-12-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/genTable.R, pkg/R/groupwise.R,
+	pkg/inst/ChangeLog: 'genTable' and 'Aggregate' now internally use
+	'with(Groups(...),...)
+
+2019-12-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/groupwise.R,
+	pkg/inst/ChangeLog: More efficient 'withGroups' and withinGroups'
+
+2019-12-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/codebook-methods.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd: 'codebook' now makes use of the "label" attribute
+	of variables in data.frames
+
+2019-12-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd: Updated NEWS.Rd
+
+2019-12-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/measurement.R,
+	pkg/inst/ChangeLog, pkg/man/measurement.Rd: Added 'measurement<-'
+	method and 'set_measurement' function for 'data.sets'.
+
+2019-12-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/dataset-methods.R,
+	pkg/inst/ChangeLog, pkg/man/dataSets.Rd: Added 'as.data.table'
+	method for 'data.set' objects
+
+2019-12-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/Iconv.Rd, pkg/man/Write.Rd: Minor documentation fixes
+
+2019-12-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tibbles.R: Added 'codebook' support for "tibbles" imported
+	using the 'haven' packages.
+
+2019-12-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/Reshape.R, pkg/inst/ChangeLog,
+	pkg/man/Reshape.Rd: Improvements of 'Reshape' function
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R, pkg/R/value-filters.R,
+	pkg/R/value-labels.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/codebook.Rd, pkg/man/labels.Rd, pkg/man/value-filters.Rd: 
+	Added methods for NULL for 'labels', 'value.filter', 'codebook' and
+	'codeplan' generics.
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-syntax.R,
+	pkg/R/spss-portable-methods.R, pkg/R/spss-syntax-methods.R,
+	pkg/R/spss-sysfile-methods.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/importers.Rd: Added support for SPSS syntax files in
+	differing encoding.
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/Write.Rd: Fix spelling error in Write.Rd
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd: Updated News.Rd
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Changed date in DESCRIPTION
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/tibbles.Rd, pkg/man/view_html.Rd: Titles of some help
+	pages are changed to title case.
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-sysfile.R, pkg/inst/ChangeLog: Handle
+	SPSS .sav files created with ReadStat or haven.
+
+2019-12-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/pspp-system-for-R.c: Handle SPSS system files created with
+	ReadStat/haven
+
+2019-12-01  Martin Elff <memisc@elff.eu>
+
+	* : commit 99acdf77c0ce6f47782bcac9e10455ae6ed51ac7 Author: Martin
+	Elff <memisc@elff.eu> Date:   Sun Dec 1 15:05:17 2019 +0100
+
+2019-12-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/view_html.Rd: Add example for 'view_html'.
+
+2019-11-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/view_html.R,
+	pkg/inst/ChangeLog, pkg/man/view.Rd, pkg/man/view_html.Rd: Added new
+	function 'view_html' for use with 'view'.
+
+2019-11-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Updated release nummer
+
+2019-11-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-html.R: Fixed colspan in
+	p-value legend of html formatted model tables.
+
+2019-11-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/NEWS.Rd: Minor fix in NEWS.Rd
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/recode.Rd: Additional example code for 'recode'.
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Updated
+	NEWS.Rd and ChangeLog
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/recode.R, pkg/man/recode.Rd: Several improvements to
+	'recode'
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/dataSets.Rd, pkg/man/importers.Rd: Add documentation for
+	new 'head' and 'tail' methods
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R, pkg/R/importer-methods.R: Small fixes in
+	'head' and 'tail'
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/dataset-methods.R, pkg/R/importer-methods.R: 
+	Added more sensible 'head' and 'tail' methods for data.set's and
+	importers
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/view.R, pkg/man/view.Rd: 
+	Added an extendable 'view' function.
+
+2019-11-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/dataset-methods.R: Added 'as.data.frame'
+	method for list of variable descriptions.
+
+2019-11-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/dataset-methods.R,
+	pkg/R/item-methods.R, pkg/R/tibbles.R, pkg/man/tibbles.Rd: Support
+	for objects from 'tibble' and 'haven'
+
+2019-11-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/Groups.Rd: Shorten example code for 'Groups'
+
+2019-11-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/man/importers.Rd: Export and document
+	'spss.file()'
+
+2019-11-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/spss-sysfile-methods.R,
+	pkg/R/stata-methods.R, pkg/man/importers.Rd: Document 'iconv' and
+	'encoded' args to importer functions
+
+2019-11-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/importers.Rd, pkg/vignettes/anes48.Rmd: Adapt help pages
+	to uppercase variable names
+
+2019-11-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R: Fixed a bug in the creation of codebooks
+	of imported data files
+
+2019-11-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/AllClasses.R, pkg/R/Iconv.R, pkg/R/Table.R,
+	pkg/R/import-internal-common.R, pkg/R/importer-methods.R,
+	pkg/R/spss-portable-methods.R, pkg/R/spss-sysfile-methods.R,
+	pkg/R/stata-methods.R: Add 'encoded' argument to importer functions
+
+2019-11-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Spelling correction of "unlab.val."
+
+2019-11-10  Martin Elff <memisc@elff.eu>
+
+	* : commit df5f110098e47cfc8566fd5ed898ec20bf9d3d14 Author: Martin
+	Elff <memisc@elff.eu> Date:   Sun Nov 10 00:38:33 2019 +0100
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/annotations.Rd, pkg/man/labels.Rd,
+	pkg/man/value-filters.Rd: Add references to new ANY,NULL-methods in
+	documentation.
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/annotation.R, pkg/R/value-filters.R, pkg/R/value-labels.R: 
+	Allow annotations, value lables, or value filters set to NULL for
+	objects that are not items
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/dataset-methods.R: Make 'dsView()' work
+	under RStudio (again)
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/Makevars: Remove unportable flags from Makevars
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/importers.Rd: Include new Stata importers into
+	documentation.
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update package date
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/dta-for-R.c, pkg/src/dta-for-R.h: Set NA from Stata files
+	only from older versions
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Table.R, pkg/R/codebook-methods.R,
+	pkg/R/importer-methods.R, pkg/R/value-filters.R: Various codebook
+	improvements
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-stata-new.R, pkg/R/import-internal-stata.R,
+	pkg/R/stata-methods.R: Support for tagged missing values in Stata
+	files prior to rev. 117
+
+2019-11-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/dta-for-R.c, pkg/src/dta117-for-R.c,
+	pkg/src/pspp-portableStream-for-R.c, pkg/src/pspp-system-for-R.c: 
+	More conservative handling of NULL pointers
+
+2019-11-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/AllClasses.R, pkg/R/import-internal-stata-new.R,
+	pkg/R/stata-methods.R, pkg/R/value-labels.R, pkg/src/dta117-for-R.c: 
+	Stata file support: Class and methods for file format release >= 117
+
+2019-11-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/dta117-for-R.c: Fixed typo
+
+2019-11-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-stata-new.R, pkg/src/dta-for-R.c,
+	pkg/src/dta117-for-R.c, pkg/src/memisc.h: Stata file support: rename
+	finalizer and avoid deleting empty pointers
+
+2019-11-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-stata-new.R, pkg/src/dta-for-R.c,
+	pkg/src/dta-for-R.h, pkg/src/dta117-for-R.c, pkg/src/init-memisc.c,
+	pkg/src/memisc.h: Low level infrastructure for reading Stata files
+	in new formats
+
+2019-11-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/Makevars: Disable compiler warnings about unused variables
+
+2019-11-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/stata-methods.R: Quick fix to deal with encoding problems in
+	value labels of Stata files
+
+2019-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update DESCRIPTION: Bump up release number and
+	date
+
+2019-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/Reshape.R, pkg/inst/ChangeLog,
+	pkg/man/Reshape.Rd: Created and documented a 'Reshape' function as
+	convenience wrapper for 'reshape'
+
+2019-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/AllGenerics.R, pkg/R/groupwise.R,
+	pkg/inst/ChangeLog, pkg/man/Groups.Rd: Classes and methods for data
+	manipulation within groups of rows
+
+2019-10-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/List.R, pkg/inst/ChangeLog, pkg/man/List.Rd: 
+	Implemented 'List' function that names element like 'data.frame()'
+
+2019-09-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/codeplan.Rd: Added documentation for codeplan,ANY-method.
+
+2019-09-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable.R: Solved issue #41
+	('summary.stats.default' not being used)
+
+2019-09-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codeplan.R: Fix bug in setCodeplan1 internal function
+
+2019-09-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/dta-for-R.c, pkg/src/pspp-portableStream-for-R.c: 
+	Eliminate warnings about unused return values
+
+2019-09-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/dataset-methods.R: new("data.set",z) instead of data.set(z)
+	in merge methods (gives better names)
+
+2019-09-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/codeplan.Rd, pkg/man/getSummary.Rd: Minor documentation
+	fixes
+
+2019-06-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update DESCRIPTION
+
+2019-06-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/00memisc.Rd, pkg/man/html.Rd: Minor improvement of
+	documentation of HTML and memisc-intro
+
+2019-06-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/HTML.R: Add linebreak to end of HTML output
+
+2019-04-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Bump up to 0.99.17.3 because bripley's patch on
+	CRAN made it 0.99.17.2
+
+2019-04-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-latex.R,
+	pkg/man/mtable-format-latex.Rd: Fix documenation for
+	'mtable_format_latex'
+
+2019-04-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/cases.R: 'cases()' now handles not realised conditions more
+	sensibly.
+
+2019-04-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R: More sensible default for
+	significance star legend in 'toLatex' method for 'mtable' results
+
+2019-04-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/annotation.R, pkg/man/annotations.Rd: Added ANY,annotation
+	method for 'annotation(x)<-' generic
+
+2019-04-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/to-things.R, pkg/man/toDataFrame.Rd: Let 'to.data.frame'
+	handle character arguments indicating dimensional extents
+
+2019-04-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/00memisc.Rd: Correct silly typo in 00memisc.Rd
+
+2019-04-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/Makevars: Remove unnecessary F77_VISIBILITY compiler flag
+
+2019-04-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/collect.Rd: Update
+	documentation for latest bugfix
+
+2019-04-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/collect.R: collect(): Fixed handling of S4 objects.
+
+2019-03-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/percentages.Rd: Fix documentation of 'percentages()'
+	function
+
+2019-03-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/percentages.R: Fix use of weights in 'percentages()'
+
+2019-03-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/importer-methods.R: Fix codebook method of
+	importers
+
+2019-03-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/cases.Rd: Minor documentation fix
+
+2019-03-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Added some missing updates
+	to ChangeLog and NEWS.Rd
+
+2019-03-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R, pkg/R/mtable-format-html.R,
+	pkg/R/toLatex-tools.R, pkg/man/Iconv.Rd, pkg/man/codebook.Rd,
+	pkg/man/dataSets.Rd, pkg/man/mtable-format-html.Rd: Some last moment
+	fixes before publication on CRAN
+
+2019-03-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/annotation.R,
+	pkg/R/syntactic-sugar.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/syntactic-sugar.Rd: Added syntactical sugar to manipulate
+	annotations and attributes.
+
+2019-03-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/spss-sysfile-methods.R,
+	pkg/inst/ChangeLog, pkg/src/pspp-portableStream-for-R.c: Added
+	support for datetime items from SPSS portable files
+
+2019-03-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R, pkg/R/item-more-methods-datetime.R,
+	pkg/inst/ChangeLog: Fixed codebook representation of datetime items
+	in SPSS system files
+
+2019-03-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-sysfile.R,
+	pkg/R/spss-sysfile-methods.R, pkg/src/memisc.h,
+	pkg/src/pspp-system-for-R.c: Fixed import of value labels for string
+	variables in 'spss.system.file'
+
+2019-03-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/import-internal-spss-sysfile.R,
+	pkg/R/spss-sysfile-methods.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/items.Rd: SPSS system files: import dates correctly
+
+2019-03-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/item-more-methods-datetime.R: Improved/corrected handling of
+	"datetime.item"s
+
+2019-03-13  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/src/memisc.h, pkg/src/ord_union.c,
+	pkg/src/pspp-system-for-R.c, pkg/src/update_data_frame.c: Eliminate
+	potential PROTECT errors reported by Tomas Kalibera's `rchk'
+
+2019-01-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-syntax.R: Deal with double " or '
+
+2018-12-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/value-labels.R: Show an error message if multiple labels are
+	defined for the same value
+
+2018-11-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/percentages.R: Fix 'as.data.frame()' for
+	extended percentage tables
+
+2018-11-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE: Export 'print' method for
+	duplicated labels reports
+
+2018-11-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/spss-syntax-methods.R,
+	pkg/R/spss-sysfile-methods.R, pkg/R/stata-methods.R,
+	pkg/R/value-label-duplicates.R, pkg/inst/ChangeLog,
+	pkg/man/duplicated-labels.Rd: Let importers give more useful
+	warnings about duplicated labels
+
+2018-11-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/dataset-methods.R,
+	pkg/R/value-label-duplicates.R, pkg/inst/ChangeLog,
+	pkg/man/duplicated-labels.Rd, pkg/man/mtable-format-latex.Rd: Added
+	'dublicated_labels()' function to show and and describe duplicated
+	labels
+
+2018-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R, pkg/R/mtable.R: Fix handling of summary
+	statistics in combined 'mtable' results
+
+2018-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/aaa.R, pkg/R/mtable.R, pkg/R/xx-getSummary.R,
+	pkg/R/yy-mtable-ext-AchimZeileis.R, pkg/R/zzz.R, pkg/inst/ChangeLog: 
+	Define sensible defaults for the selection of summary statistics in
+	'mtable'
+
+2018-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R, pkg/R/toLatex-tools.R,
+	pkg/inst/ChangeLog: Warn if 'toLatex' output of 'mtable' results
+	creates unescaped TeX specials
+
+2018-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-format-latex.R, pkg/R/mtable-format-print.R,
+	pkg/R/mtable.R, pkg/inst/ChangeLog: Fix formatting of results of
+	'mtable' without summary statistics
+
+2018-10-27  Martin Elff <memisc@elff.eu>
+
+	* TODO, builtin.travis.yml, r-builder.travis.yml: Directory cleanup
+
+2018-10-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R: Fix some problems with format_html of
+	'mtable' output
+
+2018-10-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-manip.R, pkg/R/mtable.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/mtable.Rd: Allow to
+	select summary statistics for models in 'mtable' via options or list
+	arguments.
+
+2018-10-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/src/init-memisc.c: Handle
+	visibility of binary code symbols correctly for R releases 3.3.0
+	through 3.3.3
+
+2018-10-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/importer-methods.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/importers.Rd: Defined
+	dollar and double-bracket operators for 'importer' objects
+
+2018-10-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/codebook-format-html.R, pkg/inst/ChangeLog: 
+	Fixed 'format_html' for codebooks of data frames with factors.
+
+2018-10-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/importer-methods.R, pkg/inst/ChangeLog: 
+	Make 'subset' method for 'importer' object work with variable name
+	strings
+
+2018-10-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/collect.R, pkg/R/spss-sysfile-methods.R,
+	pkg/src/memisc.h, pkg/src/pspp-system-for-R.c: Remove function
+	'restore_sysfile' and 'ord.union' that do nothing except causing a
+	complaint by 'rchk'.
+
+2018-10-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update date
+
+2018-10-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Minor asthetic improvement of 'codebook'
+	output
+
+2018-10-15  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codeplan.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/codeplan.Rd: Completed documentation of 'setCodeplan' and
+	'codeplan<-'
+
+2018-10-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/AllClasses.R,
+	pkg/R/AllGenerics.R, pkg/R/codeplan.R, pkg/man/codeplan.Rd: 
+	Implemented and documented 'setCodeplan(x,value)' and
+	'codeplan(x)<-value'
+
+2018-10-14  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/AllGenerics.R, pkg/R/{descr_data_structure.R
+	=> codeplan.R}, pkg/man/{describe_structure.Rd => codeplan.Rd}: 
+	Renamed 'describe_structure' into 'codeplan'
+
+2018-10-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/AllGenerics.R,
+	pkg/R/descr_data_structure.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/describe_structure.Rd: Implemented and documented
+	'describe_structure' function.
+
+2018-10-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R, pkg/R/mtable-format-latex.R,
+	pkg/inst/ChangeLog, pkg/man/mtable-format-html.Rd,
+	pkg/man/mtable-format-latex.Rd: 'mtable' objects exported to HTML
+	now include a legend for significance symbols
+
+2018-10-04  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/mtable-format-latex.Rd: Minor documentation fix
+
+2018-10-04  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/mtable-format-latex.Rd: Added documentation of new options
+	of 'mtable_format_latex' function
+
+2018-10-04  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-latex.R, pkg/inst/ChangeLog: 
+	'mtable' exported to LaTeX now include notes about p-values
+
+2018-10-01  Martin Elff <memisc@elff.eu>
+
+	* : commit f22e031f36f3d2fba32873b11f7907e718241861 Author: Martin
+	Elff <memisc@elff.eu> Date:   Mon Oct 1 01:40:11 2018 +0200
+
+2018-09-30  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Always use appveyor.
+
+2018-09-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/spss-syntax-methods.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/src/memisc.h, pkg/src/readfixed.c: Adapt
+	'spss.fixed.file' to data files with lines that are "too long".
+
+2018-09-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/memisc.h: Export C-function 'readfixedslice'.
+
+2018-09-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog: Update ChangeLog
+
+2018-09-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/recode.Rd: Remove crossrefs to 'car' package
+
+2018-09-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/AllClasses.R: Define double() only if R
+	version is < 3.6.0
+
+2018-09-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update DESCRIPTION: Version 0.99.14.11
+
+2018-09-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog: Update ChangeLog
+
+2018-09-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/recode.Rd: Remove crossrefs to 'car' package
+
+2018-09-07  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/AllClasses.R: Define double() only if R
+	version is < 3.6.0
+
+2018-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update
+	release number, ChangeLog and NEWS
+
+2018-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R: Handle POR files with empty
+	variable labels
+
+2018-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-portable.R: Handle POR-files with
+	weights
+
+2018-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R: Handle POR files with empty
+	variable labels
+
+2018-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-portable.R: Handle POR-files with
+	weights
+
+2018-05-20  Martin Elff <memisc@elff.eu>
+
+	* : commit db473273ba3b87751cde96230897ce63349ab5ac Author: Martin
+	Elff <memisc@elff.eu> Date:   Wed Dec 20 23:26:00 2017 +0100
+
+2017-12-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/parsehelpers.c: Fixed warning about tautological
+	comparisons
+
+2017-12-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Make installation possible with R versions from
+	3.3.0
+
+2017-12-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update date in DESCRIPTION
+
+2017-12-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/src/init-memisc.c, pkg/src/memisc.h: Fix
+	compilation problems with R version < 3.4
+
+2017-12-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update DESCRIPTION
+
+2017-12-12  Martin Elff <memisc@elff.eu>
+
+	* : commit 8c95b1a81bd44ff25586f45e1f735fa7ab5ed53e Author: Martin
+	Elff <melff@users.noreply.github.com> Date:   Tue Dec 12 15:30:37
+	2017 +0100
+
+2017-12-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Updated release number in DESCRIPTION.
+
+2017-12-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R, pkg/R/mtable-tools-format.R,
+	pkg/R/mtable.R, pkg/inst/ChangeLog: Made bracket subsetting of
+	mtable results safer and more coherent.
+
+2017-12-12  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/src/init-memisc.c,
+	pkg/src/memisc.h: Allow package to be installed and run with R
+	versions < 3.4
+
+2017-12-04  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog: ChangeLog update
+
+2017-12-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable.R, pkg/R/zzz.R, pkg/inst/ChangeLog,
+	pkg/man/mtable.Rd: Use more sensible default for
+	'mtable.show.eqnames'.
+
+2017-11-19  Martin Elff <memisc@elff.eu>
+
+	* : commit 035aedce6a6cec95cee987ae6dbfabe3a6db4095 Author: Martin
+	Elff <memisc@elff.eu> Date:   Sun Nov 19 00:29:46 2017 +0100
+
+2017-11-05  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Update appveyor.yml
+
+2017-11-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R, pkg/R/mtable.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/mtable.Rd: Added 'show.eqnames' option for
+	'mtable()'.
+
+2017-11-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/import-internal-spss-syntax.R,
+	pkg/R/spss-syntax-methods.R, pkg/inst/ChangeLog,
+	pkg/src/readfixed.c: Fixed (internal) `readChunk` method for
+	fixed-format files with SPSS meta data.
+
+2017-11-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-print.R, pkg/R/mtable.R,
+	pkg/R/zzz.R, pkg/inst/ChangeLog: 'print' method for 'mtable' objects
+	now shows a legend for significance symbols.
+
+2017-10-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/import-internal-spss-syntax.R,
+	pkg/R/spss-syntax-methods.R, pkg/inst/ChangeLog,
+	pkg/src/readfixed.c: Fixed (internal) `readChunk` method for
+	fixed-format files with SPSS meta data.
+
+2017-10-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R: Fix: `combine_mtables' now also returns
+	'show.eqnames' attribute.
+
+2017-10-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable.R, pkg/R/zzz.R: First step in implementing
+	'significance legends' for 'mtable'.
+
+2017-10-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R, pkg/R/mtable.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/mtable.Rd: Added 'show.eqnames' argument
+	to 'mtable()' etc.
+
+2017-10-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update date and release number in DESCRIPTION
+
+2017-10-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-latex.R,
+	pkg/R/toLatex-dataframe.R, pkg/R/toLatex-ftable-matrix.R,
+	pkg/R/tolatex-ftable.R, pkg/R/tolatex-matrix.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/mtable-format-latex.Rd,
+	pkg/man/toLatexExtra.Rd: Made 'toLatex.escape.tex' an explicit
+	option for 'toLatex' methods
+
+2017-10-11  Martin Elff <melff@users.noreply.github.com>
+
+	* : Merge pull request #29 from schoonees/patch-1 Fixed simple typo for 'format' argument
+
+2017-10-04  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Changed package DESCRIPTION following suggestions
+	by Uwe Ligges
+
+2017-09-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/vignettes/mtable-html.Rmd: Removed some
+	potentially stale links from vignette 'mtable-html'
+
+2017-09-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/src/memisc.h: Included
+	'read_sysfile_slice' in 'CallMethods'
+
+2017-09-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-html.R, pkg/inst/ChangeLog,
+	pkg/vignettes/anes48.Rmd: Avoid empty cells in HTML tables (which
+	break pandoc formatting)
+
+2017-09-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable.R, pkg/R/yz-getSummary-merMod.R,
+	pkg/inst/ChangeLog: Improvements in mtable (no empty lines, supports
+	for group counts in mixed models)
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/mtable.Rd: Fix documentation of 'mtable' argument sdigits
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yz-getSummary-merMod.R, pkg/inst/ChangeLog,
+	pkg/man/getSummary.Rd: Removed 'varPar.as.coef' argument from
+	'getSummary.merMod'
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/man/getSummary.Rd: Remove export of
+	non-existent mer method of getSummary
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update
+	DESCRIPTION, ChangeLog, and NEWS.Rd
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yz-getSummary-merMod.R: Adapt getSummary method for class
+	merMod to new mtable infrastructure
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/yz-getSummary-mer.R: Removed getSummary
+	support for long obsolete class 'mer'
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/{expand.R => inflate.R}: Renamed (unexported) function
+	'expand' into 'inflate'
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/src/memisc.h: Complete list of exported C
+	functions in 'CallMethods'
+
+2017-09-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yy-mtable-ext-JasonWMorgan.R: Adapt getSummary methods
+	contributed by Jason W Morgan
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yy-mtable-ext-DaveAtkins.R: Fix getSummary variant
+	contributed by Dave Atkins
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/xx-getSummary.R: Reformat some 'getSummary' code
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R, pkg/R/toLatex-dataframe.R,
+	pkg/R/toLatex-ftable-matrix.R, pkg/R/tolatex-ftable.R,
+	pkg/R/tolatex-matrix.R: Make escaping of (potential) TeX code
+	optional
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-print.R: Aesthetic improvements in print
+	method for 'mtable()' results
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable.R: Make sure that parameters are in right order and
+	formatting of contrasts is delayed.
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R: Improve handling of bracket operator
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable.R, pkg/R/xx-getSummary.R: Moved basic 'getSummary'
+	methods to special file
+
+2017-09-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yy-mtable-ext-ChristopherNLawrence.R,
+	pkg/R/yy-mtable-ext-DaveAtkins.R: Addapt getSummary methods provided
+	by Christopher Lawrence
+
+2017-08-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/yy-mtable-ext-AchimZeileis.R: Adapt getSummary methods
+	contributed by Achim Zeileis
+
+2017-08-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-print.R,
+	pkg/R/mtable-manip.R, pkg/R/mtable.R, pkg/inst/ChangeLog: 
+	Fixed/improved array semantics of object returned by 'mtable()'
+
+2017-08-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update
+	DESCRIPTION, ChangeLog, and NEWS.Rd
+
+2017-08-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R, pkg/R/toLatex-dataframe.R,
+	pkg/R/toLatex-ftable-matrix.R, pkg/R/toLatex-tools.R,
+	pkg/R/tolatex-ftable.R, pkg/R/tolatex-matrix.R: Escape TeX active
+	chars '$', '_', '^' in toLatex methods etc.
+
+2017-08-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable.R: Make sure that 'PrettyNames' is always applied
+	when an 'mtable' object is formatted.
+
+2017-07-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog: Make package depend on versio
+	3.4
+
+2017-07-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-manip.R, pkg/inst/ChangeLog: Fix
+	class attribute of objects returned by `c.memisc_mtable` and
+	`[.memisc_mtable`
+
+2017-07-13  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/format-html-dataframe.R,
+	pkg/R/mtable-format-latex.R, pkg/R/toLatex-dataframe.R,
+	pkg/R/toLatex-ftable-matrix.R, pkg/R/tolatex-ftable.R,
+	pkg/R/tolatex-matrix.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/mtable-format-latex.Rd, pkg/man/toLatexExtra.Rd: 
+	`useDcolumn` and `useBooktabs` now have global options as defaults
+
+2017-07-13  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/toLatex-dataframe.R: Fix handling of matrices contained in
+	data frames by `toLatex()`
+
+2017-07-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update ChangeLog and NEWS.Rd
+
+2017-07-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/Makevars, pkg/src/init-memisc.c, pkg/src/memisc-win.def: 
+	Restrict visibility of object code symbols
+
+2017-07-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/AllInternalGenerics.R,
+	pkg/R/import-internal-spss-portable.R,
+	pkg/R/import-internal-spss-syntax.R, pkg/R/import-internal-stata.R,
+	pkg/R/importer-methods.R, pkg/R/spss-portable-methods.R,
+	pkg/R/spss-syntax-methods.R, pkg/R/spss-sysfile-methods.R,
+	pkg/R/stata-methods.R, pkg/man/importers.Rd, pkg/src/dta-for-R.c,
+	pkg/src/init-memisc.c, pkg/src/memisc.h,
+	pkg/src/pspp-portableStream-for-R.c, pkg/src/pspp-system-for-R.c,
+	pkg/src/readfixed.c, pkg/src/rofile.c: Provide for Call method
+	registration, rename readSubset into readChunk etc.
+
+2017-07-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/repr-methods.R: Fix really stupid bugs in `repr_html()`
+	methods
+
+2017-07-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/dta-for-R.c, pkg/src/pspp-portableStream-for-R.c,
+	pkg/src/pspp-system-for-R.c, pkg/src/rofile.c: Deal with PROTECT
+	issues reported by Tomas Kalibera
+
+2017-07-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/html-tools.R, pkg/inst/ChangeLog: Remove
+	dependency on IRdisplay
+
+2017-07-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/HTML.R, pkg/R/format-html-matrix.R, pkg/R/repr-methods.R,
+	pkg/inst/ChangeLog: Bugfixes for `repr_html()` methods
+
+2017-07-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update ChangeLog and NEWS.Rd
+	files
+
+2017-07-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-manip.R, pkg/R/mtable.R, pkg/R/repr-methods.R,
+	pkg/man/mtable-format-html.Rd, pkg/man/mtable.Rd: Fix "mtable" name
+	clash with stats package
+
+2017-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/cases.R: Bugfix: `cases()` now fully heeds option
+	`check.xor="ignore"`.
+
+2017-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update ChangeLog and NEWS.Rd
+
+2017-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE: Update NAMESPACE and DESCRIPTION
+
+2017-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R, pkg/man/mtable-format-latex.Rd: 
+	Bugfix of LaTeX output for Mtables pf_mtable_format_latex() had a bug that made it fail if option
+	useDcolumn=FALSE. Transforming Jupyter notebooks into LaTeX should
+	work now.
+
+2017-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R, pkg/R/repr-methods.R, pkg/R/zzz.R: 
+	Make HTML and LaTeX output in Jupyter optional.
+
+2017-06-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Updated ChangeLog and
+	NEWS.Rd
+
+2017-06-02  Martin Elff <melff@users.noreply.github.com>
+
+	* .travis.yml: Update .travis.yml
+
+2017-06-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-delim.R,
+	pkg/R/mtable-format-html.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-format-print.R, pkg/R/mtable.R,
+	pkg/man/mtable-format-delim.Rd, pkg/man/mtable-format-html.Rd,
+	pkg/man/mtable-format-latex.Rd, pkg/man/mtable-format-print.Rd: 
+	Removed 'force.names' argument from mtable formatting functions
+
+2017-06-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-delim.R, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-format-latex.R, pkg/R/mtable-format-print.R: Further
+	bugfixes, in particular regarding the delim methods for mtables
+
+2017-06-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/mtable-format-html.R, pkg/R/repr-methods.R: 
+	More support for repr_html
+
+2017-06-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R, pkg/R/mtable-format-print.R: 
+	Bugfix/improvement of mtable multiline header HTML output
+
+2017-05-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R: Bugfix/improvement of mtable
+	multiline header LaTeX output
+
+2017-05-31  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-print.R, pkg/R/mtable-manip.R,
+	pkg/R/mtable-tools-format.R, pkg/R/mtable.R: Bugfix in mtable print
+	output with multiline headers
+
+2017-05-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R: First step of re-implementation of
+	multiline headers for LaTeX
+
+2017-05-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-print.R, pkg/R/mtable.R: Improved section
+	headers
+
+2017-05-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-print.R, pkg/R/mtable-manip.R, pkg/R/mtable.R: 
+	Support for multiline headers and model groups (need to fix LaTeX
+	and HTML)
+
+2017-05-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R, pkg/R/mtable-tools-format.R, pkg/R/mtable.R: 
+	Made subsetting or indexing of "mtable" objects work
+
+2017-05-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R, pkg/R/mtable.R: Re-implemented relabeling of
+	"mtable" objects.
+
+2017-05-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update of `DESCRIPTION` file
+
+2017-05-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/html-tools.R: `show_html()` now supports output in Jupyter
+	notebooks.
+
+2017-05-26  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-delim.R, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-format-latex.R, pkg/R/mtable-format-print.R,
+	pkg/R/mtable-tools-format.R, pkg/R/mtable.R: Change in architecture
+	of 'memisc' and friends.  Formatting is done in two steps now to unify the formatting
+	techiques used.  The resulting code may be (or maybe not) slower
+	than before, but easier to maintein.
+
+2017-05-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/format_html.Rd: Updated documentation for `format_html()`
+
+2017-05-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/repr-methods.R: Add methods
+	for `repr` generic - mtable, ftable, ftable_matrix now have HTML
+	output in Jupyter
+
+2017-05-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/format-html-dataframe.R,
+	pkg/R/format-html-ftable-matrix.R, pkg/R/format-html-ftable.R,
+	pkg/R/format-html-matrix.R, pkg/R/format-html-other.R,
+	pkg/R/mtable-format-html.R: Improve HTML output so it looks well in
+	Jupyter
+
+2017-03-18  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Updated appveyor.yml again ...
+
+2017-03-18  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Updated appveyor.yml
+
+2017-03-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-delim.R,
+	pkg/R/mtable-format-html.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-format-print.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 
+	Improved formatting of mtable objects.
+
+2017-02-03  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Build on AppVeyor on tag only.
+
+2017-02-03  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml, pkg/DESCRIPTION: Update release number
+
+2017-02-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-portable.R, pkg/inst/ChangeLog: Fixed a
+	bug in `readLabPorStream`.  The bug came from wrong assumptions about the encoding of value
+	labels of character string variables in "portable" files. Some more
+	SPSS "portable" files should now read into R.
+
+2017-02-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/item-methods.R, pkg/inst/ChangeLog: Fixed a bug in `relabel`
+	method for `item' objects.  `relabel(x,...,gsub=TRUE)` should now work as expected.
+
+2017-01-27  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update of
+	ChangeLog and NEWS.Rd
+
+2017-01-27  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Update .travis.xml
+
+2017-01-27  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, appveyor.yml: Update travis-ci and appveyor control
+	files
+
+2017-01-27  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2017-01-27  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2017-01-27  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2017-01-08  Martin Elff <melff@users.noreply.github.com>
+
+	* README.md: Update README.md
+
+2016-12-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/withVCov.R, pkg/man/withVCov.Rd: More convenient ways to
+	call `withSE()`
+
+2016-12-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/withVCov.R, pkg/man/withVCov.Rd: Added
+	documentation for withVCov, added withSE alias
+
+2016-12-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/withVCov.R: Provides
+	'withVCov' generic function to conveniently attach 'robust'
+	covariances to models
+
+2016-12-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update date in 'DESCRIPTION'
+
+2016-12-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd: Update 'NEWS.Rd'
+
+2016-12-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/anes48.Rmd, pkg/vignettes/items.Rmd: Make package
+	links use https:// as required by R CMD check.
+
+2016-10-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Change date and version info in DESCRIPTION
+
+2016-10-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/AllInternalGenerics.R,
+	pkg/R/import-internal-spss-portable.R, pkg/R/importer-methods.R,
+	pkg/R/spss-portable-methods.R, pkg/R/spss-syntax-methods.R,
+	pkg/R/spss-sysfile-methods.R, pkg/R/stata-methods.R,
+	pkg/man/importers.Rd, pkg/src/dta-for-R.c,
+	pkg/src/pspp-portableStream-for-R.c, pkg/src/pspp-system-for-R.c: 
+	Change names of internal functions
+
+2016-10-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R, pkg/man/importers.Rd: Addeddocumentation
+	for 'subset.chunk.size' option
+
+2016-10-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/importer-methods.R: Fix bug in variable ordering of subset
+	chunks
+
+2016-10-01  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/stata-methods.R,
+	pkg/src/dta-for-R.c, pkg/src/pspp-portableStream-for-R.c: New
+	importer subset support added for SPSS-Portable and Stata
+
+2016-09-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-syntax.R: Suppress excessive warnings
+
+2016-09-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/AllInternalGenerics.R, pkg/R/importer-methods.R,
+	pkg/R/spss-sysfile-methods.R, pkg/inst/ChangeLog,
+	pkg/src/pspp-system-for-R.c: First stage in refactoring 'subset'
+	Method for importer objects.
+
+2016-07-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog: No 'useRs' in DESCRIPTION and
+	software names in single quotes
+
+2016-07-08  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog: Package now suggests
+	'rmarkdown'
+
+2016-07-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Updated
+	NEWS.Rd
+
+2016-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog: Update 'DESCRIPTION' and
+	'ChangeLog'
+
+2016-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-methods.R: Make formatting of codebooks a bit more
+	robust
+
+2016-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/item-methods.R, pkg/R/relabel.R, pkg/R/value-labels.R: Fix
+	'felicity' issue pointed out by Martin Maechler
+
+2016-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-sysfile.R: Fix type that crept in while
+	fixing bug in parseSysHeader
+
+2016-04-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-sysfile.R: Fix issue #1 (error in
+	'parseSysHeader')
+
+2016-04-30  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/tolatex-ftable.R: Fix issue #8 - 'toLatex.ftable' does no
+	longer attempt to show titles if they are not available.
+
+2016-04-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Bump up release number to 0.99.7 and change date.
+
+2016-04-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/cases.R: Make 'cases' robust with respect to NA conditions.
+
+2016-04-29  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Go back to builtin R infrastructure on Travis-CI
+
+2016-04-29  Martin Elff <memisc@elff.eu>
+
+	* : commit 7108a59603136da55c81057c3f9080754eec8229 Author: Kirill
+	Müller <kirill.mueller@ivt.baug.ethz.ch> Date:   Sun Apr 17
+	23:12:09 2016 +0200
+
+2016-02-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog: Updated DESCRIPION (bump up
+	release number) and ChangeLog
+
+2016-02-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R, pkg/R/mtable-tools-format.R: Minor
+	improvenent of `c.mtable()`.
+
+2016-02-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/format-html-ftable-matrix.R, pkg/R/format-html-ftable.R,
+	pkg/R/mtable-format-html.R, pkg/R/zzz.R, pkg/man/format_html.Rd,
+	pkg/man/mtable-format-html.Rd: Make the use of ampersand-escapes in
+	HTML output optional and use unicode characters     by default. (So
+	that pandoc will not escape them.)
+
+2016-02-07  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, pkg/DESCRIPTION, pkg/inst/ChangeLog,
+	pkg/vignettes/anes48.Rmd, pkg/vignettes/ftable-matrix.Rmd,
+	pkg/vignettes/items.Rmd, pkg/vignettes/mtable-html.Rmd: Unified
+	headlines in vignettes.
+
+2016-02-07  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, r-builder.travis.yml: Change back to r-builder (now
+	it seems to be fixed).
+
+2016-02-07  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, r-builder.travis.yml: Go back to builtin travis
+	setup.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Setting warnings to errors works now. Unsetting this
+	for oldrel.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Another test
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Check whether RVERSION=oldrel creates an error (which
+	it should).
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Another test with travis ...
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Will that lead warnings to be errors??
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Really make warnings errors in recent versions.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Set warnings as errors.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Use source install of packages.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, r-builder.travis.yml: Include vignettes in pkg-build
+	test.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, builtin.travis.yml: Move from standard .travis.yml to
+	metacran/r-builder version.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* r-builder.travis.yml: Include metacran travis setup.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Build only for Linux on Travis.
+
+2016-02-06  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-delim.R: Tiny code fix.
+
+2016-02-04  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, appveyor.yml: Update .travis.yml and appveyor.yml
+
+2016-02-04  Martin Elff <memisc@elff.eu>
+
+	* : commit 6866153d311efa5152692492dc94c9287baf4719 Author: Martin
+	Elff <memisc@elff.eu> Date:   Thu Feb 4 17:18:54 2016 +0100
+
+2016-02-04  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2016-02-04  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2016-02-04  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Setup AppVeyor.yml for automatic deployment
+
+2016-02-04  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2016-02-04  Martin Elff <melff@users.noreply.github.com>
+
+	* appveyor.yml: Update appveyor.yml
+
+2016-02-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/NEWS.Rd: Update NEWS.Rd.
+
+2016-02-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/man/items.Rd: Added documentation links for
+	"Date.item" objects.
+
+2016-02-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/AllClasses.R,
+	pkg/R/AllInternalGenerics.R, pkg/R/item-more-methods-Date.R,
+	pkg/R/item-more-methods-datetime.R, pkg/inst/ChangeLog: Implement
+	"Date.item" class, so that "Date" objects can be converted into
+	items.
+
+2016-01-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog: Updated ChangeLog.
+
+2016-01-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Changed version number.
+
+2016-01-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update package release date.
+
+2016-01-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-manip.R: Use any(is.na(...)) instead of anyNA(...).
+
+2016-01-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/item-more-methods-datetime.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Fixed `show` and
+	`codebookEntry` methods for "datetime.item" class.
+
+2016-01-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Step up version number
+
+2016-01-25  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/ftable-matrix.Rmd: Argl! Vignette title was not
+	changed, now it is.
+
+2016-01-24  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Change AppVeyor Settings
+
+2016-01-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog: Update ChangeLog
+
+2016-01-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update ChangeLog
+
+2016-01-24  Martin Elff <melff@users.noreply.github.com>
+
+	* README.md: Update README.md
+
+2016-01-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-format-html.R: Optical fixes to HTML output for
+	codebooks.
+
+2016-01-24  Martin Elff <memisc@elff.eu>
+
+	* README.md: AppVeyor is commented out - Travis should be mostly
+	enough unless we do bigger changes.
+
+2016-01-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Step up release numer
+
+2016-01-24  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-format-html.R: format_html.codebookEntry: Don't
+	wrap tables and desciption lists in paragraphs.
+
+2016-01-21  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/items.Rmd: Uniform sentence case in vignette titles.
+
+2016-01-20  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml, appveyor.yml: Travis+AppVeyor: Always report build
+	results.
+
+2016-01-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/vignettes/ftable-matrix.Rmd: Corrected typo
+	in vignette title.
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Table.R, pkg/R/sample_methods.R: Dummy commit (index seems
+	to be wrong).
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Update AppVeyor artifact paths.
+
+2016-01-17  Martin Elff <melff@users.noreply.github.com>
+
+	* README.md: Rearragen badges in README.md
+
+2016-01-17  Martin Elff <melff@users.noreply.github.com>
+
+	* README.md: Update README.md with Appveyor badge.
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE: Add additional items imported from "utils" to avoid
+	"Undefined globals" notes.
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Appveyor: Change directory to "pkg", copy
+	travis-tool beforehand.
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* appveyor.yml: Appveyor: change to directory "pkg"
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* .gitattributes, appveyor.yml: Added Appveyor support.
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: No reverse dependencies check on Travis-CI.
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Check reverse dependencies on Travis-CI.
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Make travis checks strict with `warnings_are_errors:
+	true`
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* .travis.yml: Add enhanced packages to .travis.yml
+
+2016-01-17  Martin Elff <memisc@elff.eu>
+
+	* README.md: Add badges to README.md
+
+2016-01-16  Martin Elff <elff@gmx.com>
+
+	* .travis.yml: Use `before_install` in .travis.yml
+
+2016-01-16  Martin Elff <elff@gmx.com>
+
+	* .travis.yml: Added .travis.yml
+
+2016-01-16  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/html-tools.R, pkg/inst/ChangeLog,
+	pkg/man/format_html.Rd: Use "html_viewer" option instead of
+	"show_html.output".
+
+2016-01-04  Martin Elff <elff@gmx.com>
+
+	* README.md, pkg/DESCRIPTION: Deleted last sentence in package
+	description.
+
+2016-01-04  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog, pkg/vignettes/ftable-matrix.Rmd: Put back
+	vignette for `ftable-matrix`.
+
+2016-01-04  Martin Elff <elff@gmx.com>
+
+	* pkg/R/html-tools.R, pkg/inst/ChangeLog, pkg/man/format_html.Rd: 
+	`show_html` can be used with arbitrary output functions, e.g.
+	`rstudio::viewer`.
+
+2016-01-03  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog, pkg/inst/doc/getSummary-glm-sandwich.R,
+	pkg/inst/doc/getSummary-glm.R, pkg/inst/doc/mt123.csv,
+	pkg/inst/doc/mt123.txt, pkg/vignettes/anes48.Rmd,
+	pkg/vignettes/ftable-matrix.Rmd,
+	pkg/vignettes/getSummary-glm-sandwich.R, pkg/vignettes/items.Rmd,
+	pkg/vignettes/items.html, pkg/vignettes/mtable-html.Rmd,
+	pkg/vignettes/mtable.Rmd, pkg/vignettes/mtable.html: Remove
+	vignettes that lead to large install size (and a sure complaint by
+	certain CRAN people).
+
+2016-01-03  Martin Elff <elff@gmx.com>
+
+	* pkg/man/toLatexExtra.Rd: Small fix in `toLatex.ftable_matrix`.
+
+2016-01-03  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/ftable-matrix.Rmd: Added vignette for ftable_matrix
+	objects.
+
+2016-01-03  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/toLatex-ftable-matrix.R,
+	pkg/vignettes/mtable.Rmd: In DESCRIPTION: The year is 2016, of
+	course! (And other minor fixes...)
+
+2016-01-03  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd, pkg/vignettes/items.Rmd,
+	pkg/vignettes/mtable.Rmd: Smaller vignette changes.
+
+2016-01-03  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog, pkg/inst/doc/getSummary-glm-sandwich.R,
+	pkg/inst/doc/getSummary-glm.R, pkg/inst/doc/mt123.csv,
+	pkg/inst/doc/mt123.txt, pkg/vignettes/anes48.Rmd,
+	pkg/vignettes/getSummary-glm-sandwich.R, pkg/vignettes/items.Rmd,
+	pkg/vignettes/items.html, pkg/vignettes/mtable-html.Rmd,
+	pkg/vignettes/mtable.Rmd, pkg/vignettes/mtable.html: Major vignette
+	update. Use `knitr::rmarkdown` instead of `knitr::knit`. More
+	extensive documentation of `mtable`.
+
+2016-01-03  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/unzip.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/importers.Rd,
+	pkg/man/query.Rd, pkg/man/unzip.Rd, pkg/vignettes/anes48.Rmd: 
+	Removed `UnZip` form package, which has been redundant for some
+	time.
+
+2016-01-02  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd, pkg/vignettes/items.Rmd: Changed CRAN
+	urls into canongical form.
+
+2016-01-02  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/NEWS.Rd: Minor correction in `NEWS.Rd`.
+
+2016-01-02  Martin Elff <elff@gmx.com>
+
+	* README.md: Add `install_github` installation instructions to
+	`README.md`
+
+2016-01-02  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Updated
+	DESCRIPTION, NEWS.Rd, and ChangeLog
+
+2016-01-02  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/items.Rmd: Small vignette update
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: 2015-12-31: R-dependency should be >= 3.0,
+	because this is needed for knitr vignettes.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd: 2015-12-31: Some improvements of ANES
+	vignette.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/dataset-methods.R,
+	pkg/R/format-html-other.R, pkg/R/importer-methods.R,
+	pkg/vignettes/anes48.Rmd: 2015-12-31: Improvements for variable
+	descriptions in data sets and importers, including HTML formatting.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd: 2015-12-31: Added explanation of
+	`tolower` to ANES Vignette.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/R/format-html-dataframe.R, pkg/R/format-html-ftable-matrix.R,
+	pkg/R/format-html-ftable.R, pkg/R/format-html-matrix.R,
+	pkg/R/mtable-format-html.R, pkg/man/format_html.Rd,
+	pkg/man/format_html.ftable.Rd, pkg/man/mtable-format-html.Rd: 
+	2015-12-31: New argument `margin` of `format_mtable` method
+	functions, which determines the positioning of the HTML tables. By
+	default it centers the table horizontally.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/man/format_html.Rd,
+	pkg/man/format_html.ftable.Rd, pkg/man/mtable-format-html.Rd: 
+	2015-12-31: Export `format_html` cell standard style.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/HTML.R, pkg/R/codebook-format-html.R,
+	pkg/R/format-html-dataframe.R, pkg/R/format-html-ftable-matrix.R,
+	pkg/R/format-html-ftable.R, pkg/R/format-html-matrix.R,
+	pkg/R/mtable-format-html.R, pkg/man/html.Rd,
+	pkg/vignettes/anes48.Rmd: 2015-12-31: Renamed `html_style` into
+	`css`, etc.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd: 2015-12-31: Automatic HTML output in
+	ANES vignette.
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48pdf.Rnw: 2015-12-31: Remove LaTeX/PDF Vignette
+
+2015-12-31  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/HTML.R, pkg/man/format_html.Rd,
+	pkg/man/html.Rd: 2015-12-31: Added documentation for `html()` and
+	friends. Implemented `show_html()` method function for HTML code.
+
+2015-12-30  Martin Elff <elff@gmx.com>
+
+	* pkg/R/HTML.R, pkg/R/format-html-ftable-matrix.R,
+	pkg/R/format-html-ftable.R, pkg/R/mtable-format-html.R: 2015-12-30:
+	Make concatenation of html-elements safer
+
+2015-12-29  Martin Elff <elff@gmx.com>
+
+	* pkg/R/toLatex-ftable-matrix.R, pkg/man/toLatexExtra.Rd: 
+	2015-12-29: Added documentation for `toLatex` method for
+	"ftable_matrix" objects
+
+2015-12-29  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-manip.R: 2015-12-28: No longer make a fuss about
+	duplicate model names in `combine_mtables`
+
+2015-12-28  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-print.R: 2015-12-28: Small fix of
+	mtable_format_print
+
+2015-12-28  Martin Elff <elff@gmx.com>
+
+	* pkg/man/mtable.Rd: 2015-12-28: Added example for named model
+	groups in mtables.
+
+2015-12-28  Martin Elff <elff@gmx.com>
+
+	* pkg/R/format-html-ftable-matrix.R, pkg/man/format_html.ftable.Rd: 
+	2015-12-28: Minor adjustment and documentation of
+	`format_html.ftable_matrix`.
+
+2015-12-28  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-html.R, pkg/man/mtable-format-latex.Rd: 
+	2015-12-28: Updated documentation of `mtable_format_latex`
+
+2015-12-28  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/ftable-matrix.R: 2015-12-28: Create and use
+	`Write` method function for `ftable_matrix` objects
+
+2015-12-28  Martin Elff <elff@gmx.com>
+
+	* pkg/man/ftable-matrices.Rd: 2015-12-28: Added documentation of
+	`ftable_matrix` objects
+
+2015-12-18  Martin Elff <elff@gmx.com>
+
+	* : commit 6e424e5a79f6f9a397d96b11f9e6a6df003c1b78 Author: Martin
+	Elff <elff@gmx.com> Date:   Fri Dec 18 22:20:16 2015 +0100
+
+2015-12-18  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-delim.R: Added support for delimited-file
+	formatting of mtables with model groups.
+
+2015-12-17  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-html.R: Added support for HTML formatting of
+	mtable with model groups.
+
+2015-12-17  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-latex.R: Added support for LaTeX formatting of
+	mtable with model groups.
+
+2015-12-17  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-print.R: Support for `print`ing mtables with
+	model-groups
+
+2015-12-17  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-manip.R: c.mtable now creates groups of models, if
+	arguments are tagged.
+
+2015-12-17  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-print.R: Use numbered indices instead of names
+	in mtable_format_print
+
+2015-12-16  Martin Elff <elff@gmx.com>
+
+	* pkg/R/HTML.R, pkg/R/format-html-ftable-matrix.R,
+	pkg/man/format_html.ftable.Rd, pkg/man/mtable-format-delim.Rd,
+	pkg/man/mtable-format-html.Rd, pkg/man/mtable-format-latex.Rd,
+	pkg/man/mtable-format-print.Rd: Fixed issues shown by R CMD check
+
+2015-12-16  Martin Elff <elff@gmx.com>
+
+	* pkg/R/format-html-ftable-matrix.R: Adapt
+	`format_html.ftable_matrix` to html-objects infrastructure and make
+	it work.
+
+2015-12-16  Martin Elff <elff@gmx.com>
+
+	* pkg/R/HTML.R: Make check_html_classes more tolerant.
+
+2015-12-13  Martin Elff <elff@gmx.com>
+
+	* pkg/R/format-html-ftable.R: Colons after variable names in
+	format_html.ftable.
+
+2015-12-13  Martin Elff <elff@gmx.com>
+
+	* pkg/R/HTML.R: Minor bugfixes. Enable automatic insertion of
+	linebreaks into HTML code.
+
+2015-12-13  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE: Export methods for html objects etc.
+
+2015-12-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/HTML.R, pkg/R/codebook-format-html.R: Adapted HTML
+	formatting of 'codebook's to new HTML infrastructure.
+
+2015-12-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/HTML.R, pkg/R/html-tools.R: Rounding up HTML infrastructure.
+	Added syntactic sugar to 'html()'. Corrected formatting of
+	fixed-point numbers.
+
+2015-12-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/value-filters.R: Make formatting of value filters safer.
+
+2015-12-09  Martin Elff <elff@gmx.com>
+
+	* pkg/R/format-html-ftable.R, pkg/R/format-html-matrix.R,
+	pkg/R/mtable-format-delim.R, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-format-latex.R, pkg/R/mtable-format-print.R: Correct
+	and simplified the formatting of 'mtable' objects.
+
+2015-12-07  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/HTML.R, pkg/R/format-html-dataframe.R,
+	pkg/R/format-html-ftable.R, pkg/R/format-html-matrix.R: New approach
+	to fixed point numbers: encapsulation into "html_group" objects
+
+2015-12-07  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: Update version number
+
+2015-12-06  Martin Elff <elff@gmx.com>
+
+	* pkg/R/{ftable-matrix-format-html.R =>
+	format-html-ftable-matrix.R}, pkg/R/{ftable-format-html.R =>
+	format-html-ftable.R}: Updated html formatting of 'ftables' to use
+	html-objects
+
+2015-12-06  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/HTML.R, pkg/R/format-html-dataframe.R,
+	pkg/R/format-html-matrix.R: First steps in refactoring html output
+	using html objects.
+
+2015-11-13  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE: 2015-11-13: Import 'str' and 'ls.str' from 'utils'
+	package to prevent a NOTE in R CMD check
+
+2015-11-09  Martin Elff <elff@gmx.com>
+
+	* pkg/R/percentages.R: 2015-11-09: Make `percentages()` a little
+	more robust against empty cells in marginal tables.
+
+2015-10-26  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48pdf.Rnw: 2015-10-26: Erase Essex affiliation
+	from pdf-vignette
+
+2015-09-24  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: 2015-09-24: Update DESCRIPTION
+
+2015-09-24  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 2015-09-24: Update ChangeLog
+	und NEWS.Rd
+
+2015-09-24  Martin Elff <elff@gmx.com>
+
+	* pkg/R/toLatex-dataframe.R: 2015-09-24: Fix handling of row.names
+	in `toLatex.data.frame`
+
+2015-09-13  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: 2015-09-13: Update DESCRIPTION file.
+
+2015-09-13  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-delim.R, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-format-latex.R, pkg/R/mtable-format-print.R: 
+	2015-09-13: Fix regressions caused by `rbind()` and `cbind()`
+	methods for "ftable" objects.
+
+2015-09-12  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/relabel.R, pkg/R/rename.R: 2015-09-12: Added
+	some new `relabel()` methods.
+
+2015-09-06  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog: 2015-09-06: Trivial ChangeLog fix
+
+2015-09-06  Martin Elff <elff@gmx.com>
+
+	* : Merge tag '0.98.10.1' # Conflicts: #       pkg/DESCRIPTION
+
+2015-09-03  Martin Elff <elff@gmx.com>
+
+	* pkg/R/ftable-matrix-format-html.R: 2015-09-03: Added basic HTML
+	formatting of `ftable_matrix` objects. (LaTeX formatting was already
+	implemented.)
+
+2015-09-03  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/ftable-matrix.R,
+	pkg/R/toLatex-ftable-matrix.R: 2015-08-29: Implement `ftable_matrix`
+	objects - objects composed from several `ftable`s.
+
+2015-09-03  Martin Elff <elff@gmx.com>
+
+	* pkg/R/ftable-format-html.R: 2015-08-29: Fix CSS class of ftable
+	formatted in HTML
+
+2015-08-26  Martin Elff <elff@gmx.com>
+
+	* TODO, pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/percentages.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/percentages.Rd: 
+	2015-08-26: Added `percentages` function to easily create tables of
+	percentages
+
+2015-08-19  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 2015-08-19:
+	Update of DESCRIPTION, NEWS, and ChangeLog
+
+2015-08-18  Martin Elff <elff@gmx.com>
+
+	* pkg/R/import-internal-stata.R: 2015-08-18: Fixed support for Stata
+	9 files, added support for Stata 10 files
+
+2015-08-16  Martin Elff <elff@gmx.com>
+
+	* pkg/R/import-internal-spss-syntax.R: 2015-08-16: Fix that allows
+	to import ANES 2008 data with the provided buggy SPSS script files.
+
+2015-08-03  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/mtable.R, pkg/inst/ChangeLog,
+	pkg/man/mtable.Rd: 2015-08-03: Allow specification of
+	`show.baselevel=`, and `baselevel.sep=` as arguments of `mtable()`
+
+2015-07-22  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable.R: 2015-07-22: Small fix of `write.table`
+
+2015-07-22  Martin Elff <elff@gmx.com>
+
+	* pkg/man/mtable.Rd: 2015-07-22: Small docu fix.
+
+2015-07-22  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/mtable.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/mtable.Rd: 2015-07-21: Make `write.mtable`
+	more coherent; step up patchlevel.
+
+2015-07-21  Martin Elff <elff@gmx.com>
+
+	* pkg/man/mtable.Rd: 2015-07-21: Trivial format improvement of
+	`mtable` docu.
+
+2015-07-21  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/mtable-format-html.R, pkg/inst/ChangeLog: 
+	2015-07-21: Eliminate buglino that causes knitr to gobble up stars
+	(not those in the sky, but those used to indicate levels of
+	statistical significance)
+
+2015-07-18  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-manip.R: 2015-07-18: Deal with duplicated model names
+	in `c.mtable`
+
+2015-07-18  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/mtable-manip.R,
+	pkg/R/mtable-tools-format.R, pkg/R/mtable.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/mtable.Rd: 2015-07-18: Implemented `[`
+	operator for `mtable` results as well as the `c` (concatenation)
+	operator.
+
+2015-07-18  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/applyTemplate.R, pkg/R/mtable.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/mtable.Rd: 2015-07-18:
+	New `signif.symbols` option for `mtable`
+
+2015-07-15  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/mtable.Rd: 2015-07-15:   - New `options=` argument to `mtable`, that allows to pass
+	    optional arguments to getSummary.  2015-07-14:   - Added vignette about survey items (objects of class "item")
+
+2015-07-14  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/vignettes/items.Rmd: 2015-07-14: Include
+	vignette on survey items
+
+2015-07-14  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/NEWS.Rd: 2015-07-14: Correct News.Rd
+
+2015-07-14  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: 2015-07-14: Change package date.
+
+2015-07-14  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 2015-07-14: Update ChangeLog
+	and NEWS.Rd
+
+2015-07-13  Martin Elff <elff@gmx.com>
+
+	* pkg/man/styles.Rd: 2015-07-13: Add basic documentation for
+	'summaryTemplate' generic function
+
+2015-07-13  Martin Elff <elff@gmx.com>
+
+	* pkg/man/dataSets.Rd: 2015-05-13: Add documentation for 'dsView'
+
+2015-07-13  Martin Elff <elff@gmx.com>
+
+	* pkg/man/mtable-format-latex.Rd, pkg/man/mtable-format-print.Rd,
+	pkg/man/mtable.Rd: 2015-07-13: Fix codoc mismatches pointed out by R
+	CMD check
+
+2015-07-13  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/spss-syntax-methods.R: 2015-07-13:
+	'spss.fixed.file' now checks whether there are undefined variables
+	in 'varlab.file' etc.
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* : commit 3014d5e8af71d516b03ad0d721a1a703be034529 Author: Martin
+	Elff <elff@gmx.com> Date:   Fri Jul 10 18:06:44 2015 +0200
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* pkg/man/dataSets.Rd, pkg/man/items.Rd: 2015-07-10: Get rid of
+	duplicate aliases in documentation.
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-html.R: 2015-07-10: FIX: `coef.tab` not
+	`coef.table`
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* pkg/man/items.Rd: 2015-07-10: Add documentation for
+	`datetime.item` objects (merged from an earlier development branch)
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* pkg/man/dataset-manip.Rd: 2015-07-10: Add documentation for data
+	set manipulation (`merge` etc.)
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* pkg/R/cases.R, pkg/man/cases.Rd: 2015-07-10: Make `cases` more
+	fussy about logical conditions.
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* pkg/R/cases.R, pkg/man/cases.Rd: 2015-07-10: Make `cases` more
+	fussy about logical conditions.
+
+2015-07-10  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/format-html-dataframe.R: 2015-07-02: Provide
+	HTML formatting of data frames
+
+2015-07-02  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable.R, pkg/R/zzz.R: 2015-06-15: New option
+	'show.baselevel' for function 'mtable' that allows to decised
+	whether the baseline category of dummy variable shows up in the
+	table.
+
+2015-06-13  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog: 2015-06-13: Update and correction of ChangeLog
+
+2015-06-13  Martin Elff <elff@gmx.com>
+
+	* pkg/R/dataset-methods.R: 2015-06-13: 'sourcename' argument of
+	collect methods for data frames and data.sets now has a default.
+
+2015-06-13  Martin Elff <elff@gmx.com>
+
+	* pkg/R/dataset-methods.R: 2015-06-13: Created by 'within'
+	expression are now retained constant items in data.sets
+
+2015-06-08  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 2015-05-08:
+	Update DESCRIPTION, ChangeLog, and NEWS.Rd
+
+2015-06-08  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-delim.R, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-format-latex.R, pkg/R/mtable-format-print.R,
+	pkg/R/mtable.R: 2015-05-08:   - 'mtable_format_html' works again   - Slight reorganisation of 'mtable' and associated formatting
+	  functions.  - Nicer grouping of coefficients of multiple-equation models
+
+2015-06-08  Martin Elff <elff@gmx.com>
+
+	* pkg/R/applyTemplate.R: 2015-05-08: 'applyTemplate' now returns
+	empty strings for undefined quantities.
+
+2015-06-07  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd: 2015-06-07: Updated files 'DESCRIPTION',
+	'NAMESPACE', 'ChangeLog' and 'NEWS.Rd'
+
+2015-06-07  Martin Elff <elff@gmx.com>
+
+	* pkg/R/dataset-methods.R, pkg/R/toLatex-dataframe.R: 2015-06-02:
+	Moved 'toLatex' method for 'data.set' objects into different file.
+	Added 'toLatex' method for data frames.
+
+2015-06-07  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-delim.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-format-print.R, pkg/R/mtable-tools-format.R,
+	pkg/R/mtable.R, pkg/man/mtable.Rd: 2015-06-01: Complete refactoring
+	of mtable - more flexible handling of models with varying numbers of
+	equations; some formatting is delayed and moved to the
+	'mtable_format' functions.
+
+2015-06-01  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/dataset-methods.R: 2015-05-31: Add
+	toLatex-method for data.set objects
+
+2015-05-28  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-methods.R: 2015-05-28: Deal with factors that have
+	no non-missing levels.
+
+2015-05-28  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-format-html.R: 2015-05-28: Add missing 'drop=FALSE'
+	in format_html.codebookEntry
+
+2015-05-16  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE: 2015-05-16: Namespace and
+	description updated.
+
+2015-05-16  Martin Elff <elff@gmx.com>
+
+	* pkg/R/collect.R, pkg/R/dataset-methods.R: 2015-05-16: cbind,
+	rbind, collect, and merge methods for "data.set" objects copied from
+	former 'codebooks' package to 'memisc'
+
+2015-05-16  Martin Elff <elff@gmx.com>
+
+	* pkg/R/AllClasses.R, pkg/R/item-more-methods-datetime.R: 
+	2015-05-16: Added support for date-time "item" objects (from former
+	'codebooks' package)
+
+2015-05-16  Martin Elff <elff@gmx.com>
+
+	* pkg/R/item-methods.R: 2015-05-16 Some more methods for "item"
+	objects: unique, xtfrm (an helper for sorting), and rep
+
+2015-05-16  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd, pkg/vignettes/anes48pdf.Rnw: 2015-05-16:
+	Minor addition to vignettes
+
+2015-05-14  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/import-internal-spss-syntax.R,
+	pkg/inst/ChangeLog: 2015-05-14: Fixed bugs introduced by rewrite of
+	'import-internal-spss-syntax.R'.   Dependency 'MicroDatosEs' should
+	work okay now.
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/tolatex-ftable.R, pkg/inst/ChangeLog: 
+	2015-05-12: Improved `toLatex` formatting of `ftable`s; set verson
+	number to 0.98.1
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 2015-05-12:
+	Update of DESCRIPTION, NEWS, and ChangeLog
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/man/codebook.Rd: 2015-05-12: Added entries for
+	codebook-methods for atomic vectors, factors, and data frames.
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/spss-portable-methods.R, pkg/R/spss-sysfile-methods.R: 
+	2015-05-12: Minor fix - 'spss.parse.value.labels' instead of
+	'spss.parse.labels' in importer methods (because of changes
+	elsewhere).
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-format-html.R: 2015-05-12: Add dots to
+	'format_html.codebookEntry' formal arguments.
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/importer-methods.R: 2015-05-12: Make sure that codebook
+	entries for items in external data sources are complete.
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/value-filters.R: 2015-05-12: Use 'as.character' in
+	format-methods for value filters (we want to see '999999999999'
+	rather than 1e+12 in a codebook).
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/src/readfixed.c, pkg/src/rofile.c: 2015-05-12: Fixed a bug
+	introduced by side-effects of manipulating the arguments of
+	'readfixed'.
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/import-internal-spss-syntax.R, pkg/R/spss-syntax-methods.R: 
+	2015-05-11: Handling of SPSS syntax files for fixed format data
+	files is changed from a presumptious vectorising approach to an
+	old-school but more flexible and stable Turing approach.
+	'spss.fixed.file()' should work for a wider range of situations.
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/trimws.R: 2015-05-11: Make memisc:::trimws work without
+	changing locale
+
+2015-05-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-format-html.R: 2015-05-10: endash in HTML format of
+	codebooks, remove extra styling of variable names
+
+2015-05-09  Martin Elff <elff@gmx.com>
+
+	* pkg/R/dataset-methods.R, pkg/man/format_html.codebook.Rd: 
+	2015-05-09: Fix console output of data.set objects
+
+2015-05-09  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-methods.R: 2015-05-09: Codebook support for numeric
+	vectors and factors
+
+2015-05-09  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/codebook-format-html.R: 2015-05-09: Remove
+	hardcoded styling of variable names in codebook entries.
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: Revert email address change
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: 2015-04-29: Update description file
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 2015-04-29: Corrected
+	NEWS.Rd
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/Termplot.R, pkg/R/bucket.R,
+	pkg/R/panel-errbars.R, pkg/R/paste-and-draw.R,
+	pkg/R/predictionFrame.R, pkg/R/simulate.R, pkg/R/varpredict.R,
+	pkg/demo/00Index, pkg/demo/Termplot.R, pkg/demo/anes48.R,
+	pkg/demo/lm.monte.carlo.R, pkg/demo/monte.carlo.R,
+	pkg/demo/random.walk.R, pkg/demo/schelling.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/00memisc.Rd, pkg/man/Termplot.Rd,
+	pkg/man/buckets.Rd, pkg/man/errbars.Rd, pkg/man/predictionFrame.Rd,
+	pkg/man/simulation.Rd, pkg/vignettes/anes48.Rmd,
+	pkg/vignettes/anes48pdf.Rnw: 2015-04-29:   - Step up version number and date.    - Removed functions panel.errbars, Termplot, Simulate, and
+	  associated stuff (buckets etc.)
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/man/trimws.Rd: Do not export 'trimws' as this
+	may clash with a new function with the same name in R-base.
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: Step up version number and date.
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/codebook-format-html.R,
+	pkg/man/format_html.codebook.Rd, pkg/man/mtable-format-html.Rd: 
+	Documented 'format_html' method for codebooks
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-format-html.R, pkg/R/html-tools.R: Added HTML
+	formatting of codebooks.
+
+2015-04-29  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-methods.R: Bugfix in 'codebook-methods.R': specify
+	sensible defauls for 'toprule' and 'midrule' in
+	format,codebookEntry-method.
+
+2015-04-28  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-html.R, pkg/man/format_html.ftable.Rd,
+	pkg/man/mtable-format-html.Rd: Added dumentation for 'format_html'
+	methods for "ftable" and "mtable" objects.
+
+2015-04-28  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/man/{show_html.Rd => format_html.Rd}: Added
+	documentation for 'format_html' function
+
+2015-04-28  Martin Elff <elff@gmx.com>
+
+	* pkg/man/wild.codes.Rd: Documented 'wild.codes' function
+
+2015-04-28  Martin Elff <elff@gmx.com>
+
+	* pkg/R/AllGenerics.R, pkg/R/dataset-methods.R, pkg/man/dataSets.Rd: 
+	Fixed as.data.set,list-method, added documentation for
+	as.data.set,list-method
+
+2015-04-27  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd: Changed vignette engine to 'rmarkdown'
+	as this gives better output.
+
+2015-04-26  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rmd, pkg/vignettes/{anes48.Rnw =>
+	anes48pdf.Rnw}: Added html vignette 'ANES 1948'
+
+2015-04-26  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-html.R: Fix html formatting of mtables
+
+2015-04-26  Martin Elff <elff@gmx.com>
+
+	* pkg/R/ftable-format-html.R: Bugfix of format_html.ftable: Now
+	digits after the dot are handled correctly.
+
+2015-04-26  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-html.R: Some adjustments of HTML formatting of
+	"mtables"
+
+2015-04-26  Martin Elff <elff@gmx.com>
+
+	* pkg/R/ftable-format-html.R: Support for HTML formatting of
+	"ftables"
+
+2015-04-26  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/AllGenerics.R, pkg/R/wild-codes.R: Added
+	function 'wild.codes' to find, well, wild codes.
+
+2015-04-20  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/dataset-methods.R: 2015-04-20: Fix collect
+	method of "data.set" objects, by providing "as.data.set" method for
+	lists.
+
+2015-04-20  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable-format-latex.R: 2015-04-09: Improvement of header
+	formatting of mtables for LaTeX
+
+2015-04-08  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/mtable-html.Rmd: 2015-04-07: Shorter vignette for
+	html output of mtable results.
+
+2015-04-08  melff <melff@users.noreply.github.com>
+
+	* README.md: Update README.md
+
+2015-04-08  melff <melff@users.noreply.github.com>
+
+	* README.md: Create README.md
+
+2015-04-07  Martin Elff <elff@gmx.com>
+
+	* pkg/R/html-tools.R, pkg/R/mtable-format-html.R: 2015-04-07: More
+	modular code for HTML formatting
+
+2015-04-07  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/vignettes/mtable-html.Rmd: 2015-04-07: Added
+	knitr vignette for HTML output example
+
+2015-04-07  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/NEWS.Rd: Corrected NEWS.Rd
+
+2015-04-07  Martin Elff <elff@gmx.com>
+
+	* pkg/vignettes/anes48.Rnw: 2015-04-07: Minor correction of format
+	of ANES48 vignette
+
+2015-04-06  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/inst/NEWS.Rd: 2015-04-06: Bump up version
+	number. Update NEWS file.
+
+2015-04-06  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/html-tools.R, pkg/R/mtable-format-delim.R,
+	pkg/R/mtable-format-html.R, pkg/R/{mtable-format-screen.R =>
+	mtable-format-print.R}, pkg/R/mtable.R,
+	pkg/man/mtable-format-delim.Rd, pkg/man/mtable-format-html.Rd,
+	pkg/man/mtable-format-latex.Rd, pkg/man/mtable-format-print.Rd,
+	pkg/man/mtable.Rd, pkg/man/show_html.Rd: 2015-04-06: Improved HTML
+	output of 'mtable' results. Updated documentation of 'mtable'
+	results.
+
+2015-04-06  Martin Elff <elff@gmx.com>
+
+	* TODO, pkg/R/mtable-format-html.R: 2015-04-06: Improved html format
+	for mtables - alignment on decimal signs and straight borders.
+
+2015-04-05  Martin Elff <elff@gmx.com>
+
+	* pkg/R/aaa.R: 2015-04-05: New coefficient style - confidence
+	intervals right of estimates
+
+2015-04-05  Martin Elff <elff@gmx.com>
+
+	* TODO, pkg/NAMESPACE, pkg/R/mtable-format-delim.R,
+	pkg/R/mtable-format-html.R, pkg/R/mtable-format-latex.R,
+	pkg/R/mtable-format-screen.R, pkg/R/mtable-tools-format.R,
+	pkg/R/mtable.R: 2015-04-05: Some cleanup in mtable; special
+	formatting functions for mtable objects (needs testing)
+
+2015-03-07  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/yy-mtable-ext-DaveAtkins.R,
+	pkg/inst/ChangeLog, pkg/inst/NEWS.Rd, pkg/man/getSummary.Rd: 
+	2015-03-07: Renamed `getSummary.expCoef` into `getSummary_expCoef`
+
+2015-02-17  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/contrasts.R, pkg/man/contrasts.Rd: 
+	2015-02-17: Fix documentation of generic contrasts function
+
+2015-02-17  Martin Elff <elff@gmx.com>
+
+	* pkg/man/importers.Rd, pkg/src/pspp-portableStream-for-R.c: 
+	2015-02-17: Clarify origin of code for importing SPSS/PSPP data
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* TODO: Clear TODO file (all done)
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog: Fix date in ChangeLog
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/AllGenerics.R, pkg/R/codebook-methods.R,
+	pkg/R/dataset-methods.R, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd,
+	pkg/man/Write.Rd, pkg/man/codebook.Rd: 2015-02-14:   - Added documentation for 'as.character' method for 'codebook'
+	  objects.  - Implemented 'Write()' convenience function for 'descriptions'
+	objects.
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* pkg/R/AllGenerics.R, pkg/R/contrasts.R: 2015-02-14: No explicit
+	override for function contrasts, making it generic instead
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* pkg/man/Iconv.Rd: 2015-02-14: Added documentation for Iconv()
+	function
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: 2015-01-14: Created NEWS.RD
+	and updated ChangeLog
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/{NEWS => ChangeLog}: 2015-02-14: Renamed 'NEWS' into
+	'ChangeLog'
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* TODO: 2015-02-14:   - Added TODO
+
+2015-02-14  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/Termplot.R, pkg/R/contrasts.R,
+	pkg/R/dataset-methods.R, pkg/R/paste-and-draw.R, pkg/inst/NEWS: 
+	2015-02-14:   - Modified file structure somewhat and added some lines do clarify
+	  credit for code.
+
+2015-02-13  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/attch.R,
+	pkg/R/{aggregateFormula.R => genTable.R}, pkg/demo/Termplot.R,
+	pkg/demo/anes48.R, pkg/demo/monte.carlo.R, pkg/inst/NEWS,
+	pkg/man/00memisc.Rd, pkg/man/By.Rd, pkg/man/Sapply.Rd,
+	pkg/man/Table.Rd, pkg/man/Termplot.Rd, pkg/man/errbars.Rd,
+	pkg/man/{aggregateFormula.Rd => genTable.Rd}, pkg/man/include.Rd,
+	pkg/man/mtable.Rd, pkg/man/percent.Rd, pkg/man/predictionFrame.Rd,
+	pkg/man/toDataFrame.Rd, pkg/vignettes/anes48.Rnw: 2015-02-13:   - Removed 'aggregate.formula' method as it conflicts with a method
+	    of the name that was included into the 'base' R package more or
+	  less recenlty.  - Removed 'include' and 'uninclude' since it modifies (in a benign
+	    way though) the global namespace, which is discouraged by recently
+	changed CRAN policies.
+
+2015-01-26  Martin Elff <elff@gmx.com>
+
+	* pkg/R/codebook-methods.R: Added 'as.character' method for
+	'codebook' objects, to allow conveniently write the to files using
+	'writeLines'
+
+2015-01-25  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/Iconv.R: 2014-01-25: added
+	'Iconv' S3 generic to translate value labels etc.
+
+2015-01-25  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/inst/NEWS,
+	pkg/man/getSummary.Rd: 2015-01-25:   - Explicitly export S3 method as required by package check by more
+	  recent R version - Added github URL   - Listed packages that are 'enhanced' by supporting them for
+	  `mtable`
+
+2015-01-09  Martin Elff <elff@gmx.com>
+
+	* pkg/R/import-internal-spss-sysfile.R: 2014-12-30:    'to.lower' argument of spss.system.file now also available in the
+	   'codebooks' package
+
+2015-01-09  Martin Elff <elff@gmx.com>
+
+	* pkg/R/recode.R, pkg/inst/NEWS: 2014-12-14: Correct buglet in
+	'recode' method for numeric vectors
+
+2015-01-09  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/import-internal-spss-sysfile.R,
+	pkg/inst/NEWS: 2014-11-04:   - Fixed silly bug introduced in recent update: Long variable names
+	  in SPSS "sav" files should work again now.
+
+2014-10-13  Martin Elff <elff@gmx.com>
+
+	* pkg/R/yz-getSummary-merMod.R: 2014-10-13: Minor fix in
+	getSummary.merMod
+
+2014-10-12  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/recode.R, pkg/inst/NEWS: 2014-10-11:
+	recode() handles character vectors in a more convenient way: They
+	are converted into factors with sorted unique values (after
+	recoding) as levels.
+
+2014-10-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/yz-getSummary-merMod.R, pkg/vignettes/anes48.Rnw: 
+	2014-10-11: Provide getSummary method for 'merMod' objects
+
+2014-10-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/mtable.R, pkg/inst/NEWS: 2014-09-08: 'getSummary.glm' now
+	takes care of missing values in weights of glm objects
+
+2014-10-12  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/aggregateFormula.R,
+	pkg/R/import-internal-spss-portable.R,
+	pkg/R/import-internal-spss-syntax.R,
+	pkg/R/import-internal-spss-sysfile.R,
+	pkg/R/spss-portable-methods.R, pkg/R/spss-syntax-methods.R,
+	pkg/R/spss-sysfile-methods.R,
+	pkg/R/yy-mtable-ext-ChristopherNLawrence.R, pkg/R/zzz.R,
+	pkg/inst/NEWS, pkg/man/importers.Rd, pkg/src/readfixed.c: In memisc
+	 0.96: 2014-08-19:   - modified some code that Prof Ripley thinks looks 'suspicious'.   2014-06-24:   - Change of SPSS variable names to lower case is now optional (but
+	  still the default).
+
+2014-10-12  Martin Elff <elff@gmx.com>
+
+	* pkg/R/yy-mtable-ext-ChristopherNLawrence.R, pkg/inst/NEWS: 
+	2014-03-10:   - Removed modification to getSummary.clm that slipped in from a
+	  development branch.
+
+2014-02-12  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/inst/NEWS,
+	pkg/src/pspp-portableStream-for-R.c: 2013-12-06: Really fixes the
+	out-of-bounds errors indicated by Prof. Ripley
+
+2014-02-12  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/Termplot.R, pkg/inst/NEWS,
+	pkg/man/simulation.Rd, pkg/src/pspp-portableStream-for-R.c: 
+	2013-12-04:   - fixes out-of-bound error and memory leak in
+	    'pspp-portableStream-for-R.c' reported by Prof. Ripley.
+	    Eliminated calls to non-exported functions from 'lattice'.  Marked
+	all example code of 'Simulate' as 'dontrun' to save time during
+	package checks.
+
+2014-02-12  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/Termplot.R, pkg/R/zzz.R, pkg/inst/NEWS: 
+	2013-09-20: Fixed import issues indicated by BDR
+
+2013-07-29  Martin Elff <elff@gmx.com>
+
+	* pkg/inst/doc/anes48.Rnw: 2013-07-29:   - Last changes before submission to CRAN
+
+2013-07-28  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/Table.R, pkg/R/dataset-methods.R,
+	pkg/inst/NEWS, pkg/src/pspp-portableStream-for-R.c,
+	pkg/src/pspp-system-for-R.c: 2013-07-28:         Fixed bugs reported by Jeremy Jackson and Gabor Grothendiek
+
+2013-03-23  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION: 2013-03-23: Push up patchlevel of memisc v. 0.96
+
+2013-03-23  Martin Elff <elff@gmx.com>
+
+	* pkg/R/importer-methods.R: 2013-03-23: Fixed bug in computation of
+	skewness in codebooks of spss system/portable files.
+
+2013-03-23  Martin Elff <elff@gmx.com>
+
+	* pkg/src/dta-for-R.c, pkg/src/memisc.h, pkg/src/parsehelpers.c,
+	pkg/src/pspp-portableStream-for-R.c, pkg/src/pspp-system-for-R.c,
+	pkg/src/readfixed.c, pkg/src/rofile.c: 2013-03-23: Explicit type
+	casts in dta-for-R.c etc.
+
+2013-03-20  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE,
+	pkg/R/yy-mtable-ext-AchimZeileis.R, pkg/inst/NEWS,
+	pkg/man/getSummary.Rd: 2013-03-20:   - getSummary method for "mer" objects was broken and now is fixed.
+
+2013-03-10  Martin Elff <elff@gmx.com>
+
+	* .gitignore, pkg/DESCRIPTION, pkg/R/yy-mtable-ext-AchimZeileis.R,
+	pkg/R/yz-getSummary-mer.R, pkg/inst/NEWS,
+	pkg/src/pspp-system-for-R.c: 2013-03-10:         Big Fat Reorganization: split up memisc .99 into packages
+	        mutils, mtabs, mplot, msimul; merged in codebooks package.
+	        Now all code derived from memisc 0.96 is collected into one archive.
+	The CRAN version (memisc 0.96) is included in a separate dictionary.
+
+2013-02-20  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/yy-mtable-ext-AchimZeileis.R,
+	pkg/inst/NEWS: 2012-02-20:   - Deleted example code from yy-mtable-ext-AchimZeileis.R    (It was made harmless by if(FALSE) but nevertheless leads to a
+	    `NOTE' on R-devel)
+
+2013-02-10  Martin Elff <elff@gmx.com>
+
+	* .gitignore, pkg/DESCRIPTION, pkg/NAMESPACE, pkg/inst/NEWS,
+	pkg/man/getSummary.Rd: 2012-02-10:   - getSummary methods for "ivreg", "tobit" (from package "AER"),     "hurdle", "zeroinfl" (from package "pscl"),     "betareg" (from package "betareg"),     "multinom" (from package "nnet"),     contributed by Achim Zeileis,     were included into the package, but had not been exported yet     from the package namespace.      This is now fixed.
+
+2013-01-27  Martin Elff <elff@gmx.com>
+
+	* .gitignore, pkg/DESCRIPTION, pkg/inst/NEWS, pkg/src/dumbswap.c: 
+	2013-01-27:   - Minor improvement of 'codebook' output for external SPSS data
+	  sets.  - Fixed a bug in 'dumbswap.c' discovered while building a windows
+	binary.
+
+2013-01-27  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/importer-methods.R,
+	pkg/R/mtable.R, pkg/R/yy-mtable-ext-JasonWMorgan.R,
+	pkg/R/yz-getSummary-mer.R, pkg/R/zzz.R, pkg/inst/NEWS,
+	pkg/man/getSummary.Rd: 2013-01-27:   - Minor improvement of 'codebook' output for external SPSS data
+	  sets.
+
+2013-01-26  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/Sapply.R, pkg/R/aaa.R,
+	pkg/R/import-internal-spss-syntax.R, pkg/R/numeric-if-possible.R,
+	pkg/R/spss-syntax-methods.R, pkg/R/yy-mtable-ext-AchimZeileis.R,
+	pkg/R/yy-mtable-ext-ChristopherNLawrence.R,
+	pkg/R/yy-mtable-ext-DaveAtkins.R,
+	pkg/R/yy-mtable-ext-JasonWMorgan.R, pkg/R/yz-getSummary-mer.R,
+	pkg/R/zzz.R, pkg/inst/NEWS: 2013-01-26:   - Included getSummary methods      - for objects of classes "ivreg", "tobit" (from package "AER"),                               "hurdle", "zeroinfl" (from package
+	                              "pscl"), "betareg" (from package
+	                              "betareg"), "multinom" (from package "nnet"),                               contributed by Achim Zeileis     - for objects of classes "polr" (from package "MASS"),                              "clm" (from package "ordinal"),                              "simex" (from package "simex"),                              contributed by Christopher N. Lawrence     - for objects of classes "coxph", "survreg" (from package
+	                             "survival"), "aftreg", "phreg", "weibreg" (from package "eha"),                              contributed by Jason W. Morgan,     - for exponentiated coefficients in glm-models,                              contributed by Dave Atkins.    - Made the 'spss.fixed.file' importer function more robust:       - It works now, even if 'varlab.file', 'codes.file',         or 'missval.file' arguments are missing. (This was broken by
+	      an earlier revision.) - It now handles value labels of character string variables
+	correctly.
+
+2013-01-04  Martin Elff <elff@gmx.com>
+
+	* .gitignore, pkg/DESCRIPTION, pkg/INDEX, pkg/R/dataset-methods.R,
+	pkg/inst/NEWS, pkg/man/utility-classes.Rd: 2013-01-04:   - Updated contact email address. Corrected "initialize" method for
+	  "data.set" objects.
+
+2012-02-15  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/Sapply.R, pkg/R/retain.R,
+	pkg/R/sample_methods.R, pkg/R/unzip.R, pkg/inst/NEWS,
+	pkg/inst/doc/Sweave.sty: 2012-02-14:   - Replaced calls to .Internal(sample()) by calls to sample.int()
+	    and eliminated call to .Internal(int.unzip()). The package now
+	depends on R >= 2.9.0 2012-01-25:   - Fixed reading of value labels from SPSS system files - no
+	  garbage at the end of the labels.
+
+2012-01-25  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/mtable.R,
+	pkg/man/getSummary.Rd, pkg/src/pspp-system-for-R.c: 2011-12-07:
+	Version 0.95-37: Fixed "getSummary" and "getSummary.expcoef"
+	S3-generic functions.  2012-01-25: Version 0.95-38: Fixed reading of value labels from SPSS
+	system files - no garbage at the end of the labels.
+
+2011-11-06  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/item-methods.R,
+	pkg/R/recode.R, pkg/inst/NEWS, pkg/man/items.Rd: 2011-11-06:   - Added a 'rep' method for 'item' objects.    - Applied patch sent by Masahiro Hayashi <rinm884@gmail.com> to
+	    fix bugs in 'vector' method of 'recode' (recode did not handle
+	    missing values correctly and ignored 'otherwise' arguments in some
+	cases).
+
+2011-10-05  Martin Elff <elff@gmx.com>
+
+	* pkg/NAMESPACE, pkg/R/compress-storage-modes.R,
+	pkg/R/item-methods.R, pkg/R/sample_methods.R, pkg/R/zzz.R,
+	pkg/inst/NEWS, pkg/man/sample-methods.Rd: 2011-10-05:   - Adapted the package to R 2.14.0 (by eliminating calls to
+	    'require' in the '.onLoad' function)   - Changed the methods for data frames, 'data.set' and 'importer'
+	    objects of the function 'sort' from S3 to S4 2011-08-26:   - Fixed a bug in internal function 'compress.storage.mode.double'
+	    that caused it to create NA's where it should not.    - Fixed a bug in the print method for items that caused it to
+	    report their length incorrectly
+
+2011-08-15  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/import-internal-spss-syntax.R,
+	pkg/inst/NEWS: Made internal functions of 'spss.fixed.file' robuster
+	against syntax errors in the spss-controls files (codes.file,
+	labels.file, etc.)
+
+2011-06-17  Martin Elff <elff@gmx.com>
+
+	* .gitignore, pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/mkHelpDir.R,
+	pkg/R/mtable.R, pkg/R/zzz.R, pkg/inst/NEWS, pkg/man/00memisc.Rd,
+	pkg/man/mkHelpDir.Rd, pkg/man/mtable.Rd, pkg/src/dta-for-R.c,
+	pkg/src/numeric_if_possible.c, pkg/src/pspp-portableStream-for-R.c:   - Removed mkHelpDir() that has not worked for a while because of
+	    architectural changes in R.    - Removed some unused variables from the C-code that caused
+	  warnings.  - Corrected a bug in format.mtable() misusing the function
+	    character() and some other buglets reported by NOTE's in automatic
+	runs by CRAN.
+
+2011-05-29  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/mtable.R, pkg/R/zzz.R,
+	pkg/man/getSummary.Rd, pkg/man/mtable.Rd: Applied patch sent by
+	Christopher N. Lawrence, Ph.D. <c.n.lawrence@gmail.com> - Adds support to mtable() for clm and clmm ordinal models in the
+	ordinal package.  - Updates getSummary.to support mer objects as generated by recent
+	versions of the lme4 package.  - Adds the Aldrich & Nelson pseudo-R2 (Aldrich and Nelson 1984) to
+	mtable output for various categorical models.
+
+2011-05-14  Martin Elff <elff@gmx.com>
+
+	* pkg/R/dataset-methods.R, pkg/R/importer-methods.R,
+	pkg/man/importers.Rd: Fixed 'show' and 'print' methods for
+	'data.set' objects - they no do fit the width set by
+	options(width=...), without ugly line breaks.  Changed the default value of the 'compress.storage.modes' option for
+	the subset and bracket methods for 'importer' objects to FALSE,
+	which is much more safer.
+
+2011-05-14  Martin Elff <elff@gmx.com>
+
+	* pkg/DESCRIPTION, pkg/R/dataset-methods.R,
+	pkg/R/import-internal-spss-sysfile.R, pkg/src/pspp-system-for-R.c: 
+	Fixed problems with SPSS system files that do not contain an
+	'info_flt64' record. This problem led to zeroes in the data section
+	of the file being erroneously interpreted as sysmis.
+
+2011-04-30  Martin Elff <elff@gmx.com>
+
+	* Initial git commit of last released version of memisc (0.95-31)
+
