@@ -239,7 +239,10 @@
     \item \code{recode()} keeps \code{NA}s as \code{NA}s when an
           \code{otherwise} argument is given and \code{NA}s are not
           recoded explicitly.
-    \item \code{codebook()} now fully supports logical vectors.      
+    \item \code{codebook()} now fully supports logical vectors.
+    \item HTML output created by \code{format_html} etc. now uses
+          '<style>' elements for formatting. This reduces the size of
+          created HTML code.
     }
  }
   \subsection{BUGFIXES}{
