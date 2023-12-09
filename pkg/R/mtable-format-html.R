@@ -22,8 +22,7 @@ fillin <- function(template,substitutions){
 class_id_selector <- function(id=NULL,class=NULL){
     class_or_id <- ""
     if(length(class)){
-       class <- paste0(".",paste0(class,collapse="."))   
-       class_or_id <- class_or_id(subst,class)
+       class_or_id <- paste0(".",paste0(class,collapse="."))   
     } 
     if(length(id)){
         id <- paste0("#",id[1])
@@ -386,24 +385,25 @@ pf_mtable_format_html <- function(x,
          text-align: left; 
          /*background-color: green;*/
         "
-        header_style <- "
+        
+        style_dots <- style_mtable_cols(id=mtable_id,cols=dot_cols+1,style=dot_style)
+        style_before_dots <- style_mtable_cols(id=mtable_id,cols=dot_cols,style=before_dot_style)
+        style_behind_dots <- style_mtable_cols(id=mtable_id,cols=dot_cols+2,style=behind_dot_style)
+        style_content <- paste(style_content,
+                               style_dots,
+                               style_before_dots,
+                               style_behind_dots)
+    }
+    header_style <- "
          padding-left: 0.5ex;
          padding-right: 0.5ex;
          text-align: center; 
          /*background-color: gray;*/
         "
-        
-        style_dots <- style_mtable_cols(id=mtable_id,cols=dot_cols+1,style=dot_style)
-        style_before_dots <- style_mtable_cols(id=mtable_id,cols=dot_cols,style=before_dot_style)
-        style_behind_dots <- style_mtable_cols(id=mtable_id,cols=dot_cols+2,style=behind_dot_style)
-        style_header <- style_mtable_header(id=mtable_id,style=header_style)
-        style_content <- paste(style_content,
-                               style_dots,
-                               style_before_dots,
-                               style_behind_dots,
-                               style_header,
-                               "\n")
-    }
+    style_header <- style_mtable_header(id=mtable_id,style=header_style)
+    style_content <- paste(style_content,
+                           style_header,
+                           "\n")
 
     style_element <- html("style",style_content,linebreak=TRUE)
 

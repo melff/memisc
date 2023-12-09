@@ -1,40 +1,42 @@
+descr_format_stdstyle <- df_format_stdstyle
+
 format_html.descriptions <- function(x,
                                      toprule=2,midrule=1,bottomrule=2,
+                                     style=descr_format_stdstyle,
                                      margin="2ex auto",
                                      ...){
 
-  padleft <- c("padding-left"="0.3em")
-  padright <- c("padding-right"="0.3em")
-  toprule <- c("border-top"=paste0(midrule,"px solid"))
-  bottomrule <- c("border-bottom"=paste0(midrule,"px solid"))
-  midrule_above <- c("border-top"=paste0(midrule,"px solid"))
-  midrule <- c("border-bottom"=paste0(midrule,"px solid"))
-  align.right <- c("text-align"="right")  
-  align.left <- c("text-align"="left")  
-  align.center <- c("text-align"="center")
-  row_style <- c("border-style"="none")
-  table_style <- c("border-collapse"="collapse" ,"border-style"="none")
+    tab <- cbind(
+        html_td(names(x),vectorize=TRUE),
+        html_td(x,vectorize=TRUE)
+    )
+    n <- nrow(tab)
+    
+    header <- c(html_td("Variable",class="header"),
+                html_td("Description",class="header"))
+    
+    tab <- rbind(header,tab)
+    res <- apply(tab,1,html_tr)
+    
+    res <- html_table(res,class="descriptions")
 
+    style_global <- style_df_global(class="descriptions",style=style,margin=margin)
 
-  tab <- cbind(
-          html_td(names(x),style=css(align.left,padleft,padright),vectorize=TRUE),
-          html_td(x,style=css(align.left,padright),vectorize=TRUE)
-          )
-  n <- nrow(tab)
-  tab[n,] <- lapply(tab[n,],setStyle,bottomrule)
-  
-  header <- c(html_td("Variable",style=css(align.left,padleft,padright,toprule,midrule)),
-              html_td("Description",style=css(align.center,padright,toprule,midrule)))
-                    
-  tab <- rbind(header,tab)
-  ans <- apply(tab,1,html_tr,style=as.css(row_style))
-  
-  ans <- html_table(ans)
-  
-  if(length(margin))
-    table_style <- c(table_style,margin=margin)
-  style(ans) <- as.css(table_style)
-
-  ans <- as.character(ans)
-  return(ans)
+    style_toprule <- style_df_rule(class="descriptions",rulewidth=toprule,top=TRUE,
+                                       rows=1)
+    style_bottomrule <- style_df_rule(class="descriptions",rulewidth=bottomrule,bottom=TRUE,
+                                          rows=n+1)
+    style_midrule <- style_df_rule(class="descriptions",rulewidth=midrule,bottom=TRUE,
+                                          rows=1)
+    style_content <- paste(
+        style_global,
+        style_toprule,
+        style_midrule,
+        style_bottomrule,
+        sep="\n"
+    )
+    style_element <- html("style",style_content,linebreak=TRUE)
+    res <- html_group(style_element,res)
+    
+    return(res)
 }

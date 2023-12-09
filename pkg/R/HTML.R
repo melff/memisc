@@ -248,7 +248,7 @@ html_afterDec <- css("text-align"="left",
                             "padding-left"="0px",
                             "padding-right"="0.3em")
 
-html_td_spltDec <- function(x,style=character(),...,linebreak=FALSE,add_CSS=TRUE){
+html_td_spltDec <- function(x,style=character(),...,linebreak=FALSE,add_CSS=FALSE){
   y <- matrix(x,nrow=3)
   if(add_CSS){
       html_beforeDec <- css(style,html_beforeDec)

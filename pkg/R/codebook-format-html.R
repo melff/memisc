@@ -25,25 +25,11 @@ format_cb_table_ht <- function(tab){
 }
 
 format_html.codebookEntry <- function(x,name="",
-                                      toprule=2,
-                                      midrule=1,
-                                      padding=3,
                                       var_tag="code",
                                       varid_prefix="",
                                       title_tag="p",
                                       ...
 ){
-  firstcol <- c("padding-left"="0.3em")
-  toprule <- c("border-top"=paste0(midrule,"px solid"))
-  bottomrule <- c("border-bottom"=paste0(midrule,"px solid"))
-  midrule_above <- c("border-top"=paste0(midrule,"px solid"))
-  midrule <- c("border-bottom"=paste0(midrule,"px solid"))
-  align.right <- c("text-align"="right")  
-  align.left <- c("text-align"="left")  
-  align.center <- c("text-align"="center")
-  lrpad <- c("padding-left"="0.3em","padding-right"="0.3em")
-  if(length(padding))
-    padding <- c("padding-left"=paste0(padding,"ex"))
   
   annot <- x@annotation
   description <- annot["description"]
@@ -61,8 +47,8 @@ format_html.codebookEntry <- function(x,name="",
     html_p(dQuote(wording), class="cbe-wording") 
   else NULL
   x.spec <- gsub("--","&ndash;",x@spec)
-  spec_html <- cbind(html_td(names(x.spec),style=css(align.left),vectorize=TRUE),
-                     html_td(x.spec,style=css(align.left),vectorize=TRUE))
+  spec_html <- cbind(html_td(names(x.spec),vectorize=TRUE),
+                     html_td(x.spec,vectorize=TRUE))
   spec_html <- apply(spec_html,1,html_tr)
   spec_html <- as.html_group(spec_html)
   
@@ -74,7 +60,7 @@ format_html.codebookEntry <- function(x,name="",
   
   if(length(tab)){
     counts_html <- formatC(tab[,1,1],format="d")
-    counts_html <- html_td(counts_html,vectorize=TRUE,style=css(align.right,lrpad))
+    counts_html <- html_td(counts_html,vectorize=TRUE)
 
     perc_html <- formatC(tab[,-1,1,drop=FALSE],
                          format="f",digits=1)
@@ -123,48 +109,48 @@ format_html.codebookEntry <- function(x,name="",
     
     tab_lab <- sapply(tab_lab,paste,collapse=" ")
     
-    tab_lab_html <- cbind(html_td(tab_val,style=css(c(align.right,lrpad)),vectorize=TRUE),
-                          html_td(tab_m,style=css(c(align.center,lrpad)),vectorize=TRUE),
-                          html_td(tab_lab,style=css(c(align.left,lrpad)),vectorize=TRUE))
+    tab_lab_html <- cbind(html_td(tab_val,vectorize=TRUE),
+                          html_td(tab_m,vectorize=TRUE),
+                          html_td(tab_lab,vectorize=TRUE))
     
     tab_html <- cbind(tab_lab_html,tab_html)
     tab_html <- as.html_group(apply(tab_html,1,html_tr))
 
     if(dim(tab)[3] == 1){
       if(dim(tab)[2] == 3){
-        tabh_html <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
-                                html_td("N",style=css(align.center)),
-                                html_td("Valid",colspan=3,style=css(align.center)),
-                                html_td("Total",colspan=3,style=css(align.center)))
+        tabh_html <- html_group(html_td("Values and labels",colspan=3,class="header"),
+                                html_td("N",class="header"),
+                                html_td("Valid",colspan=3,class="header"),
+                                html_td("Total",colspan=3,class="header"))
       }
       else{
-        tabh_html <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
-                                html_td("N",style=css(align.center)),
-                                html_td("Percent",colspan=3,style=css(align.center)))
+        tabh_html <- html_group(html_td("Values and labels",colspan=3,class="header"),
+                                html_td("N",class="header"),
+                                html_td("Percent",colspan=3,class="header"))
       }
       tabh_html <- html_tr(tabh_html)
     } else {
       if(dim(tab)[2] == 3){
-        tabh_html2 <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
-                                html_td("N",style=css(align.center)),
-                                html_td("Valid",colspan=3,style=css(align.center)),
-                                html_td("Total",colspan=3,style=css(align.center)),
-                                html_td("N",colspan=3,style=css(align.center)),
-                                html_td("Valid",colspan=3,style=css(align.center)),
-                                html_td("Total",colspan=3,style=css(align.center)))
+        tabh_html2 <- html_group(html_td("Values and labels",colspan=3,class="header"),
+                                html_td("N",class="header"),
+                                html_td("Valid",colspan=3,class="header"),
+                                html_td("Total",colspan=3,class="header"),
+                                html_td("N",colspan=3,class="header"),
+                                html_td("Valid",colspan=3,class="header"),
+                                html_td("Total",colspan=3,class="header"))
         tabh_html1 <- html_group(html_td("",colspan=3),
-                               html_td("Unweighted",colspan=7,style=css(align.center)),
-                               html_td("Weighted",colspan=9,style=css(align.center)))
+                               html_td("Unweighted",colspan=7,class="header"),
+                               html_td("Weighted",colspan=9,class="header"))
       }
       else{
-        tabh_html2 <- html_group(html_td("Values and labels",colspan=3,style=css(align.center)),
-                                html_td("N",style=css(align.center)),
-                                html_td("Percent",colspan=3,style=css(align.center)),
-                                html_td("N",colspan=3,style=css(align.center)),
-                                html_td("Percent",colspan=3,style=css(align.center)))
+        tabh_html2 <- html_group(html_td("Values and labels",colspan=3,class="header"),
+                                html_td("N",class="header"),
+                                html_td("Percent",colspan=3,class="header"),
+                                html_td("N",colspan=3,class="header"),
+                                html_td("Percent",colspan=3,class="header"))
         tabh_html1 <- html_group(html_td("",colspan=3),
-                               html_td("Unweighted",colspan=4,style=css(align.center)),
-                               html_td("Weighted",colspan=6,style=css(align.center)))
+                               html_td("Unweighted",colspan=4,class="header"),
+                               html_td("Weighted",colspan=6,class="header"))
       }
       
       tabh_html1 <- html_tr(tabh_html1)
@@ -172,15 +158,14 @@ format_html.codebookEntry <- function(x,name="",
       tabh_html <- c(tabh_html1,tabh_html2)
     }
     
-    tab_html <- html_table(html_group(tabh_html,tab_html),class="cbe-table",
-                           style=css("border-collapse"="collapse"))
+    tab_html <- html_table(html_group(tabh_html,tab_html),class="cbe-table cbe-vl-table")
     tab_html <- html_group(html_p(""),tab_html)
   }
   else tab_html <- NULL
   
   if(length(descr)){
     descr_ldr_html <- trimws(paste(rownames(descr),": ",sep=""))
-    descr_ldr_html <- html_td(descr_ldr_html,style=css(align.right,lrpad),vectorize=TRUE)
+    descr_ldr_html <- html_td(descr_ldr_html,vectorize=TRUE)
     descr_html <- formatC(descr,format="f",digits=3)
     
     descr_html <- spltDec(descr_html)
@@ -193,13 +178,12 @@ format_html.codebookEntry <- function(x,name="",
 
     if(ncol(descr)>1){
       descrh_html <- html_group(html_td(""),
-                                html_td("Unweighted",colspan=3,style=css(align.center)),
-                                html_td("&nbsp;Weighted",colspan=3,style=css(align.center)))
+                                html_td("Unweighted",colspan=3,class="header"),
+                                html_td("&nbsp;Weighted",colspan=3,class="header"))
       descr_html <- c(list(html_tr(descrh_html)),descr_html)
     }
     
-    descr_html <- html_table(descr_html,class="cbe-table",
-                               style=css("border-collapse"="collapse"))
+    descr_html <- html_table(descr_html,class="cbe-table cbe-d-table")
     descr_html <- html_group(html_p(""),descr_html)
   } else descr_html <- NULL
   
@@ -211,19 +195,24 @@ format_html.codebookEntry <- function(x,name="",
     annot_html <- html_group(html_p(""),annot_html)
   } else annot_html <- NULL
   
-  header_html <- html_div(html_group(title_html,wording_html),class="cbe-header",
-                          style=css(c(toprule,midrule,padding)))
-  body_html <- html_div(html_group(spec_html,tab_html,descr_html,annot_html,html_p("")),class="cbe-body",
-                        style=css(padding))
+  header_html <- html_div(html_group(title_html,wording_html),class="cbe-header")
+  body_html <- html_div(html_group(spec_html,tab_html,descr_html,annot_html,html_p("")),class="cbe-body")
 
   cbe_html <- html_div(
-                  html_group(header_html,body_html),class="codebook-entry")
-  as.character(cbe_html)
+      html_group(header_html,body_html),class="codebook-entry")
+  cbe_html <- as.character(cbe_html)
+  return(cbe_html)
 }
+
+codebook_format_stdstyle <- c(
+    "padding-left"=".3em",
+    "padding-right"=".3em"
+)
 
 format_html.codebook <- function(x,toprule=2,
                                  midrule=1,
-                                 padding=3,
+                                 indent="3ex",
+                                 style=codebook_format_stdstyle,
                                  var_tag="code",
                                  varid_prefix="",
                                  title_tag="p",
@@ -231,10 +220,96 @@ format_html.codebook <- function(x,toprule=2,
 {
   out <- mapply(format_html,x=x@.Data,name=names(x),
                 MoreArgs = list(
-                    toprule=toprule,midrule=midrule,
-                    padding=padding,var_tag=var_tag,
+                    var_tag=var_tag,
                     varid_prefix=varid_prefix,
                     title_tag=title_tag
                   ))
-  as.character(html_div(unlist(out),class="codebook"))
+  res <- html_div(unlist(out),class="codebook")
+
+  cb_format_tmpl <- "
+    .cbe-header {
+         border-top: solid 2px;
+         border-bottom: solid 1px;
+         padding-left: <<indent>>;
+    }
+    .cbe-body {
+         padding-left: <<indent>>;
+    }
+    .cbe-table {
+         border-collapse: collapse;
+    }
+    .cbe-table td:nth-child(n of .header) {
+         text-align: center;
+         padding-left: <<padding-left>>;
+         padding-right: <<padding-right>>;
+    }
+    .cbe-vl-table td:nth-child(1) {
+         text-align: right;
+         padding-left: <<padding-left>>;
+         padding-right: <<padding-right>>;
+    }
+    .cbe-vl-table td:nth-child(2) {
+         text-align: center;
+         padding-left: <<padding-left>>;
+         padding-right: <<padding-right>>;
+    }
+    .cbe-vl-table td:nth-child(3) {
+         text-align: left;
+         padding-left: <<padding-left>>;
+         padding-right: <<padding-right>>;
+    }
+    .cbe-vl-table td:nth-child(4) {
+         text-align: right;
+         padding-left: <<padding-left>>;
+         padding-right: <<padding-right>>;
+    }
+    .cbe-vl-table td:nth-child(5),
+    .cbe-vl-table td:nth-child(8),
+    .cbe-vl-table td:nth-child(11),
+    .cbe-vl-table td:nth-child(14),
+    .cbe-vl-table td:nth-child(17),
+    .cbe-d-table td:nth-child(2),
+    .cbe-d-table td:nth-child(5){
+         text-align: right;
+         padding-left: <<padding-left>>;
+         padding-right: 0px;
+    }
+    .cbe-vl-table td:nth-child(6),
+    .cbe-vl-table td:nth-child(9),
+    .cbe-vl-table td:nth-child(12),
+    .cbe-vl-table td:nth-child(15),
+    .cbe-vl-table td:nth-child(18),
+    .cbe-d-table td:nth-child(3),
+    .cbe-d-table td:nth-child(6) {
+         text-align: center;
+         padding-left: 0px;
+         padding-right: 0px;
+         width: 1px;
+    }
+    .cbe-vl-table td:nth-child(7),
+    .cbe-vl-table td:nth-child(10),
+    .cbe-vl-table td:nth-child(13),
+    .cbe-vl-table td:nth-child(16),
+    .cbe-vl-table td:nth-child(19),
+    .cbe-d-table td:nth-child(4),
+    .cbe-d-table td:nth-child(7) {
+         text-align: left;
+         padding-right: <<padding-left>>;
+         padding-left: 0px;
+    }
+    .cbe-d-table td:nth-child(1){
+         text-align: left;
+         padding-left: <<padding-left>>;
+         padding-right: <<padding-right>>;
+    }
+"
+  toprule <- paste0(toprule,"px")
+  midrule <- paste0(midrule,"px")
+  style_content <- fillin(cb_format_tmpl,
+                          c(codebook_format_stdstyle,
+                            indent=indent,toprule=toprule,midrule=midrule))
+  style_element <- html("style",style_content,linebreak=TRUE)
+  res <- html_group(style_element,res)
+  
+  return(res)
 }
