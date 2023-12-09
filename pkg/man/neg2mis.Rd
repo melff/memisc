@@ -7,7 +7,7 @@
   \code{neg2miss} allows to mark them as missing values.)
 }
 \usage{
-neg2miss(x,all=FALSE,exclude=NULL,select=NULL,zero=FALSE)
+neg2mis(x,all=FALSE,exclude=NULL,select=NULL,zero=FALSE)
 }
 \arguments{
   \item{x}{an object that inherits from class "item.list", e.g. a
