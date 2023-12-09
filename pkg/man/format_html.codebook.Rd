@@ -1,5 +1,6 @@
 \name{format_html.codebook}
 \alias{format_html.codebook}
+\alias{codebook_format_stdstyle}
 \title{
   Format Codebooks as HTML
 }
@@ -9,8 +10,10 @@
 }
 \usage{
 \method{format_html}{codebook}(x, 
-    toprule = 2, midrule = 1, 
-    padding = 3, 
+    toprule = 2,
+    midrule = 1,
+    indent = "3ex",
+    style = codebook_format_stdstyle,
     var_tag = "code", 
     varid_prefix = "", title_tag = "p",\dots)
 }
@@ -20,8 +23,9 @@
   codebook entry}
   \item{midrule}{a non-negative integer; thickness of the line (in pixels) that separates the
   header of an codebook entry from its body}
-  \item{padding}{a non-negative integer; left-hand padding in "ex" of the 
-  codebook entry contents}
+  \item{indent}{character string; indentation (by padding) of the 
+    codebook entry contents}
+  \item{style}{string containing the standard CSS styling of codebook table cells.}
   \item{var_tag}{character string; the HTML tag that contains the 
   name of the variable}
   \item{varid_prefix}{character string; a prefix added to 

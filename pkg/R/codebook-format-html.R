@@ -209,7 +209,8 @@ codebook_format_stdstyle <- c(
     "padding-right"=".3em"
 )
 
-format_html.codebook <- function(x,toprule=2,
+format_html.codebook <- function(x,
+                                 toprule=2,
                                  midrule=1,
                                  indent="3ex",
                                  style=codebook_format_stdstyle,

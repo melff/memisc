@@ -44,7 +44,7 @@
      thickness in pixels of rule at the bottom of the table.}
     \item{split.dec}{logical; whether numbers should be centered
     at the decimal point by splitting the table cells.}
-    \item{style}{string containing the stanard CSS styling of table cells.}
+    \item{style}{string containing the standard CSS styling of table cells.}
     \item{margin}{character string, determines the margin and thus
       the position of the HTML table.}
     \item{varontop}{logical; whether names of column variables should appear on top of factor levels}

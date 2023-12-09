@@ -372,7 +372,8 @@ export(
     df_format_stdstyle,
     ftable_format_stdstyle,
     mat_format_stdstyle,
-    mtable_format_stdstyle)
+    mtable_format_stdstyle,
+    codebook_format_stdstyle)
 
 export(html,content,attribs,style,
   setContent,setStyle,setAttribs,

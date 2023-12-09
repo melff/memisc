@@ -16,7 +16,7 @@
 }
 \usage{
 show_html(x, output = NULL, \dots)
-write_html(x, file, \dots)
+write_html(x, file, \dots, standalone = TRUE)
 
 format_html(x, \dots)
 
@@ -85,6 +85,7 @@ format_html(x, \dots)
   \item{margin}{character string, determines the margin and thus
     the position of the HTML table.}
   \item{\dots}{other arguments, passed on to formatter functions.}
+  \item{standalone}{logical; should HTML file contain a "!DOCTYPE" header?}
 }
 \value{
    \code{format_html} character string with code suitable for inclusion into a HTML-file.
