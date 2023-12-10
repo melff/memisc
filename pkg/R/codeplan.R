@@ -34,7 +34,7 @@ print.codeplan <- function(x,...){
     cat("\n",as.yaml(unclass(x)),"\n",sep="")
 }
 
-any.nzchar <- function(x) any(nzchar(x))
+any_nzchar <- function(x) any(nzchar(x))
 
 
 formatw <- function(x,width){

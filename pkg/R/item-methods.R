@@ -364,7 +364,7 @@ setMethod("as.character","item.vector",function(x,use.labels=TRUE,include.missin
 
 ## utilities #############################################################################
 
-relabel.item <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
+relabel_item <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
   subst <- c(...)
   vl <- x@value.labels
   vll <- vl@.Data
@@ -389,7 +389,7 @@ relabel.item <- function(x,...,gsub=FALSE,fixed=TRUE,warn=TRUE){
   return(x)
 }
 
-setMethod("relabel4","item",function(x,...)relabel.item(x,...))
+setMethod("relabel4","item",function(x,...)relabel_item(x,...))
 
 
 setMethod("summary","item.vector",function(object,...,maxsum=100,digits=3)

@@ -1,6 +1,7 @@
 \name{view}
 \alias{view}
 \alias{viewPrep}
+\alias{viewPrep.default}
 \alias{viewPrep.data.set}
 \alias{viewPrep.data.frame}
 \alias{viewPrep.descriptions}
