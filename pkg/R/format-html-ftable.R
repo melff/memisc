@@ -304,6 +304,7 @@ format_html.ftable <- function(x,
 
     style_element <- html("style",style_content,linebreak=TRUE)
     res <- html_group(style_element,res)
+    res <- as.character(res)
     return(res)
 }
 

@@ -311,6 +311,6 @@ format_html.codebook <- function(x,
                             indent=indent,toprule=toprule,midrule=midrule))
   style_element <- html("style",style_content,linebreak=TRUE)
   res <- html_group(style_element,res)
-  
+  res <- as.character(res)
   return(res)
 }
