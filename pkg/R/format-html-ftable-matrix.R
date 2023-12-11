@@ -20,11 +20,16 @@ format_html.ftable_matrix <- function(x,
                                       split.dec=TRUE,
                                       style=ftable_format_stdstyle,
                                       margin="2ex auto",
-                                      varontop,varinfront,
+                                      varontop,
+                                      varinfront,
+                                      grouprules=1,
                                       ...){
     
     row.vars <- attr(x,"row.vars")
     col.vars <- attr(x,"col.vars")
+
+    nms.cv <- names(col.vars)
+    n.col.vars <- length(col.vars)
 
     N <- nrow(x)
     M <- ncol(x)
@@ -37,10 +42,9 @@ format_html.ftable_matrix <- function(x,
     
     l.rv <- sapply(row.vars,length)
     max.l.rv <- max(l.rv)
-    
+
     if(missing(varontop)) varontop <- (max.l.cv <= 1)
     if(missing(varinfront)) varinfront <- (max.l.rv <= 1)
-    if(varontop) max.l.cv <- max.l.cv + 1
     
     d <- digits
     digits <- integer(M)
@@ -93,9 +97,14 @@ format_html.ftable_matrix <- function(x,
             cv.j <- col.vars[[j]]
             tmp.bdy <- htfm_mkBody(x[[i,j]],format[[j]],digits[[j]],split.dec)
             if(i == 1 && split.dec) {
-                if(!varontop && j > 1 && any(nzchar(names(cv.j))))
-                    col_sums <- col_sums + 1
+                nm.cv.j <- names(cv.j)
+                nz.nm.cv.j <- length(nm.cv.j) && all(nzchar(nm.cv.j))
                 m.j <- ncol(tmp.bdy)
+                if((!varontop || max.l.cv > 1) && nz.nm.cv.j) {
+                    col_sums <- col_sums + 1
+                    message(sprintf("Incremented col_sums j=%d varontop=%d max.l.cv=%d col_sums=%d",j,varontop,max.l.cv,col_sums))
+                    print(dot_cols)
+                }
                 dot_cols <- c(dot_cols, col_sums + (1:m.j-1)*3 + 2)
                 col_sums <- col_sums + 3*m.j
             }
@@ -152,10 +161,30 @@ format_html.ftable_matrix <- function(x,
                                        rows=1)
     style_bottomrule <- style_ftab_rule(id=ftab_id,rulewidth=bottomrule,bottom=TRUE,
                                           rows=ntot)
-    style_midrule <- style_ftab_rule(id=ftab_id,rulewidth=midrule,bottom=TRUE,
-                                          rows=nh)
-    style_grouprule <- style_ftab_matrix_group_rule(id=ftab_id,rulewidth=midrule)
     
+    nrows <- sapply(x,nrow)
+    dim(nrows) <- dim(x)
+    nrows <- nrows[,1]
+
+    if(length(nrows) > 1){
+        if(varinfront){
+            midrule_rows <- cumsum(c(nh,nrows))
+        }
+        else {
+            nrows <- nrows[-1]
+            l.nr <- length(nrows)
+            if(grouprules > 1)
+                midrule_rows <- c(nh,nrows + (rep(1:l.nr,each=2) - c(1,0)) + nh)
+            else
+                midrule_rows <- c(nh,nrows + 1:l.nr - 1 + nh)
+        }
+    }
+    else midrule_rows <- nh
+
+    style_midrule <- style_ftab_rule(id=ftab_id,rulewidth=midrule,bottom=TRUE,
+                                          rows=midrule_rows)
+    style_grouprule <- style_ftab_matrix_group_rule(id=ftab_id,rulewidth=midrule)
+
     style_content <- paste(
         style_global,
         style_toprule,
@@ -186,9 +215,9 @@ format_html.ftable_matrix <- function(x,
          /*background-color: green;*/
         "
         dot_cols <- dot_cols + nl
-        style_dots <- style_df_cols(id=ftab_id,cols=dot_cols+1,style=dot_style)
-        style_before_dots <- style_df_cols(id=ftab_id,cols=dot_cols,style=before_dot_style)
-        style_behind_dots <- style_df_cols(id=ftab_id,cols=dot_cols+2,style=behind_dot_style)
+        style_dots <- style_df_cols(id=ftab_id,cols=dot_cols,style=dot_style)
+        style_before_dots <- style_df_cols(id=ftab_id,cols=dot_cols-1,style=before_dot_style)
+        style_behind_dots <- style_df_cols(id=ftab_id,cols=dot_cols+1,style=behind_dot_style)
         style_content <- paste(style_content,
                                style_dots,
                                style_before_dots,
@@ -202,7 +231,6 @@ format_html.ftable_matrix <- function(x,
          /*background-color: gray;*/
         "
     style_header <- style_ftab_header(id=ftab_id,style=header_style)
-    style_header <- style_ftab_header(id=ftab_id,style=header_style)
     style_content <- paste(style_content,
                            style_header,
                            "\n")
@@ -211,7 +239,6 @@ format_html.ftable_matrix <- function(x,
     res <- html_group(style_element,res)
     res <- as.character(res)
     return(res)
-    
 }
 
 
@@ -269,7 +296,7 @@ htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec){
       htmp <- html_td(names(col.vars)[1],colspan=colspan,class="header")
     }
     else {
-      htmp <- html_td("",colspan=colspan,class="header")
+      htmp <- html_td("",colspan=colspan)
     }
     header <- c(list(htmp),header)
   }
@@ -283,9 +310,11 @@ htfm_mkHeader <- function(col.vars,m,max.l.cv,varontop,split.dec){
   if(n.col.vars > 1 || !varontop)
     colspan <- colspan + 1
   
-  header <- rep(list(html_td("",colspan=colspan)),max.l.cv)
+  l.header <- max.l.cv + varontop
+
+  header <- rep(list(html_td("",colspan=colspan)),l.header)
   
-  i <- seq(to=max.l.cv,length=length(tmp.header))
+  i <- seq(to=l.header,length=length(tmp.header))
   header[i] <- tmp.header
   header
 }

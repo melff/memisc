@@ -27,7 +27,9 @@
                    split.dec=TRUE,
                    style = ftable_format_stdstyle,
                    margin="2ex auto", 
-                   varontop,varinfront,
+                   varontop,
+                   varinfront,
+                   grouprules=1,
                    \dots)
 }
 \arguments{
@@ -48,7 +50,10 @@
     \item{margin}{character string, determines the margin and thus
       the position of the HTML table.}
     \item{varontop}{logical; whether names of column variables should appear on top of factor levels}
-    \item{varinfront}{logical; whether names of row variables should appear in front of factor levels}
+    \item{varinfront}{logical; whether names of row variables should
+      appear in front of factor levels}
+    \item{grouprules}{integer, should be either 1 or 2; whether one or
+      two rules should drawn to distinguish groups of rows.}
     \item{\dots}{further arguments, ignored.}}
 \seealso{
   See Also as \code{\link{format_html}}, \code{\link{show_html}}, \code{\link{write_html}}.
