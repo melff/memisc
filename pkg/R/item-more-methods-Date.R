@@ -9,7 +9,7 @@ setMethod("as.item","Date",function(x,...){
 
 setMethod("as.item","Date.item",as_item_item)
 
-as.Date.numeric.item <- function(x)
+as.Date.numeric.item <- function(x,...)
                           as.Date(as.numeric(x),
                                   origin=structure(0,class="Date"))
 

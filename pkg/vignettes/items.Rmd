@@ -433,7 +433,7 @@ as can be seen, `recode()` was called in such a way that not only old
 codes are transferred into new ones, but also the new codes are labelled.
 
 
-[^3]: The [German Longitudinal Election Study](https://gles.eu) is funded by the German National Science Foundation (DFG) and carried out outin close cooperation with the [DGfW](https://www.dgfw.info/), German Society for Electoral Studies.
+[^3]: The [German Longitudinal Election Study](https://www.gesis.org/gles/about-gles) is funded by the German National Science Foundation (DFG) and carried out outin close cooperation with the [DGfW](https://www.dgfw.info/), German Society for Electoral Studies.
 Principal investigators are Hans Rattinger (University of Mannheim, until 2014), Sigrid Roßteutscher (University of Frankfurt), Rüdiger Schmitt-Beck (University of Mannheim), Harald Schoen (Mannheim Centre for European Social Research, from 2015), Bernhard Weßels (Social Science Research Center Berlin), and Christof Wolf (GESIS – Leibniz Institute for the Social Sciences, since 2012). Neither the funding organisation nor the principal investigators bear any responsibility for the example code shown here.
 
 ### Case distinctions 

@@ -1,4 +1,4 @@
-str.has <- function(text,has,not=NULL,how=c("all","any")){
+str_has <- function(text,has,not=NULL,how=c("all","any")){
     how <- match.fun(match.arg(how))
 
     hasit <- sapply(has,function(pat)regexpr(pat,text,fixed=TRUE) > 0)
@@ -144,7 +144,7 @@ prettyNames1 <- function(str,
       else if(is.matrix(contrast.f))
         contrast.matrix <- contrast.f
       levels.present <- sapply(levels,function(level)
-            any(str.has(str,c(f,level)))
+            any(str_has(str,c(f,level)))
             )
       if(all(levels.present))
         oldlabels <- newlabels <- levels
