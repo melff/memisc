@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">memisc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/anes48.html">UNKNOWN TITLE</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">UNKNOWN TITLE</a>
     <a class="dropdown-item" href="../articles/items.html">UNKNOWN TITLE</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">UNKNOWN TITLE</a>
@@ -109,468 +109,524 @@ format<a class="anchor" aria-label="anchor" href="#a-demonstration-of-showing-mt
 <p>Finally we view the results in HTML format.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="va">mtable123</span><span class="op">)</span></span></code></pre></div>
-<table class="table mtable" style="border-collapse: collapse; border-style: none; margin: 2ex auto;">
-<tr style="border-style: none;">
-<td colspan="1" style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; border-top: 1px solid;">
+<style>
+      table#mtable-1 {
+         border-collapse: collapse; border-style: none; margin: 2ex auto;
+      } 
+      table#mtable-1 tr {
+          border-style: none;
+      } 
+      table#mtable-1 td {
+        padding-top: 3px; 
+        padding-bottom: 3px; 
+        padding-left: 0.5ex; 
+        padding-right: 0.5ex; 
+        margin: 0px; 
+        margin-top: 0px;
+        margin-bottom: 0px;
+        border-style: none; 
+        border-width: 0px; 
+      }
+table#mtable-1 tr:nth-child(1){
+     border-top: 2px solid;
+}
+table#mtable-1 tr:nth-child(1),
+table#mtable-1 tr:nth-child(11){
+     border-bottom: 1px solid;
+}
+table#mtable-1 tr:nth-child(16){
+     border-bottom: 2px solid;
+} table#mtable-1 td:nth-child(3),
+table#mtable-1 td:nth-child(6),
+table#mtable-1 td:nth-child(9){
+         padding-left: 0px;
+         padding-right: 0px;
+         text-align: center; 
+         /*background-color: blue;*/
+        } table#mtable-1 td:nth-child(2),
+table#mtable-1 td:nth-child(5),
+table#mtable-1 td:nth-child(8){
+         padding-left: 0.5ex;
+         padding-right: 0px;
+         text-align: right; 
+         /*background-color: red;*/
+        } table#mtable-1 td:nth-child(4),
+table#mtable-1 td:nth-child(7),
+table#mtable-1 td:nth-child(10){
+         padding-left: 0px;
+         padding-right: 0.5ex;
+         text-align: left; 
+         /*background-color: green;*/
+        } 
+table#mtable-1 td:nth-child(n of .header){
+         padding-left: 0.5ex;
+         padding-right: 0.5ex;
+         text-align: center; 
+         /*background-color: gray;*/
+        } 
+</style>
+<table id="mtable-1" class="table">
+<tr>
+<td colspan="1" class="header">
 </td>
-<td colspan="3" style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; border-top: 1px solid;">
+<td colspan="3" class="header">
 Model 1
 </td>
-<td colspan="3" style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; border-top: 1px solid;">
+<td colspan="3" class="header">
 Model 2
 </td>
-<td colspan="3" style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; border-top: 1px solid;">
+<td colspan="3" class="header">
 Model 3
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; border-top: 1px solid;">
+<tr>
+<td>
 Constant
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-top: 1px solid;">
+<td>
 30
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-top: 1px solid;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-top: 1px solid;">
+<td>
 628<span class="signif.symbol">***</span>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-top: 1px solid;">
+<td>
 6
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-top: 1px solid;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-top: 1px solid;">
+<td>
 360<span class="signif.symbol">***</span>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-top: 1px solid;">
+<td>
 28
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-top: 1px solid;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-top: 1px solid;">
+<td>
 566<span class="signif.symbol">***</span>
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (7
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 409)
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (1
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 252)
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (7
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 355)
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 Percentage of population under 15
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 −0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 471<span class="signif.symbol">**</span>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 −0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 461<span class="signif.symbol">**</span>
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 147)
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 145)
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 Percentage of population over 75
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 −1
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 934
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 −1
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 691
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (1
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 041)
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (1
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 084)
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 Real per-capita disposable income
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 001
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 −0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 000
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 001)
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 001)
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 Growth rate of real per-capita disp. income
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 529<span class="signif.symbol">*</span>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 410<span class="signif.symbol">*</span>
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 210)
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 (0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 196)
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; border-top: 1px solid;">
+<tr>
+<td>
 sigma
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-top: 1px solid;">
+<td>
 3
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-top: 1px solid;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-top: 1px solid;">
+<td>
 931
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-top: 1px solid;">
+<td>
 4
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-top: 1px solid;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-top: 1px solid;">
+<td>
 189
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-top: 1px solid;">
+<td>
 3
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-top: 1px solid;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-top: 1px solid;">
+<td>
 803
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 R-squared
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 262
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 162
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 338
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 F
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 8
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 332
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 4
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 528
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 5
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 756
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left;">
+<tr>
+<td>
 p
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 001
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 016
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 001
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.3em; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; border-bottom: 1px solid;">
+<tr>
+<td>
 N
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-bottom: 1px solid;">
+<td>
 50
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-bottom: 1px solid;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-bottom: 1px solid;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-bottom: 1px solid;">
+<td>
 50
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-bottom: 1px solid;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-bottom: 1px solid;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em; border-bottom: 1px solid;">
+<td>
 50
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px; border-bottom: 1px solid;">
+<td>
 </td>
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px; text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em; border-bottom: 1px solid;">
+<td>
 </td>
 </tr>
-<tr style="border-style: none;">
-<td style="padding-top: 3px; padding-bottom: 3px; padding-left: 0.5ex; padding-right: 0.5ex; margin-top: 0px; margin-bottom: 0px; border-style: none; border-width: 0px;" colspan="10">
-<p style="width: inherit;">
+<tr>
+<td colspan="10">
+<p>
 Significance: *** = p &lt; 0.001; ** = p &lt; 0.01; * = p &lt; 0.05
 </p>
 </td>
