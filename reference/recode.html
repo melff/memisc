@@ -10,7 +10,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">memisc</a>
 
@@ -153,13 +153,14 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-in"><span>                  e<span class="op">=</span><span class="fl">5</span>,</span></span>
 <span class="r-in"><span>                  f<span class="op">=</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] b b a f b a a e f f b d d e e f a d d a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] d b c a f a a e d a a c e d b b d a c b</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="codebook.html">codebook</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="fu">recode</span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>           a <span class="op">=</span> <span class="fl">1</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,</span></span>
 <span class="r-in"><span>           b <span class="op">=</span> <span class="fl">2</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>recoding created 3 NAs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    recode(x, a = 1 &lt;- 1:2, b = 2 &lt;- 4:6)</span>
@@ -169,10 +170,11 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Storage mode: integer</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Measurement: nominal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   9    45.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                  11    55.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels     N Valid Total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'a'             10  58.8  50.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'b'              7  41.2  35.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    NA M                  3        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -192,9 +194,9 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   9    45.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                  11    55.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   0     0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                  10    50.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                   7    35.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   3    15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Note the handling of labels if the recoding rules are bijective</span></span></span>
@@ -215,11 +217,11 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1 'b'                   4    20.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'a'                   5    25.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   0     0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'a'                   6    30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   3    15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    4 'd'                   4    20.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5 'e'                   3    15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    6 'f'                   4    20.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    5 'e'                   2    10.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    6 'f'                   1     5.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="codebook.html">codebook</a></span><span class="op">(</span></span></span>
@@ -239,11 +241,11 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   4    20.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                   5    25.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   0     0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                   6    30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   3    15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    4 'd'                   4    20.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5 'e'                   3    15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    6 'f'                   4    20.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    5 'e'                   2    10.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    6 'f'                   1     5.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -258,7 +260,7 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Item (measurement: nominal, type: integer, length = 20) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:20] A A A C A A A C C C A B B C C C A B B A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:20] B A B A C A A C B A A B C B A A B A B A</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># This causes an error action: the sets</span></span></span>
 <span class="r-in"><span><span class="co"># of original values overlap.</span></span></span>
@@ -280,7 +282,7 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Item (measurement: nominal, type: integer, length = 20) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:20] A A A C A A A C C C A B B C C C A B B A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:20] B A B A C A A C B A A B C B A A B A B A</span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span><span class="co"># This results in an all-missing vector:</span></span></span>
 <span class="r-in"><span><span class="fu">recode</span><span class="op">(</span><span class="va">x</span>,</span></span>
@@ -302,7 +304,7 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-in"><span>  <span class="fl">2</span> <span class="op">&lt;-</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,</span></span>
 <span class="r-in"><span>  <span class="fl">3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fl">5</span>,<span class="va">max</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 3 1 1 1 3 3 3 1 2 2 3 3 3 1 2 2 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2 1 2 1 3 1 1 3 2 1 1 2 3 2 1 1 2 1 2 1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># This causes another error action:</span></span></span>
 <span class="r-in"><span><span class="co"># the third argument is an invalid</span></span></span>
@@ -322,14 +324,14 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-in"><span>  <span class="st">"b"</span> <span class="op">&lt;-</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"c"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] a a a c a a a c c c a b b c c c a b b a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] b a b a c a a c b a a b c b a a b a b a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: a b c</span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span><span class="fu">recode</span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>  <span class="fl">1</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span></span>
 <span class="r-in"><span>  <span class="fl">2</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 2 1 1 1 2 2 2 1 2 2 2 2 2 1 2 2 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2 1 1 1 2 1 1 2 2 1 1 1 2 2 1 1 2 1 1 1</span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span><span class="fu">recode</span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>  <span class="fl">4</span> <span class="op">&lt;-</span> <span class="fl">7</span>,</span></span>
@@ -337,14 +339,14 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-in"><span>  otherwise <span class="op">=</span> <span class="st">"copy"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>recodings 4 &lt;- 7, 5 &lt;- 8 have no consequences</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2 2 1 6 2 1 1 5 6 6 2 4 4 5 5 6 1 4 4 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 4 2 3 1 6 1 1 5 4 1 1 3 5 4 2 2 4 1 3 2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">recode</span><span class="op">(</span><span class="va">f</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"A"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"B"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>,<span class="st">"d"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  otherwise<span class="op">=</span><span class="st">"copy"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] A A A f A A A e f f A B B e e f A B B A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] B A B A f A A e B A A B e B A A B A B A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: A B e f</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">recode</span><span class="op">(</span><span class="va">f</span>,</span></span>
@@ -352,16 +354,16 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-in"><span>  <span class="st">"B"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>,<span class="st">"d"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  otherwise<span class="op">=</span><span class="st">"C"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] A A A C A A A C C C A B B C C C A B B A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] B A B A C A A C B A A B C B A A B A B A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: A B C</span>
 <span class="r-in"><span> </span></span>
 <span class="r-in"><span><span class="fu">recode</span><span class="op">(</span><span class="va">f</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"A"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"B"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>,<span class="st">"d"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>recoding created 7 NAs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] A    A    A    &lt;NA&gt; A    A    A    &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; A    B    B    &lt;NA&gt; &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] &lt;NA&gt; A    B    B    A   </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>recoding created 3 NAs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] B    A    B    A    &lt;NA&gt; A    A    &lt;NA&gt; B    A    A    B    &lt;NA&gt; B    A   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] A    B    A    B    A   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: A B</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">DS</span> <span class="op">&lt;-</span> <span class="fu"><a href="dataSets.html">data.set</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="items.html">as.item</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,<span class="fl">20</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,</span></span>
@@ -373,26 +375,26 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-in"><span>                  f<span class="op">=</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DS</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2 c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3 c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2 a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3 b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4 c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5 b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6 b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7 d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8 c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9 c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5 f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6 e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7 c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8 a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9 a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15 c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 d</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">DS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">DS</span>,<span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="va">xf</span> <span class="op">&lt;-</span> <span class="fu">recode</span><span class="op">(</span><span class="va">x</span>,</span></span>
@@ -419,26 +421,26 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 20 observations and 5 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x xf xn xc xcc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 c  b  3  c   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2 c  b  3  c   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3 c  b  3  c   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 b  a  2  b   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2 a  a  1  a   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3 b  a  2  b   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4 c  b  3  c   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5 b  a  2  b   1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6 b  a  2  b   1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7 d  b  4  d   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8 c  b  3  c   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9 c  b  3  c   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 f  c  6  f   3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 a  a  1  a   1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 e  c  5  e   3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 b  a  2  b   1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 c  b  3  c   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5 f  c  6  f   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6 e  c  5  e   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7 c  b  3  c   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8 a  a  1  a   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9 a  a  1  a   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 a  a  1  a   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 f  c  6  f   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 a  a  1  a   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 e  c  5  e   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 b  a  2  b   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15 c  b  3  c   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 e  c  5  e   3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 a  a  1  a   1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 d  b  4  d   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 d  b  4  d   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 f  c  6  f   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 c  b  3  c   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 d  b  4  d   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 a  a  1  a   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 c  b  3  c   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 d  b  4  d   2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">DS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">DS</span>,<span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="va">xf</span> <span class="op">&lt;-</span> <span class="fu">recode</span><span class="op">(</span><span class="va">x</span>,</span></span>
@@ -462,26 +464,26 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 20 observations and 7 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x xf xn xc xcc x1 xf1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 c  b  3  c   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2 c  b  3  c   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3 c  b  3  c   2  b   B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 b  a  2  b   1  a   A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2 a  a  1  a   1  a   A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3 b  a  2  b   1  a   A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4 c  b  3  c   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5 b  a  2  b   1  a   A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6 b  a  2  b   1  a   A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7 d  b  4  d   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8 c  b  3  c   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9 c  b  3  c   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 f  c  6  f   3  f   f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 a  a  1  a   1  a   A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 e  c  5  e   3  e   e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 b  a  2  b   1  a   A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 c  b  3  c   2  b   B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5 f  c  6  f   3  f   f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6 e  c  5  e   3  e   e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7 c  b  3  c   2  b   B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8 a  a  1  a   1  a   A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9 a  a  1  a   1  a   A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 a  a  1  a   1  a   A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 f  c  6  f   3  f   f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 a  a  1  a   1  a   A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 e  c  5  e   3  e   e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 b  a  2  b   1  a   A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15 c  b  3  c   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 e  c  5  e   3  e   e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 a  a  1  a   1  a   A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 d  b  4  d   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 d  b  4  d   2  b   B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 f  c  6  f   3  f   f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 c  b  3  c   2  b   B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 d  b  4  d   2  b   B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 a  a  1  a   1  a   A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 c  b  3  c   2  b   B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 d  b  4  d   2  b   B</span>
 <span class="r-in"><span><span class="fu"><a href="codebook.html">codebook</a></span><span class="op">(</span><span class="va">DS</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -494,10 +496,10 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   2    10.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   6    30.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                   3    15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   8    40.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4 'd'                   3    15.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   5    25.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    4 'd'                   2    10.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    5 'e'                   2    10.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    6 'f'                   2    10.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -512,8 +514,8 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   5    25.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                  11    55.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   9    45.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                   7    35.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3 'c'                   4    20.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
@@ -527,8 +529,8 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Min: 1.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 6.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean: 3.300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.: 1.382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean: 2.850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.: 1.652</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -553,8 +555,8 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 '1'                   5    25.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 '2'                  11    55.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 '1'                   9    45.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 '2'                   7    35.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3 '3'                   4    20.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
@@ -568,8 +570,8 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   5    25.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                  11    55.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'a'                   9    45.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'b'                   7    35.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    5 'e'                   2    10.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    6 'f'                   2    10.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -584,8 +586,8 @@ with the syntax of the <code>recode</code> function of that package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'A'                   5    25.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'B'                  11    55.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'A'                   9    45.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'B'                   7    35.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    5 'e'                   2    10.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    6 'f'                   2    10.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
