@@ -6,7 +6,7 @@
   that delimits the output to one line per variable.
 With setCodeplan an item list structure (as returned by codeplan())
   can be applied to a data frame or data set. It is also possible to use an
-  assignment like codeplan(x) &amp;lt;- value to a similar effect."><title>Describe structure of Data Sets and Importers — codeplan • memisc</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Describe structure of Data Sets and Importers — codeplan"><meta property="og:description" content="The function codeplan() creates a data frame that
+  assignment like codeplan(x) &amp;lt;- value to a similar effect."><title>Describe structure of Data Sets and Importers — codeplan • memisc</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Describe structure of Data Sets and Importers — codeplan"><meta property="og:description" content="The function codeplan() creates a data frame that
   describes the structure of an item list (a data.set object or
   an importer object), so that this structure can be stored and
   and recovered. The resulting data frame has a particular print method
@@ -38,7 +38,7 @@ With setCodeplan an item list structure (as returned by codeplan())
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">UNKNOWN TITLE</a>
+    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">UNKNOWN TITLE</a>
     <a class="dropdown-item" href="../articles/items.html">UNKNOWN TITLE</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">UNKNOWN TITLE</a>
@@ -280,13 +280,13 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          40  34.8  13.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 41  35.7  13.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      34  29.6  11.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             47        15.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         40        13.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         57        19.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    41        13.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          39  29.8  13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 48  36.6  16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      44  33.6  14.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             39        13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         50        16.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         40        13.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    40        13.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -303,10 +303,10 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               136  52.3  45.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               90  34.6  30.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  34  13.1  11.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    40        13.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               123  50.6  41.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               76  31.3  25.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  44  18.1  14.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    57        19.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -320,10 +320,10 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Storage mode: double</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Measurement: ratio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:   217.126</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 16872.431</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean:  2632.363</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  2206.038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:   136.099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 10964.443</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean:  2572.043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  1943.411</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -335,33 +335,33 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">Data2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">Data2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	300 obs. of  3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : num  1 1 97 3 1 8 99 2 99 97 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: num  2 3 1 1 1 2 1 2 3 1 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  785 2274 3992 3017 3720 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : num  3 99 2 1 2 3 1 2 9 2 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: num  1 2 2 3 99 99 3 1 99 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  2357 3113 5685 1767 727 ...</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">Data2df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	300 obs. of  3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Factor w/ 3 levels "Conservatives",..: 1 1 NA 3 1 NA NA 2 NA NA ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Factor w/ 3 levels "Conservatives",..: 3 NA 2 1 2 3 1 2 NA 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Vote intention"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Factor w/ 3 levels "England","Scotland",..: 2 3 1 1 1 2 1 2 3 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Factor w/ 3 levels "England","Scotland",..: 1 2 2 3 NA NA 3 1 NA 1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Region of residence"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  785 2274 3992 3017 3720 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  2357 3113 5685 1767 727 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Household income"</span>
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">Data2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># Does not change anything</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Codeplans of survey items can also be inquired and manipulated:</span></span></span>
 <span class="r-in"><span><span class="va">vote</span> <span class="op">&lt;-</span> <span class="va">Data1</span><span class="op">$</span><span class="va">vote</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">vote</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num [1:300] 99 1 2 99 99 3 99 9 9 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num [1:300] 97 99 1 2 3 1 9 1 97 97 ...</span>
 <span class="r-in"><span><span class="va">cp.vote</span> <span class="op">&lt;-</span> <span class="fu">codeplan</span><span class="op">(</span><span class="va">vote</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">vote</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">vote</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  num [1:300] 99 1 2 99 99 3 99 9 9 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  num [1:300] 97 99 1 2 3 1 9 1 97 97 ...</span>
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">vote</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">cp.vote</span></span></span>
 <span class="r-in"><span><span class="va">vote</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Item 'Vote intention' (measurement: nominal, type: double, length = 300) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] *Not asked in survey Conservatives Labour *Not asked in survey ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] *Not applicable *Not asked in survey Conservatives Labour ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fn.json</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">".json"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">write_codeplan</span><span class="op">(</span><span class="fu">codeplan</span><span class="op">(</span><span class="va">Data1</span><span class="op">)</span>,filename<span class="op">=</span><span class="va">fn.json</span><span class="op">)</span></span></span>

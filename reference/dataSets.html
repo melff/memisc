@@ -13,7 +13,7 @@ Thus data preparation using data sets retains all informations
   functions.  
 dsView is a function that displays data sets in a similar
   manner as View displays data frames. (View works
-  with data sets as well, but changes them first into data frames.)"><title>Data Set Objects — data.set • memisc</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Data Set Objects — data.set"><meta property="og:description" content="&quot;data.set&quot; objects are collections of &quot;item&quot; objects,
+  with data sets as well, but changes them first into data frames.)"><title>Data Set Objects — data.set • memisc</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Data Set Objects — data.set"><meta property="og:description" content="&quot;data.set&quot; objects are collections of &quot;item&quot; objects,
   with similar semantics as data frames. They are distinguished
   from data frames so that coercion by as.data.fame
   leads to a data frame that contains only vectors and factors.
@@ -52,7 +52,7 @@ dsView is a function that displays data sets in a similar
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">UNKNOWN TITLE</a>
+    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">UNKNOWN TITLE</a>
     <a class="dropdown-item" href="../articles/items.html">UNKNOWN TITLE</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">UNKNOWN TITLE</a>
@@ -226,33 +226,33 @@ a data frame.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 300 observations and 3 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    vote               region     income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 *Not asked in survey *Not asked in survey  1715.6085</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2      *Not applicable *Not asked in survey  2252.1969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3               Labour *Not asked in survey  3877.5634</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4        Conservatives                Wales   957.1327</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5      *Not applicable              England  5828.3387</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6    Liberal Democrats *Not asked in survey 15438.2770</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7        Conservatives              England  1736.9046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8        Conservatives             Scotland  1343.7010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9               Labour              England  1881.3877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          *Don't know                Wales  3372.9566</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11      *Not applicable              England  2709.0086</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12          *Don't know             Scotland  1550.5605</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13    Liberal Democrats              England  1782.3988</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14          *Don't know                Wales  1088.8877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 *Not asked in survey *Not asked in survey  1568.4711</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16               Labour              England  1673.8212</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17          *Don't know              England   704.1890</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18        Conservatives *Not asked in survey  1023.8533</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19        Conservatives              England  5322.1834</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20      *Not applicable              England  1927.4379</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21      *Answer refused              England  5909.2853</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22      *Not applicable             Scotland  3377.8488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23      *Answer refused              England  4466.9434</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24          *Don't know              England  4842.7757</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 *Not asked in survey             Scotland  1271.7488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> .. .................... .................... ..........</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    vote               region    income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1      *Answer refused             Scotland  944.2337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2 *Not asked in survey *Not asked in survey 5112.9072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3 *Not asked in survey              England 1803.2351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4               Labour                Wales 1507.5144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5      *Answer refused              England 2292.3071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6          *Don't know              England  659.5949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7        Conservatives              England 1949.3719</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8 *Not asked in survey                Wales  836.8290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9               Labour             Scotland 2628.9685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Liberal Democrats              England 2287.4699</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11        Conservatives *Not asked in survey 2592.4487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      *Not applicable                Wales 2483.5636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13               Labour             Scotland  767.2337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 *Not asked in survey *Not asked in survey  615.2773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15          *Don't know              England 2861.8562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16          *Don't know              England 1474.5820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17      *Answer refused             Scotland 1662.4548</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    Liberal Democrats *Not asked in survey 2005.6087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19               Labour *Not asked in survey 1998.9550</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20        Conservatives              England 2852.1071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    Liberal Democrats                Wales 2685.5377</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22    Liberal Democrats              England 5197.4616</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23        Conservatives              England 2400.2614</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24          *Don't know              England 2075.5128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25    Liberal Democrats *Not asked in survey 2960.6372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> .. .................... .................... .........</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (25 of 300 observations shown)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -263,18 +263,18 @@ a data frame.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 300 obs. of 3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num  99 97 2 1 97 3 1 1 2 8 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Nmnl. item w/ 5 labels for 1,2,3,... + ms.v.  num  99 99 99 3 1 99 1 2 1 3 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: Rto. item  num  1716 2252 3878 957 5828 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num  9 99 99 2 9 8 1 99 2 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Nmnl. item w/ 5 labels for 1,2,3,... + ms.v.  num  2 99 1 3 1 1 1 3 2 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: Rto. item  num  944 5113 1803 1508 2292 ...</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    vote                     region        income       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Conservatives       :44   England             :122   Min.   :  241.1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Labour              :56   Scotland            : 75   1st Qu.: 1309.3  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Liberal Democrats   :45   Wales               : 49   Median : 2016.5  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Don't know         :31   *Not asked in survey: 54   Mean   : 2693.4  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Answer refused     :48                              3rd Qu.: 3293.5  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not applicable     :41                              Max.   :15438.3  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not asked in survey:35                                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Conservatives       :38   England             :134   Min.   :  281.2  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Labour              :47   Scotland            : 87   1st Qu.: 1189.2  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Liberal Democrats   :49   Wales               : 35   Median : 1990.9  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Don't know         :34   *Not asked in survey: 44   Mean   : 2518.2  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Answer refused     :39                              3rd Qu.: 3135.1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not applicable     :60                              Max.   :12747.5  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not asked in survey:33                                               </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># If we want to 'View' a data set we can use 'dsView'</span></span></span>
@@ -287,72 +287,72 @@ a data frame.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Item 'Vote intention' (measurement: nominal, type: double, length = 300) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] *Not asked in survey *Not applicable Labour Conservatives ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] *Answer refused *Not asked in survey *Not asked in survey Labour ...</span>
 <span class="r-in"><span><span class="va">Data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 1 observations and 3 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   vote               region   income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 *Not asked in survey *Not asked in survey 1715.609</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              vote   region   income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 *Answer refused Scotland 944.2337</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                vote  region     income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1              &lt;NA&gt;    &lt;NA&gt;  1715.6085</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2              &lt;NA&gt;    &lt;NA&gt;  2252.1969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            Labour    &lt;NA&gt;  3877.5634</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Conservatives   Wales   957.1327</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5              &lt;NA&gt; England  5828.3387</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Liberal Democrats    &lt;NA&gt; 15438.2770</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     vote   region    income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   &lt;NA&gt; Scotland  944.2337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   &lt;NA&gt;     &lt;NA&gt; 5112.9072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   &lt;NA&gt;  England 1803.2351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Labour    Wales 1507.5144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   &lt;NA&gt;  England 2292.3071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   &lt;NA&gt;  England  659.5949</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">EnglandData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Data</span>,<span class="va">region</span> <span class="op">==</span> <span class="st">"England"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">EnglandData</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 122 observations and 3 variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 134 observations and 3 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 vote  region    income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1   *Not applicable England 5828.3387</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2     Conservatives England 1736.9046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3            Labour England 1881.3877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4   *Not applicable England 2709.0086</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5 Liberal Democrats England 1782.3988</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6            Labour England 1673.8212</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7       *Don't know England  704.1890</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8     Conservatives England 5322.1834</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9   *Not applicable England 1927.4379</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   *Answer refused England 5909.2853</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   *Answer refused England 4466.9434</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       *Don't know England 4842.7757</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13   *Answer refused England 2103.0118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     Conservatives England  684.7497</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     Conservatives England 2865.5092</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Liberal Democrats England 1621.3743</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17            Labour England 1387.0668</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 Liberal Democrats England 3318.2035</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19   *Answer refused England 1957.5920</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20   *Answer refused England 2743.2113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21            Labour England 6947.0691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     Conservatives England 9186.9795</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 Liberal Democrats England 3130.7817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24   *Answer refused England 1131.3532</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25            Labour England 3170.6028</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> .. ................. ....... .........</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (25 of 122 observations shown)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    vote  region    income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 *Not asked in survey England 1803.2351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2      *Answer refused England 2292.3071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3          *Don't know England  659.5949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4        Conservatives England 1949.3719</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5    Liberal Democrats England 2287.4699</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6          *Don't know England 2861.8562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7          *Don't know England 1474.5820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8        Conservatives England 2852.1071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9    Liberal Democrats England 5197.4616</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        Conservatives England 2400.2614</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11          *Don't know England 2075.5128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      *Answer refused England 3211.8419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13        Conservatives England 4885.4607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14               Labour England 2333.8379</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15               Labour England 2779.3364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    Liberal Democrats England 2060.1537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17               Labour England 6327.5283</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          *Don't know England 1144.4259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 *Not asked in survey England  895.1926</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20               Labour England 1827.1834</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21               Labour England 2040.6935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22      *Not applicable England 2387.5276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23    Liberal Democrats England 2882.4550</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24          *Don't know England  529.0566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25               Labour England 3806.4456</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> .. .................... ....... .........</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (25 of 134 observations shown)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">vote</span><span class="op">+</span><span class="va">region</span>,data<span class="op">=</span><span class="va">Data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    region</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vote                England Scotland Wales</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives          17       16     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                 30       11     7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats      18       13     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives          17       13     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                 21       15     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats      27       11     5</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">vote</span><span class="op">+</span><span class="va">region</span>,data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">Data</span>, <span class="va">vote</span> <span class="op">&lt;-</span> <span class="fu"><a href="value-filters.html">include.missings</a></span><span class="op">(</span><span class="va">vote</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       region</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vote                   England Scotland Wales</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives             17       16     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                    30       11     7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats         18       13     9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Don't know               11        4     9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Answer refused           23        8     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not applicable           14       13     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not asked in survey       9       10     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives             17       13     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                    21       15     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats         27       11     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Don't know               17        8     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Answer refused           17       11     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not applicable           23       19     8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not asked in survey      12       10     6</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
