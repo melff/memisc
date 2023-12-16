@@ -1,18 +1,17 @@
-% \VignetteIndexEntry{Combining flattened contingency tables (and other tables)}
-% \VignetteEngine{knitr::rmarkdown}
-% \VignetteEncoding{UTF-8}
+---
+title: Combining flattened contingency tables (and other tables)
+output: rmarkdown::html_vignette
+vignette: >
+  % \VignetteIndexEntry{Combining flattened contingency tables (and other tables)}
+  % \VignetteEngine{knitr::rmarkdown}
+  % \VignetteEncoding{UTF-8}
+---
 
 ```{r,echo=FALSE,message=FALSE}
 knitr::opts_chunk$set(comment=NA,
                fig.align="center",
                results="markup")
 ```
-
----
-title: Combining flattened contingency tables (and other tables)
----
-
-# Combining flattened contingency tables (and other tables)
 
 This vignette demonstrates how flattened contingency tables can be combined into more
 complex tables. For starters, we create a few contingendy tables.

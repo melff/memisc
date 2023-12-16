@@ -1,5 +1,12 @@
-% \VignetteIndexEntry{Analysing the American National Election Study of 1948 with "memisc"}
-% \VignetteEngine{knitr::rmarkdown}
+---
+title: Analysing the American National Election Study of 1948 with 'memisc'
+output: rmarkdown::html_vignette
+vignette: >
+  % \VignetteIndexEntry{Analysing the American National Election Study of 1948 with "memisc"}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
 
 
 ```{r,echo=FALSE,message=FALSE}
@@ -8,13 +15,8 @@ knitr::opts_chunk$set(comment=NA,
                results="markup")
 ```
 
----
-title: Analysing the American National Election Study of 1948 with 'memisc'
----
 
-# Analysing the American National Election Study of 1948 with *memisc*
-
-## Introduction
+# Introduction
 
 This vignette gives an example for the analysis of a typical social science data set.
 It is the data file of the *American National Election Study* of
@@ -79,7 +81,7 @@ knit_print.mtable <-function(x,...)
   knitr::asis_output(format_html(x,...))
 ```
 
-## Reading in a "portable" SPSS data file
+# Reading in a "portable" SPSS data file
 
 We start with importing the data into R.
 The following code extracts the SPSS portable file
@@ -210,9 +212,9 @@ of the class and type of the variables in the data set,
 the value labels and defined missing values, and counts of
 the distinct values of the variables.
 
-## Analysis
+# Analysis
 
-### Some descriptive analyses
+## Some descriptive analyses
 
 We start our analyses with a contingency table, but first
 we make some preparations: We recode the variables of
