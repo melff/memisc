@@ -228,6 +228,16 @@ format_html.codebook <- function(x,
   res <- html_div(unlist(out),class="codebook")
 
   cb_format_tmpl <- "
+    .cbe-body table {
+         margin: unset;
+    }
+    .cbe-body table,
+    .cbe-body table tr,
+    .cbe-body table td
+    {
+         border-style: none;
+         padding: unset;
+    }
     .cbe-header {
          border-top: solid 2px;
          border-bottom: solid 1px;
