@@ -20,5 +20,5 @@ Suggests: splines, knitr, rmarkdown, sandwich
 Enhances: AER, car, eha, lme4, ordinal, simex, tibble, haven
 Imports: grid, data.table, yaml, jsonlite
 VignetteBuilder: knitr
-URL: http://memisc.elff.eu,https://github.com/melff/memisc/
+URL: https://melff.github.io/memisc,https://github.com/melff/memisc/
 BugReports: https://github.com/melff/memisc/issues

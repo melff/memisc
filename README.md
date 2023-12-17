@@ -13,4 +13,3 @@ One of the aims of this package is to make life easier for useRs who deal with s
 
 Releases will be published on [CRAN](http://cran.r-project.org/web/packages/memisc/). Pre-releases will be available here in source and binary form. To install from the sources on GitHub you can use `devtools::install_github("melff/memisc",subdir="pkg")`.
 
-More information about the package can be found at [my site](http://www.martin-elff.net/software/memisc/)
