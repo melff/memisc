@@ -102,8 +102,8 @@ format_html.ftable_matrix <- function(x,
                 m.j <- ncol(tmp.bdy)
                 if((!varontop || max.l.cv > 1) && nz.nm.cv.j) {
                     col_sums <- col_sums + 1
-                    message(sprintf("Incremented col_sums j=%d varontop=%d max.l.cv=%d col_sums=%d",j,varontop,max.l.cv,col_sums))
-                    print(dot_cols)
+                    # message(sprintf("Incremented col_sums j=%d varontop=%d max.l.cv=%d col_sums=%d",j,varontop,max.l.cv,col_sums))
+                    # print(dot_cols)
                 }
                 dot_cols <- c(dot_cols, col_sums + (1:m.j-1)*3 + 2)
                 col_sums <- col_sums + 3*m.j
@@ -151,7 +151,7 @@ format_html.ftable_matrix <- function(x,
     
     res <- html_tr(res,vectorize=TRUE)
     
-    ftab_id <- paste0("ftab-matrix-",ftab_html_env$counter)
+    ftab_id <- paste0("ftab-matrix-",ftab_mat_html_env$counter)
     res <- html_table(res,class="ftable",id=ftab_id)
 
     ftab_mat_html_env$counter <- ftab_mat_html_env$counter + 1    
@@ -161,7 +161,7 @@ format_html.ftable_matrix <- function(x,
                                        rows=1)
     style_bottomrule <- style_ftab_rule(id=ftab_id,rulewidth=bottomrule,bottom=TRUE,
                                           rows=ntot)
-    
+    print(style_bottomrule)
     nrows <- sapply(x,nrow)
     dim(nrows) <- dim(x)
     nrows <- nrows[,1]
