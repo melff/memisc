@@ -10,11 +10,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">memisc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,10 +28,12 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/ftable-matrix.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/items.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/mtable-html.html">UNKNOWN TITLE</a>
+    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -130,12 +132,12 @@ the function that gives the covariance matrix (e.g. <code>"OPG"</code> for
 <span class="r-in"><span><span class="va">fmo</span> <span class="op">&lt;-</span> <span class="fu">withVCov</span><span class="op">(</span><span class="va">fm</span>,<span class="va">vcovOPG</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">fm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              (Intercept)            x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.004351121 -0.003348108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x           -0.003348108  0.007902202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.004528394 -0.003800066</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x           -0.003800066  0.008039679</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">fmo</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              (Intercept)            x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.006461219 -0.005395309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x           -0.005395309  0.011481704</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.005352824 -0.005229323</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x           -0.005229323  0.009675268</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -144,16 +146,16 @@ the function that gives the covariance matrix (e.g. <code>"OPG"</code> for
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error z value Pr(&gt;|z|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.01952    0.06596   15.46   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x            0.93375    0.08889   10.50   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.02849    0.06729   15.28   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x            1.07151    0.08966   11.95   &lt;2e-16 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Dispersion parameter for poisson family taken to be 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 210.07  on 99  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance:  81.56  on 98  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 359.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 281.92  on 99  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 108.08  on 98  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 379.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Fisher Scoring iterations: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -164,16 +166,16 @@ the function that gives the covariance matrix (e.g. <code>"OPG"</code> for
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error z value Pr(&gt;|z|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.01952    0.08038  12.684   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x            0.93375    0.10715   8.714   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.02849    0.07316   14.06   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x            1.07151    0.09836   10.89   &lt;2e-16 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Dispersion parameter for poisson family taken to be 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 210.07  on 99  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance:  81.56  on 98  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 359.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 281.92  on 99  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 108.08  on 98  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 379.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Fisher Scoring iterations: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -190,12 +192,12 @@ the function that gives the covariance matrix (e.g. <code>"OPG"</code> for
 <span class="r-out co"><span class="r-pr">#&gt;</span> =======================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 Default       OPG      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)    1.020***    1.020***  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.066)     (0.080)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x              0.934***    0.934***  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.089)     (0.107)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)    1.028***    1.028***  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.067)     (0.073)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x              1.072***    1.072***  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.090)     (0.098)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Deviance      81.560      81.560     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Deviance     108.084     108.084     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   N            100         100         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> =======================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Significance: *** = p &lt; 0.001;   </span>
@@ -216,12 +218,12 @@ the function that gives the covariance matrix (e.g. <code>"OPG"</code> for
 <span class="r-out co"><span class="r-pr">#&gt;</span> =======================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 Default       OPG      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)    1.020***    1.020***  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.066)     (0.080)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x              0.934***    0.934***  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.089)     (0.107)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)    1.028***    1.028***  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.067)     (0.073)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x              1.072***    1.072***  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 (0.090)     (0.098)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Deviance      81.560      81.560     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Deviance     108.084     108.084     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   N            100         100         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> =======================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Significance: *** = p &lt; 0.001;   </span>

@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="memisc">
-<title> • memisc</title>
+<title>Handling questionnaire items with 'memisc' • memisc</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Handling questionnaire items with 'memisc'">
 <meta property="og:description" content="memisc">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -22,11 +22,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">memisc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,10 +41,12 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/ftable-matrix.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/items.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/mtable-html.html">UNKNOWN TITLE</a>
+    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
 </li>
       </ul>
@@ -71,8 +73,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1></h1>
-                        <h4 data-toc-skip class="author"></h4>
+      <img src="" class="logo" alt=""><h1>Handling questionnaire items with 'memisc'</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/melff/memisc/blob/HEAD/../vignettes/items.Rmd" class="external-link"><code>../vignettes/items.Rmd</code></a></small>
@@ -82,11 +83,8 @@
     
     
 <div class="section level2">
-<h2 id="handling-questionnaire-items-with-memisc">Handling questionnaire items with <em>memisc</em><a class="anchor" aria-label="anchor" href="#handling-questionnaire-items-with-memisc"></a>
+<h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h2>
-<div class="section level3">
-<h3 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
-</h3>
 <p>R is a great tool to do data analysis and for data management tasks
 that arise in the context of big data analytics. Nevertheless there is
 still room for improvement in terms of the support for data management
@@ -183,9 +181,9 @@ course, one can filter out these missing values before data analysis by
 replacing them with <code>NA</code>, but it would convenient to have
 facilities that do that automatically.</p>
 </div>
-<div class="section level3">
-<h3 id="standard-attributes-of-survey-items">Standard attributes of survey items<a class="anchor" aria-label="anchor" href="#standard-attributes-of-survey-items"></a>
-</h3>
+<div class="section level2">
+<h2 id="standard-attributes-of-survey-items">Standard attributes of survey items<a class="anchor" aria-label="anchor" href="#standard-attributes-of-survey-items"></a>
+</h2>
 <p>The “memisc” package introduces a new data type (more correctly an
 <code>S4</code> class) that allows to handle such data, that allows to
 adjust labels or missing values definitions and to translate such data
@@ -206,9 +204,9 @@ representations of survey item responses if a principal investigator
 obtains only raw numeric codes. In the following, the construction of
 <code>"item"</code> vectors from raw numeric data is mainly used to
 highlight their structure.</p>
-<div class="section level4">
-<h4 id="value_labels">Value labels<a class="anchor" aria-label="anchor" href="#value_labels"></a>
-</h4>
+<div class="section level3">
+<h3 id="value_labels">Value labels<a class="anchor" aria-label="anchor" href="#value_labels"></a>
+</h3>
 <pre><code>Loading required package: lattice</code></pre>
 <pre><code>Loading required package: MASS</code></pre>
 <pre><code>
@@ -324,9 +322,9 @@ Item (measurement: nominal, type: double, length = 200)
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">voteint</span><span class="op">)</span></span></code></pre></div>
 <pre><code> Nmnl. item w/ 8 labels for 1,2,3,...  num [1:200] 4 3 9 2 97 99 9 9 1 1 ...</code></pre>
 </div>
-<div class="section level4">
-<h4 id="missing_values">Missing values<a class="anchor" aria-label="anchor" href="#missing_values"></a>
-</h4>
+<div class="section level3">
+<h3 id="missing_values">Missing values<a class="anchor" aria-label="anchor" href="#missing_values"></a>
+</h3>
 <p>In the coding plan shown above, the values 97, 98, and 99 are marked
 as “missing values”, that is, while they represent coded responses, they
 are not to be considered as valid in the sense of providing information
@@ -407,9 +405,9 @@ define a <em>range</em> of values as valid:</p>
 <span><span class="fu"><a href="../reference/value-filters.html">missing.values</a></span><span class="op">(</span><span class="va">voteint</span><span class="op">)</span></span></code></pre></div>
 <pre><code>97, 98, 99</code></pre>
 </div>
-<div class="section level4">
-<h4 id="annotations">Other attributes of survey items<a class="anchor" aria-label="anchor" href="#annotations"></a>
-</h4>
+<div class="section level3">
+<h3 id="annotations">Other attributes of survey items<a class="anchor" aria-label="anchor" href="#annotations"></a>
+</h3>
 <p>Other software packages targeted at social scientists also allow to
 add annotations to the variables in a data set, which are not subject to
 the syntactic constraints of variable names. These annotations are
@@ -441,9 +439,9 @@ wording:
 <pre><code><span>                                                                      <span class="va">wording</span> </span>
 <span><span class="st">"Which party are you going to vote for in the general election next Tuesday?"</span> </span></code></pre>
 </div>
-<div class="section level4">
-<h4 id="codebooks-of-survey-items">Codebooks of survey items<a class="anchor" aria-label="anchor" href="#codebooks-of-survey-items"></a>
-</h4>
+<div class="section level3">
+<h3 id="codebooks-of-survey-items">Codebooks of survey items<a class="anchor" aria-label="anchor" href="#codebooks-of-survey-items"></a>
+</h3>
 <p>It is common in survey research to describe a data set in the form of
 a <em>codebook</em>. A codebook summarises each variable in the data set
 in terms of its relevant attributes, that is, the label attached to the
@@ -609,9 +607,86 @@ scale-levels.&lt;/p&gt;"><sup>2</sup></a></p>
 there is also the possibility to export codebooks into HTML:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">voteint</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<style>
+    .cbe-header {
+         border-top: solid 2px;
+         border-bottom: solid 1px;
+         padding-left: 3ex;
+    }
+    .cbe-body {
+         padding-left: 3ex;
+    }
+    .cbe-table {
+         border-collapse: collapse;
+    }
+    .cbe-table td:nth-child(n of .header) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(1) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(2) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(3) {
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(4) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(5),
+    .cbe-vl-table td:nth-child(8),
+    .cbe-vl-table td:nth-child(11),
+    .cbe-vl-table td:nth-child(14),
+    .cbe-vl-table td:nth-child(17),
+    .cbe-d-table td:nth-child(2),
+    .cbe-d-table td:nth-child(5){
+         text-align: right;
+         padding-left: .3em;
+         padding-right: 0px;
+    }
+    .cbe-vl-table td:nth-child(6),
+    .cbe-vl-table td:nth-child(9),
+    .cbe-vl-table td:nth-child(12),
+    .cbe-vl-table td:nth-child(15),
+    .cbe-vl-table td:nth-child(18),
+    .cbe-d-table td:nth-child(3),
+    .cbe-d-table td:nth-child(6) {
+         text-align: center;
+         padding-left: 0px;
+         padding-right: 0px;
+         width: 1px;
+    }
+    .cbe-vl-table td:nth-child(7),
+    .cbe-vl-table td:nth-child(10),
+    .cbe-vl-table td:nth-child(13),
+    .cbe-vl-table td:nth-child(16),
+    .cbe-vl-table td:nth-child(19),
+    .cbe-d-table td:nth-child(4),
+    .cbe-d-table td:nth-child(7) {
+         text-align: left;
+         padding-right: .3em;
+         padding-left: 0px;
+    }
+    .cbe-d-table td:nth-child(1){
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+</style>
 <div class="codebook">
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="voteint">
@@ -622,291 +697,291 @@ there is also the possibility to export codebooks into HTML:</p>
 Tuesday?”
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec">
 <tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 double
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Measurement:
 </td>
-<td style="text-align: left;">
+<td>
 nominal
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Valid range:
 </td>
-<td style="text-align: left;">
+<td>
 1 - 9
 </td>
 </tr>
 </table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-vl-table">
 <tr>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Values and labels
 </td>
-<td style="text-align: center;">
+<td class="header">
 N
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Valid
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Total
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Cons’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 49
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 27
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 24
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 2
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Lab’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 26
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 13
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘LibDem’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 21
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 11
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 10
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Other’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 19
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 10
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘NoVote’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 61
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 34
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 30
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 97
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘DK’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 6
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 98
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Refused’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 7
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 99
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘N.a.’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 11
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 5
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
@@ -918,9 +993,9 @@ M
 </div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="data-sets-containers-of-survey-items">Data sets: Containers of survey items<a class="anchor" aria-label="anchor" href="#data-sets-containers-of-survey-items"></a>
-</h3>
+<div class="section level2">
+<h2 id="data-sets-containers-of-survey-items">Data sets: Containers of survey items<a class="anchor" aria-label="anchor" href="#data-sets-containers-of-survey-items"></a>
+</h2>
 <p>Usually one expects to be able handle data on responses to survey
 items not in isolation, but as part of a data set, which contains a
 multitude of observations on many variables. The usual data structure in
@@ -933,9 +1008,9 @@ objects of class <code>"data.set"</code>. This opens up the possibility
 to automatically translate survey items into regular vectors and
 factors, as expected by typical data analysis functions, such as
 <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> or <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code>.</p>
-<div class="section level4">
-<h4 id="the-structure-of-data-set-objects">The structure of <code>"data.set"</code> objects<a class="anchor" aria-label="anchor" href="#the-structure-of-data-set-objects"></a>
-</h4>
+<div class="section level3">
+<h3 id="the-structure-of-data-set-objects">The structure of <code>"data.set"</code> objects<a class="anchor" aria-label="anchor" href="#the-structure-of-data-set-objects"></a>
+</h3>
 <p>Data set objects have essentially the same row-by-column structure as
 data frames: They are a set of vectors (however of class
 <code>"item"</code>) all with the same length, so that in each row of
@@ -1038,9 +1113,9 @@ then you can use <code><a href="https://rdrr.io/r/base/print.html" class="extern
 <p>but you should not do this with large data sets, such as the
 Eurobarometer trend file …</p>
 </div>
-<div class="section level4">
-<h4 id="manipulating-data-in-data-sets">Manipulating data in data sets<a class="anchor" aria-label="anchor" href="#manipulating-data-in-data-sets"></a>
-</h4>
+<div class="section level3">
+<h3 id="manipulating-data-in-data-sets">Manipulating data in data sets<a class="anchor" aria-label="anchor" href="#manipulating-data-in-data-sets"></a>
+</h3>
 <p>Typical data management tasks that you would otherwise have done in
 commercial packages like SPSS or Stata can be conducted within data set
 objects. Actually to provide this possibility (to the author of the
@@ -1162,9 +1237,9 @@ Data set with 132 observations and 3 variables
 .. .................... ....... ......
 (25 of 132 observations shown)</code></pre>
 </div>
-<div class="section level4">
-<h4 id="codebooks">Codebooks of data sets<a class="anchor" aria-label="anchor" href="#codebooks"></a>
-</h4>
+<div class="section level3">
+<h3 id="codebooks">Codebooks of data sets<a class="anchor" aria-label="anchor" href="#codebooks"></a>
+</h3>
 <p>Previouly, we created a code book for individual survey items. But it
 is also possible to create a codebook for a whole data set (what one
 usually wants to have a codebook of). Obtaining a codebook is simple, by
@@ -1240,9 +1315,86 @@ applying the function <code><a href="../reference/codebook.html">codebook()</a><
 <p>On a website, it looks better in HTML:</p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<style>
+    .cbe-header {
+         border-top: solid 2px;
+         border-bottom: solid 1px;
+         padding-left: 3ex;
+    }
+    .cbe-body {
+         padding-left: 3ex;
+    }
+    .cbe-table {
+         border-collapse: collapse;
+    }
+    .cbe-table td:nth-child(n of .header) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(1) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(2) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(3) {
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(4) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(5),
+    .cbe-vl-table td:nth-child(8),
+    .cbe-vl-table td:nth-child(11),
+    .cbe-vl-table td:nth-child(14),
+    .cbe-vl-table td:nth-child(17),
+    .cbe-d-table td:nth-child(2),
+    .cbe-d-table td:nth-child(5){
+         text-align: right;
+         padding-left: .3em;
+         padding-right: 0px;
+    }
+    .cbe-vl-table td:nth-child(6),
+    .cbe-vl-table td:nth-child(9),
+    .cbe-vl-table td:nth-child(12),
+    .cbe-vl-table td:nth-child(15),
+    .cbe-vl-table td:nth-child(18),
+    .cbe-d-table td:nth-child(3),
+    .cbe-d-table td:nth-child(6) {
+         text-align: center;
+         padding-left: 0px;
+         padding-right: 0px;
+         width: 1px;
+    }
+    .cbe-vl-table td:nth-child(7),
+    .cbe-vl-table td:nth-child(10),
+    .cbe-vl-table td:nth-child(13),
+    .cbe-vl-table td:nth-child(16),
+    .cbe-vl-table td:nth-child(19),
+    .cbe-d-table td:nth-child(4),
+    .cbe-d-table td:nth-child(7) {
+         text-align: left;
+         padding-right: .3em;
+         padding-left: 0px;
+    }
+    .cbe-d-table td:nth-child(1){
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+</style>
 <div class="codebook">
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="vote">
@@ -1254,289 +1406,289 @@ intention’</span>
 which party would you vote for?”
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec">
 <tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 double
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Measurement:
 </td>
-<td style="text-align: left;">
+<td>
 nominal
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Missing values:
 </td>
-<td style="text-align: left;">
+<td>
 8, 9, 97, 99
 </td>
 </tr>
 </table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-vl-table">
 <tr>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Values and labels
 </td>
-<td style="text-align: center;">
+<td class="header">
 N
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Valid
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Total
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Conservatives’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 32
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 21
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 10
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 2
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Labour’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 41
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 27
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 13
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Liberal Democrats’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 36
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 23
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 12
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Other’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 43
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 28
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Don’t know’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 47
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 15
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Answer refused’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 29
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 97
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Not applicable’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 28
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 99
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Not asked in survey’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 44
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
@@ -1556,178 +1708,178 @@ This is not a real survey item, of course …
 </div>
 </div>
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="region">
 <code class="cbe-name">region</code> — <span class="cbe-description">‘Region of residence’</span>
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec">
 <tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 double
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Measurement:
 </td>
-<td style="text-align: left;">
+<td>
 nominal
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Missing values:
 </td>
-<td style="text-align: left;">
+<td>
 97, 99
 </td>
 </tr>
 </table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-vl-table">
 <tr>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Values and labels
 </td>
-<td style="text-align: center;">
+<td class="header">
 N
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Valid
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Total
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘England’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 132
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 51
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 44
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 2
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Scotland’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 87
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 33
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 29
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Wales’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 38
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 12
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 99
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 M
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Not asked in survey’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 43
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
@@ -1747,7 +1899,7 @@ This is not a real survey item, of course …
 </div>
 </div>
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="income">
@@ -1758,83 +1910,83 @@ This is not a real survey item, of course …
 in sum?”
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec">
 <tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 double
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Measurement:
 </td>
-<td style="text-align: left;">
+<td>
 ratio
 </td>
 </tr>
 </table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-d-table">
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Min:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 245
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 000
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Max:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 13596
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 000
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Mean:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 2556
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 743
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Std.Dev.:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 2158
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 757
 </td>
 </tr>
@@ -1855,9 +2007,9 @@ This is not a real survey item, of course …
 </div>
 </div>
 </div>
-<div class="section level4">
-<h4 id="translating-data-sets-into-data-frames">Translating data sets into data frames<a class="anchor" aria-label="anchor" href="#translating-data-sets-into-data-frames"></a>
-</h4>
+<div class="section level3">
+<h3 id="translating-data-sets-into-data-frames">Translating data sets into data frames<a class="anchor" aria-label="anchor" href="#translating-data-sets-into-data-frames"></a>
+</h3>
 <p>The punchline of the existence of <code>"data.set"</code> objects
 however is that they can be coerced into regular data frames, using
 <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>, which causes survey items to be translated
@@ -1957,9 +2109,86 @@ vote                   England Scotland Wales
 <p>For convenience, there is also a codebook method for data frames:</p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">DataFr</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<style>
+    .cbe-header {
+         border-top: solid 2px;
+         border-bottom: solid 1px;
+         padding-left: 3ex;
+    }
+    .cbe-body {
+         padding-left: 3ex;
+    }
+    .cbe-table {
+         border-collapse: collapse;
+    }
+    .cbe-table td:nth-child(n of .header) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(1) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(2) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(3) {
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(4) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(5),
+    .cbe-vl-table td:nth-child(8),
+    .cbe-vl-table td:nth-child(11),
+    .cbe-vl-table td:nth-child(14),
+    .cbe-vl-table td:nth-child(17),
+    .cbe-d-table td:nth-child(2),
+    .cbe-d-table td:nth-child(5){
+         text-align: right;
+         padding-left: .3em;
+         padding-right: 0px;
+    }
+    .cbe-vl-table td:nth-child(6),
+    .cbe-vl-table td:nth-child(9),
+    .cbe-vl-table td:nth-child(12),
+    .cbe-vl-table td:nth-child(15),
+    .cbe-vl-table td:nth-child(18),
+    .cbe-d-table td:nth-child(3),
+    .cbe-d-table td:nth-child(6) {
+         text-align: center;
+         padding-left: 0px;
+         padding-right: 0px;
+         width: 1px;
+    }
+    .cbe-vl-table td:nth-child(7),
+    .cbe-vl-table td:nth-child(10),
+    .cbe-vl-table td:nth-child(13),
+    .cbe-vl-table td:nth-child(16),
+    .cbe-vl-table td:nth-child(19),
+    .cbe-d-table td:nth-child(4),
+    .cbe-d-table td:nth-child(7) {
+         text-align: left;
+         padding-right: .3em;
+         padding-left: 0px;
+    }
+    .cbe-d-table td:nth-child(1){
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+</style>
 <div class="codebook">
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="vote">
@@ -1967,192 +2196,192 @@ vote                   England Scotland Wales
 intention’</span>
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec">
 <tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 integer
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Factor with
 </td>
-<td style="text-align: left;">
+<td>
 4 levels
 </td>
 </tr>
 </table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-vl-table">
 <tr>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Values and labels
 </td>
-<td style="text-align: center;">
+<td class="header">
 N
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Valid
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Total
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Conservatives’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 32
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 21
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 10
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 2
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Labour’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 41
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 27
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 13
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Liberal Democrats’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 36
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 23
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 12
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Other’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 43
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 28
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 NA
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 148
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 49
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
@@ -2162,168 +2391,168 @@ NA
 </div>
 </div>
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="region">
 <code class="cbe-name">region</code> — <span class="cbe-description">‘Region of residence’</span>
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec">
 <tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 integer
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Factor with
 </td>
-<td style="text-align: left;">
+<td>
 3 levels
 </td>
 </tr>
 </table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-vl-table">
 <tr>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Values and labels
 </td>
-<td style="text-align: center;">
+<td class="header">
 N
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Valid
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Total
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘England’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 132
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 51
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 44
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 2
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Scotland’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 87
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 33
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 29
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Wales’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 38
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 12
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 NA
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 43
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
@@ -2333,80 +2562,80 @@ NA
 </div>
 </div>
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="income">
 <code class="cbe-name">income</code> — <span class="cbe-description">‘Household income’</span>
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec"><tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 double
 </td>
 </tr></table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-d-table">
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Min:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 245
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 000
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Max:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 13596
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 000
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Mean:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 2556
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 743
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 Std.Dev.:
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 2158
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 757
 </td>
 </tr>
@@ -2418,9 +2647,9 @@ Std.Dev.:
 </div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="more-tools-for-data-preparation">More tools for data preparation<a class="anchor" aria-label="anchor" href="#more-tools-for-data-preparation"></a>
-</h3>
+<div class="section level2">
+<h2 id="more-tools-for-data-preparation">More tools for data preparation<a class="anchor" aria-label="anchor" href="#more-tools-for-data-preparation"></a>
+</h2>
 <p>When social scientists work with survey data, these are not always
 organised and coded in a way that suits the intended data analysis. For
 this reasons, the <code>"memisc"</code> package provides the two
@@ -2429,9 +2658,9 @@ functions <code><a href="../reference/recode.html">recode()</a></code> and <code
 complex distinctions of cases and can be seen as a more general version
 of <code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code>. These two functions are demonstrated with a
 “real-life” example.</p>
-<div class="section level4">
-<h4 id="recode">Recoding<a class="anchor" aria-label="anchor" href="#recode"></a>
-</h4>
+<div class="section level3">
+<h3 id="recode">Recoding<a class="anchor" aria-label="anchor" href="#recode"></a>
+</h3>
 <p>The function <code><a href="../reference/recode.html">recode()</a></code> is similar in semantics to the
 function of the same name in package <a href="https://cran.r-project.org/package=car" class="external-link"><code>"car"</code></a> and
 designed in such a way that it does not conflict with this function. In
@@ -2463,399 +2692,476 @@ that contains the Bundesländer codes:</p>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">gles2013work</span>,</span>
 <span>     <span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">bula</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<style>
+    .cbe-header {
+         border-top: solid 2px;
+         border-bottom: solid 1px;
+         padding-left: 3ex;
+    }
+    .cbe-body {
+         padding-left: 3ex;
+    }
+    .cbe-table {
+         border-collapse: collapse;
+    }
+    .cbe-table td:nth-child(n of .header) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(1) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(2) {
+         text-align: center;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(3) {
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(4) {
+         text-align: right;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+    .cbe-vl-table td:nth-child(5),
+    .cbe-vl-table td:nth-child(8),
+    .cbe-vl-table td:nth-child(11),
+    .cbe-vl-table td:nth-child(14),
+    .cbe-vl-table td:nth-child(17),
+    .cbe-d-table td:nth-child(2),
+    .cbe-d-table td:nth-child(5){
+         text-align: right;
+         padding-left: .3em;
+         padding-right: 0px;
+    }
+    .cbe-vl-table td:nth-child(6),
+    .cbe-vl-table td:nth-child(9),
+    .cbe-vl-table td:nth-child(12),
+    .cbe-vl-table td:nth-child(15),
+    .cbe-vl-table td:nth-child(18),
+    .cbe-d-table td:nth-child(3),
+    .cbe-d-table td:nth-child(6) {
+         text-align: center;
+         padding-left: 0px;
+         padding-right: 0px;
+         width: 1px;
+    }
+    .cbe-vl-table td:nth-child(7),
+    .cbe-vl-table td:nth-child(10),
+    .cbe-vl-table td:nth-child(13),
+    .cbe-vl-table td:nth-child(16),
+    .cbe-vl-table td:nth-child(19),
+    .cbe-d-table td:nth-child(4),
+    .cbe-d-table td:nth-child(7) {
+         text-align: left;
+         padding-right: .3em;
+         padding-left: 0px;
+    }
+    .cbe-d-table td:nth-child(1){
+         text-align: left;
+         padding-left: .3em;
+         padding-right: .3em;
+    }
+</style>
 <div class="codebook">
 <div class="codebook-entry">
-<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<div class="cbe-header">
 <p>
 </p>
 <p class="cbe-title" id="bula">
 <code class="cbe-name">bula</code> — <span class="cbe-description">‘Bundesland’</span>
 </p>
 </div>
-<div class="cbe-body" style="padding-left: 3ex;">
+<div class="cbe-body">
 <p>
 </p>
 <table class="table cbe-spec">
 <tr>
-<td style="text-align: left;">
+<td>
 Storage mode:
 </td>
-<td style="text-align: left;">
+<td>
 double
 </td>
 </tr>
 <tr>
-<td style="text-align: left;">
+<td>
 Measurement:
 </td>
-<td style="text-align: left;">
+<td>
 nominal
 </td>
 </tr>
 </table>
 <p>
 </p>
-<table class="table cbe-table" style="border-collapse: collapse;">
+<table class="table cbe-table cbe-vl-table">
 <tr>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Values and labels
 </td>
-<td style="text-align: center;">
+<td class="header">
 N
 </td>
-<td colspan="3" style="text-align: center;">
+<td colspan="3" class="header">
 Percent
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Baden-Wuerttemberg’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 333
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 2
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Bayern’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 507
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 13
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 0
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Berlin’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 190
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 9
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Brandenburg’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 212
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 5
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 4
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 5
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Bremen’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 27
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 0
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 7
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 6
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Hamburg’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 49
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 7
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Hessen’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 232
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 5
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 9
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Mecklenburg-Vorpommern’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 160
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 4
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 1
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 9
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Niedersachsen’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 331
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 8
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 5
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 10
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Nordrhein-Westfalen’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 619
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 15
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 8
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 11
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Rheinland-Pfalz’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 150
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 8
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 12
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Saarland’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 45
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 1
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 2
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 13
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Sachsen’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 402
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 10
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 14
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Sachsen-Anhalt’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 252
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 6
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 4
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 15
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Schleswig-Holstein’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 131
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 3
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 3
 </td>
 </tr>
 <tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 16
 </td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 </td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 ‘Thueringen’
 </td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+<td>
 271
 </td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+<td>
 6
 </td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+<td>
 .
 </td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+<td>
 9
 </td>
 </tr>
@@ -2897,9 +3203,9 @@ bula                     East West
 not only old codes are transferred into new ones, but also the new codes
 are labelled.</p>
 </div>
-<div class="section level4">
-<h4 id="case-distinctions">Case distinctions<a class="anchor" aria-label="anchor" href="#case-distinctions"></a>
-</h4>
+<div class="section level3">
+<h3 id="case-distinctions">Case distinctions<a class="anchor" aria-label="anchor" href="#case-distinctions"></a>
+</h3>
 <p>Recoding can be used to combine the codes of an item into a smaller
 set, but sometimes one needs to do more complex data preparations, in
 which the values of some variable are set conditional on values of
@@ -3088,7 +3394,6 @@ list.vote CDU/CSU  SPD  FDP Grüne Linke  NPD Piraten  AfD Other No Vote
   AfD          20    7    2     2     5    2       5   43     2       0
   Other         5    4    0     3     1    1       0    1    11       0
   No Vote       0    0    0     0     0    0       0    0     0     515</code></pre>
-</div>
 </div>
 </div>
 

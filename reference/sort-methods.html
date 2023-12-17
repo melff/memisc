@@ -8,11 +8,11 @@ the data frame or data set, given as first argument."><!-- mathjax --><script sr
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">memisc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,10 +26,12 @@ the data frame or data set, given as first argument."><!-- mathjax --><script sr
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/ftable-matrix.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/items.html">UNKNOWN TITLE</a>
-    <a class="dropdown-item" href="../articles/mtable-html.html">UNKNOWN TITLE</a>
+    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -104,114 +106,114 @@ the data frame or data set, given as first argument.</p>
 <span class="r-in"><span>        b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,size<span class="op">=</span><span class="fl">20</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">DF</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 4</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">DF</span>,by<span class="op">=</span><span class="op">~</span><span class="va">a</span><span class="op">+</span><span class="va">b</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 4</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">DF</span>,by<span class="op">=</span><span class="op">~</span><span class="va">b</span><span class="op">+</span><span class="va">a</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 4</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">DF</span>,by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>,<span class="st">"a"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 4</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">DF</span>,by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 2 4</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
