@@ -128,10 +128,10 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">percent</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Percentage          N </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         40        100 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         49        100 </span>
 <span class="r-in"><span><span class="fu">percent</span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   a   b   c   N </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  38  27  35 100 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  34  34  32 100 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="genTable.html">genTable</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu">percent</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span>,</span></span>
@@ -142,22 +142,22 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              percent(x &gt; 0) percent(y &gt; 0) percent(z &gt; 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Percentage             50       52.63158       44.73684</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N                      38       38.00000       38.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Percentage       47.05882       29.41176       52.94118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   N                34.00000       34.00000       34.00000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , f = b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              percent(x &gt; 0) percent(y &gt; 0) percent(z &gt; 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Percentage       33.33333       40.74074       62.96296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N                27.00000       27.00000       27.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Percentage       47.05882       55.88235       52.94118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   N                34.00000       34.00000       34.00000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , f = c</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              percent(x &gt; 0) percent(y &gt; 0) percent(z &gt; 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Percentage       34.28571       48.57143       65.71429</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N                35.00000       35.00000       35.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Percentage         53.125         46.875         53.125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   N                  32.000         32.000         32.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">gt</span> <span class="op">&lt;-</span> <span class="fu"><a href="genTable.html">genTable</a></span><span class="op">(</span></span></span>
@@ -169,15 +169,15 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">gt</span>,row.vars<span class="op">=</span><span class="fl">3</span><span class="op">:</span><span class="fl">2</span>,col.vars<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Percentage    lower    upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> f                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a x &gt; 0    50.00000 33.37890 66.62110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   y &gt; 0    52.63158 35.81834 69.01927</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   z &gt; 0    44.73684 28.62415 61.70092</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b x &gt; 0    33.33333 16.51882 53.96073</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   y &gt; 0    40.74074 22.38973 61.20161</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   z &gt; 0    62.96296 42.36796 80.59928</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c x &gt; 0    34.28571 19.13241 52.21100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   y &gt; 0    48.57143 31.38285 66.01086</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   z &gt; 0    65.71429 47.78900 80.86759</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a x &gt; 0    47.05882 29.77867 64.87072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   y &gt; 0    29.41176 15.09837 47.47811</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   z &gt; 0    52.94118 35.12928 70.22133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b x &gt; 0    47.05882 29.77867 64.87072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   y &gt; 0    55.88235 37.88576 72.81498</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   z &gt; 0    52.94118 35.12928 70.22133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c x &gt; 0    53.12500 34.74368 70.90602</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   y &gt; 0    46.87500 29.09398 65.25632</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   z &gt; 0    53.12500 34.74368 70.90602</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ex.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">25</span>,<span class="fl">50</span><span class="op">)</span>,sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">250</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">ex.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">ex.data</span>,<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ex.data</span><span class="op">)</span>,mean<span class="op">=</span><span class="va">ex.data</span><span class="op">$</span><span class="va">mean</span>,sd<span class="op">=</span><span class="va">ex.data</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -191,30 +191,30 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         0  25    50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt; 0              53.6   0   0.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 0 &amp; x &lt; 50    46.4 100  46.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 50 &amp; x &lt; 100   0.0   0  53.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt; 0              46.4   0   0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 0 &amp; x &lt; 50    53.6 100  50.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 50 &amp; x &lt; 100   0.0   0  49.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 100            0.0   0   0.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   N                 250.0 250 250.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , sd = 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         0  25    50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt; 0              49.2   0   0.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 0 &amp; x &lt; 50    50.8 100  47.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 50 &amp; x &lt; 100   0.0   0  52.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 100            0.0   0   0.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N                 250.0 250 250.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         0    25  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt; 0              55.6   0.8   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 0 &amp; x &lt; 50    44.4  98.4  46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 50 &amp; x &lt; 100   0.0   0.8  54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 100            0.0   0.0   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   N                 250.0 250.0 250</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , sd = 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         0    25    50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt; 0              43.6  36.8  39.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 0 &amp; x &lt; 50    20.8  21.6  20.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 50 &amp; x &lt; 100  20.0  15.2  14.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 100           15.6  26.4  26.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt; 0              54.8  44.4  30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 0 &amp; x &lt; 50    14.0  17.2  17.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 50 &amp; x &lt; 100  16.8  18.0  19.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt;= 100           14.4  20.4  32.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   N                 250.0 250.0 250.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
