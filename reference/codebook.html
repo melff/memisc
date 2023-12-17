@@ -32,6 +32,8 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -174,12 +176,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          41  33.3  13.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 37  30.1  12.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      45  36.6  15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             54        18.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         37        12.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         41        13.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          48  41.0  16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 44  37.6  14.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      25  21.4   8.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             48        16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         46        15.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         44        14.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
@@ -197,10 +199,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               145  54.7  48.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               74  27.9  24.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  46  17.4  15.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    35        11.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               126  49.4  42.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               90  35.3  30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  39  15.3  13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -217,10 +219,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Storage mode: double</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Measurement: ratio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:  302.934</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 9804.347</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean: 2582.028</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.: 1842.079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:   242.840</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 12460.855</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean:  2553.851</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  1962.946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -242,12 +244,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          41  33.3  13.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 37  30.1  12.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      45  36.6  15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             54        18.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         37        12.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         41        13.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          48  41.0  16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 44  37.6  14.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      25  21.4   8.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             48        16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         46        15.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         44        14.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
@@ -266,10 +268,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               145  54.7  48.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               74  27.9  24.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  46  17.4  15.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    35        11.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               126  49.4  42.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               90  35.3  30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  39  15.3  13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -288,10 +290,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               145  54.7  48.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               74  27.9  24.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  46  17.4  15.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    35        11.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               126  49.4  42.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               90  35.3  30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  39  15.3  13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -312,10 +314,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Levels and labels          N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1 'Conservatives'        41  33.3  13.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2 'Labour'               37  30.1  12.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3 'Liberal Democrats'    45  36.6  15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    NA                       177        59.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1 'Conservatives'        48  41.0  16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2 'Labour'               44  37.6  14.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3 'Liberal Democrats'    25  21.4   8.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    NA                       183        61.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -328,10 +330,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Levels and labels     N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1 'England'        145  54.7  48.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2 'Scotland'        74  27.9  24.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3 'Wales'           46  17.4  15.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    NA                   35        11.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1 'England'        126  49.4  42.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2 'Scotland'        90  35.3  30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3 'Wales'           39  15.3  13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    NA                   45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -341,10 +343,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Storage mode: double</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:  302.9342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 9804.3470</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean: 2582.0282</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.: 1842.0791</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:   242.8405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 12460.8551</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean:  2553.8511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  1962.9464</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">codebook</span><span class="op">(</span><span class="va">DataHv</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
@@ -359,12 +361,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          41  33.3  13.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 37  30.1  12.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      45  36.6  15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             54        18.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         37        12.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         41        13.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          48  41.0  16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 44  37.6  14.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      25  21.4   8.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             48        16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         46        15.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         44        14.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
@@ -379,10 +381,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               145  54.7  48.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               74  27.9  24.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  46  17.4  15.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    35        11.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               126  49.4  42.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               90  35.3  30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  39  15.3  13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    45        15.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -392,10 +394,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Storage mode: double</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:  302.9342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 9804.3470</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean: 2582.0282</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.: 1842.0791</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:   242.8405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 12460.8551</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean:  2553.8511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  1962.9464</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   </span></span>
