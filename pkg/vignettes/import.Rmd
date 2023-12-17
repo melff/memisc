@@ -1,0 +1,369 @@
+---
+title: Generating Tables of Descriptive Statistics with "memisc"
+output: rmarkdown::html_vignette
+vignette: >
+  % \VignetteIndexEntry{Generating Tables of Descriptive Statistics with "memisc"}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(comment=NA,eval=FALSE)
+```
+
+
+# Importing data from SPSS and Stata
+
+# Motivation
+
+The \"foreign\" package for *R* already provides facilities to import
+data from other statistical software packages such as SPSS or Stata, but
+they are limited by the way survey data are generally represented in
+*R*. That is, since variables in an R data frame can only be numerical
+vectors or factors, any direct translation of SPSS or Stata data sets
+into data frames will lead to the loss of information of information,
+such as variable labels, variable labels, or user-specified missing
+values. (Value labels can be preserved by translating them into factor
+levels, but this means losing information about the original codes. It
+will also lead to undesired missing values, if variables in the original
+data sets are only partially labelled.) The \"memisc\" package for this
+reason provides functions that allow to import SPSS or Stata data sets
+into objects of the class `"data.set"` defined in it.
+
+# The role of \"importer\" objects
+
+Importing data using the facilities provided by the \"memisc\" package
+consists of two steps. In the first step, a description of the data in
+the file is collected in an object of class \"importer\". In the second
+step, data are imported into \"data.set\" objects with the help of these
+\"importer\" objects. These \"importer\" objects contain only meta-data
+e.g. about variable labels, value labels, and user-defined missing
+values. This allows to get an overview of the structure of the file
+without the need of loading the complete data, which is advantageous
+esp. if the data set is large. For example, with the help of an
+\"importer object\" it is possible to see what the labels of the
+variables are so that one can select those variables from the data file
+that are actually needed. The data set object in R memory can then
+created by \-- if `imprtr` is an importer object \-- by calls like
+`subset(imprtr,...)`, `imprtr[...]` or `as.data.set(imprtr)`. Some
+examples are given in the following.
+
+# Importing data from SPSS files
+
+## Importing from a SPSS \"system\" file
+
+In order to import data from an SPSS \"system\" file, the usual binary
+format in which SPSS data now is usually saved and often distributed,
+one needs to first make the file that contains the data known to R, as
+in the following example:
+
+``` r
+library(memisc)
+ZA5702 <- spss.system.file("Data/ZA5702_v2-0-0.sav")
+ZA5702
+```
+
+:
+
+    SPSS system file 'Data/ZA5702_v2-0-0.sav' 
+        with 979 variables and 3911 observations
+
+Once the \"system file\" is declared using the function
+`spss.system.file()`, metadata becomes available, such as the number of
+cases and variables (as just seen), the names and labels of the
+variables (as seen below):
+
+``` r
+description(ZA5702)
+```
+
+:
+
+    study    'Studiennummer'                       
+    version  'GESIS Archiv Version'                
+    year     'Erhebungsjahr'                       
+    field    'Erhebungszeitraum'                   
+    glescomp 'GLES-Komponente'                     
+    survey   'Erhebung/Welle'                      
+    lfdn     'Laufende Nummer (Kumulation)'        
+    vlfdn    'Laufende Nummer (Vorwahl)'           
+    nlfdn    'Laufende Nummer (Nachwahl)'          
+    datum    'Datum der Befragung (Monat/Tag/Jahr)'
+
+(Here only an extract of the full output was shown, since the data set
+contains as many as 979 variables.)
+
+An \"importer\" object, such as `ZA5702` in this example, would also
+allow to obtain a full codebook with
+
+``` r
+codebook(ZA5702)
+```
+
+but we refrain from showing such a codebook for the obvious reason of
+not creating too much output. As the inspection of the data in the file
+shows, most variable names have a standardised, yet non-mnemonic
+structure. Variables referring to questions asked in the pre-election
+wave of the GLES 2013 study have names starting with \"`v`\", those
+referring to questions asked in the post-election wave have names
+starting with \"`v`\", while those referring to question asked in both
+waves have names starting \"`nv`\". For a specific analysis, such
+variable names are not very useful. For this reason we want to rename
+them. We could do this after loading the data, but it is more convenient
+to do the data import and the renaming in one step as in the example
+below:
+
+``` r
+gles2013work <- subset(ZA5702,
+                       select=c(
+                         wave                  = survey,
+                         intent.turnout        = v10,
+                         turnout               = n10,
+                         voteint.candidate     = v11aa,
+                         voteint.list          = v11ba,
+                         postal.vote.candidate = v12aa,
+                         postal.vote.list      = v12ba,
+                         vote.candidate        = n11aa,
+                         vote.list             = n11ba,                 
+                         bula                  = bl
+                       ))
+```
+
+The variable names to the left of the equality sign are the variable
+names as they will appear in the data set after import, while the
+variable names to the right of the equality aign are the variable names
+as they exist in the data file.
+
+As a demonstration of what information can be extracted from the data
+file, we create a codebook for one of the items in the data set:
+
+``` r
+codebook(gles2013work$turnout)
+```
+
+```{=html}
+<div class="codebook">
+<div class="codebook-entry">
+<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<p class="cbe-title" id="gles2013work$turnout"><code class="cbe-name">gles2013work$turnout</code> &mdash; <span class="cbe-description">'Wahlbeteiligung'</span></p></div>
+<div class="cbe-body" style="padding-left: 3ex;">
+<p><table class="cbe-spec">
+<tr><td style="text-align: left;">Storage mode:</td><td style="text-align: left;">double</td></tr>
+<tr><td style="text-align: left;">Measurement:</td><td style="text-align: left;">nominal</td></tr>
+<tr><td style="text-align: left;">Missing values:</td><td style="text-align: left;">-Inf&ndash;1</td></tr>
+</table>
+</p>
+<p><table class="cbe-table" style="border-collapse: collapse;">
+<tr><td colspan="3" style="text-align: center;">Values and labels</td><td style="text-align: center;">N</td><td colspan="6" style="text-align: center;">Percent</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-99</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Angabe'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">3</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">1</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-98</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'weiss nicht'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-97</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'trifft nicht zu'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">20</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">5</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-96</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Split'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-95</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht teilgenommen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-94</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht in Auswahlgesamtheit'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2003</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">51</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">2</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-93</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Interview abgebrochen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-92</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Fehler in Daten'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-86</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht wahlberechtigt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-85</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht waehlen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-84</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Erst-/Zweitstimme abgegeben'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-83</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ungueltig waehlen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-82</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine andere Partei waehlen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-81</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'noch nicht entschieden'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-72</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht einzuschaetzen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-71</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht bekannt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ja, habe gewaehlt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1596</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">84</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">7</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">40</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">8</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nein, habe nicht gewaehlt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">289</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">15</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">3</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">7</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">4</td></tr>
+</table>
+</p>
+</div>
+</div>
+</div>
+```
+## Import from a SPSS \"portable\" file
+
+Data from SPSS \"portable\" files are imported in essentially the same
+way as data from SPSS \"system\" files: The first step again is to make
+the data set known to *R*:
+
+``` r
+ZA3861 <- spss.portable.file("Data/ZA3861.por")
+ZA3861
+```
+
+:
+
+    SPSS portable file 'Data/ZA3861.por' 
+        with 331 variables and 3263 observations
+
+Since this file contains German umlauts (in contrast to the previous
+example), we need to convert the character coding of the value labels
+etc. from \"Latin-1\" (the original coding of the data) into the native
+encoding of the system (unless the computer is using natively
+\"Latin-1\" encoding and not - as must Mac and most Linux System - a
+variant of UTF8).
+
+``` r
+ZA3861 <- Iconv(ZA3861,from="latin1")
+```
+
+Importer objects created from \"portable\" files can be examined in the
+same way as importer objects created from \"system\" files. For example,
+we get a description of the variables in the data set (the variable
+labels) and a codebook.
+
+``` r
+description(ZA3861)
+```
+
+:
+
+    vvpnid   'Fallnummer'                                 
+    vsplitwo 'West-Ost-Kennung'                           
+    vvornach 'Vor-/Nachwahl'                              
+    vland    'Bundesland'                                 
+    v10      'Wirtschaftl. Lage allgemein'                
+    v20      'Wirtschaftl. Lage retrospektiv'             
+    v30      'Wirtschaftl. Lage prospektiv'               
+    v31      'Wichtigkeit Erst/Zweitstimme BTW (nicht 94)'
+    v40      'Demokratiezufriedenheit'                    
+    v50      'Staerke Politikinteresse'                   
+
+To actually import the data and make them accessible for analysis we can
+(as above), use `as.data.set()`, or `subset()` as in this example:
+
+``` r
+work2002 <- subset(ZA3861,
+    select=c(
+          respid            = vvpnid,
+          split.wo          = vsplitwo,
+          split.vor.nach    = vvornach,
+          Bundesland        = vland,
+          Erststimme        = v69,
+          Zweitstimme       = v70,
+          Geschlecht        = vsex,
+          GebMonat          = vmonat,
+          GebJahr           = vjahr,
+          Konfession        = vrelig,
+          Kirchgang         = vkirchg,
+          Erwerbst          = vberuftg,
+          FrErwerbst        = vfrbertg,
+          Beruf             = vberuf,
+          Famstand          = vfamstdn,
+          Partner           = vpartner,
+          BildungP          = vpbildga,
+          BerufstP          = vpberuft,
+          FrBerufstP        = vpfbertg,
+          BerufP            = vpberuf,
+          ReprGewicht       = vgvwnw
+        )
+    )
+```
+
+## Import from a fixed-width file accompanied by SPSS syntax
+
+Data from more recent study components of the American National Elecion
+Study comes in fixed-width format, with some additional SPSS syntax
+files that define columns, variable labels, value labels, and missing
+values. `memisc` also provides an importer function such data. Naturally
+this requires a little bit more information. In addition to the actual
+data file, we also need a file with SPSS syntax specifying the data
+columns. Optionally, Syntax files that define variable labels, value
+lables, and missing values can also be specified.
+
+``` r
+anes2008TS <- spss.fixed.file("Data/anes2008/anes2008TS_dat.txt",
+                              columns.file="Data/anes2008/anes2008TS_col.sps",
+                              varlab.file="Data/anes2008/anes2008TS_lab.sps",
+                              codes.file="Data/anes2008/anes2008TS_cod.sps",
+                              missval.file="Data/anes2008/anes2008TS_md.sps")
+anes2008TS
+```
+
+:
+
+    SPSS fixed column file 'issues/anes2008/anes2008TS_dat.txt' 
+        with 1954 variables and 2322 observations
+        with variable labels from file 'issues/anes2008/anes2008TS_lab.sps' 
+        with value labels from file 'issues/anes2008/anes2008TS_cod.sps' 
+        with missing value definitions from file 'issues/anes2008/anes2008TS_md.sps' 
+
+Further information about the data can now be obtained from the returned
+importer object in the same way as from importer objects that describe
+SPSS \"system\" or SPSS \"portable\" files. That is, we can use
+`names()`, `description()`, and `codebook()`. To get the data in to the
+memory of *R* we can use (as above) the functions `as.data.set()` and
+`subset()`.
+
+## Importing data from a Stata file
+
+Data from Stata files (up to Stata Version 12) can be imported in the
+same way as data from SPSS files. The main difference is the function
+used for it, and the fact that user-defined missing values do not exists
+in Stata. For this, see the following example:
+
+``` r
+library(memisc)
+ZA5702.dta <- Stata.file("Data/ZA5702_v2-0-0.dta")
+ZA5702.dta
+```
+
+:
+
+    Stata file 'Data/ZA5702_v2-0-0.dta' 
+        with 874 variables and 3911 observations
+
+``` r
+gles2013work.dta <- subset(ZA5702.dta,
+                       select=c(
+                         wave                  = survey,
+                         intent.turnout        = v10,
+                         turnout               = n10,
+                         voteint.candidate     = v11aa,
+                         voteint.list          = v11ba,
+                         postal.vote.candidate = v12aa,
+                         postal.vote.list      = v12ba,
+                         vote.candidate        = n11aa,
+                         vote.list             = n11ba,                 
+                         bula                  = bl
+                       ))
+codebook(gles2013work.dta$turnout)
+```
+
+```{=html}
+<div class="codebook">
+<div class="codebook-entry">
+<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<p class="cbe-title" id="gles2013work.dta$turnout"><code class="cbe-name">gles2013work.dta$turnout</code> &mdash; <span class="cbe-description">'Wahlbeteiligung'</span></p></div>
+<div class="cbe-body" style="padding-left: 3ex;">
+<p><table class="cbe-spec">
+<tr><td style="text-align: left;">Storage mode:</td><td style="text-align: left;">integer</td></tr>
+<tr><td style="text-align: left;">Measurement:</td><td style="text-align: left;">nominal</td></tr>
+<tr><td style="text-align: left;">Missing values:</td><td style="text-align: left;">100-127</td></tr>
+</table>
+</p>
+<p><table class="cbe-table" style="border-collapse: collapse;">
+<tr><td colspan="3" style="text-align: center;">Values and labels</td><td style="text-align: center;">N</td><td colspan="6" style="text-align: center;">Percent</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-99</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Angabe'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">3</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">1</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">1</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-98</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'weiss nicht'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-97</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'trifft nicht zu'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">20</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">5</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">5</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-96</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Split'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-95</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht teilgenommen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-94</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht in Auswahlgesamtheit'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2003</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">51</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">2</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">51</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">2</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-93</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Interview abgebrochen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-92</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Fehler in Daten'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-86</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht wahlberechtigt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-85</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht waehlen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-84</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Erst-/Zweitstimme abgegeben'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-83</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ungueltig waehlen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-82</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine andere Partei waehlen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-81</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'noch nicht entschieden'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-72</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht einzuschaetzen'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-71</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht bekannt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ja, habe gewaehlt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1596</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">40</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">8</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">40</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">8</td></tr>
+<tr><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2</td><td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td><td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nein, habe nicht gewaehlt'</td><td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">289</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">7</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">4</td><td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">7</td><td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td><td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">4</td></tr>
+</table>
+</p>
+</div>
+</div>
+</div>
+```
