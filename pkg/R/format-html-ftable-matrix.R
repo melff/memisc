@@ -161,7 +161,6 @@ format_html.ftable_matrix <- function(x,
                                        rows=1)
     style_bottomrule <- style_ftab_rule(id=ftab_id,rulewidth=bottomrule,bottom=TRUE,
                                           rows=ntot)
-    print(style_bottomrule)
     nrows <- sapply(x,nrow)
     dim(nrows) <- dim(x)
     nrows <- nrows[,1]
