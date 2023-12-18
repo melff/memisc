@@ -395,7 +395,6 @@ Yes
 <span>      <span class="va">ftab.Survived.Sex</span>,</span>
 <span>      Total<span class="op">=</span><span class="va">tab.Survived</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-[1] “table#ftab-matrix-1 tr:nth-child(4){border-bottom: 2px solid;}”
 <style>
       table#ftab-matrix-1 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
@@ -602,7 +601,6 @@ use the following little trick:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">ftab.Survived.Age</span>,</span>
 <span>      <span class="va">ftab.Survived.Sex</span>,</span>
 <span>      Total<span class="op">=</span><span class="va">tab.Survived</span><span class="op">)</span></span></code></pre></div>
-<pre><code>[1] "table#ftab-matrix-2 tr:nth-child(4){\n     border-bottom: 2px solid;\n}"</code></pre>
 <style>
       table#ftab-matrix-2 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
@@ -795,18 +793,17 @@ Yes
 </table>
 <p>This can be undone by removing the method function of
 <code>knit_print</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">knit_print.ftable_matrix</span><span class="op">)</span></span></code></pre></div>
 <p>For <code>show_html</code> and <code>toLatex</code> there are some
 variants in how the variable names are positioned, for example:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">ftab.Survived.Age</span>,</span>
 <span>      <span class="va">ftab.Survived.Sex</span>,</span>
 <span>      Total<span class="op">=</span><span class="va">tab.Survived</span><span class="op">)</span>,</span>
 <span>  varinfront<span class="op">=</span><span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-[1] “table#ftab-matrix-3 tr:nth-child(4){border-bottom: 2px solid;}”
 <style>
       table#ftab-matrix-3 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
@@ -989,14 +986,13 @@ Yes
 </td>
 </tr>
 </table>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">ftab.Survived.Age</span>,</span>
 <span>      <span class="va">ftab.Survived.Sex</span>,</span>
 <span>      Total<span class="op">=</span><span class="va">tab.Survived</span><span class="op">)</span>,</span>
 <span>  varontop<span class="op">=</span><span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-[1] “table#ftab-matrix-4 tr:nth-child(3){border-bottom: 2px solid;}”
 <style>
       table#ftab-matrix-4 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
@@ -1189,7 +1185,7 @@ Yes
 </table>
 <p>Of course it is also possible to combine flat contingency tables
 rowwise:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ftab.Age.Survived</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">tab.Survived.Age</span>,col.vars<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ftab.Sex.Survived</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">tab.Survived.Sex</span>,col.vars<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ftab.Class.Survived</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">tab.Survived.Class</span>,col.vars<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
@@ -1218,7 +1214,7 @@ Crew             673 212
                          
 Total           1490 711 
                          </code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>    <span class="va">ftab.Age.Survived</span>,</span>
@@ -1227,7 +1223,6 @@ Total           1490 711
 <span>    Total<span class="op">=</span><span class="va">tab.Survived</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-[1] “table#ftab-matrix-5 tr:nth-child(11){border-bottom: 2px solid;}”
 <style>
       table#ftab-matrix-5 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
@@ -1509,7 +1504,7 @@ Total
 <p>It is also possible to create the <code>ftable</code>s from tables of
 percentages or generic tables (created with <code>genTable</code>)
 etc.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ptab.Survived.Age</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/percentages.html">percentages</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">~</span><span class="va">Age</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">ptab.Survived.Sex</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/percentages.html">percentages</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">~</span><span class="va">Sex</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">ptab.Survived.Class</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/percentages.html">percentages</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">~</span><span class="va">Class</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
@@ -1526,7 +1521,6 @@ etc.</p>
 <span>  <span class="op">)</span>,</span>
 <span>  digits<span class="op">=</span><span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-[1] “table#ftab-matrix-6 tr:nth-child(10){border-bottom: 2px solid;}”
 <style>
       table#ftab-matrix-6 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
@@ -1817,7 +1811,7 @@ Crew
 </table>
 <p>It is also possible to combine <code>rbind</code> and
 <code>cbind</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tab.Age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">Age</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">tab.Sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">Sex</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">tab.Class</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">Class</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
@@ -1832,7 +1826,6 @@ Crew
 <span>  digits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span> <span class="co"># One digit after dot for percentages </span></span>
 <span>                <span class="co"># no digits for total counts.</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-[1] “table#ftab-matrix-7 tr:nth-child(10){border-bottom: 2px solid;}”
 <style>
       table#ftab-matrix-7 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
@@ -2186,7 +2179,7 @@ Crew
 </tr>
 </table>
 <p>The same construct as LaTeX code:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/toLatex.html" class="external-link">toLatex</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">fptab.Age.Survived</span>,Total<span class="op">=</span><span class="va">tab.Age</span><span class="op">)</span>,</span>
