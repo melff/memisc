@@ -1,8 +1,8 @@
 ---
-title: Importing data from SPSS and Stata
+title: Generating Tables of Descriptive Statistics
 output: rmarkdown::html_vignette
 vignette: >
-  % \VignetteIndexEntry{Importing data from SPSS and Stata}
+  % \VignetteIndexEntry{Generating Tables of Descriptive Statistics}
   % \VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -20,6 +20,31 @@ R is a great tool to do data analysis and for data management tasks that arise i
 It is one of the aim of the "memisc" package to provide a bridge between social science data sets of variables that contain coded responses to questionnaire items, with their typical structures involving labelled numeric response codes and numeric codes declared as "missing values". As an illustrative example, suppose in a pre-election survey, respondents are asked about which party they are going to vote for in their constituency in the framework of a first-past-the-post electoral system. Suppose the response categories offered to the respondents are "Conservative", "Labour", "Liberal Democrat", "Other party".[^1] A survey agency that actually conducts the interviews with a sample of voters may, according to common practice, use the following codes to collect the responses to the question about the vote intention:
 
 <div class="booktable">
+<style>
+.booktable table th {
+    border-top: 0 none;
+    border-bottom: 0 none;
+    background-color: unset;
+}
+.booktable table td {
+    border-top: 0 none;
+    border-bottom: 0 none;
+    background-color: unset;
+}
+
+.booktable table tr.even {
+    background-color: unset;
+}
+
+.booktable table tr.header {
+    border-top: 2px solid;
+    border-bottom: 1px solid;
+}
+
+.booktable table tbody tr:last-child {
+    border-bottom: 2px solid;
+}
+</style>
 
 Response category     Code        
 -------------------- ----- ----- 
