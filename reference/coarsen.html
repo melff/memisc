@@ -31,7 +31,7 @@
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
     <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
-    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -132,8 +132,8 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">coarsen</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -3 - -2 -2 - -1  -1 - 0   0 - 1   1 - 2   2 - 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       3      30      69      64      31       3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -3 - -2 -2 - -1  -1 - 0   0 - 1   1 - 2   2 - 3   3 - 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       5      29      62      67      33       3       1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">coarsen</span><span class="op">(</span><span class="va">x</span>,quantiles<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -142,19 +142,19 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">coarsen</span><span class="op">(</span><span class="va">x</span>,brackets<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [-3;-2] [-2;-1]  [-1;0]   [0;1]   [1;2]   [2;3] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       3      30      69      64      31       3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [-3;-2] [-2;-1]  [-1;0]   [0;1]   [1;2]   [2;3]   [3;4] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       5      29      62      67      33       3       1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">coarsen</span><span class="op">(</span><span class="va">x</span>,breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1 - 0  0 - 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     69     64 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     62     67 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">coarsen</span><span class="op">(</span><span class="va">x</span>,breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>              range<span class="op">=</span><span class="cn">TRUE</span>,labels<span class="op">=</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  a  b  c  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 69 64 34 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34 62 67 37 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

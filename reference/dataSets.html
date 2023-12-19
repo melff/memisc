@@ -55,7 +55,7 @@ dsView is a function that displays data sets in a similar
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
     <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
-    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -228,33 +228,33 @@ a data frame.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 300 observations and 3 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    vote               region     income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 *Not asked in survey              England 12076.0588</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2        Conservatives *Not asked in survey  3270.8117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3               Labour                Wales  2765.8968</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4      *Not applicable              England   668.8680</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5      *Not applicable              England  2653.1078</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6          *Don't know              England   279.2010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7      *Not applicable                Wales  1328.9843</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8        Conservatives *Not asked in survey  2073.2958</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9      *Answer refused              England  1658.4523</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      *Answer refused             Scotland   632.3376</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11          *Don't know             Scotland   985.2760</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      *Answer refused              England  4128.1992</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13          *Don't know              England  8083.8686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14      *Answer refused             Scotland  4008.2079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15               Labour              England  2273.4031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 *Not asked in survey              England  2637.8494</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17      *Answer refused             Scotland  1357.0114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18      *Not applicable                Wales  1838.1643</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19    Liberal Democrats              England  1731.1915</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20        Conservatives *Not asked in survey   977.2703</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21    Liberal Democrats             Scotland  4828.5276</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22        Conservatives              England  2452.8176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23          *Don't know              England  1558.5283</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24      *Not applicable                Wales  4791.8016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25               Labour                Wales  2019.0097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> .. .................... .................... ..........</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    vote               region    income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1        Conservatives                Wales 5428.8244</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2      *Answer refused                Wales 3505.2302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3          *Don't know              England 2453.8302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4               Labour *Not asked in survey 3719.0128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5    Liberal Democrats              England 1509.7460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6          *Don't know              England  351.2437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7      *Answer refused              England 2411.3120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8        Conservatives              England 3140.4829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9          *Don't know              England 1944.1228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Liberal Democrats              England 3953.9499</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 *Not asked in survey              England 1013.2668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12          *Don't know             Scotland 3796.8595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13               Labour                Wales 1995.8608</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14          *Don't know *Not asked in survey 2267.3249</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15          *Don't know *Not asked in survey 1837.1329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16      *Not applicable              England  669.6346</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 *Not asked in survey             Scotland 1302.6590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18               Labour              England 1689.8221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19      *Not applicable             Scotland 3849.1621</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20        Conservatives              England 2415.5697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21      *Not applicable             Scotland 1692.2920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22               Labour             Scotland 1632.9102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23        Conservatives             Scotland 4534.1037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24        Conservatives                Wales 3157.7119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25      *Not applicable              England  909.6034</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> .. .................... .................... .........</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (25 of 300 observations shown)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -265,18 +265,18 @@ a data frame.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 300 obs. of 3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num  99 1 2 97 97 8 97 1 9 9 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Nmnl. item w/ 5 labels for 1,2,3,... + ms.v.  num  1 99 3 1 1 1 3 99 1 2 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: Rto. item  num  12076 3271 2766 669 2653 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num  1 9 8 2 3 8 9 1 8 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Nmnl. item w/ 5 labels for 1,2,3,... + ms.v.  num  3 3 1 99 1 1 1 1 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: Rto. item  num  5429 3505 2454 3719 1510 ...</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    vote                     region        income       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Conservatives       :41   England             :126   Min.   :  279.2  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Labour              :40   Scotland            : 92   1st Qu.: 1222.3  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Liberal Democrats   :40   Wales               : 46   Median : 1945.4  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Don't know         :45   *Not asked in survey: 36   Mean   : 2451.7  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Answer refused     :56                              3rd Qu.: 2801.8  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not applicable     :45                              Max.   :12076.1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not asked in survey:33                                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Conservatives       :46   England             :127   Min.   :  177.1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Labour              :42   Scotland            : 89   1st Qu.: 1234.4  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Liberal Democrats   :46   Wales               : 45   Median : 1922.1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Don't know         :45   *Not asked in survey: 39   Mean   : 2351.3  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Answer refused     :43                              3rd Qu.: 3054.5  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not applicable     :39                              Max.   :17456.1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *Not asked in survey:39                                               </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># If we want to 'View' a data set we can use 'dsView'</span></span></span>
@@ -289,72 +289,72 @@ a data frame.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Item 'Vote intention' (measurement: nominal, type: double, length = 300) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] *Not asked in survey Conservatives Labour *Not applicable ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] Conservatives *Answer refused *Don't know Labour Liberal Democrats ...</span>
 <span class="r-in"><span><span class="va">Data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 1 observations and 3 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   vote  region   income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 *Not asked in survey England 12076.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            vote region   income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Conservatives  Wales 5428.824</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            vote  region    income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          &lt;NA&gt; England 12076.059</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Conservatives    &lt;NA&gt;  3270.812</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        Labour   Wales  2765.897</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          &lt;NA&gt; England   668.868</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          &lt;NA&gt; England  2653.108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          &lt;NA&gt; England   279.201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                vote  region    income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Conservatives   Wales 5428.8244</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2              &lt;NA&gt;   Wales 3505.2302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3              &lt;NA&gt; England 2453.8302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            Labour    &lt;NA&gt; 3719.0128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Liberal Democrats England 1509.7460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6              &lt;NA&gt; England  351.2437</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">EnglandData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Data</span>,<span class="va">region</span> <span class="op">==</span> <span class="st">"England"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">EnglandData</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 126 observations and 3 variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data set with 127 observations and 3 variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    vote  region     income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 *Not asked in survey England 12076.0588</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2      *Not applicable England   668.8680</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3      *Not applicable England  2653.1078</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4          *Don't know England   279.2010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5      *Answer refused England  1658.4523</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6      *Answer refused England  4128.1992</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7          *Don't know England  8083.8686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8               Labour England  2273.4031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9 *Not asked in survey England  2637.8494</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Liberal Democrats England  1731.1915</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11        Conservatives England  2452.8176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12          *Don't know England  1558.5283</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      *Not applicable England  2879.3263</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14          *Don't know England  1420.6832</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15      *Answer refused England  2063.6379</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16          *Don't know England  4067.1603</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17      *Answer refused England  2170.0382</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18               Labour England  2566.1221</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19      *Not applicable England   855.2873</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20      *Answer refused England   723.8749</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21          *Don't know England  2811.9149</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22      *Not applicable England  1971.7155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23      *Answer refused England  1888.8399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24    Liberal Democrats England  5507.4907</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25        Conservatives England  1810.2119</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> .. .................... ....... ..........</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (25 of 126 observations shown)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    vote  region    income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1          *Don't know England 2453.8302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2    Liberal Democrats England 1509.7460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3          *Don't know England  351.2437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4      *Answer refused England 2411.3120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5        Conservatives England 3140.4829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6          *Don't know England 1944.1228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7    Liberal Democrats England 3953.9499</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8 *Not asked in survey England 1013.2668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9      *Not applicable England  669.6346</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10               Labour England 1689.8221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11        Conservatives England 2415.5697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      *Not applicable England  909.6034</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    Liberal Democrats England 1203.9971</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14        Conservatives England  177.0659</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15          *Don't know England 2246.8159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16      *Not applicable England 3668.9902</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17               Labour England  620.6565</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          *Don't know England 1299.0849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    Liberal Democrats England 2566.1997</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    Liberal Democrats England 1514.5071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21      *Not applicable England 3451.7493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 *Not asked in survey England 1703.5673</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 *Not asked in survey England 1738.6046</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24        Conservatives England  944.3050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25          *Don't know England 1459.8150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> .. .................... ....... .........</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (25 of 127 observations shown)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">vote</span><span class="op">+</span><span class="va">region</span>,data<span class="op">=</span><span class="va">Data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    region</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vote                England Scotland Wales</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives          18       13     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                 13       11    12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats      17       12     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives          19       13     8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                 14       12     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats      20       16     5</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">vote</span><span class="op">+</span><span class="va">region</span>,data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">Data</span>, <span class="va">vote</span> <span class="op">&lt;-</span> <span class="fu"><a href="value-filters.html">include.missings</a></span><span class="op">(</span><span class="va">vote</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       region</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vote                   England Scotland Wales</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives             18       13     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                    13       11    12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats         17       12     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Don't know               23       14     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Answer refused           19       21     9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not applicable           19       10     9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not asked in survey      17       11     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conservatives             19       13     8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Labour                    14       12     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Liberal Democrats         20       16     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Don't know               22       12     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Answer refused           20       12     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not applicable           13       12     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   *Not asked in survey      19       12     7</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

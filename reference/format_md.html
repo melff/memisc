@@ -33,7 +33,7 @@ in a Rmd file with different output formats."><!-- mathjax --><script src="https
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
     <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
-    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -151,13 +151,13 @@ in a Rmd file with different output formats.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    | Values |   | Labels                |     N | Valid | Total |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    |-------:|--:|:----------------------|------:|------:|------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  1     |   | 'Conservatives'       |    32 |  23.4 |  10.7 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  2     |   | 'Labour'              |    50 |  36.5 |  16.7 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  3     |   | 'Liberal Democrats'   |    55 |  40.1 |  18.3 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  8     | M | 'Don't know'          |    50 |       |  16.7 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  9     | M | 'Answer refused'      |    38 |       |  12.7 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    | 97     | M | 'Not applicable'      |    35 |       |  11.7 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    | 99     | M | 'Not asked in survey' |    40 |       |  13.3 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  1     |   | 'Conservatives'       |    52 |  40.3 |  17.3 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  2     |   | 'Labour'              |    38 |  29.5 |  12.7 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  3     |   | 'Liberal Democrats'   |    39 |  30.2 |  13.0 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  8     | M | 'Don't know'          |    37 |       |  12.3 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  9     | M | 'Answer refused'      |    40 |       |  13.3 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    | 97     | M | 'Not applicable'      |    48 |       |  16.0 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    | 99     | M | 'Not asked in survey' |    46 |       |  15.3 |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -174,10 +174,10 @@ in a Rmd file with different output formats.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    | Values |   | Labels                |     N | Valid | Total |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    |-------:|--:|:----------------------|------:|------:|------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  1     |   | 'England'             |   141 |  53.8 |  47.0 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  2     |   | 'Scotland'            |    79 |  30.2 |  26.3 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    |  3     |   | 'Wales'               |    42 |  16.0 |  14.0 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    | 99     | M | 'Not asked in survey' |    38 |       |  12.7 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  1     |   | 'England'             |   122 |  49.6 |  40.7 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  2     |   | 'Scotland'            |    81 |  32.9 |  27.0 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    |  3     |   | 'Wales'               |    43 |  17.5 |  14.3 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    | 99     | M | 'Not asked in survey' |    54 |       |  18.0 |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -191,10 +191,10 @@ in a Rmd file with different output formats.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Storage mode: double    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Measurement: ratio    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Min:        354.922   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Max:      15018.324   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Mean:      2668.469   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  2094.304   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Min:        239.603   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Max:      19957.723   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Mean:      2633.078   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  2203.486   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
