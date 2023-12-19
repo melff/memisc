@@ -88,6 +88,7 @@ Aggregate <- function (formula,
     m <- match.call()
 
     m[[1]] <- as.name("genTable")
+    m$data <- force(data)
     res <- eval(m,enclos=parent.frame())
 
     empty <- attr(res,"empty")
