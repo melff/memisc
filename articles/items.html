@@ -41,14 +41,11 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Survey items</h6>
-    <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
-    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tables of summary statistics and model estimates</h6>
-    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Generating Tables of Descriptive Statistics</a>
+    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
 </li>
@@ -118,6 +115,31 @@ A survey agency that actually conducts the interviews with a sample of
 voters may, according to common practice, use the following codes to
 collect the responses to the question about the vote intention:</p>
 <div class="booktable">
+<style>
+.booktable table th {
+    border-top: 0 none;
+    border-bottom: 0 none;
+    background-color: unset;
+}
+.booktable table td {
+    border-top: 0 none;
+    border-bottom: 0 none;
+    background-color: unset;
+}
+
+.booktable table tr.even {
+    background-color: unset;
+}
+
+.booktable table tr.header {
+    border-top: 2px solid;
+    border-bottom: 1px solid;
+}
+
+.booktable table tbody tr:last-child {
+    border-bottom: 2px solid;
+}
+</style>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Response category</th>
@@ -611,6 +633,16 @@ there is also the possibility to export codebooks into HTML:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">voteint</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <style>
+    .cbe-body table {
+         margin: unset;
+    }
+    .cbe-body table,
+    .cbe-body table tr,
+    .cbe-body table td
+    {
+         border-style: none;
+         padding: unset;
+    }
     .cbe-header {
          border-top: solid 2px;
          border-bottom: solid 1px;
@@ -1319,6 +1351,16 @@ applying the function <code><a href="../reference/codebook.html">codebook()</a><
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">Data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <style>
+    .cbe-body table {
+         margin: unset;
+    }
+    .cbe-body table,
+    .cbe-body table tr,
+    .cbe-body table td
+    {
+         border-style: none;
+         padding: unset;
+    }
     .cbe-header {
          border-top: solid 2px;
          border-bottom: solid 1px;
@@ -2113,6 +2155,16 @@ vote                   England Scotland Wales
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">DataFr</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <style>
+    .cbe-body table {
+         margin: unset;
+    }
+    .cbe-body table,
+    .cbe-body table tr,
+    .cbe-body table td
+    {
+         border-style: none;
+         padding: unset;
+    }
     .cbe-header {
          border-top: solid 2px;
          border-bottom: solid 1px;
@@ -2696,6 +2748,16 @@ that contains the Bundesländer codes:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">gles2013work</span>,</span>
 <span>     <span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">bula</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <style>
+    .cbe-body table {
+         margin: unset;
+    }
+    .cbe-body table,
+    .cbe-body table tr,
+    .cbe-body table td
+    {
+         border-style: none;
+         padding: unset;
+    }
     .cbe-header {
          border-top: solid 2px;
          border-bottom: solid 1px;
