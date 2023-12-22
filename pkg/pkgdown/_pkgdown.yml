@@ -2,3 +2,16 @@ url: https://melff.github.io/mclogit
 template:
   bootstrap: 5
   bootswatch: spacelab
+articles:
+- title: Items in survey questionnaires
+  navbar: ~
+  contents:
+  - items
+  - import
+  - anes48
+- title: Tables of summary statistics and model estimates
+  navbar: ~
+  contents:
+  - gentab
+  - ftable-matrix
+  - mtable-html
