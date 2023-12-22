@@ -1,4 +1,101 @@
-url: https://melff.github.io/mclogit
+url: https://melff.github.io/memisc
 template:
   bootstrap: 5
   bootswatch: spacelab
+reference:
+- title: Introduction
+  contents:
+  - 00memisc
+- title: Data preparation helpers and convenience functions
+  contents:
+  - cases
+  - coarsen
+  - collect
+  - dimrename
+  - Foreach
+  - recode
+  - reorder.array
+  - Reshape
+  - retain
+  - reversed
+  - sample-methods
+  - stats-conveniences
+  - xapply
+- title: Survey items and survey data sets
+  contents:
+  - annotations
+  - codebook
+  - codeplan
+  - dataSets
+  - dataset-manip
+  - dedup-labels
+  - duplicated-labels
+  - importers
+  - items
+  - items-to-vectors
+  - labels
+  - measurement
+  - measurement-autolevel
+  - neg2mis
+  - relabel
+  - tibbles
+  - trim-labels
+  - value-filters
+  - wild.codes
+- title: Tables of model estimates
+  contents:
+  - getSummary
+  - mtable
+  - mtable-format-delim
+  - mtable-format-html
+  - mtable-format-latex
+  - mtable-format-print
+  - styles
+  - withVCov
+- title: Groupwise computations and tables of summary statistics
+  - By
+  - Descriptives
+  - genTable
+  - ftable-matrices
+  - Groups
+  - Means
+  - percentages
+  - percent
+  - Table
+- title: Syntactic sugar
+  contents:
+  - attr-operators
+  - nin
+  - within-operators
+- title: HTML and LaTeX formatting
+  contents:
+  - format_html
+  - format_html.ftable
+  - format_html.codebook
+  - html
+  - toLatexExtra
+- title: Other tools and utilities
+  contents:
+  - applyTemplate
+  - as.symbols
+  - Iconv
+  - Substitute
+  - toDataFrame
+  - utility-classes
+  - view
+  - view_html
+  - Write
+articles:
+- title: Survey items
+  navbar: Survey items
+  contents:
+  - items
+  - import
+  - anes48
+- title: Tables of summary statistics and model estimates
+  navbar: Tables of summary statistics and model estimates
+  contents:
+  - gentab
+  - ftable-matrix
+  - mtable-html
+
