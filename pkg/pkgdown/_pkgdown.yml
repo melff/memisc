@@ -40,7 +40,7 @@ reference:
   - relabel
   - as_haven
   - trim_labels
-  - value.filters
+  - value.filter
   - wild.codes
 - title: Tables of model estimates
   contents:
@@ -57,7 +57,7 @@ reference:
   - By
   - Descriptives
   - genTable
-  - ftable_matrices
+  - ftable_matrix
   - Groups
   - Means
   - percentages
