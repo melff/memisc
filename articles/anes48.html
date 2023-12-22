@@ -41,11 +41,14 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
-    <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
-    <a class="dropdown-item" href="../articles/gentab.html">Generating Tables of Descriptive Statistics</a>
-    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
+    <h6 class="dropdown-header" data-toc-skip>Survey items</h6>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Tables of summary statistics and model estimates</h6>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
 </li>
@@ -156,7 +159,7 @@ to produce HTML where possible.</p>
 the SPSS portable file <code>NES1948.POR</code> from zip file
 <code>NES1948.ZIP</code> delivered with the <em>memisc</em> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://melff.github.io/memisc/" class="external-link">memisc</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://memisc.elff.eu" class="external-link">memisc</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">nes1948.por</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"anes/NES1948.ZIP"</span>,package<span class="op">=</span><span class="st">"memisc"</span><span class="op">)</span>,</span>
 <span>                     <span class="st">"NES1948.POR"</span>,exdir<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -178,7 +181,7 @@ course, be suppressed if it would take too long.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">nes1948</span><span class="op">)</span></span></code></pre></div>
 <pre><code>
-SPSS portable file '/tmp/Rtmpf1MTgY/file1ce160713977/NES1948.POR' 
+SPSS portable file '/tmp/RtmpX8utsG/file1c5d43a5821b/NES1948.POR' 
     with 67 variables and 662 observations</code></pre>
 <p>At this stage, the data are not loaded into the memory yet. But we
 can see which variables exist inside the data set:</p>
@@ -787,16 +790,6 @@ instead, with</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">nes1948</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <style>
-    .cbe-body table {
-         margin: unset;
-    }
-    .cbe-body table,
-    .cbe-body table tr,
-    .cbe-body table td
-    {
-         border-style: none;
-         padding: unset;
-    }
     .cbe-header {
          border-top: solid 2px;
          border-bottom: solid 1px;
@@ -1409,16 +1402,6 @@ possible:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">vote.48</span><span class="op">)</span></span></code></pre></div>
 <style>
-    .cbe-body table {
-         margin: unset;
-    }
-    .cbe-body table,
-    .cbe-body table tr,
-    .cbe-body table td
-    {
-         border-style: none;
-         padding: unset;
-    }
     .cbe-header {
          border-top: solid 2px;
          border-bottom: solid 1px;

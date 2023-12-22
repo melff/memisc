@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="memisc">
-<title>Importing data from SPSS and Stata • memisc</title>
+<title>Generating Tables of Descriptive Statistics with "memisc" • memisc</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Importing data from SPSS and Stata">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generating Tables of Descriptive Statistics with " memisc>
 <meta property="og:description" content="memisc">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -41,11 +41,14 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
-    <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
-    <a class="dropdown-item" href="../articles/gentab.html">Generating Tables of Descriptive Statistics</a>
-    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
+    <h6 class="dropdown-header" data-toc-skip>Survey items</h6>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Tables of summary statistics and model estimates</h6>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
 </li>
@@ -73,7 +76,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Importing data from SPSS and Stata</h1>
+      <img src="" class="logo" alt=""><h1>Generating Tables of Descriptive Statistics with "memisc"</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/melff/memisc/blob/HEAD/../vignettes/import.Rmd" class="external-link"><code>../vignettes/import.Rmd</code></a></small>
@@ -82,6 +85,10 @@
 
     
     
+<div class="section level2">
+<h2 id="importing-data-from-spss-and-stata">Importing data from SPSS and Stata<a class="anchor" aria-label="anchor" href="#importing-data-from-spss-and-stata"></a>
+</h2>
+</div>
 <div class="section level2">
 <h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h2>
@@ -119,10 +126,6 @@ if <code>imprtr</code> is an importer object -- by calls like
 <code>subset(imprtr,...)</code>, <code>imprtr[...]</code> or
 <code>as.data.set(imprtr)</code>. Some examples are given in the
 following.</p>
-<p>Note that these examples require data not included in the package
-(you need to register to <a href="https://www.gesis.org" class="external-link">GESIS</a> to
-download the data). The vignette code cannot be run without this
-additional data.</p>
 </div>
 <div class="section level2">
 <h2 id="importing-data-from-spss-files">Importing data from SPSS files<a class="anchor" aria-label="anchor" href="#importing-data-from-spss-files"></a>
@@ -135,7 +138,7 @@ format in which SPSS data now is usually saved and often distributed,
 one needs to first make the file that contains the data known to R, as
 in the following example:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://melff.github.io/memisc/" class="external-link">memisc</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://memisc.elff.eu" class="external-link">memisc</a></span><span class="op">)</span></span>
 <span><span class="va">ZA5702</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importers.html">spss.system.file</a></span><span class="op">(</span><span class="st">"Data/ZA5702_v2-0-0.sav"</span><span class="op">)</span></span>
 <span><span class="va">ZA5702</span></span></code></pre></div>
 <p>:</p>
@@ -198,28 +201,254 @@ as they exist in the data file.</p>
 file, we create a codebook for one of the items in the data set:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">gles2013work</span><span class="op">$</span><span class="va">turnout</span><span class="op">)</span></span></code></pre></div>
-<pre><code>================================================================================
-
-   gles2013work$turnout 'Wahlbeteiligung'
-
---------------------------------------------------------------------------------
-
-   Storage mode: double
-   Measurement: interval
-   Missing values: -Inf - -1
-
-   Values and labels                      N Valid Total
-                                                       
-   -99 M 'keine Angabe'                   3         0.1
-   -97 M 'trifft nicht zu'               20         0.5
-   -94 M 'nicht in Auswahlgesamtheit'  2003        51.2
-     1   'ja, habe gewaehlt'           1596  84.7  40.8
-     2   'nein, habe nicht gewaehlt'    289  15.3   7.4
-                                                       
-        Min: 1.000                                     
-        Max: 2.000                                     
-       Mean: 1.153                                     
-   Std.Dev.: 0.360   </code></pre>
+<div class="codebook">
+<div class="codebook-entry">
+<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<p class="cbe-title" id="gles2013work$turnout"><code class="cbe-name">gles2013work$turnout</code> — <span class="cbe-description">'Wahlbeteiligung'</span></p>
+</div>
+<div class="cbe-body" style="padding-left: 3ex;">
+<p></p>
+<table class="table cbe-spec">
+<tr>
+<td style="text-align: left;">Storage mode:</td>
+<td style="text-align: left;">double</td>
+</tr>
+<tr>
+<td style="text-align: left;">Measurement:</td>
+<td style="text-align: left;">nominal</td>
+</tr>
+<tr>
+<td style="text-align: left;">Missing values:</td>
+<td style="text-align: left;">-Inf–1</td>
+</tr>
+</table>
+<p></p>
+<table class="table cbe-table" style="border-collapse: collapse;">
+<tr>
+<td colspan="3" style="text-align: center;">Values and labels</td>
+<td style="text-align: center;">N</td>
+<td colspan="6" style="text-align: center;">Percent</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-99</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Angabe'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">3</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">1</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-98</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'weiss nicht'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-97</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'trifft nicht zu'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">20</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">5</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-96</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Split'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-95</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht teilgenommen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-94</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht in Auswahlgesamtheit'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2003</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">51</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">2</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-93</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Interview abgebrochen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-92</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Fehler in Daten'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-86</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht wahlberechtigt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-85</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht waehlen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-84</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Erst-/Zweitstimme abgegeben'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-83</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ungueltig waehlen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-82</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine andere Partei waehlen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-81</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'noch nicht entschieden'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-72</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht einzuschaetzen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-71</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">M</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht bekannt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;"></td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;"></td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;"></td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ja, habe gewaehlt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1596</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">84</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">7</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">40</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">8</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nein, habe nicht gewaehlt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">289</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">15</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">3</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">7</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">4</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="import-from-a-spss-portable-file">Import from a SPSS "portable" file<a class="anchor" aria-label="anchor" href="#import-from-a-spss-portable-file"></a>
@@ -227,8 +456,8 @@ file, we create a codebook for one of the items in the data set:</p>
 <p>Data from SPSS "portable" files are imported in essentially the same
 way as data from SPSS "system" files: The first step again is to make
 the data set known to <em>R</em>:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ZA3861</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importers.html">spss.portable.file</a></span><span class="op">(</span><span class="st">"Data/ZA3861.por"</span>,iconv<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ZA3861</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importers.html">spss.portable.file</a></span><span class="op">(</span><span class="st">"Data/ZA3861.por"</span><span class="op">)</span></span>
 <span><span class="va">ZA3861</span></span></code></pre></div>
 <p>:</p>
 <pre><code>SPSS portable file 'Data/ZA3861.por' 
@@ -239,13 +468,13 @@ etc. from "Latin-1" (the original coding of the data) into the native
 encoding of the system (unless the computer is using natively "Latin-1"
 encoding and not - as must Mac and most Linux System - a variant of
 UTF8).</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ZA3861</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Iconv.html">Iconv</a></span><span class="op">(</span><span class="va">ZA3861</span>,from<span class="op">=</span><span class="st">"latin1"</span><span class="op">)</span></span></code></pre></div>
 <p>Importer objects created from "portable" files can be examined in the
 same way as importer objects created from "system" files. For example,
 we get a description of the variables in the data set (the variable
 labels) and a codebook.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/annotations.html">description</a></span><span class="op">(</span><span class="va">ZA3861</span><span class="op">)</span></span></code></pre></div>
 <p>:</p>
 <pre><code>vvpnid   'Fallnummer'                                 
@@ -261,30 +490,30 @@ v50      'Staerke Politikinteresse'                   </code></pre>
 <p>To actually import the data and make them accessible for analysis we
 can (as above), use <code><a href="../reference/dataSets.html">as.data.set()</a></code>, or <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code>
 as in this example:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">work2002</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">ZA3861</span>,</span>
 <span>    select<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>          respid            <span class="op">=</span> <span class="va">VVPNID</span>,</span>
-<span>          split.wo          <span class="op">=</span> <span class="va">VSPLITWO</span>,</span>
-<span>          split.vor.nach    <span class="op">=</span> <span class="va">VVORNACH</span>,</span>
-<span>          Bundesland        <span class="op">=</span> <span class="va">VLAND</span>,</span>
-<span>          Erststimme        <span class="op">=</span> <span class="va">V69</span>,</span>
-<span>          Zweitstimme       <span class="op">=</span> <span class="va">V70</span>,</span>
-<span>          Geschlecht        <span class="op">=</span> <span class="va">VSEX</span>,</span>
-<span>          GebMonat          <span class="op">=</span> <span class="va">VMONAT</span>,</span>
-<span>          GebJahr           <span class="op">=</span> <span class="va">VJAHR</span>,</span>
-<span>          Konfession        <span class="op">=</span> <span class="va">VRELIG</span>,</span>
-<span>          Kirchgang         <span class="op">=</span> <span class="va">VKIRCHG</span>,</span>
-<span>          Erwerbst          <span class="op">=</span> <span class="va">VBERUFTG</span>,</span>
-<span>          FrErwerbst        <span class="op">=</span> <span class="va">VFRBERTG</span>,</span>
-<span>          Beruf             <span class="op">=</span> <span class="va">VBERUF</span>,</span>
-<span>          Famstand          <span class="op">=</span> <span class="va">VFAMSTDN</span>,</span>
-<span>          Partner           <span class="op">=</span> <span class="va">VPARTNER</span>,</span>
-<span>          BildungP          <span class="op">=</span> <span class="va">VPBILDGA</span>,</span>
-<span>          BerufstP          <span class="op">=</span> <span class="va">VPBERUFT</span>,</span>
-<span>          FrBerufstP        <span class="op">=</span> <span class="va">VPFBERTG</span>,</span>
-<span>          BerufP            <span class="op">=</span> <span class="va">VPBERUF</span>,</span>
-<span>          ReprGewicht       <span class="op">=</span> <span class="va">VGVWNW</span></span>
+<span>          respid            <span class="op">=</span> <span class="va">vvpnid</span>,</span>
+<span>          split.wo          <span class="op">=</span> <span class="va">vsplitwo</span>,</span>
+<span>          split.vor.nach    <span class="op">=</span> <span class="va">vvornach</span>,</span>
+<span>          Bundesland        <span class="op">=</span> <span class="va">vland</span>,</span>
+<span>          Erststimme        <span class="op">=</span> <span class="va">v69</span>,</span>
+<span>          Zweitstimme       <span class="op">=</span> <span class="va">v70</span>,</span>
+<span>          Geschlecht        <span class="op">=</span> <span class="va">vsex</span>,</span>
+<span>          GebMonat          <span class="op">=</span> <span class="va">vmonat</span>,</span>
+<span>          GebJahr           <span class="op">=</span> <span class="va">vjahr</span>,</span>
+<span>          Konfession        <span class="op">=</span> <span class="va">vrelig</span>,</span>
+<span>          Kirchgang         <span class="op">=</span> <span class="va">vkirchg</span>,</span>
+<span>          Erwerbst          <span class="op">=</span> <span class="va">vberuftg</span>,</span>
+<span>          FrErwerbst        <span class="op">=</span> <span class="va">vfrbertg</span>,</span>
+<span>          Beruf             <span class="op">=</span> <span class="va">vberuf</span>,</span>
+<span>          Famstand          <span class="op">=</span> <span class="va">vfamstdn</span>,</span>
+<span>          Partner           <span class="op">=</span> <span class="va">vpartner</span>,</span>
+<span>          BildungP          <span class="op">=</span> <span class="va">vpbildga</span>,</span>
+<span>          BerufstP          <span class="op">=</span> <span class="va">vpberuft</span>,</span>
+<span>          FrBerufstP        <span class="op">=</span> <span class="va">vpfbertg</span>,</span>
+<span>          BerufP            <span class="op">=</span> <span class="va">vpberuf</span>,</span>
+<span>          ReprGewicht       <span class="op">=</span> <span class="va">vgvwnw</span></span>
 <span>        <span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
 </div>
@@ -300,7 +529,7 @@ addition to the actual data file, we also need a file with SPSS syntax
 specifying the data columns. Optionally, Syntax files that define
 variable labels, value lables, and missing values can also be
 specified.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">anes2008TS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importers.html">spss.fixed.file</a></span><span class="op">(</span><span class="st">"Data/anes2008/anes2008TS_dat.txt"</span>,</span>
 <span>                              columns.file<span class="op">=</span><span class="st">"Data/anes2008/anes2008TS_col.sps"</span>,</span>
 <span>                              varlab.file<span class="op">=</span><span class="st">"Data/anes2008/anes2008TS_lab.sps"</span>,</span>
@@ -328,14 +557,14 @@ we can use (as above) the functions <code><a href="../reference/dataSets.html">a
 same way as data from SPSS files. The main difference is the function
 used for it, and the fact that user-defined missing values do not exists
 in Stata. For this, see the following example:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://melff.github.io/memisc/" class="external-link">memisc</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://memisc.elff.eu" class="external-link">memisc</a></span><span class="op">)</span></span>
 <span><span class="va">ZA5702.dta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importers.html">Stata.file</a></span><span class="op">(</span><span class="st">"Data/ZA5702_v2-0-0.dta"</span><span class="op">)</span></span>
 <span><span class="va">ZA5702.dta</span></span></code></pre></div>
 <p>:</p>
 <pre><code>Stata file 'Data/ZA5702_v2-0-0.dta' 
     with 874 variables and 3911 observations</code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gles2013work.dta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">ZA5702.dta</span>,</span>
 <span>                       select<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>                         wave                  <span class="op">=</span> <span class="va">survey</span>,</span>
@@ -350,36 +579,254 @@ in Stata. For this, see the following example:</p>
 <span>                         bula                  <span class="op">=</span> <span class="va">bl</span></span>
 <span>                       <span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="va">gles2013work.dta</span><span class="op">$</span><span class="va">turnout</span><span class="op">)</span></span></code></pre></div>
-<pre><code>================================================================================
-
-   gles2013work.dta$turnout 'Wahlbeteiligung'
-
---------------------------------------------------------------------------------
-
-   Storage mode: integer
-   Measurement: nominal
-   Missing values: 100 - 127
-
-   Values and labels                               N Percent
-                                                            
-   -99   'keine Angabe'                            3     0.1
-   -98   'weiss nicht'                             0     0.0
-   -97   'trifft nicht zu'                        20     0.5
-   -96   'Split'                                   0     0.0
-   -95   'nicht teilgenommen'                      0     0.0
-   -94   'nicht in Auswahlgesamtheit'           2003    51.2
-   -93   'Interview abgebrochen'                   0     0.0
-   -92   'Fehler in Daten'                         0     0.0
-   -86   'nicht wahlberechtigt'                    0     0.0
-   -85   'nicht waehlen'                           0     0.0
-   -84   'keine Erst-/Zweitstimme abgegeben'       0     0.0
-   -83   'ungueltig waehlen'                       0     0.0
-   -82   'keine andere Partei waehlen'             0     0.0
-   -81   'noch nicht entschieden'                  0     0.0
-   -72   'nicht einzuschaetzen'                    0     0.0
-   -71   'nicht bekannt'                           0     0.0
-     1   'ja, habe gewaehlt'                    1596    40.8
-     2   'nein, habe nicht gewaehlt'             289     7.4</code></pre>
+<div class="codebook">
+<div class="codebook-entry">
+<div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
+<p class="cbe-title" id="gles2013work.dta$turnout"><code class="cbe-name">gles2013work.dta$turnout</code> — <span class="cbe-description">'Wahlbeteiligung'</span></p>
+</div>
+<div class="cbe-body" style="padding-left: 3ex;">
+<p></p>
+<table class="table cbe-spec">
+<tr>
+<td style="text-align: left;">Storage mode:</td>
+<td style="text-align: left;">integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">Measurement:</td>
+<td style="text-align: left;">nominal</td>
+</tr>
+<tr>
+<td style="text-align: left;">Missing values:</td>
+<td style="text-align: left;">100-127</td>
+</tr>
+</table>
+<p></p>
+<table class="table cbe-table" style="border-collapse: collapse;">
+<tr>
+<td colspan="3" style="text-align: center;">Values and labels</td>
+<td style="text-align: center;">N</td>
+<td colspan="6" style="text-align: center;">Percent</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-99</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Angabe'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">3</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">1</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">1</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-98</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'weiss nicht'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-97</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'trifft nicht zu'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">20</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">5</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">5</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-96</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Split'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-95</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht teilgenommen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-94</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht in Auswahlgesamtheit'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2003</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">51</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">2</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">51</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">2</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-93</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Interview abgebrochen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-92</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'Fehler in Daten'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-86</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht wahlberechtigt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-85</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht waehlen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-84</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine Erst-/Zweitstimme abgegeben'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-83</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ungueltig waehlen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-82</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'keine andere Partei waehlen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-81</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'noch nicht entschieden'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-72</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht einzuschaetzen'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">-71</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nicht bekannt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">0</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">0</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'ja, habe gewaehlt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">1596</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">40</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">8</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">40</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">8</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">2</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;"></td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">'nein, habe nicht gewaehlt'</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">289</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">7</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">4</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">7</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">.</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">4</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
