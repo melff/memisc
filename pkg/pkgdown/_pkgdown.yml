@@ -53,6 +53,7 @@ reference:
   - styles
   - withVCov
 - title: Groupwise computations and tables of summary statistics
+  contents:
   - By
   - Descriptives
   - genTable
