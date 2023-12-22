@@ -8,7 +8,7 @@ articles:
   import: import.html
   items: items.html
   mtable-html: mtable-html.html
-last_built: 2023-12-22T21:25Z
+last_built: 2023-12-22T21:34Z
 urls:
   reference: https://melff.github.io/mclogit/reference
   article: https://melff.github.io/mclogit/articles

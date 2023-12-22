@@ -30,9 +30,12 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <h6 class="dropdown-header" data-toc-skip>Survey items</h6>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Tables of summary statistics and model estimates</h6>
     <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
@@ -178,32 +181,32 @@
 <span class="r-in"><span>  <span class="va">z2</span><span class="op">=</span><span class="fu">cases</span><span class="op">(</span><span class="va">x</span><span class="op">&lt;</span><span class="fl">0</span>,<span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">0</span> <span class="op">&amp;</span> <span class="va">y</span> <span class="op">&lt;</span><span class="fl">0</span><span class="op">)</span>, <span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="fl">0</span> <span class="op">&amp;</span> <span class="va">y</span> <span class="op">&gt;=</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>conditions are not mutually exclusive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              x           y                z2          z1     y1     x1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 -0.84758101 -1.05063906             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 -0.77656522  0.26457574             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.76228092  0.83176161             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.19166423 -1.55802287             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.11860266  2.36187427             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -0.08437798  1.31504992             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16  0.02150864 -0.47121464  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20  0.08948696  0.26567814 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.17984707  0.85445671 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   0.53976118  0.23613682 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.58038390 -1.43045044  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.58137214  0.01933323 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19  0.58458620 -0.26153197  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.86863662  2.27897663 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.87631618  1.16428940 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.92653750 -0.05082081  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1.01140047  1.21430506 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   1.24502642  0.97476134 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  1.25717651  0.34261012 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1.68584447 -1.25288623  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x          y                z2          z1     y1     x1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -1.30488440 -0.1214612             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -1.28306725 -1.0935296             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 -1.25942493  0.1491688             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.73820368  0.9902737             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 -0.56696654 -1.0186032             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -0.52432097 -0.1121775             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 -0.40767009 -0.3216866             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 -0.38393622 -0.8221522             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 -0.37911913 -1.0519419             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -0.32502524  1.3770674             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.20119776 -1.4794840             x &lt; 0 Condition 1 y &lt;= 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.07004835  0.7174688             x &lt; 0 Condition 1  y &gt; 0 x &lt;= 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.05230204  0.8989646 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.35530121 -1.2860655  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  0.61679300  0.5469233 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.62619955 -1.3284207  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.64450217  0.6187451 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   0.77980154  0.2477075 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.96022617 -0.1247788  (x &gt;= 0 &amp; y &lt; 0) Condition 2 y &lt;= 0  x &gt; 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1.26157096  0.2082531 (x &gt;= 0 &amp; y &gt;= 0) Condition 3  y &gt; 0  x &gt; 0</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">x1</span><span class="op">+</span><span class="va">y1</span>,data<span class="op">=</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         y1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x1       y &gt; 0 y &lt;= 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt; 0      9      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt;= 0     4      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &gt; 0      5      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x &lt;= 0     4      8</span>
 <span class="r-in"><span><span class="va">dd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">df</span>,</span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">cases</span><span class="op">(</span><span class="va">x</span><span class="op">&lt;</span><span class="fl">0</span>,</span></span>
 <span class="r-in"><span>            <span class="va">x</span><span class="op">&gt;=</span><span class="fl">0</span>,</span></span>
