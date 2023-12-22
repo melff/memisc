@@ -34,12 +34,15 @@ jobs:
           needs: website
           working-directory: pkg
       
-      - name: Copy Package contents
+      - name: Copy README
         run: cp -a README.md pkg
 
       - name: Build site
         run: setwd("pkg"); pkgdown::build_site_github_pages(pkg = ".", dest_dir = "./docs", new_process = FALSE, install = FALSE)
         shell: Rscript {0}
+
+      - name: Copy docs
+        run: cp -a pkg/docs .
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
