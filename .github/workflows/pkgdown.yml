@@ -38,7 +38,7 @@ jobs:
         run: cp -a README.md pkg
 
       - name: Build site
-        run: setwd("pkg"); pkgdown::build_site_github_pages(pkg = ".", dest_dir = "./docs", new_process = FALSE, install = FALSE)
+        run: pkgdown::build_site_github_pages(pkg = "pkg", dest_dir = "docs", new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
       - name: Copy docs
