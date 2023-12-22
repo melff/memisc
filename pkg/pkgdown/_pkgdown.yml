@@ -5,7 +5,7 @@ template:
 reference:
 - title: Introduction
   contents:
-  - 00memisc
+  - memisc
 - title: Data preparation helpers and convenience functions
   contents:
   - cases
