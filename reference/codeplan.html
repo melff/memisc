@@ -40,8 +40,8 @@ With setCodeplan an item list structure (as returned by codeplan())
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
-    <a class="dropdown-item" href="../articles/gentab.html">Generating Tables of Descriptive Statistics</a>
-    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -282,13 +282,13 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          44  32.8  14.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 42  31.3  14.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      48  35.8  16.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             44        14.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         51        17.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         45        15.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    26         8.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'Conservatives'          37  29.8  12.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Labour'                 55  44.4  18.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Liberal Democrats'      32  25.8  10.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8 M 'Don't know'             42        14.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     9 M 'Answer refused'         33        11.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    97 M 'Not applicable'         51        17.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    50        16.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -305,10 +305,10 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels              N Valid Total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               134  51.9  44.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               83  32.2  27.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  41  15.9  13.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    42        14.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1   'England'               143  57.0  47.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2   'Scotland'               81  32.3  27.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3   'Wales'                  27  10.8   9.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    99 M 'Not asked in survey'    49        16.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -322,10 +322,10 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Storage mode: double</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Measurement: ratio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:  209.825</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 9971.899</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean: 2376.075</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.: 1680.682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Min:   306.592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Max: 12003.982</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Mean:  2361.692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Std.Dev.:  1604.990</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Remark:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        This is not a real survey item, of course ...</span>
@@ -337,33 +337,33 @@ With setCodeplan an item list structure (as returned by codeplan())
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">Data2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">Data2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	300 obs. of  3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : num  2 3 99 97 8 99 2 99 9 9 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: num  1 2 3 3 2 99 1 1 1 2 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  2020 3477 1362 2976 1023 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : num  97 8 1 97 1 2 97 1 2 2 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: num  1 99 1 1 1 2 99 2 3 2 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  2282 815 1614 7032 570 ...</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">Data2df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	300 obs. of  3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Factor w/ 3 levels "Conservatives",..: 2 3 NA NA NA NA 2 NA NA NA ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ vote  : Factor w/ 3 levels "Conservatives",..: NA NA 1 NA 1 2 NA 1 2 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Vote intention"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Factor w/ 3 levels "England","Scotland",..: 1 2 3 3 2 NA 1 1 1 2 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ region: Factor w/ 3 levels "England","Scotland",..: 1 NA 1 1 1 2 NA 2 3 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Region of residence"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  2020 3477 1362 2976 1023 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ income: num  2282 815 1614 7032 570 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Household income"</span>
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">Data2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># Does not change anything</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Codeplans of survey items can also be inquired and manipulated:</span></span></span>
 <span class="r-in"><span><span class="va">vote</span> <span class="op">&lt;-</span> <span class="va">Data1</span><span class="op">$</span><span class="va">vote</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">vote</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num [1:300] 97 99 97 97 2 3 8 99 8 99 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Nmnl. item w/ 7 labels for 1,2,3,... + ms.v.  num [1:300] 9 97 99 1 1 1 3 3 2 2 ...</span>
 <span class="r-in"><span><span class="va">cp.vote</span> <span class="op">&lt;-</span> <span class="fu">codeplan</span><span class="op">(</span><span class="va">vote</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">vote</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">vote</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  num [1:300] 97 99 97 97 2 3 8 99 8 99 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  num [1:300] 9 97 99 1 1 1 3 3 2 2 ...</span>
 <span class="r-in"><span><span class="fu">codeplan</span><span class="op">(</span><span class="va">vote</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">cp.vote</span></span></span>
 <span class="r-in"><span><span class="va">vote</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Item 'Vote intention' (measurement: nominal, type: double, length = 300) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] *Not applicable *Not asked in survey *Not applicable ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1:300] *Answer refused *Not applicable *Not asked in survey Conservatives ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fn.json</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">".json"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">write_codeplan</span><span class="op">(</span><span class="fu">codeplan</span><span class="op">(</span><span class="va">Data1</span><span class="op">)</span>,filename<span class="op">=</span><span class="va">fn.json</span><span class="op">)</span></span></span>

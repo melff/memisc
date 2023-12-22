@@ -43,8 +43,8 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
-    <a class="dropdown-item" href="../articles/gentab.html">Generating Tables of Descriptive Statistics</a>
-    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -76,7 +76,7 @@
       <img src="" class="logo" alt=""><h1>A demonstration of showing 'mtable' results in HTML format</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/melff/memisc/blob/HEAD/../vignettes/mtable-html.Rmd" class="external-link"><code>../vignettes/mtable-html.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/melff/memisc/blob/HEAD/vignettes/mtable-html.Rmd" class="external-link"><code>vignettes/mtable-html.Rmd</code></a></small>
       <div class="d-none name"><code>mtable-html.Rmd</code></div>
     </div>
 
@@ -84,7 +84,7 @@
     
 <p>First, we load the package and estimate some regression models.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://melff.github.io/memisc" class="external-link">memisc</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://memisc.elff.eu" class="external-link">memisc</a></span><span class="op">)</span></span>
 <span><span class="va">lm0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sr</span> <span class="op">~</span> <span class="va">pop15</span> <span class="op">+</span> <span class="va">pop75</span>,              data <span class="op">=</span> <span class="va">LifeCycleSavings</span><span class="op">)</span></span>
 <span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sr</span> <span class="op">~</span>                 <span class="va">dpi</span> <span class="op">+</span> <span class="va">ddpi</span>, data <span class="op">=</span> <span class="va">LifeCycleSavings</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sr</span> <span class="op">~</span> <span class="va">pop15</span> <span class="op">+</span> <span class="va">pop75</span> <span class="op">+</span> <span class="va">dpi</span> <span class="op">+</span> <span class="va">ddpi</span>, data <span class="op">=</span> <span class="va">LifeCycleSavings</span><span class="op">)</span></span></code></pre></div>
@@ -114,8 +114,8 @@
           border-style: none;
       } 
       table#mtable-1 td {
-        padding-top: 1px; 
-        padding-bottom: 1px; 
+        padding-top: 3px; 
+        padding-bottom: 3px; 
         padding-left: 0.5ex; 
         padding-right: 0.5ex; 
         margin: 0px; 
