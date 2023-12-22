@@ -3,14 +3,14 @@ template:
   bootstrap: 5
   bootswatch: spacelab
 articles:
-- title: Items in survey questionnaires
-  navbar: ~
+- title: Survey items
+  navbar: Survey items
   contents:
   - items
   - import
   - anes48
 - title: Tables of summary statistics and model estimates
-  navbar: ~
+  navbar: Tables of summary statistics and model estimates
   contents:
   - gentab
   - ftable-matrix
