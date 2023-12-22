@@ -12,52 +12,52 @@ reference:
   - coarsen
   - collect
   - dimrename
-  - Foreach
+  - foreach
   - recode
   - reorder.array
   - Reshape
   - retain
   - reversed
   - sample-methods
-  - stats-conveniences
+  - Mean
   - xapply
 - title: Survey items and survey data sets
   contents:
   - annotations
   - codebook
   - codeplan
-  - dataSets
-  - dataset-manip
-  - dedup-labels
-  - duplicated-labels
+  - data.set
+  - subset.data.set
+  - deduplicate_labels
+  - duplicated_labels
   - importers
   - items
-  - items-to-vectors
+  - as.data.frame.character.item
   - labels
   - measurement
-  - measurement-autolevel
+  - measurement_autolevel
   - neg2mis
   - relabel
-  - tibbles
-  - trim-labels
-  - value-filters
+  - as_tibbles.data.set
+  - trim_labels
+  - value.filters
   - wild.codes
 - title: Tables of model estimates
   contents:
   - getSummary
   - mtable
-  - mtable-format-delim
-  - mtable-format-html
-  - mtable-format-latex
-  - mtable-format-print
-  - styles
+  - mtable_format_delim
+  - mtable_format_html
+  - mtable_format_latex
+  - mtable_format_print
+  - coef.style
   - withVCov
 - title: Groupwise computations and tables of summary statistics
   contents:
   - By
   - Descriptives
   - genTable
-  - ftable-matrices
+  - ftable_matrices
   - Groups
   - Means
   - percentages
@@ -66,8 +66,8 @@ reference:
 - title: Syntactic sugar
   contents:
   - attr-operators
-  - nin
-  - within-operators
+  - %nin%
+  - Within
 - title: HTML and LaTeX formatting
   contents:
   - format_html
@@ -81,8 +81,8 @@ reference:
   - as.symbols
   - Iconv
   - Substitute
-  - toDataFrame
-  - utility-classes
+  - to.data.fram
+  - named.list
   - view
   - view_html
   - Write
