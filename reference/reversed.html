@@ -28,8 +28,8 @@ or levels in reverse order."><!-- mathjax --><script src="https://cdnjs.cloudfla
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
-    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
-    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Generating Tables of Descriptive Statistics</a>
+    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -112,10 +112,10 @@ or levels in reverse order.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'One'                35    35.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Two'                23    23.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Three'              22    22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    9 'Missing'            20    20.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'One'                23    23.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Two'                24    24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Three'              24    24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    9 'Missing'            29    29.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -128,10 +128,10 @@ or levels in reverse order.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Values and labels       N Percent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'Missing'            20    20.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Three'              22    22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Two'                23    23.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    9 'One'                35    35.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'Missing'            29    29.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Three'              24    24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Two'                24    24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    9 'One'                23    23.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">df</span>,<span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="va">xr</span> <span class="op">&lt;-</span> <span class="fu">reversed</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
@@ -148,10 +148,10 @@ or levels in reverse order.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Levels and labels     N Valid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'One'              35  35.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Two'              23  23.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Three'            22  22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4 'Missing'          20  20.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'One'              23  23.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Two'              24  24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Three'            24  24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    4 'Missing'          29  29.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -164,10 +164,10 @@ or levels in reverse order.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Levels and labels     N Valid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'Missing'          20  20.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Three'            22  22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Two'              23  23.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4 'One'              35  35.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 'Missing'          29  29.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 'Three'            24  24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 'Two'              24  24.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    4 'One'              23  23.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
