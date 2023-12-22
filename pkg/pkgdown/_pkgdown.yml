@@ -38,7 +38,7 @@ reference:
   - measurement_autolevel
   - neg2mis
   - relabel
-  - as_tibbles.data.set
+  - as_haven
   - trim_labels
   - value.filters
   - wild.codes
