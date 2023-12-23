@@ -11,16 +11,20 @@ reference:
   - cases
   - coarsen
   - collect
+  - contr
+  - contract
   - dimrename
   - foreach
+  - query
   - recode
+  - rename
   - reorder.array
   - Reshape
   - retain
   - reversed
   - sample-methods
+  - sort-methods
   - Mean
-  - xapply
 - title: Survey items and survey data sets
   contents:
   - annotations
@@ -65,6 +69,7 @@ reference:
   - Table
 - title: Syntactic sugar
   contents:
+  - assign_if
   - attr-operators
   - '%nin%'
   - Within
@@ -73,19 +78,27 @@ reference:
   - format_html
   - format_html.ftable
   - format_html.codebook
+  - format_md
   - html
   - toLatex.default
 - title: Other tools and utilities
   contents:
   - applyTemplate
+  - as.array
   - as.symbols
   - Iconv
+  - List
+  - Sapply
   - Substitute
   - to.data.frame
   - named.list
   - view
   - view_html
   - Write
+  - xapply
+- title: Deprecated
+  contents:
+  - memisc-deprecated
 articles:
 - title: Survey items
   navbar: Survey items
