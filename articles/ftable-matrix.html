@@ -43,11 +43,11 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Survey items</h6>
     <a class="dropdown-item" href="../articles/items.html">Handling questionnaire items with 'memisc'</a>
-    <a class="dropdown-item" href="../articles/import.html">Generating Tables of Descriptive Statistics with "memisc"</a>
+    <a class="dropdown-item" href="../articles/import.html">Importing data from SPSS and Stata</a>
     <a class="dropdown-item" href="../articles/anes48.html">Analysing the American National Election Study of 1948 with 'memisc'</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Tables of summary statistics and model estimates</h6>
-    <a class="dropdown-item" href="../articles/gentab.html">Importing data from SPSS and Stata</a>
+    <a class="dropdown-item" href="../articles/gentab.html">Generating Tables of Descriptive Statistics</a>
     <a class="dropdown-item" href="../articles/ftable-matrix.html">Combining flattened contingency tables (and other tables)</a>
     <a class="dropdown-item" href="../articles/mtable-html.html">A demonstration of showing 'mtable' results in HTML format</a>
   </div>
@@ -98,7 +98,7 @@ contingendy tables.</p>
 <span><span class="va">tab.Survived</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">Survived</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span></code></pre></div>
 <p>Then we load the <em>memisc</em> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://memisc.elff.eu" class="external-link">memisc</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://melff.github.io/memisc/">memisc</a></span><span class="op">)</span></span></code></pre></div>
 <p>Next, we create a few flattened contingency tables:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">ftab.Survived.Age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">tab.Survived.Age</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -399,13 +399,13 @@ Yes
 <span>      Total<span class="op">=</span><span class="va">tab.Survived</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <style>
-      table#ftab-matrix-3 {
+      table#ftab-matrix-1 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
       } 
-      table#ftab-matrix-3 tr {
+      table#ftab-matrix-1 tr {
           border-style: none;
       } 
-      table#ftab-matrix-3 td {
+      table#ftab-matrix-1 td {
         padding-top: 3px; 
         padding-bottom: 3px; 
         padding-left: 0.5ex; 
@@ -416,57 +416,57 @@ Yes
         border-style: none; 
         border-width: 0; 
       }
-table#ftab-matrix-3 tr:nth-child(1){
+table#ftab-matrix-1 tr:nth-child(1){
      border-top: 2px solid;
 }
-table#ftab-matrix-3 tr:nth-child(2){
+table#ftab-matrix-1 tr:nth-child(2){
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 tr:nth-child(4){
+table#ftab-matrix-1 tr:nth-child(4){
      border-bottom: 2px solid;
 }
-table#ftab-matrix-3 td:nth-child(n of .header) {
+table#ftab-matrix-1 td:nth-child(n of .header) {
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 td:nth-child(4),
-table#ftab-matrix-3 td:nth-child(7),
-table#ftab-matrix-3 td:nth-child(10),
-table#ftab-matrix-3 td:nth-child(13),
-table#ftab-matrix-3 td:nth-child(16){
+table#ftab-matrix-1 td:nth-child(4),
+table#ftab-matrix-1 td:nth-child(7),
+table#ftab-matrix-1 td:nth-child(10),
+table#ftab-matrix-1 td:nth-child(13),
+table#ftab-matrix-1 td:nth-child(16){
          padding-left: 0px;
          padding-right: 0px;
          text-align: center; 
          width: .2ex;
          /*background-color: blue;*/
         }
-table#ftab-matrix-3 td:nth-child(3),
-table#ftab-matrix-3 td:nth-child(6),
-table#ftab-matrix-3 td:nth-child(9),
-table#ftab-matrix-3 td:nth-child(12),
-table#ftab-matrix-3 td:nth-child(15){
+table#ftab-matrix-1 td:nth-child(3),
+table#ftab-matrix-1 td:nth-child(6),
+table#ftab-matrix-1 td:nth-child(9),
+table#ftab-matrix-1 td:nth-child(12),
+table#ftab-matrix-1 td:nth-child(15){
          padding-left: 0.5ex;
          padding-right: 0px;
          text-align: right; 
          /*background-color: red;*/
         }
-table#ftab-matrix-3 td:nth-child(5),
-table#ftab-matrix-3 td:nth-child(8),
-table#ftab-matrix-3 td:nth-child(11),
-table#ftab-matrix-3 td:nth-child(14),
-table#ftab-matrix-3 td:nth-child(17){
+table#ftab-matrix-1 td:nth-child(5),
+table#ftab-matrix-1 td:nth-child(8),
+table#ftab-matrix-1 td:nth-child(11),
+table#ftab-matrix-1 td:nth-child(14),
+table#ftab-matrix-1 td:nth-child(17){
          padding-left: 0px;
          padding-right: 0.5ex;
          text-align: left; 
          /*background-color: green;*/
         } 
-table#ftab-matrix-3 td:nth-child(n of .header){
+table#ftab-matrix-1 td:nth-child(n of .header){
          padding-left: 0.5ex;
          padding-right: 0.5ex;
          text-align: center; 
          /*background-color: gray;*/
         } 
 </style>
-<table class="table ftable" id="ftab-matrix-3">
+<table class="table ftable" id="ftab-matrix-1">
 <tr>
 <td>
 </td>
@@ -605,13 +605,13 @@ use the following little trick:</p>
 <span>      <span class="va">ftab.Survived.Sex</span>,</span>
 <span>      Total<span class="op">=</span><span class="va">tab.Survived</span><span class="op">)</span></span></code></pre></div>
 <style>
-      table#ftab-matrix-3 {
+      table#ftab-matrix-2 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
       } 
-      table#ftab-matrix-3 tr {
+      table#ftab-matrix-2 tr {
           border-style: none;
       } 
-      table#ftab-matrix-3 td {
+      table#ftab-matrix-2 td {
         padding-top: 3px; 
         padding-bottom: 3px; 
         padding-left: 0.5ex; 
@@ -622,57 +622,57 @@ use the following little trick:</p>
         border-style: none; 
         border-width: 0; 
       }
-table#ftab-matrix-3 tr:nth-child(1){
+table#ftab-matrix-2 tr:nth-child(1){
      border-top: 2px solid;
 }
-table#ftab-matrix-3 tr:nth-child(2){
+table#ftab-matrix-2 tr:nth-child(2){
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 tr:nth-child(4){
+table#ftab-matrix-2 tr:nth-child(4){
      border-bottom: 2px solid;
 }
-table#ftab-matrix-3 td:nth-child(n of .header) {
+table#ftab-matrix-2 td:nth-child(n of .header) {
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 td:nth-child(4),
-table#ftab-matrix-3 td:nth-child(7),
-table#ftab-matrix-3 td:nth-child(10),
-table#ftab-matrix-3 td:nth-child(13),
-table#ftab-matrix-3 td:nth-child(16){
+table#ftab-matrix-2 td:nth-child(4),
+table#ftab-matrix-2 td:nth-child(7),
+table#ftab-matrix-2 td:nth-child(10),
+table#ftab-matrix-2 td:nth-child(13),
+table#ftab-matrix-2 td:nth-child(16){
          padding-left: 0px;
          padding-right: 0px;
          text-align: center; 
          width: .2ex;
          /*background-color: blue;*/
         }
-table#ftab-matrix-3 td:nth-child(3),
-table#ftab-matrix-3 td:nth-child(6),
-table#ftab-matrix-3 td:nth-child(9),
-table#ftab-matrix-3 td:nth-child(12),
-table#ftab-matrix-3 td:nth-child(15){
+table#ftab-matrix-2 td:nth-child(3),
+table#ftab-matrix-2 td:nth-child(6),
+table#ftab-matrix-2 td:nth-child(9),
+table#ftab-matrix-2 td:nth-child(12),
+table#ftab-matrix-2 td:nth-child(15){
          padding-left: 0.5ex;
          padding-right: 0px;
          text-align: right; 
          /*background-color: red;*/
         }
-table#ftab-matrix-3 td:nth-child(5),
-table#ftab-matrix-3 td:nth-child(8),
-table#ftab-matrix-3 td:nth-child(11),
-table#ftab-matrix-3 td:nth-child(14),
-table#ftab-matrix-3 td:nth-child(17){
+table#ftab-matrix-2 td:nth-child(5),
+table#ftab-matrix-2 td:nth-child(8),
+table#ftab-matrix-2 td:nth-child(11),
+table#ftab-matrix-2 td:nth-child(14),
+table#ftab-matrix-2 td:nth-child(17){
          padding-left: 0px;
          padding-right: 0.5ex;
          text-align: left; 
          /*background-color: green;*/
         } 
-table#ftab-matrix-3 td:nth-child(n of .header){
+table#ftab-matrix-2 td:nth-child(n of .header){
          padding-left: 0.5ex;
          padding-right: 0.5ex;
          text-align: center; 
          /*background-color: gray;*/
         } 
 </style>
-<table class="table ftable" id="ftab-matrix-3">
+<table class="table ftable" id="ftab-matrix-2">
 <tr>
 <td>
 </td>
@@ -996,18 +996,14 @@ Yes
 <span>      Total<span class="op">=</span><span class="va">tab.Survived</span><span class="op">)</span>,</span>
 <span>  varontop<span class="op">=</span><span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code>Incremented col_sums j=1 varontop=0 max.l.cv=1 col_sums=1</code></pre>
-<p>integer(0)</p>
-<pre><code>Incremented col_sums j=2 varontop=0 max.l.cv=1 col_sums=8</code></pre>
-[1] 3 6
 <style>
-      table#ftab-matrix-3 {
+      table#ftab-matrix-4 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
       } 
-      table#ftab-matrix-3 tr {
+      table#ftab-matrix-4 tr {
           border-style: none;
       } 
-      table#ftab-matrix-3 td {
+      table#ftab-matrix-4 td {
         padding-top: 3px; 
         padding-bottom: 3px; 
         padding-left: 0.5ex; 
@@ -1018,57 +1014,57 @@ Yes
         border-style: none; 
         border-width: 0; 
       }
-table#ftab-matrix-3 tr:nth-child(1){
+table#ftab-matrix-4 tr:nth-child(1){
      border-top: 2px solid;
 }
-table#ftab-matrix-3 tr:nth-child(1){
+table#ftab-matrix-4 tr:nth-child(1){
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 tr:nth-child(3){
+table#ftab-matrix-4 tr:nth-child(3){
      border-bottom: 2px solid;
 }
-table#ftab-matrix-3 td:nth-child(n of .header) {
+table#ftab-matrix-4 td:nth-child(n of .header) {
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 td:nth-child(5),
-table#ftab-matrix-3 td:nth-child(8),
-table#ftab-matrix-3 td:nth-child(12),
-table#ftab-matrix-3 td:nth-child(15),
-table#ftab-matrix-3 td:nth-child(18){
+table#ftab-matrix-4 td:nth-child(5),
+table#ftab-matrix-4 td:nth-child(8),
+table#ftab-matrix-4 td:nth-child(12),
+table#ftab-matrix-4 td:nth-child(15),
+table#ftab-matrix-4 td:nth-child(18){
          padding-left: 0px;
          padding-right: 0px;
          text-align: center; 
          width: .2ex;
          /*background-color: blue;*/
         }
-table#ftab-matrix-3 td:nth-child(4),
-table#ftab-matrix-3 td:nth-child(7),
-table#ftab-matrix-3 td:nth-child(11),
-table#ftab-matrix-3 td:nth-child(14),
-table#ftab-matrix-3 td:nth-child(17){
+table#ftab-matrix-4 td:nth-child(4),
+table#ftab-matrix-4 td:nth-child(7),
+table#ftab-matrix-4 td:nth-child(11),
+table#ftab-matrix-4 td:nth-child(14),
+table#ftab-matrix-4 td:nth-child(17){
          padding-left: 0.5ex;
          padding-right: 0px;
          text-align: right; 
          /*background-color: red;*/
         }
-table#ftab-matrix-3 td:nth-child(6),
-table#ftab-matrix-3 td:nth-child(9),
-table#ftab-matrix-3 td:nth-child(13),
-table#ftab-matrix-3 td:nth-child(16),
-table#ftab-matrix-3 td:nth-child(19){
+table#ftab-matrix-4 td:nth-child(6),
+table#ftab-matrix-4 td:nth-child(9),
+table#ftab-matrix-4 td:nth-child(13),
+table#ftab-matrix-4 td:nth-child(16),
+table#ftab-matrix-4 td:nth-child(19){
          padding-left: 0px;
          padding-right: 0.5ex;
          text-align: left; 
          /*background-color: green;*/
         } 
-table#ftab-matrix-3 td:nth-child(n of .header){
+table#ftab-matrix-4 td:nth-child(n of .header){
          padding-left: 0.5ex;
          padding-right: 0.5ex;
          text-align: center; 
          /*background-color: gray;*/
         } 
 </style>
-<table class="table ftable" id="ftab-matrix-3">
+<table class="table ftable" id="ftab-matrix-4">
 <tr>
 <td>
 </td>
@@ -1192,7 +1188,7 @@ Yes
 </table>
 <p>Of course it is also possible to combine flat contingency tables
 rowwise:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ftab.Age.Survived</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">tab.Survived.Age</span>,col.vars<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ftab.Sex.Survived</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">tab.Survived.Sex</span>,col.vars<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ftab.Class.Survived</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">tab.Survived.Class</span>,col.vars<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
@@ -1221,7 +1217,7 @@ Crew             673 212
                          
 Total           1490 711 
                          </code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_html.html">show_html</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>    <span class="va">ftab.Age.Survived</span>,</span>
@@ -1231,13 +1227,13 @@ Total           1490 711
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <style>
-      table#ftab-matrix-3 {
+      table#ftab-matrix-5 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
       } 
-      table#ftab-matrix-3 tr {
+      table#ftab-matrix-5 tr {
           border-style: none;
       } 
-      table#ftab-matrix-3 td {
+      table#ftab-matrix-5 td {
         padding-top: 3px; 
         padding-bottom: 3px; 
         padding-left: 0.5ex; 
@@ -1248,52 +1244,52 @@ Total           1490 711
         border-style: none; 
         border-width: 0; 
       }
-table#ftab-matrix-3 tr:nth-child(1){
+table#ftab-matrix-5 tr:nth-child(1){
      border-top: 2px solid;
 }
-table#ftab-matrix-3 tr:nth-child(2),
-table#ftab-matrix-3 tr:nth-child(4),
-table#ftab-matrix-3 tr:nth-child(6),
-table#ftab-matrix-3 tr:nth-child(10),
-table#ftab-matrix-3 tr:nth-child(11){
+table#ftab-matrix-5 tr:nth-child(2),
+table#ftab-matrix-5 tr:nth-child(4),
+table#ftab-matrix-5 tr:nth-child(6),
+table#ftab-matrix-5 tr:nth-child(10),
+table#ftab-matrix-5 tr:nth-child(11){
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 tr:nth-child(11){
+table#ftab-matrix-5 tr:nth-child(11){
      border-bottom: 2px solid;
 }
-table#ftab-matrix-3 td:nth-child(n of .header) {
+table#ftab-matrix-5 td:nth-child(n of .header) {
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 td:nth-child(4),
-table#ftab-matrix-3 td:nth-child(7){
+table#ftab-matrix-5 td:nth-child(4),
+table#ftab-matrix-5 td:nth-child(7){
          padding-left: 0px;
          padding-right: 0px;
          text-align: center; 
          width: .2ex;
          /*background-color: blue;*/
         }
-table#ftab-matrix-3 td:nth-child(3),
-table#ftab-matrix-3 td:nth-child(6){
+table#ftab-matrix-5 td:nth-child(3),
+table#ftab-matrix-5 td:nth-child(6){
          padding-left: 0.5ex;
          padding-right: 0px;
          text-align: right; 
          /*background-color: red;*/
         }
-table#ftab-matrix-3 td:nth-child(5),
-table#ftab-matrix-3 td:nth-child(8){
+table#ftab-matrix-5 td:nth-child(5),
+table#ftab-matrix-5 td:nth-child(8){
          padding-left: 0px;
          padding-right: 0.5ex;
          text-align: left; 
          /*background-color: green;*/
         } 
-table#ftab-matrix-3 td:nth-child(n of .header){
+table#ftab-matrix-5 td:nth-child(n of .header){
          padding-left: 0.5ex;
          padding-right: 0.5ex;
          text-align: center; 
          /*background-color: gray;*/
         } 
 </style>
-<table class="table ftable" id="ftab-matrix-3">
+<table class="table ftable" id="ftab-matrix-5">
 <tr>
 <td>
 </td>
@@ -1511,7 +1507,7 @@ Total
 <p>It is also possible to create the <code>ftable</code>s from tables of
 percentages or generic tables (created with <code>genTable</code>)
 etc.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ptab.Survived.Age</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/percentages.html">percentages</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">~</span><span class="va">Age</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">ptab.Survived.Sex</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/percentages.html">percentages</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">~</span><span class="va">Sex</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">ptab.Survived.Class</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/percentages.html">percentages</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">~</span><span class="va">Class</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
@@ -1529,13 +1525,13 @@ etc.</p>
 <span>  digits<span class="op">=</span><span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <style>
-      table#ftab-matrix-3 {
+      table#ftab-matrix-6 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
       } 
-      table#ftab-matrix-3 tr {
+      table#ftab-matrix-6 tr {
           border-style: none;
       } 
-      table#ftab-matrix-3 td {
+      table#ftab-matrix-6 td {
         padding-top: 3px; 
         padding-bottom: 3px; 
         padding-left: 0.5ex; 
@@ -1546,51 +1542,51 @@ etc.</p>
         border-style: none; 
         border-width: 0; 
       }
-table#ftab-matrix-3 tr:nth-child(1){
+table#ftab-matrix-6 tr:nth-child(1){
      border-top: 2px solid;
 }
-table#ftab-matrix-3 tr:nth-child(2),
-table#ftab-matrix-3 tr:nth-child(4),
-table#ftab-matrix-3 tr:nth-child(6),
-table#ftab-matrix-3 tr:nth-child(10){
+table#ftab-matrix-6 tr:nth-child(2),
+table#ftab-matrix-6 tr:nth-child(4),
+table#ftab-matrix-6 tr:nth-child(6),
+table#ftab-matrix-6 tr:nth-child(10){
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 tr:nth-child(10){
+table#ftab-matrix-6 tr:nth-child(10){
      border-bottom: 2px solid;
 }
-table#ftab-matrix-3 td:nth-child(n of .header) {
+table#ftab-matrix-6 td:nth-child(n of .header) {
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 td:nth-child(4),
-table#ftab-matrix-3 td:nth-child(7){
+table#ftab-matrix-6 td:nth-child(4),
+table#ftab-matrix-6 td:nth-child(7){
          padding-left: 0px;
          padding-right: 0px;
          text-align: center; 
          width: .2ex;
          /*background-color: blue;*/
         }
-table#ftab-matrix-3 td:nth-child(3),
-table#ftab-matrix-3 td:nth-child(6){
+table#ftab-matrix-6 td:nth-child(3),
+table#ftab-matrix-6 td:nth-child(6){
          padding-left: 0.5ex;
          padding-right: 0px;
          text-align: right; 
          /*background-color: red;*/
         }
-table#ftab-matrix-3 td:nth-child(5),
-table#ftab-matrix-3 td:nth-child(8){
+table#ftab-matrix-6 td:nth-child(5),
+table#ftab-matrix-6 td:nth-child(8){
          padding-left: 0px;
          padding-right: 0.5ex;
          text-align: left; 
          /*background-color: green;*/
         } 
-table#ftab-matrix-3 td:nth-child(n of .header){
+table#ftab-matrix-6 td:nth-child(n of .header){
          padding-left: 0.5ex;
          padding-right: 0.5ex;
          text-align: center; 
          /*background-color: gray;*/
         } 
 </style>
-<table class="table ftable" id="ftab-matrix-3">
+<table class="table ftable" id="ftab-matrix-6">
 <tr>
 <td>
 </td>
@@ -1818,7 +1814,7 @@ Crew
 </table>
 <p>It is also possible to combine <code>rbind</code> and
 <code>cbind</code>:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tab.Age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">Age</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">tab.Sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">Sex</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
 <span><span class="va">tab.Class</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">Class</span>,data<span class="op">=</span><span class="va">Titanic</span><span class="op">)</span></span>
@@ -1834,13 +1830,13 @@ Crew
 <span>                <span class="co"># no digits for total counts.</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <style>
-      table#ftab-matrix-3 {
+      table#ftab-matrix-7 {
          border-collapse: collapse; border-style: none; margin: 2ex auto;
       } 
-      table#ftab-matrix-3 tr {
+      table#ftab-matrix-7 tr {
           border-style: none;
       } 
-      table#ftab-matrix-3 td {
+      table#ftab-matrix-7 td {
         padding-top: 3px; 
         padding-bottom: 3px; 
         padding-left: 0.5ex; 
@@ -1851,54 +1847,54 @@ Crew
         border-style: none; 
         border-width: 0; 
       }
-table#ftab-matrix-3 tr:nth-child(1){
+table#ftab-matrix-7 tr:nth-child(1){
      border-top: 2px solid;
 }
-table#ftab-matrix-3 tr:nth-child(2),
-table#ftab-matrix-3 tr:nth-child(4),
-table#ftab-matrix-3 tr:nth-child(6),
-table#ftab-matrix-3 tr:nth-child(10){
+table#ftab-matrix-7 tr:nth-child(2),
+table#ftab-matrix-7 tr:nth-child(4),
+table#ftab-matrix-7 tr:nth-child(6),
+table#ftab-matrix-7 tr:nth-child(10){
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 tr:nth-child(10){
+table#ftab-matrix-7 tr:nth-child(10){
      border-bottom: 2px solid;
 }
-table#ftab-matrix-3 td:nth-child(n of .header) {
+table#ftab-matrix-7 td:nth-child(n of .header) {
      border-bottom: 1px solid;
 }
-table#ftab-matrix-3 td:nth-child(4),
-table#ftab-matrix-3 td:nth-child(7),
-table#ftab-matrix-3 td:nth-child(10){
+table#ftab-matrix-7 td:nth-child(4),
+table#ftab-matrix-7 td:nth-child(7),
+table#ftab-matrix-7 td:nth-child(10){
          padding-left: 0px;
          padding-right: 0px;
          text-align: center; 
          width: .2ex;
          /*background-color: blue;*/
         }
-table#ftab-matrix-3 td:nth-child(3),
-table#ftab-matrix-3 td:nth-child(6),
-table#ftab-matrix-3 td:nth-child(9){
+table#ftab-matrix-7 td:nth-child(3),
+table#ftab-matrix-7 td:nth-child(6),
+table#ftab-matrix-7 td:nth-child(9){
          padding-left: 0.5ex;
          padding-right: 0px;
          text-align: right; 
          /*background-color: red;*/
         }
-table#ftab-matrix-3 td:nth-child(5),
-table#ftab-matrix-3 td:nth-child(8),
-table#ftab-matrix-3 td:nth-child(11){
+table#ftab-matrix-7 td:nth-child(5),
+table#ftab-matrix-7 td:nth-child(8),
+table#ftab-matrix-7 td:nth-child(11){
          padding-left: 0px;
          padding-right: 0.5ex;
          text-align: left; 
          /*background-color: green;*/
         } 
-table#ftab-matrix-3 td:nth-child(n of .header){
+table#ftab-matrix-7 td:nth-child(n of .header){
          padding-left: 0.5ex;
          padding-right: 0.5ex;
          text-align: center; 
          /*background-color: gray;*/
         } 
 </style>
-<table class="table ftable" id="ftab-matrix-3">
+<table class="table ftable" id="ftab-matrix-7">
 <tr>
 <td>
 </td>
@@ -2186,7 +2182,7 @@ Crew
 </tr>
 </table>
 <p>The same construct as LaTeX code:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/toLatex.html" class="external-link">toLatex</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">fptab.Age.Survived</span>,Total<span class="op">=</span><span class="va">tab.Age</span><span class="op">)</span>,</span>
