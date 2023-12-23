@@ -127,40 +127,40 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="op">(</span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">25</span><span class="op">)</span>,<span class="fl">5</span>,<span class="fl">5</span>,dimnames<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,<span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            a           b          c           d          e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.1743088  0.18065326 -0.6129990 -0.79145044  0.4809299</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B -0.7298181 -0.47458993 -1.0205761  1.14812646  1.0373528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C  0.3501607 -2.00644220 -1.8775550  1.33433652 -0.1785495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> D -0.4609637  0.02719801 -1.2106670 -0.08899116 -1.0037660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> E  1.1367318  2.27028803  0.7749067 -1.13219834  0.8320559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            a          b          c            d          e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.4909692  1.7019227 -0.1575236  0.423516038 -0.4157476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B -0.2781602 -0.2191605 -1.6705938 -0.383907602  0.7191832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C  1.9902031  0.9765465  2.1993641  0.316010892 -0.7873279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D  0.3773306 -0.1496624 -0.2998385 -1.118061234 -0.2933884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> E  0.2207406 -1.0414609  1.6164087  0.004506212 -0.9921484</span>
 <span class="r-in"><span>  <span class="fu">reorder</span><span class="op">(</span><span class="va">M</span>,dim<span class="op">=</span><span class="fl">1</span>,names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E"</span>,<span class="st">"A"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            a           b          c           d          e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> E  1.1367318  2.27028803  0.7749067 -1.13219834  0.8320559</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.1743088  0.18065326 -0.6129990 -0.79145044  0.4809299</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B -0.7298181 -0.47458993 -1.0205761  1.14812646  1.0373528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C  0.3501607 -2.00644220 -1.8775550  1.33433652 -0.1785495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> D -0.4609637  0.02719801 -1.2106670 -0.08899116 -1.0037660</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            a          b          c            d          e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> E  0.2207406 -1.0414609  1.6164087  0.004506212 -0.9921484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.4909692  1.7019227 -0.1575236  0.423516038 -0.4157476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B -0.2781602 -0.2191605 -1.6705938 -0.383907602  0.7191832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C  1.9902031  0.9765465  2.1993641  0.316010892 -0.7873279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D  0.3773306 -0.1496624 -0.2998385 -1.118061234 -0.2933884</span>
 <span class="r-in"><span>  <span class="fu">reorder</span><span class="op">(</span><span class="va">M</span>,dim<span class="op">=</span><span class="fl">2</span>,indices<span class="op">=</span><span class="fl">3</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            c           b          a           d          e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.6129990  0.18065326 -0.1743088 -0.79145044  0.4809299</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B -1.0205761 -0.47458993 -0.7298181  1.14812646  1.0373528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C -1.8775550 -2.00644220  0.3501607  1.33433652 -0.1785495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> D -1.2106670  0.02719801 -0.4609637 -0.08899116 -1.0037660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> E  0.7749067  2.27028803  1.1367318 -1.13219834  0.8320559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            c          b          a            d          e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.1575236  1.7019227 -0.4909692  0.423516038 -0.4157476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B -1.6705938 -0.2191605 -0.2781602 -0.383907602  0.7191832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C  2.1993641  0.9765465  1.9902031  0.316010892 -0.7873279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D -0.2998385 -0.1496624  0.3773306 -1.118061234 -0.2933884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> E  1.6164087 -1.0414609  0.2207406  0.004506212 -0.9921484</span>
 <span class="r-in"><span>  <span class="fu">reorder</span><span class="op">(</span><span class="va">M</span>,dim<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            a           b          c           d          e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> D -0.4609637  0.02719801 -1.2106670 -0.08899116 -1.0037660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C  0.3501607 -2.00644220 -1.8775550  1.33433652 -0.1785495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.1743088  0.18065326 -0.6129990 -0.79145044  0.4809299</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B -0.7298181 -0.47458993 -1.0205761  1.14812646  1.0373528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> E  1.1367318  2.27028803  0.7749067 -1.13219834  0.8320559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            a          b          c            d          e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B -0.2781602 -0.2191605 -1.6705938 -0.383907602  0.7191832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D  0.3773306 -0.1496624 -0.2998385 -1.118061234 -0.2933884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> E  0.2207406 -1.0414609  1.6164087  0.004506212 -0.9921484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.4909692  1.7019227 -0.1575236  0.423516038 -0.4157476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C  1.9902031  0.9765465  2.1993641  0.316010892 -0.7873279</span>
 <span class="r-in"><span>  <span class="fu">reorder</span><span class="op">(</span><span class="va">M</span>,dim<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            c           b          a           d          e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.6129990  0.18065326 -0.1743088 -0.79145044  0.4809299</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B -1.0205761 -0.47458993 -0.7298181  1.14812646  1.0373528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C -1.8775550 -2.00644220  0.3501607  1.33433652 -0.1785495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> D -1.2106670  0.02719801 -0.4609637 -0.08899116 -1.0037660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> E  0.7749067  2.27028803  1.1367318 -1.13219834  0.8320559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            e            d          b          c          a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.4157476  0.423516038  1.7019227 -0.1575236 -0.4909692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B  0.7191832 -0.383907602 -0.2191605 -1.6705938 -0.2781602</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C -0.7873279  0.316010892  0.9765465  2.1993641  1.9902031</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D -0.2933884 -1.118061234 -0.1496624 -0.2998385  0.3773306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> E -0.9921484  0.004506212 -1.0414609  1.6164087  0.2207406</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
