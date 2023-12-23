@@ -6,25 +6,6 @@ reference:
 - title: Introduction
   contents:
   - memisc
-- title: Data preparation helpers and convenience functions
-  contents:
-  - cases
-  - coarsen
-  - collect
-  - contr
-  - contract
-  - dimrename
-  - foreach
-  - query
-  - recode
-  - rename
-  - reorder.array
-  - Reshape
-  - retain
-  - reversed
-  - sample-methods
-  - sort-methods
-  - Mean
 - title: Survey items and survey data sets
   contents:
   - annotations
@@ -67,6 +48,25 @@ reference:
   - percentages
   - percent
   - Table
+- title: Data preparation helpers and convenience functions
+  contents:
+  - cases
+  - coarsen
+  - collect
+  - contr
+  - contract
+  - dimrename
+  - foreach
+  - query
+  - recode
+  - rename
+  - reorder.array
+  - Reshape
+  - retain
+  - reversed
+  - sample-methods
+  - sort-methods
+  - Mean
 - title: Syntactic sugar
   contents:
   - assign_if
