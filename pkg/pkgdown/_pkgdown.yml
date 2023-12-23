@@ -81,7 +81,7 @@ reference:
   - as.symbols
   - Iconv
   - Substitute
-  - to.data.fram
+  - to.data.frame
   - named.list
   - view
   - view_html
