@@ -405,7 +405,7 @@ pf_mtable_format_html <- function(x,
                            style_header,
                            "\n")
 
-    style_element <- html("style",style_content,linebreak=TRUE)
+    style_element <- html("style",style_content,linebreak=FALSE)
 
     res <- html_group(style_element,res)
 

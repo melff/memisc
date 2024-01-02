@@ -1,9 +1,9 @@
 ---
-title: A demonstration of showing 'mtable' results in HTML format
+title: Tables of model estimates
 output: rmarkdown::html_vignette
 vignette: >
   % \VignetteEngine{knitr::rmarkdown}
-  % \VignetteIndexEntry{"mtable" results in HTML format}
+  % \VignetteIndexEntry{Tables of model estimates}
 ---
 
 ```{r,echo=FALSE,message=FALSE}
@@ -44,5 +44,8 @@ show_html(mtable123)
 The results can be written into an HTML file using
 `write_html(mtable123,file="mtable123.html")` or the like. MS Word or LibreOffice can import such a file. 
 
-[^1]: Unfortunately, LibreOffice currently seems to do a less than perfect job in importing HTML tables. The columns are a bit too wide and need to be adjusted by hand as do the skips after paragraphs. The example you find at the link mentioned above is thus manually adjusted.
+[^1]: Unfortunately, LibreOffice currently seems to do a less than perfect job in
+    importing HTML tables. The columns are a bit too wide and need to be
+    adjusted by hand as do the skips after paragraphs. The example you find at
+    the link mentioned above is thus manually adjusted.
 

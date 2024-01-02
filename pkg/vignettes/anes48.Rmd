@@ -1,8 +1,8 @@
 ---
-title: Analysing the American National Election Study of 1948 with 'memisc'
+title: Analysing the American National Election Study of 1948
 output: rmarkdown::html_vignette
 vignette: >
-  % \VignetteIndexEntry{Analysing the American National Election Study of 1948 with "memisc"}
+  % \VignetteIndexEntry{Analysing the American National Election Study of 1948}
   % \VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

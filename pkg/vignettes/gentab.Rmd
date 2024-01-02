@@ -53,7 +53,7 @@ ZA5702 <- spss.system.file("Data/ZA5702_v2-0-0.sav",
 gles2013work <- subset(ZA5702,
                        select=c(
                          wave                  = survey,
-                         gender                   = vn1,
+                         gender                = vn1,
                          byear                 = vn2c,
                          bmonth                = vn2b,
                          intent.turnout        = v10,
