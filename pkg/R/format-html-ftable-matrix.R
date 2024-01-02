@@ -23,6 +23,7 @@ format_html.ftable_matrix <- function(x,
                                       varontop,
                                       varinfront,
                                       grouprules=1,
+                                      multi_digits=NULL,
                                       ...){
     
     row.vars <- attr(x,"row.vars")
@@ -46,9 +47,19 @@ format_html.ftable_matrix <- function(x,
     if(missing(varontop)) varontop <- (max.l.cv <= 1)
     if(missing(varinfront)) varinfront <- (max.l.rv <= 1)
     
-    d <- digits
-    digits <- integer(M)
-    digits[] <- d
+    if(!missing(multi_digits)){
+        if(is.list(multi_digits)){
+            digits <- multi_digits
+        }
+        else {
+            digits <- rep(list(multi_digits),M)
+        }
+    }
+    else {
+        d <- digits
+        digits <- integer(M)
+        digits[] <- d
+    }
     
     fo <- format
     format <- integer(M)

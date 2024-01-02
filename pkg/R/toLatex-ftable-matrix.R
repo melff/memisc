@@ -21,6 +21,7 @@ toLatex.ftable_matrix <- function(object,
                                   groupsep="3pt",
                                   grouprule=midrule,
                                   toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
+                                  multi_digits=NULL,
                                   ...)
 {
   
@@ -40,17 +41,33 @@ toLatex.ftable_matrix <- function(object,
   if(missing(varontop)) varontop <- max(n.col.vars) <= 1
   if(missing(varinfront)) varinfront <- max(n.row.vars) <= 1
   
-  d <- digits
-  digits <- integer(M)
-  digits[] <- d
-  
+  if(!missing(multi_digits)){
+    if(is.list(multi_digits)){
+      digits <- multi_digits
+    }
+    else {
+      digits <- rep(list(multi_digits),M)
+    }
+  }
+  else {
+    d <- digits
+    digits <- integer(M)
+    digits[] <- d
+  }
+    
   fo <- format
   format <- integer(M)
   format[] <- fo
+
+  if(missing(ddigits) && missing(colspec) && useDcolumn && is.list(digits)){
+    colspec <- lapply(digits,function(ddigits)paste0("D{.}{",LaTeXdec,"}{",ddigits,"}"))
+  }
+  else {
+    csp <- colspec
+    colspec <- character(length(m))
+    colspec[] <- csp
+  }
   
-  csp <- colspec
-  colspec <- character(length(m))
-  colspec[] <- csp
   
   cv.desc <- sapply(col.vars,cv_get_desc,compact=compact)
   start.g <- cv.desc["start.g",]
@@ -140,11 +157,10 @@ toLatex.ftable_matrix <- function(object,
   if(varinfront)
     header <- paste0("&",header)
   
-  cln <- mapply(mkclines,cmidrule,start.g,end.g)
+  cln <- mapply(mkclines,cmidrule,start.g,end.g,SIMPLIFY=FALSE)
   cln <- sapply(cln,paste0,collapse="")
   
   header <- paste0(header,"\\\\")
-  
   if(varontop)
     header[-1] <- paste0(cln,"\n",header[-1])
   else
@@ -221,7 +237,7 @@ toLatex.ftable_matrix <- function(object,
   for(i in 1:N){
     
     tmp.bdy <- cbind(leaders[[i]],do.call(cbind,body[i,,drop=FALSE]))
-    tmp.bdy <- apply(tmp.bdy,1,paste0,collapse="&")
+    tmp.bdy <- apply(tmp.bdy,1,paste0,collapse=" & ")
     tmp.rowsep <- rep("\\\\",length(tmp.bdy))
     if(i<N && (!varinfront || max.n.row.vars > 1) && !compact)
       tmp.rowsep[length(tmp.bdy)] <- paste0(tmp.rowsep[length(tmp.bdy)],"[",groupsep,"]")
