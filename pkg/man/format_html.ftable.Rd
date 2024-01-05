@@ -30,6 +30,7 @@
                    varontop,
                    varinfront,
                    grouprules=1,
+                   multi_digits=NULL,
                    \dots)
 }
 \arguments{
@@ -54,6 +55,14 @@
       appear in front of factor levels}
     \item{grouprules}{integer, should be either 1 or 2; whether one or
       two rules should drawn to distinguish groups of rows.}
+     \item{multi_digits}{NULL, a numeric vector, or a list. If it is a
+          list it should have as many elements as
+           the "ftable_matrix" contains columns, where each vector has
+           as many columns as the respective "ftable". If it is a
+           vector, it is put into a list with replicated elements
+           according to the "ftable" components.
+           The elements of these vectors can be used to specify a separate
+           number of digits for each column of the respective "ftable".}
     \item{\dots}{further arguments, ignored.}}
 \seealso{
   See Also as \code{\link{format_html}}, \code{\link{show_html}}, \code{\link{write_html}}.

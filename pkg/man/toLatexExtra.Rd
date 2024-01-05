@@ -97,6 +97,7 @@
     groupsep="3pt",
     grouprule=midrule,
     toLatex.escape.tex=getOption("toLatex.escape.tex",FALSE),
+    multi_digits=NULL,
     \dots)
 }
 \arguments{
@@ -149,6 +150,14 @@
      \item{fold.leaders}{logical, if \code{TRUE}, factor levels of row
        variables are not distributed into different columns, but
        'folded' into a single column.}
+     \item{multi_digits}{NULL, a numeric vector, or a list. If it is a
+          list it should have as many elements as
+           the "ftable_matrix" contains columns, where each vector has
+           as many columns as the respective "ftable". If it is a
+           vector, it is put into a list with replicated elements
+           according to the "ftable" components.
+           The elements of these vectors can be used to specify a separate
+           number of digits for each column of the respective "ftable".}
      \item{\dots}{further argument, currently ignored.}
 }
 \examples{
