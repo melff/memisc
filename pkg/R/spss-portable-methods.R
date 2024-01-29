@@ -13,7 +13,7 @@ spss.portable.file <- function(
     check.file(file,error=TRUE)
     ptr <- porStream(file)
 
-    data.spec <- parseHeaderPorStream(ptr)
+    data.spec <- parseHeaderPorStream(ptr,iconv=iconv,encoded=encoded)
     types <- data.spec$types
     variables <- vector(length(types),mode="list")
     variables[types==0] <- list(new("double.item"))
@@ -41,7 +41,7 @@ spss.portable.file <- function(
                         ans
                       })
     vallabs <- unlist(vallab.tmp,recursive=FALSE)
-   
+    
     missings <- lapply(data.spec$dictionary,"[[",i="missing")
 
     if(length(varlab.file) && check.file(varlab.file,error=TRUE)){
@@ -81,10 +81,10 @@ spss.portable.file <- function(
       names(variables) <- tolower(names(variables))
     }
 
-    if(iconv)
-        variables <- lapply(variables,Iconv,from=encoded,to="UTF-8")
-    else
-        encoded = ""
+    # if(iconv)
+    #     variables <- lapply(variables,Iconv,from=encoded,to="UTF-8")
+    # else
+    #     encoded = ""
 
     warn_if_duplicate_labels(variables)
         

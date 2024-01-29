@@ -113,7 +113,7 @@ readLabPorStream <- function(pstream,types){
     namlabs <- character(nlabs)
     for(j in 1:nlabs){
       labs[j] <- readDoublePorStream(pstream)
-      nlabs[j] <- trimws(readStringPorStream(pstream))
+      nlabs[j] <- readStringPorStream(pstream)
       #cat("\n",labs[j]," ",sQuote(nlabs[j]))
       }
     }
@@ -121,7 +121,7 @@ readLabPorStream <- function(pstream,types){
     labs <- character(nlabs)
     for(j in 1:nlabs){
       labs[j] <- readStringPorStream(pstream)
-      nlabs[j] <- trimws(readStringPorStream(pstream))
+      nlabs[j] <- readStringPorStream(pstream)
       #cat("\n",labs[j]," ",sQuote(nlabs[j]))
       }
     }
@@ -138,7 +138,7 @@ readDocumentPorStream <- function(stream){
   doclines
 }
 
-parseHeaderPorStream <- function(stream){
+parseHeaderPorStream <- function(stream,iconv=FALSE,encoded=getOption("spss.por.encoding","cp1252")){
   header <- list()
   header$control <- readRangePorStream(stream,200 + c(0,60))
   header$digits <- readRangePorStream(stream,200 + c(64,73))
@@ -219,6 +219,20 @@ parseHeaderPorStream <- function(stream){
   if(length(value.labels)){
     names(value.labels) <- paste("label",seq(1,length(value.labels)),sep="")
   }
+  if(iconv){
+      if(length(value.labels)){
+          value.labels <- lapply(value.labels,
+                                 function(x){
+                                     vl <- x$value.labels
+                                     names(vl) <- iconv(names(vl),from=encoded)
+                                     x$value.labels <- vl
+                                     x
+                                 })
+      }
+      document <- iconv(document,from=encoded)
+  }
+
+
   p <- list()
   p$header <- header
   p$dictionary <- dictionary
