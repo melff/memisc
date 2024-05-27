@@ -111,7 +111,31 @@ get.format <- function(x){
 }
 
 
-applyTemplate <- function(x,template,float.style=getOption("float.style"),
+applyTemplate <- function(x,template,...){
+    if(is.list(x)){
+        y <- list()
+        nms <- names(x)
+        for(i in seq_along(x)){
+            n_i <- nms[i]
+            if(n_i==""){
+                y[[i]] <- applyTemplate(x[[i]],template=template)
+            }
+            else {
+                if(n_i %in% names(template)){
+                    tmpl <- template[n_i]
+                    tmpl <- sub(n_i,"1",tmpl)
+                    y[[i]] <-as.matrix(unlist(lapply(x[[i]],applyTemplate,template=unname(tmpl))))
+                }
+            }
+        }
+        do.call(rbind,y)
+    }
+    else {
+        applyTemplate1(x,template=template,...)
+    }
+}
+
+applyTemplate1 <- function(x,template,float.style=getOption("float.style"),
                       digits=min(3,getOption("digits")),
                       signif.symbols=getOption("signif.symbols")){
    template <- as.matrix(template)
