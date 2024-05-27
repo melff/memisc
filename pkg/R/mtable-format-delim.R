@@ -35,6 +35,7 @@ pf_mtable_format_delim <- function(x,
                                 colsep="\t",
                                 rowsep="\n",
                                 interaction.sep = " x ",
+                                show.parmtypes = nrow(x$parmtab) > 1,
                                 ...
                                 ){
 
@@ -56,9 +57,18 @@ pf_mtable_format_delim <- function(x,
         
         name.j <- colnames(pt)[j]
         pt.j <- pt[,j]
+        l.pt.j <- length(pt.j)
 
         ncol.j <- unique(sapply(pt.j,ncol))
         stopifnot(length(ncol.j)==1)
+
+        for(i in 1:l.pt.j){
+            pt.ij <- pt.j[[i]]
+            if(show.parmtypes){
+                pt.ij <- rbind(" ",pt.ij)
+            }
+            pt.j[[i]] <- pt.ij
+        }
 
         pt.j <- do.call(rbind,pt.j)
 
@@ -99,6 +109,12 @@ pf_mtable_format_delim <- function(x,
             leaders <- c(rep(list(list(structure("",span=1))),lh),
                          leaders)
         leaders <- lapply(leaders,ldxp)
+        if(show.parmtypes){
+            parmtypes <- rownames(x$parmtab)
+            for(p in parmtypes){
+                leaders[[p]] <- rbind(p,leaders[[p]])
+            }
+        }
         leaders <- do.call(rbind,leaders)
         
         res <- cbind(leaders,res)

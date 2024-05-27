@@ -163,6 +163,7 @@ pf_mtable_format_html <- function(x,
                                style=mtable_format_stdstyle,
                                margin="2ex auto",
                                sig.notes.style=c(width="inherit"),
+                               show.parmtypes = nrow(x$parmtab) > 1,
                                ...
 ){
   
@@ -231,7 +232,11 @@ pf_mtable_format_html <- function(x,
                     pt.ij[] <- html_td(pt.ij,vectorize=TRUE)
             }
             dim(pt.ij) <- dm.ij
-            
+            if(show.parmtypes){
+                spaces <- rep(" ",ncol(pt.ij))
+                spaces <- html_td(spaces,vectorize=TRUE)
+                pt.ij <- rbind(spaces,pt.ij)
+            }
             pt.j[[i]] <- pt.ij
         }
         pt.j <- do.call(rbind,pt.j)
@@ -249,7 +254,7 @@ pf_mtable_format_html <- function(x,
                 eq.span <- eq.span*3
             eq.header.j <- html_td(eq.header.j,colspan=eq.span,vectorize=TRUE)
             pt.j <- rbind(eq.header.j,pt.j)
-            total_hdr_lines <- max(total_hdr_lines,1+n.eq.j)
+            #total_hdr_lines <- max(total_hdr_lines,1+n.eq.j)
         }
         total_pt_lines <- max(total_pt_lines,1+nrow(pt.j))
 
@@ -278,8 +283,13 @@ pf_mtable_format_html <- function(x,
     }
 
     if(l.leaders){
-
         leaders <- lapply(leaders,ldxp)
+        if(show.parmtypes){
+            parmtypes <- rownames(x$parmtab)
+            for(p in parmtypes){
+                leaders[[p]] <- rbind(p,leaders[[p]])
+            }
+        }
         leaders <- do.call(rbind,leaders)
         if(has.eq.headers)
             leaders <- rbind("",leaders)
@@ -350,14 +360,18 @@ pf_mtable_format_html <- function(x,
     res <- html_table(res,id=mtable_id)
 
     mtable_html_env$counter <- mtable_html_env$counter + 1
-    
+
+    midrule_lines <- total_hdr_lines
+    midrule_lines <- c(midrule_lines,total_hdr_lines + total_pt_lines)
+    # browser()
+
     style_global <- style_mtable_global(id=mtable_id,style=style,margin=margin)
     style_toprule <- style_mtable_rule(id=mtable_id,rulewidth=toprule,top=TRUE,
                                        rows=1)
     style_bottomrule <- style_mtable_rule(id=mtable_id,rulewidth=bottomrule,bottom=TRUE,
                                           rows=total_pt_lines+total_sum_lines)
     style_midrule <- style_mtable_rule(id=mtable_id,rulewidth=midrule,bottom=TRUE,
-                                          rows=c(total_hdr_lines,total_pt_lines))
+                                          rows=midrule_lines)
 
     style_content <- paste(
         style_global,

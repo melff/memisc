@@ -76,6 +76,7 @@ pf_mtable_format_print <- function(x,
                                    center.at=getOption("OutDec"),
                                    align.integers=c("dot","right","left"),
                                    padding="  ",
+                                   show.parmtypes = nrow(x$parmtab) > 1,
                                    ...
                                    ){
 
@@ -113,6 +114,9 @@ pf_mtable_format_print <- function(x,
         nr.j <- numeric(l.pt.j)
         for(i in 1:l.pt.j){
             pt.ij <- pt.j[[i]]
+            if(show.parmtypes){
+                pt.ij <- rbind(" ",pt.ij)
+            }
             nr.j[i] <- nrow(pt.ij)
             skip.ij <- rep(FALSE,nrow(pt.ij))
             tmp <- matrix("",nrow=nrow(pt.ij),ncol=maxncols.j)
@@ -203,11 +207,15 @@ pf_mtable_format_print <- function(x,
     }
     l.leaders <- length(leaders)
     if(l.leaders){
-
         leaders <- c(list(headers=rep(list(structure("",span=1)),
                                           ld.headlines)),leaders)
-
         leaders <- lapply(leaders,ldxp)
+        if(show.parmtypes){
+            parmtypes <- rownames(x$parmtab)
+            for(p in parmtypes){
+                leaders[[p]] <- rbind(p,leaders[[p]])
+            }
+        }
         leaders <- do.call(rbind,leaders)
         leaders <- format(leaders,justify="left")
         res <- cbind(leaders,res)
@@ -233,6 +241,8 @@ pf_mtable_format_print <- function(x,
         sectseps   <- c(sectseps,   sectionrule)
         sectsep.at <- c(sectsep.at, csum)
         csum <- csum + nrow(pt[[i,1]])
+        if(show.parmtypes)
+            csum <- csum + 1
     }
     if(length(sst) && any(sapply(sst,length)>0)){
         sectseps   <- c(sectseps,   sectionrule)

@@ -264,8 +264,10 @@ mtable <- function(...,
   else
     summaries <- lapply(args,getSummary)
   
-  parameter.types <- unique(unlist(lapply(summaries,names)))
-  parameter.types <- parameter.types[parameter.types %nin% c("sumstat","contrasts","call","xlevels")]
+  # parameter.types <- unique(unlist(lapply(summaries,names)))
+  # parameter.types <- parameter.types[parameter.types %nin% c("sumstat","contrasts","call","xlevels")]
+  parameter.types <- unique(unlist(lapply(summaries,`[[`,"parameter.types")))
+  parameter.types <- c("coef",parameter.types)
   parmnames <- list()
   for(pt in parameter.types){
 
@@ -514,12 +516,15 @@ dropnull <- function(x) {
     x[!ii]
 }
 ni <- function(tab,x) x%in%tab
+drop_zchrow <- function(x)x[nzchar_row(x),,drop=FALSE]
+
 preformat_mtable <- function(x){
 
     x <- unclass(x)
     
     coef.style <- attr(x,"coef.style")
     summary.stats <- attr(x,"summary.stats")
+    other.stats <- attr(x,"other.stats")
     signif.symbols <- attr(x,"signif.symbols")
     factor.style <- attr(x,"factor.style")
     show.baselevel <- attr(x,"show.baselevel")
@@ -529,16 +534,20 @@ preformat_mtable <- function(x){
     stemplates <- attr(x,"stemplates")
     sdigits <- attr(x,"sdigits")
     
-    allcompo <- unique(unlist(lapply(x,names)))
-    nonparnames <- c("sumstat","contrasts","xlevels","call")
-    partypes <- setdiff(allcompo,nonparnames)
+    # allcompo <- unique(unlist(lapply(x,names)))
+    # nonparnames <- c("sumstat","contrasts","xlevels","call")
+    # partypes <- setdiff(allcompo,nonparnames)
 
     sumstats <- lapply(x,`[[`,"sumstat")
     contrasts <- lapply(x,`[[`,"contrasts")
     xlevels <- lapply(x,`[[`,"xlevels")
     calls <- lapply(x,`[[`,"call")
+
+    partypes <- unique(c("coef",unlist(lapply(x,`[[`,"parameter.types"))))
     parms <- lapply(x,`[`,partypes)
     parms <- lapply(parms,dropnull)
+
+    descriptives <- lapply(x,`[[`,"descriptives")
 
     ctemplate <- getCoefTemplate(coef.style)
     if(!length(ctemplate)) stop("invalid coef.style argument")
@@ -713,10 +722,10 @@ preformat_mtable <- function(x){
       }
     }
 
-    if(length(summary.stats)) {
-        sumstats <- Map(applyTemplate,sumstats,stemplates,digits=sdigits)
-        sst <- Map(getRows,sumstats,summary.stats)
-
+    if(length(summary.stats)){
+        stemplates_ <- Map(select_by_names,stemplates,summary.stats)
+        sst <- Map(applyTemplate,sumstats,stemplates_,digits=sdigits)
+        sst <- lapply(sst,drop_zchrow)
         snames <- unique(unlist(lapply(sst,rownames)))
         nc <- lapply(parmtab[1,],ncol)
         summary.stats <- Map(smryxpand,sst,list(snames))
@@ -726,6 +735,13 @@ preformat_mtable <- function(x){
         leaders <- c(leaders,summary.stats=list(snames))
     }
     else summary.stats <- NULL
+
+    if(length(descriptives)){
+        dnames <- unique(unlist(lapply(descriptives,rownames)))
+        nc <- lapply(parmtab[1,],ncol)
+        descriptives <- Map(smryxpand,descriptives,list(dnames))
+    }
+    else descriptives <- NULL
 
     needs.signif <- any(grepl("$p",ctemplate,fixed=TRUE))
     if(needs.signif){
@@ -746,11 +762,19 @@ preformat_mtable <- function(x){
                    headers=headers,
                    eq.headers=eq.headers,
                    summary.stats = summary.stats,
+                   other.stats = other.stats,
                    signif.symbols=signif.symbols,
                    controls=controls,
                    outtypes=outtypes),
               class="preformatted.memisc_mtable")
     }
+
+# Avoid NA's while subsetting
+select_by_names <- function(x,nms){
+    nms <- unique(nms)
+    nms <- intersect(names(x),nms)
+    x[nms]
+}
 
 
 format_signif <- function(syms,tmpl){

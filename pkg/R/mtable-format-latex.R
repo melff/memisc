@@ -59,6 +59,7 @@ pf_mtable_format_latex <- function(x,
           signif.notes.spec=getOption("toLatex.signif.notes.spec",
                                       paste0("p{",signif.notes.width,"\\linewidth}")),
           signif.notes.width=getOption("toLatex.signif.notes.width",".7"),
+          show.parmtypes = nrow(x$parmtab) > 1,
           ...
           ){
 
@@ -107,7 +108,9 @@ pf_mtable_format_latex <- function(x,
                 if(useDcolumn)
                     pt.ij[] <- paste0("\\multicolumn{1}{c}{",pt.ij,"}")
             }
-            
+            if(show.parmtypes){
+                pt.ij <- rbind(" ",pt.ij)
+            }
             pt.ij <- apply(pt.ij,1,paste,collapse=colsep)
             pt.j[[i]] <- pt.ij
         }
@@ -145,7 +148,14 @@ pf_mtable_format_latex <- function(x,
     l.leaders <- length(leaders)
     if(l.leaders){
         leaders <- lapply(leaders,ldxp)
+        if(show.parmtypes){
+            parmtypes <- rownames(x$parmtab)
+            for(p in parmtypes){
+                leaders[[p]] <- rbind(p,leaders[[p]])
+            }
+        }
         leaders <- do.call(rbind,leaders)
+
         leaders <- gsub(" x ",interaction.sep,leaders,fixed=TRUE)
         if(escape.tex)
             leaders <- LaTeXcape(leaders)
