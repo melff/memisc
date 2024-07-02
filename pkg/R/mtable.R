@@ -720,6 +720,10 @@ preformat_mtable <- function(x){
         else
           leaders[[i]] <- lapply(pn,structure,span=span)
       }
+      pt <- rownames(parmtab)
+      pt <- do_subs(pt,relab.attr)
+      rownames(parmtab) <- pt
+      names(leaders) <- pt
     }
 
     if(length(summary.stats)){
