@@ -15,7 +15,11 @@ retain <- function (..., list = character(0), envir = parent.frame(),force=FALSE
         names <- character(0)
     list <- .Primitive("c")(list, names)
     obs <- ls(envir=envir)
-    if(!all(list %in% obs)) stop("cannot retain undefined objects")
+    if(!all(list %in% obs)) {
+        mis <- setdiff(list,obs)
+        mis <- paste(mis,collapse=", ")
+        stop("Undefined object(s) ",mis)
+    }
     to.remove <- obs[!(obs %in% list)]
     remove(list=to.remove, envir=envir, inherits=FALSE)
 }
