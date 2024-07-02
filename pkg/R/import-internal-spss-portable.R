@@ -82,7 +82,7 @@ readVarPorStream <- function(pstream,start){
           }
     if(tag.code=="C"){
           #cat("Found variable label tag\n")
-          variable$label <- trimws(readStringPorStream(pstream))
+          variable$label <- trimws(withEncoding(readStringPorStream(pstream),"bytes"))
           #cat("Variable label",variable$label,"\n")
           }
     }
