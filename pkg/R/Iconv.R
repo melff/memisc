@@ -1,5 +1,9 @@
 Iconv <- function(x,from="",to="",...) UseMethod("Iconv")
 
+Iconv.character <- function(x,from="",to="",...){
+  iconv(x,from=from,to=to,...)  
+}
+
 Iconv.importer <- function(x,from="",to="",...){
   x@.Data <- lapply(x@.Data,Iconv.item,from,to,...)
   return(x)

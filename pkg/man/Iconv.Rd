@@ -1,5 +1,6 @@
 \name{Iconv}
 \alias{Iconv}
+\alias{Iconv.character}
 \alias{Iconv.annotation}
 \alias{Iconv.data.set}
 \alias{Iconv.importer}
@@ -19,6 +20,7 @@
 \usage{
 
 Iconv(x,from="",to="",\dots) 
+\method{Iconv}{character}(x,from="",to="",\dots) 
 \method{Iconv}{annotation}(x,from="",to="",\dots) 
 \method{Iconv}{data.set}(x,from="",to="",\dots) 
 \method{Iconv}{importer}(x,from="",to="",\dots) 
@@ -27,14 +29,15 @@ Iconv(x,from="",to="",\dots)
 
 }
 \arguments{
-  \item{x}{an object of which attributes are to be re-encoded.}
-  \item{from}{a character string desribing the original encoding}
-  \item{to}{a character string desribing the target encoding}
+  \item{x}{a character vector or an object of which character data or attributes 
+    are to be re-encoded.}
+  \item{from}{a character string describing the original encoding}
+  \item{to}{a character string describing the target encoding}
   \item{\dots}{further arguments, passed to \code{\link[base]{iconv}}}
 }
 \value{
-  Iconv returns a copy of its first argument with re-encoded 
-  attributes.
+  \code{Iconv} returns a copy of its first argument with re-encoded 
+  character data or attributes.
 }
 \seealso{
   \code{\link[base]{iconv}}, \code{\link[base:iconv]{iconvlist}}
