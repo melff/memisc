@@ -12,7 +12,7 @@ applyTemplate(x,template,float.style=getOption("float.style"),
                       signif.symbols=getOption("signif.symbols"))
 }
 \arguments{
- \item{x}{a numeric or character vector to be formatted}
+ \item{x}{a numeric or character vector to be formatted, or a list of such vectors.}
  \item{template}{a character vector that defines the template, see details.}
  \item{float.style}{A character string that is passed to \code{\link{formatC}}
         by \code{applyTemplate}; valid values

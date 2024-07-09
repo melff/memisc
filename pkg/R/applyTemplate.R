@@ -111,27 +111,42 @@ get.format <- function(x){
 }
 
 
-applyTemplate <- function(x,template,...){
+applyTemplate <- function(x,template,
+                            float.style=getOption("float.style"),
+                            digits=min(3,getOption("digits")),
+                            signif.symbols=getOption("signif.symbols")){
     if(is.list(x)){
         y <- list()
         nms <- names(x)
         for(i in seq_along(x)){
             n_i <- nms[i]
             if(n_i==""){
-                y[[i]] <- applyTemplate(x[[i]],template=template)
+                y[[i]] <- applyTemplate(x[[i]],
+                                        template=template,
+                                        float.style=float.style,
+                                        digits=digits,
+                                        signif.symbols=signif.symbols)
             }
             else {
                 if(n_i %in% names(template)){
                     tmpl <- template[n_i]
                     tmpl <- sub(n_i,"1",tmpl)
-                    y[[i]] <-as.matrix(unlist(lapply(x[[i]],applyTemplate,template=unname(tmpl))))
+                    y[[i]] <-as.matrix(unlist(lapply(x[[i]],
+                                              applyTemplate,
+                                              template=unname(tmpl),
+                                              float.style=float.style,  
+                                              digits=digits,
+                                              signif.symbols=signif.symbols)))
                 }
             }
         }
         do.call(rbind,y)
     }
     else {
-        applyTemplate1(x,template=template,...)
+        applyTemplate1(x, template=template,
+                          float.style=float.style,
+                          digits=digits,
+                          signif.symbols=signif.symbols)
     }
 }
 
