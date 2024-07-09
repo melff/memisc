@@ -86,6 +86,7 @@ reference:
   - applyTemplate
   - as.array
   - as.symbols
+  - charTrans
   - Iconv
   - List
   - Sapply
