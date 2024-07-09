@@ -203,6 +203,9 @@ parseHeaderPorStream <- function(stream,iconv=FALSE,encoded=getOption("spss.por.
             #print(variable)
             # Can't rely on the information in the print formats, so always "real" 5.9.07
             #types[variable$name] <- if(variable$width) 2 else 1#if (variable$printformat[3] > 0) 1 else 0
+            if(iconv){
+              variable$label <- iconv(variable$label,from=encoded)
+            }
             types[variable$name] <- variable$width
             dictionary[[variable$name]] <- variable[-nameidx]
             }
