@@ -120,6 +120,7 @@ export(
       query,
       relabel4,
       Iconv,
+      charTrans,
       Write,
       mtable_format_print,
       mtable_format_latex,
@@ -290,11 +291,21 @@ S3method(cbind,data.set)
 S3method(fapply,data.set)
 S3method(print,descriptions)
 S3method(as.data.frame,descriptions)
+
+S3method(Iconv,character)
 S3method(Iconv,item)
 S3method(Iconv,value.labels)
 S3method(Iconv,annotation)
 S3method(Iconv,data.set)
 S3method(Iconv,importer)
+
+S3method(charTrans,character)
+S3method(charTrans,item)
+S3method(charTrans,value.labels)
+S3method(charTrans,annotation)
+S3method(charTrans,data.set)
+S3method(charTrans,importer)
+
 S3method(Write,descriptions)
 S3method(Write,codebook)
 
