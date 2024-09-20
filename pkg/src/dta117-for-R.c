@@ -57,7 +57,7 @@ typedef struct {
 
 SEXP dta117_file_close(SEXP);
 SEXP dta117_file_open (SEXP name){
-  dta117_file *dtaf = Calloc(1,dta117_file);
+  dta117_file *dtaf = R_Calloc(1,dta117_file);
   dtaf->release = 0;
   dtaf->swap = 0;
   dtaf->nvars = 0;
@@ -67,7 +67,7 @@ SEXP dta117_file_open (SEXP name){
   dtaf->enddata = 0;
   dtaf->f = fopen(asString(name),"r+b");
   if (dtaf->f == NULL){
-      Free(dtaf);
+      R_Free(dtaf);
       error("cannot open file");
       }
   dtaf->map.hdr       = 0;
@@ -110,7 +110,7 @@ dta117_file *get_dta117_file(SEXP s_file){
   if (dtaf == NULL || dtaf->f == NULL){
     SEXP name = getAttrib(s_file,install("file.name"));
     if(dtaf != NULL){
-      Free(dtaf);
+      R_Free(dtaf);
     }
     error("external pointer is NULL, you need to recreate this object");
   }

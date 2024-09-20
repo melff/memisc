@@ -178,13 +178,13 @@ SEXP NewSysFile (SEXP name){
 #endif
   PROTECT(name = coerceVector(name,STRSXP));
 //   sys_file *s = (sys_file *)S_alloc(1,sizeof(sys_file));
-  sys_file *s = Calloc(1,sys_file);
+  sys_file *s = R_Calloc(1,sys_file);
   s->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
 #ifdef DEBUG
   Rprintf("\nfile = %d",s->f);
 #endif
   if(s->f == NULL){
-    Free(s);
+    R_Free(s);
     UNPROTECT(1);
     return R_NilValue;
   }
@@ -205,7 +205,7 @@ SEXP sys_file_restore_from_attrib(SEXP SysFile, sys_file *s,const char* attribna
     if(ans == R_NilValue || ans == NULL) {
       fclose(s->f);
       R_SetExternalPtrAddr(SysFile,NULL);
-      Free(s);
+      R_Free(s);
       error("cannot restore sysfile data: missing '%s' attribute",attribname);
     }
   return ans;
@@ -217,7 +217,7 @@ sys_file *get_sys_file(SEXP SysFile){
   sys_file *s = R_ExternalPtrAddr(SysFile);
   if (s == NULL){
     error("external pointer is NULL, you need to recreate this object");
-    /* sys_file *s = Calloc(1,sys_file);
+    /* sys_file *s = R_Calloc(1,sys_file);
      * R_SetExternalPtrAddr(SysFile,s);
      * SEXP name;
      * PROTECT(name = getAttrib(SysFile,install("file.name")));
@@ -225,7 +225,7 @@ sys_file *get_sys_file(SEXP SysFile){
      * s->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
      * if(s->f == NULL){
      *   R_SetExternalPtrAddr(SysFile,NULL);
-     *   Free(s);
+     *   R_Free(s);
      *   error("cannot reopen file -- does it still exist?");
      * }
      * init_sys_file(s);
@@ -240,7 +240,7 @@ sys_file *get_sys_file(SEXP SysFile){
      * s->data_pos = asInteger(tmp);
      * tmp = sys_file_restore_from_attrib(SysFile,s,"sysmis");
      * s->sysmis = (R_flt64) asReal(tmp);
-     * s->buf = Calloc(s->case_size,R_flt64);
+     * s->buf = R_Calloc(s->case_size,R_flt64);
      * Rprintf("File '%s' reopened\n\n",CHAR(STRING_ELT(name, 0)));
      * Rprintf("\ns= %llx",s);
      * UNPROTECT(1); */
@@ -256,7 +256,7 @@ SEXP closeSysFile (SEXP SysFile){
   sys_file *s = R_ExternalPtrAddr(SysFile);
   if (s != NULL) {
       fclose(s->f);
-      Free(s->buf);
+      R_Free(s->buf);
       R_ClearExternalPtr(SysFile);
   }
   return R_NilValue;
@@ -328,7 +328,7 @@ SEXP read_sysfile_header(SEXP SysFile){
   s->compressed = iswap(h.compressed,s->swap_code);
   s->case_size = iswap(h.case_size,s->swap_code);
   s->bias = dswap(h.bias,s->swap_code);
-  s->buf = Calloc(s->case_size,R_flt64);
+  s->buf = R_Calloc(s->case_size,R_flt64);
 
   SET_VECTOR_ELT(ans,0,mkString(h.prod_name));
   SET_VECTOR_ELT(ans,1,ScalarInteger(iswap(h.layout_code,s->swap_code)));
@@ -1092,7 +1092,7 @@ SEXP read_sysfile_data (SEXP SysFile, SEXP what,
         Rprintf("\nFile = %d",s->f);
         Rprintf("\n");
 #endif
-//     Free(buf);
+//     R_Free(buf);
     for(j = 0; j < nvar; j++){
       x = VECTOR_ELT(what,j);
       y = VECTOR_ELT(data,j);

@@ -23,7 +23,7 @@ char headbuf[109];
 
 SEXP dta_file_close(SEXP);
 SEXP dta_file_open (SEXP name){
-  dta_file *dtaf = Calloc(1,dta_file);
+  dta_file *dtaf = R_Calloc(1,dta_file);
   dtaf->swap = 0;
   dtaf->start_data = 0;
   dtaf->l_record = 0;
@@ -31,7 +31,7 @@ SEXP dta_file_open (SEXP name){
   dtaf->version = 0;
   dtaf->f = fopen(asString(name),"r+b");
   if (dtaf->f == NULL){
-      Free(dtaf);
+      R_Free(dtaf);
       error("cannot open file");
       }
   SEXP ans = R_MakeExternalPtr(dtaf, install("dta_file"), R_NilValue);
@@ -61,7 +61,7 @@ dta_file *get_dta_file(SEXP s_file){
   if (dtaf == NULL || dtaf->f == NULL){
     SEXP name = getAttrib(s_file,install("file.name"));
     if(dtaf != NULL){
-      Free(dtaf);
+      R_Free(dtaf);
     }
    error("external pointer is NULL, you need to recreate this object");
   }

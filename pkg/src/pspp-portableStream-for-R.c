@@ -707,14 +707,14 @@ SEXP NewPorStream (SEXP name){
 #endif
   PROTECT(name = coerceVector(name,STRSXP));
 //   porStreamBuf *b = (porStreamBuf *)S_alloc(1,sizeof(porStreamBuf));
-  porStreamBuf *b = Calloc(1,porStreamBuf);
+  porStreamBuf *b = R_Calloc(1,porStreamBuf);
   initPorStreamBuf(b);
   b->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
 #ifdef DEBUG
   Rprintf("\nfile = %d",b->f);
 #endif
   if(b->f == NULL){
-    Free(b);
+    R_Free(b);
     UNPROTECT(1);
     return R_NilValue;
   }
@@ -738,19 +738,19 @@ porStreamBuf *get_porStreamBuf(SEXP porStream){
   porStreamBuf *b = R_ExternalPtrAddr(porStream);
   if (b == NULL){
     error("external pointer is NULL, you need to recreate this object");
-    /* b = Calloc(1,porStreamBuf);
+    /* b = R_Calloc(1,porStreamBuf);
      * R_SetExternalPtrAddr(porStream,b);
      * initPorStreamBuf(b);
      * SEXP name = getAttrib(porStream,install("file.name"));
      * if(name == R_NilValue || name == NULL){
      *   R_SetExternalPtrAddr(porStream,NULL);
-     *   Free(b);
+     *   R_Free(b);
      *   error("need filename to reopen file");
      *   }
      * b->f = fopen(CHAR(STRING_ELT(name, 0)),"rb");
      * if(b->f == NULL){
      *   R_SetExternalPtrAddr(porStream,NULL);
-     *   Free(b);
+     *   R_Free(b);
      *   error("cannot reopen file -- does it still exist?");
      * }
      * Rprintf("File '%s' reopened\n",CHAR(STRING_ELT(name, 0))); */
@@ -765,7 +765,7 @@ SEXP closePorStream (SEXP porStream){
   porStreamBuf *b = R_ExternalPtrAddr(porStream);
   if (b != NULL) {
       fclose(b->f);
-      Free(b);
+      R_Free(b);
       /*Rprintf("\n'portable' file closed\n");*/
       R_ClearExternalPtr(porStream);
   }
