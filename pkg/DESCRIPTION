@@ -2,9 +2,18 @@ Package: memisc
 Type: Package
 Title: Management of Survey Data and Presentation of Analysis Results
 Version: 0.99.31.8
-Date: 2024-07-10
-Author: Martin Elff (with contributions from Christopher N. Lawrence, Dave Atkins,
-        Jason W. Morgan, Achim Zeileis, Mael Astruc-Le Souder, Kiril Mueller, and Pieter Schoonees)
+Date: 2024-09-12
+Authors@R: c(person(given = "Martin",
+                    family = "Elff",
+                    role = c("aut", "cre"),
+                    email = "memisc@elff.eu"),
+             person(given = "Christopher N.", family = "Lawrence", role = "ctb"),
+             person(given = "Dave", family = "Atkins", role = "ctb"),
+             person(given = "Jason W.", family = "Morgan", role = "ctb"),
+             person(given = "Achim", family = "Zeileis", role = "ctb"),
+             person(given = "Mael", family = "Astruc-Le Souder", role = "ctb"),
+             person(given = "Kiril", family = "Mueller", role = "ctb"),
+             person(given = "Pieter", family = "Schoonees", role = "ctb"))
 Maintainer: Martin Elff <memisc@elff.eu>
 Description: An infrastructure for the management of survey data including
         value labels, definable missing values, recoding of variables,
