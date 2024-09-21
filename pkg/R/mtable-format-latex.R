@@ -236,11 +236,13 @@ pf_mtable_format_latex <- function(x,
     sec.hrules <- character()
 
     sectionrule <- midrule
-    
+
     for(i in 1:nrow(pt)){
         sectseps   <- c(sectseps,   sectionrule)
         sectsep.at <- c(sectsep.at, csum)
-        csum <- csum + nrow(pt[[i,1]])
+        csum <- csum + nrow(pt[[i,1]]) 
+        if(nrow(pt) > 1)
+            csum <- csum + 1
     }
     if(length(sst) && any(sapply(sst,length)>0)){
         sectseps   <- c(sectseps,   sectionrule)
@@ -250,6 +252,7 @@ pf_mtable_format_latex <- function(x,
         sectsep.at <- sectsep.at + 1
     }
     
+
     res <- .insert(res,
                    c(sec.hrules.at,sectsep.at),
                    c(sec.hrules,   sectseps)
