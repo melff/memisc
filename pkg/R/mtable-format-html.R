@@ -247,14 +247,15 @@ pf_mtable_format_html <- function(x,
         }
 
         if(has.eq.headers){
-            eq.header.j <- eq.headers[[name.j]]
+           eq.header.j <- eq.headers[[name.j]]
             n.eq.j <- length(eq.header.j)
             eq.span <- ncol.j/n.eq.j
             if(split.dec)
                 eq.span <- eq.span*3
-            eq.header.j <- html_td(eq.header.j,colspan=eq.span,vectorize=TRUE)
-            pt.j <- rbind(eq.header.j,pt.j)
+            eq.header.j <- html_td(eq.header.j,colspan=eq.span,vectorize=TRUE,class="header")
+            # pt.j <- rbind(eq.header.j,pt.j)
             #total_hdr_lines <- max(total_hdr_lines,1+n.eq.j)
+           eq.headers[[name.j]] <- eq.header.j
         }
         total_pt_lines <- max(total_pt_lines,1+nrow(pt.j))
 
@@ -293,7 +294,7 @@ pf_mtable_format_html <- function(x,
         leaders <- do.call(rbind,leaders)
         if(has.eq.headers)
             leaders <- rbind("",leaders)
-        
+
         leaders <- html_td(leaders,vectorize=TRUE)
         
         res <- cbind(leaders,res)
@@ -315,15 +316,34 @@ pf_mtable_format_html <- function(x,
             headers[[k]] <- headers.k
         }
         headers <- lapply(headers,as.html_group)
+        if(has.eq.headers) {
+            if(l.leaders){
+                lheader.e <- html_td("",colspan=1,class="header")
+                tmp <- unlist(eq.headers,recursive=FALSE)
+                eq.headers <- as.html_group(c(list(lheader.e),tmp))
+            }
+            headers[[l.headers + 1]] <- eq.headers
+        }
         res <- c(headers,res)
     }
+    else if(has.eq.headers) {
+        if(l.leaders){
+            lheader.e <- html_td("",colspan=1,class="header")
+            tmp <- unlist(eq.headers,recursive=FALSE)
+            eq.headers <- as.html_group(c(list(lheader.e),tmp))
+        }
+        res <- c(list(eq.headers), res)
+    }
 
-    
+    csum <- l.headers
+
     sect.at <- integer()
     csum <- 1
     for(i in 1:nrow(pt)){
         sect.at <- c(sect.at,csum)
         csum <- csum + nrow(pt[[i,1]])
+        if(nrow(pt) > 1)
+            csum <- csum + 1
     }
     if(length(sst) && any(sapply(sst,length)>0))
         sect.at <- c(sect.at,csum)
