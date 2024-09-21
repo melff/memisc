@@ -95,6 +95,38 @@ style_mtable_rule <- function(id=NULL,class=NULL,top=FALSE,bottom=FALSE,rulewidt
     } else ""
 }
 
+style_mtable_cmidrule <- function(id=NULL,class=NULL,top=FALSE,bottom=FALSE,rulewidth=0.5,cols=NULL,rows=NULL){
+    if(length(cols) && length(rows)){
+        class_or_id <- class_id_selector(id=id,class=class)
+        rulewidth <- paste0(rulewidth,"px")
+        selector_tmpl <- "table<<class-or-id>> tr:nth-child(<<row>>) td:nth-child(<<col>>)"
+        selector <- character(0)
+        for(row in rows){
+            for(col in cols){
+                selector <- c(selector,
+                              fillin(selector_tmpl,c("class-or-id"=class_or_id,row=row,col=col)))
+            }
+        }
+        selector <- paste(selector,collapse=",\n")
+        style_tmpl <- "<<selector>>{"
+        if(top){
+            style_tmpl <- paste(style_tmpl,
+                                "     border-top: <<rulewidth>> solid;",
+                                sep="\n")
+        }
+        if(bottom){
+            style_tmpl <- paste(style_tmpl,
+                                "     border-bottom: <<rulewidth>> solid;",
+                                sep="\n")
+        }
+        style_tmpl <- paste(style_tmpl,"}",sep="\n")
+
+        fillin(style_tmpl,c(selector=selector,rulewidth=rulewidth))
+    } else ""
+}
+
+
+
 style_mtable_cols <- function(id=NULL,class=NULL,cols=NULL,style=""){
     if(length(cols)){
         class_or_id <- class_id_selector(id=id,class=class)
@@ -292,8 +324,6 @@ pf_mtable_format_html <- function(x,
             }
         }
         leaders <- do.call(rbind,leaders)
-        if(has.eq.headers)
-            leaders <- rbind("",leaders)
 
         leaders <- html_td(leaders,vectorize=TRUE)
         
@@ -338,7 +368,6 @@ pf_mtable_format_html <- function(x,
     csum <- l.headers
 
     sect.at <- integer()
-    csum <- 1
     for(i in 1:nrow(pt)){
         sect.at <- c(sect.at,csum)
         csum <- csum + nrow(pt[[i,1]])
@@ -347,10 +376,9 @@ pf_mtable_format_html <- function(x,
     }
     if(length(sst) && any(sapply(sst,length)>0))
         sect.at <- c(sect.at,csum)
-    if(l.headers)
-        sect.at <- c(sect.at + l.headers)
     if(has.eq.headers)
         sect.at <- sect.at + 1
+    lines_total <- length(res)
 
     signif.symbols <- x$signif.symbols
     if(length(signif.symbols)){
@@ -381,21 +409,33 @@ pf_mtable_format_html <- function(x,
 
     mtable_html_env$counter <- mtable_html_env$counter + 1
 
-    midrule_lines <- total_hdr_lines
-    midrule_lines <- c(midrule_lines,total_hdr_lines + total_pt_lines)
-    # browser()
+    #midrule_lines <- total_hdr_lines
+    #midrule_lines <- c(midrule_lines,total_hdr_lines + total_pt_lines)
+    midrule_lines <- sect.at
 
     style_global <- style_mtable_global(id=mtable_id,style=style,margin=margin)
     style_toprule <- style_mtable_rule(id=mtable_id,rulewidth=toprule,top=TRUE,
                                        rows=1)
     style_bottomrule <- style_mtable_rule(id=mtable_id,rulewidth=bottomrule,bottom=TRUE,
-                                          rows=total_pt_lines+total_sum_lines)
+                                          rows=lines_total)
     style_midrule <- style_mtable_rule(id=mtable_id,rulewidth=midrule,bottom=TRUE,
                                           rows=midrule_lines)
+
+
+    if(l.headers > 0 && has.eq.headers) {
+        if(l.leaders) cmod_fst <- 2 else cmod_fst <- 1
+        last.header <- headers[[l.headers]]
+        cmod_lst <- length((last.header))
+        cmid_cols <- cmod_fst:cmod_lst
+        style_mtable_cmidrule <- style_mtable_cmidrule(id=mtable_id,bottom=TRUE,
+                                                       rows=l.headers,cols=cmid_cols)
+    }
+    else style_mtable_cmidrule <- NULL
 
     style_content <- paste(
         style_global,
         style_toprule,
+        style_mtable_cmidrule,
         style_midrule,
         style_bottomrule,
         sep="\n"
