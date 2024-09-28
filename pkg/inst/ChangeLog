@@ -1,6 +1,268 @@
+2024-09-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R: Group rules for headers and equations
+
+2024-09-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-latex.R: Fix location of midrules in latex
+	formatting of mtables
+
+2024-09-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R: Fix column grouping in html formatting
+	of mtables
+
+2024-09-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/src/dta-for-R.c, pkg/src/dta117-for-R.c,
+	pkg/src/pspp-portableStream-for-R.c, pkg/src/pspp-system-for-R.c: 
+	Use R_ forms for Calloc, Realloc, Free
+
+2024-09-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Correct "Authors@R"
+
+2024-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/pkgdown/_pkgdown.yml: Include 'charTrans' in _pkgdown.yml
+
+2024-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/applyTemplate.R, pkg/man/applyTemplate.Rd: Fix document
+	mismatch re 'applyTemplate()'
+
+2024-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/NAMESPACE, pkg/R/charTrans.R,
+	pkg/man/charTrans.Rd: Provide new 'charTrans()' generic.
+
+2024-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/Iconv.R, pkg/man/Iconv.Rd: Provide 'character' method of
+	'Iconv()'
+
+2024-07-10  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/import-internal-spss-portable.R: Make sure that Iconv is
+	applied to variable labels if required.
+
+2024-07-07  Martin Elff <melff@users.noreply.github.com>
+
+	* README.md: Remove verbatim HTML from  README.md
+
+2024-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable.R: mtable.R: Improve relabelling
+
+2024-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/retain.R: retain: Give more informative error message
+
+2024-07-02  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/encoding.R, pkg/R/import-internal-spss-portable.R: Make
+	POR-Import work with weirdly encoded labels
+
+2024-05-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-delim.R, pkg/R/mtable-format-html.R,
+	pkg/R/mtable-format-latex.R, pkg/R/mtable-format-print.R,
+	pkg/R/mtable.R: Add support for multiple parameter groups/types Coefficients are not the only kinds of parameter. This update takes
+	care for variance parameters in model tables (mtables).
+
+2024-05-27  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/applyTemplate.R: Fix(?) 'applyTemplate'
+
+2024-01-29  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/import-internal-spss-portable.R,
+	pkg/R/spss-portable-methods.R: Drop call of 'trimws' as it fails
+	with incorrectly coded strings
+
+2024-01-05  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/format_html.ftable.Rd, pkg/man/toLatexExtra.Rd: Added the
+	documentation for the multi_digits argument.
+
+2024-01-03  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/format-html-ftable-matrix.R, pkg/R/toLatex-ftable-matrix.R: 
+	New multi_digits argument for formatting "ftable_matrix" objects
+
+2024-01-02  Martin Elff <memisc@elff.eu>
+
+	* README.md, pkg/R/mtable-format-html.R, pkg/vignettes/anes48.Rmd,
+	pkg/vignettes/gentab.Rmd, pkg/vignettes/items.Rmd,
+	pkg/vignettes/mtable-html.Rmd: Linebreaks in vignettes
+
+2023-12-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/pkgdown/_pkgdown.yml: Rearrange topic groups of references in
+	_pkgdown.yml
+
+2023-12-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/pkgdown/_pkgdown.yml: Add missing reference topics
+
+2023-12-23  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Update _pkgdown.yml
+
+2023-12-23  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Update _pkgdown.yml
+
+2023-12-23  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Update _pkgdown.yml
+
+2023-12-23  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Update _pkgdown.yml
+
+2023-12-23  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Fix _pkgdown.yml
+
+2023-12-23  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Correct _pkgdown.yml
+
+2023-12-23  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Update _pkgdown.yml
+
+2023-12-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/pkgdown/_pkgdown.yml: Add missing 'contents' mapping title
+
+2023-12-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/pkgdown/_pkgdown.yml: Group reference items in _pkgdown.yml
+
+2023-12-22  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Fix URL in DESCRIPTION
+
+2023-12-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/doc/index.html: Add index to doc folder
+
+2023-12-22  Martin Elff <melff@users.noreply.github.com>
+
+	* .github/workflows/pkgdown.yml: Update pkgdown.yml
+
+2023-12-20  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/gentab.Rmd, pkg/vignettes/items.Rmd: Fix vignettes
+
+2023-12-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/gentab.Rmd, pkg/vignettes/import.Rmd: Update static
+	vignettes
+
+2023-12-19  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/genTable.R: Make Aggegate work (again) with knitr-generated
+	example output
+
+2023-12-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/format-html-ftable-matrix.R: Remove unnecessary debug output
+
+2023-12-18  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/format-html-ftable-matrix.R: Use correct counter for
+	ftable-matrices
+
+2023-12-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/mtable-format-html.R: Slightly more compact mtable HTML
+	format
+
+2023-12-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-format-html.R: Reset table formatting imposed by
+	knitr etc.
+
+2023-12-17  Martin Elff <memisc@elff.eu>
+
+	* README.md, pkg/DESCRIPTION: Use Github URL
+
+2023-12-17  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/gentab.Rmd, pkg/vignettes/import.Rmd: Moved user
+	guides from website to vignettes
+
+2023-12-17  Martin Elff <melff@users.noreply.github.com>
+
+	* .github/workflows/pkgdown.yml: Update pkgdown.yml
+
+2023-12-16  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Update _pkgdown.yml
+
+2023-12-16  Martin Elff <melff@users.noreply.github.com>
+
+	* pkg/pkgdown/_pkgdown.yml: Update _pkgdown.yml
+
+2023-12-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/anes48.Rmd, pkg/vignettes/ftable-matrix.Rmd,
+	pkg/vignettes/items.Rmd, pkg/vignettes/mtable-html.Rmd: Change to
+	new vignette format
+
+2023-12-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update date
+
+2023-12-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/format-html-ftable-matrix.R, pkg/man/format_html.ftable.Rd: 
+	Improve format_html method for ftable matrices
+
+2023-12-11  Martin Elff <memisc@elff.eu>
+
+	* pkg/R/codebook-format-html.R, pkg/R/format-html-dataframe.R,
+	pkg/R/format-html-ftable-matrix.R, pkg/R/format-html-ftable.R,
+	pkg/R/format-html-matrix.R, pkg/R/format-html-other.R: Make sure
+	that 'format_html' returns a character string
+
+2023-12-11  Martin Elff <memisc@elff.eu>
+
+	* : commit 8bea20adb275a0a54dabc4fba6a8e0ad606307fd Author: Martin
+	Elff <memisc@elff.eu> Date:   Sun Dec 10 22:14:12 2023 +0100
+
 2023-12-09  Martin Elff <memisc@elff.eu>
 
-	* pkg/DESCRIPTION, pkg/inst/NEWS.Rd: Bump to 0.99.31.8
+	* pkg/man/neg2mis.Rd: Fix docu of neg2miss
+
+2023-12-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION: Update package date
+
+2023-12-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/.Rbuildignore: Add .Rbuildignore
+
+2023-12-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/NAMESPACE, pkg/R/codebook-format-html.R,
+	pkg/man/format_html.Rd, pkg/man/format_html.codebook.Rd,
+	pkg/man/format_html.ftable.Rd: Fix codoc issues
+
+2023-12-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/man/neg2mis.Rd: Correct docu
+
+2023-12-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/inst/ChangeLog, pkg/inst/ChangeLog-old: Retire old ChangeLog
+
+2023-12-09  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/NEWS.Rd: Bump version to 0.99.31.8
 
 2023-12-09  Martin Elff <memisc@elff.eu>
 
