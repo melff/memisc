@@ -8,7 +8,7 @@ articles:
   import: import.html
   items: items.html
   mtable-html: mtable-html.html
-last_built: 2024-09-28T15:32Z
+last_built: 2024-09-28T20:04Z
 urls:
   reference: https://melff.github.io/memisc/reference
   article: https://melff.github.io/memisc/articles
