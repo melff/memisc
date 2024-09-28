@@ -41,8 +41,8 @@ computed. The left-hand side of the formula determines the statistics being
 computed. The right-hand side determines the grouping factor(s). The second
 argument is an optional `data=` argument that determines from which data frame
 or data set the descriptive statistics are to be computed. This is illustrated
-by the following example, which uses (like [the page on item
-objects](/memisc/items/)) the GLES 2013 election study[^1].  In this example we
+by the following example, which uses (like the page on item
+objects, see `?item`) the GLES 2013 election study[^1].  In this example we
 first create a table of some descriptives of the age distribution of the
 respondents per German federal state:
 
