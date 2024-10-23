@@ -1,3 +1,18 @@
+2024-10-23  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/man/items-to-vectors.Rd: Added missing \alias
+	entries that were not spotted by R check before the current revision
+
+2024-09-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/vignettes/gentab.Rmd: Remove link to docs from vignette (as
+	this does not work).
+
+2024-09-28  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/inst/ChangeLog, pkg/inst/NEWS.Rd: Update
+	additional docs
+
 2024-09-22  Martin Elff <memisc@elff.eu>
 
 	* pkg/R/mtable-format-html.R: Group rules for headers and equations

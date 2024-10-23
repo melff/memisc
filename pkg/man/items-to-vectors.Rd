@@ -12,6 +12,8 @@
 \alias{as.character,item.vector-method}
 \alias{as.character,datetime.item-method}
 \alias{as.character,Date.item-method}
+\alias{as.character,datetime.item.vector-method}
+\alias{as.character,Date.item.vector-method}
 
 \title{How Survey Items Are Converted into "Ordinary" Data Vectors}
 \description{
