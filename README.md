@@ -3,9 +3,9 @@
 
 [![Travis build status](https://api.travis-ci.com/melff/memisc.svg?branch=master)](https://app.travis-ci.com/github/melff/memisc) 
 [![Current release on GitHub](http://img.shields.io/github/release/melff/memisc.svg)](http://github.com/melff/memisc/releases/)
-[![CRAN](http://www.r-pkg.org/badges/version-last-release/memisc)](http://cran.r-project.org/package=memisc)
+<!-- [![CRAN](http://www.r-pkg.org/badges/version-last-release/memisc)](http://cran.r-project.org/package=memisc)
 [![Total downloads from RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/memisc)](http://cran.r-project.org/web/packages/memisc/index.html)
-[![Total downloads from RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/memisc)](http://cran.r-project.org/web/packages/memisc/index.html)
+[![Total downloads from RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/memisc)](http://cran.r-project.org/web/packages/memisc/index.html) -->
 
 <!--[![Build status](https://ci.appveyor.com/api/projects/status/iav1id61lmlh7nkb?svg=true)](https://ci.appveyor.com/project/melff/memisc) one CI is enough .. -->
 
