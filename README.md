@@ -18,7 +18,6 @@ arbitrary descriptive statistics](https://melff.github.io/memisc/reference/genTa
 regression model estimates](https://melff.github.io/memisc/reference/mtable.html), which can be exported to [LaTeX](reference/mtable-format-latex.html) and [HTML](https://melff.github.io/memisc/reference/mtable-format-html.html).
 
 Releases will be published on [CRAN](http://cran.r-project.org/web/packages/memisc/). (Pre-)Releases are also available from [GitHub](https://github.com/melff/memisc) in
-source and binary form. To install from the sources on GitHub you can use
-`remotes::install_github("melff/memisc",subdir="pkg")`.
+source and binary form. To install from the sources on GitHub you can use `remotes::install_github("melff/memisc",subdir="pkg")`. The most convenient way to install the current development version of the package however is from [melff.r-universe.dev](https://melff.r-universe.dev/memisc) were you can find binaries for Windows, macOS, Linux, and webasm. Probably the easiest way of installation from R is `install.packages("memisc", repos = c("https://melff.r-universe.dev", "https://cloud.r-project.org"))`
 
 The package has a DOI now: [10.32614/CRAN.package.memisc](https://doi.org/10.32614/CRAN.package.memisc)
