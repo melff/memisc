@@ -11,12 +11,12 @@
 
 One of the aims of this package is to make life easier for useRs who deal with
 survey data sets. It provides an infrastructure for the management of survey
-data including [value labels](reference/labels.html), [definable missing values](reference/value-filters.html), [recoding](reference/recode.html) of variables,
-production of [codebooks](reference/codebook.html), and [import of (subsets of) SPSS and Stata
-files](reference/importers.html). Further, it provides functionality to produce [tables and data frames of
-arbitrary descriptive statistics](reference/genTable.html) and (almost) publication-ready [tables of
-regression model estimates](reference/mtable.html), which can be exported to [LaTeX](reference/mtable-format-latex.html) and [HTML](reference/mtable-format-html.html).
+data including [value labels](https://melff.github.io/memisc/reference/labels.html), [definable missing values](https://melff.github.io/memisc/reference/value-filters.html), [recoding](https://melff.github.io/memisc/reference/recode.html) of variables,
+production of [codebooks](https://melff.github.io/memisc/reference/codebook.html), and [import of (subsets of) SPSS and Stata
+files](https://melff.github.io/memisc/reference/importers.html). Further, it provides functionality to produce [tables and data frames of
+arbitrary descriptive statistics](https://melff.github.io/memisc/reference/genTable.html) and (almost) publication-ready [tables of
+regression model estimates](https://melff.github.io/memisc/reference/mtable.html), which can be exported to [LaTeX](reference/mtable-format-latex.html) and [HTML](https://melff.github.io/memisc/reference/mtable-format-html.html).
 
-Releases will be published on [CRAN](http://cran.r-project.org/web/packages/memisc/). Pre-releases will be available on [GitHub](https://github.com/melff/memisc) in
+Releases will be published on [CRAN](http://cran.r-project.org/web/packages/memisc/). (Pre-)Releases are also available from [GitHub](https://github.com/melff/memisc) in
 source and binary form. To install from the sources on GitHub you can use
 `remotes::install_github("melff/memisc",subdir="pkg")`.
