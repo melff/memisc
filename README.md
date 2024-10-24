@@ -20,3 +20,5 @@ regression model estimates](https://melff.github.io/memisc/reference/mtable.html
 Releases will be published on [CRAN](http://cran.r-project.org/web/packages/memisc/). (Pre-)Releases are also available from [GitHub](https://github.com/melff/memisc) in
 source and binary form. To install from the sources on GitHub you can use
 `remotes::install_github("melff/memisc",subdir="pkg")`.
+
+The package has a DOI now: 10.32614/CRAN.package.memisc.
