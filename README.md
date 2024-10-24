@@ -21,4 +21,4 @@ Releases will be published on [CRAN](http://cran.r-project.org/web/packages/memi
 source and binary form. To install from the sources on GitHub you can use
 `remotes::install_github("melff/memisc",subdir="pkg")`.
 
-The package has a DOI now: 10.32614/CRAN.package.memisc.
+The package has a DOI now: [10.32614/CRAN.package.memisc](https://doi.org/10.32614/CRAN.package.memisc)
