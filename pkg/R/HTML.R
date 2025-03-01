@@ -52,7 +52,7 @@ as.character.html_elem <- function(x,...){
         content <- as.character(x$content)
       else{
         content <- lapply(x$content,as.character)
-        content <- unlist(content,as.character)
+        content <- unlist(content)
       }
     }
     else
