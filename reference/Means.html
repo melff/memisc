@@ -368,39 +368,39 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> division                 Murder</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   New England         2.2329361</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Middle Atlantic    -0.2121697</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   South Atlantic      7.6111289</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   East South Central  9.0571304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   West South Central  5.6883091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   East North Central  3.8130827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   West North Central  0.9380882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mountain            5.1620124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pacific             3.1040410</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   New England         4.5337305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Middle Atlantic    15.0121697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   South Atlantic     11.9388711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   East South Central 15.5428696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   West South Central 15.2616909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   East North Central 11.7469173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   West North Central  6.0333404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mountain            9.2129876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Pacific            11.4159590</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/drop.html" class="external-link">drop</a></span><span class="op">(</span><span class="fu">Means</span><span class="op">(</span><span class="va">Murder</span><span class="op">~</span><span class="va">division</span>, data<span class="op">=</span><span class="va">USstates</span>, ci<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Statistic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> division                   Mean      Lower      Upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   New England         3.3833333  2.2329361  2.2329361</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Middle Atlantic     7.4000000 -0.2121697 -0.2121697</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   South Atlantic      9.7750000  7.6111289  7.6111289</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   East South Central 12.3000000  9.0571304  9.0571304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   West South Central 10.4750000  5.6883091  5.6883091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   East North Central  7.7800000  3.8130827  3.8130827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   West North Central  3.4857143  0.9380882  0.9380882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mountain            7.1875000  5.1620124  5.1620124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pacific             7.2600000  3.1040410  3.1040410</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   New England         3.3833333  2.2329361  4.5337305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Middle Atlantic     7.4000000 -0.2121697 15.0121697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   South Atlantic      9.7750000  7.6111289 11.9388711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   East South Central 12.3000000  9.0571304 15.5428696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   West South Central 10.4750000  5.6883091 15.2616909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   East North Central  7.7800000  3.8130827 11.7469173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   West North Central  3.4857143  0.9380882  6.0333404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mountain            7.1875000  5.1620124  9.2129876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Pacific             7.2600000  3.1040410 11.4159590</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">Means</span><span class="op">(</span><span class="va">Murder</span><span class="op">~</span><span class="va">division</span>, data<span class="op">=</span><span class="va">USstates</span>, ci<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             division Variable      Mean      Lower      Upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        New England   Murder  3.383333  2.2329361  2.2329361</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Middle Atlantic   Murder  7.400000 -0.2121697 -0.2121697</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     South Atlantic   Murder  9.775000  7.6111289  7.6111289</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 East South Central   Murder 12.300000  9.0571304  9.0571304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 West South Central   Murder 10.475000  5.6883091  5.6883091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 East North Central   Murder  7.780000  3.8130827  3.8130827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 West North Central   Murder  3.485714  0.9380882  0.9380882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           Mountain   Murder  7.187500  5.1620124  5.1620124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9            Pacific   Murder  7.260000  3.1040410  3.1040410</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             division Variable      Mean      Lower     Upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        New England   Murder  3.383333  2.2329361  4.533731</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Middle Atlantic   Murder  7.400000 -0.2121697 15.012170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     South Atlantic   Murder  9.775000  7.6111289 11.938871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 East South Central   Murder 12.300000  9.0571304 15.542870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 West South Central   Murder 10.475000  5.6883091 15.261691</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 East North Central   Murder  7.780000  3.8130827 11.746917</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 West North Central   Murder  3.485714  0.9380882  6.033340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           Mountain   Murder  7.187500  5.1620124  9.212988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9            Pacific   Murder  7.260000  3.1040410 11.415959</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># More than one dependent variable</span></span></span>
 <span class="r-in"><span><span class="fu">Means</span><span class="op">(</span><span class="va">Murder</span><span class="op">+</span><span class="va">Illiteracy</span><span class="op">~</span><span class="va">division</span>, data<span class="op">=</span><span class="va">USstates</span><span class="op">)</span></span></span>
@@ -461,36 +461,36 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> division                 Murder Illiteracy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   New England         2.2329361  0.6167655</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Middle Atlantic    -0.2121697  0.6495522</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   South Atlantic      7.6111289  1.0807969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   East South Central  9.0571304  1.3617494</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   West South Central  5.6883091  0.8748353</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   East North Central  3.8130827  0.6758336</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   West North Central  0.9380882  0.5126359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mountain            5.1620124  0.3990592</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pacific             3.1040410  0.4343240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   New England         4.5337305  1.2165679</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Middle Atlantic    15.0121697  1.6837812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   South Atlantic     11.9388711  1.9192031</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   East South Central 15.5428696  2.5382506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   West South Central 15.2616909  3.1251647</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   East North Central 11.7469173  0.9241664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   West North Central  6.0333404  0.7445070</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mountain            9.2129876  1.5009408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Pacific            11.4159590  1.8456760</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">Means</span><span class="op">(</span><span class="va">Murder</span><span class="op">+</span><span class="va">Illiteracy</span><span class="op">~</span><span class="va">division</span>, data<span class="op">=</span><span class="va">USstates</span>, ci<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              division   Variable       Mean      Lower      Upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         New England     Murder  3.3833333  2.2329361  2.2329361</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Middle Atlantic     Murder  7.4000000 -0.2121697 -0.2121697</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      South Atlantic     Murder  9.7750000  7.6111289  7.6111289</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  East South Central     Murder 12.3000000  9.0571304  9.0571304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  West South Central     Murder 10.4750000  5.6883091  5.6883091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  East North Central     Murder  7.7800000  3.8130827  3.8130827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  West North Central     Murder  3.4857143  0.9380882  0.9380882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            Mountain     Murder  7.1875000  5.1620124  5.1620124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9             Pacific     Murder  7.2600000  3.1040410  3.1040410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10        New England Illiteracy  0.9166667  0.6167655  0.6167655</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11    Middle Atlantic Illiteracy  1.1666667  0.6495522  0.6495522</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     South Atlantic Illiteracy  1.5000000  1.0807969  1.0807969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 East South Central Illiteracy  1.9500000  1.3617494  1.3617494</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 West South Central Illiteracy  2.0000000  0.8748353  0.8748353</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 East North Central Illiteracy  0.8000000  0.6758336  0.6758336</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 West North Central Illiteracy  0.6285714  0.5126359  0.5126359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17           Mountain Illiteracy  0.9500000  0.3990592  0.3990592</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18            Pacific Illiteracy  1.1400000  0.4343240  0.4343240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         New England     Murder  3.3833333  2.2329361  4.5337305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Middle Atlantic     Murder  7.4000000 -0.2121697 15.0121697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      South Atlantic     Murder  9.7750000  7.6111289 11.9388711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  East South Central     Murder 12.3000000  9.0571304 15.5428696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  West South Central     Murder 10.4750000  5.6883091 15.2616909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  East North Central     Murder  7.7800000  3.8130827 11.7469173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  West North Central     Murder  3.4857143  0.9380882  6.0333404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            Mountain     Murder  7.1875000  5.1620124  9.2129876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9             Pacific     Murder  7.2600000  3.1040410 11.4159590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        New England Illiteracy  0.9166667  0.6167655  1.2165679</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    Middle Atlantic Illiteracy  1.1666667  0.6495522  1.6837812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     South Atlantic Illiteracy  1.5000000  1.0807969  1.9192031</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 East South Central Illiteracy  1.9500000  1.3617494  2.5382506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 West South Central Illiteracy  2.0000000  0.8748353  3.1251647</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 East North Central Illiteracy  0.8000000  0.6758336  0.9241664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 West North Central Illiteracy  0.6285714  0.5126359  0.7445070</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17           Mountain Illiteracy  0.9500000  0.3990592  1.5009408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18            Pacific Illiteracy  1.1400000  0.4343240  1.8456760</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Some 'non-standard' but still valid usages:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">USstates</span>,</span></span>
