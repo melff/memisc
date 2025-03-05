@@ -269,6 +269,8 @@ setMethod("show","value.filter",function(object){
   writeLines(format(object))
 })
 
+setMethod("include.missings","ANY",function(x,mark="*") x)
+
 setMethod("include.missings","item",function(x,mark="*"){
   if(length(vl <- x@value.labels)){
     vlv <- vl@values
