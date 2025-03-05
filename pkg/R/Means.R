@@ -195,7 +195,7 @@ Means.data.frame <-
         tval <- qt(1-alpha/2,df=n-1)
         se_tval <- mean_se*tval
         Lower <- means - se_tval
-        Upper <- means - se_tval
+        Upper <- means + se_tval
         ConfInt <- list(Lower = Lower,
                         Upper = Upper)
     }
