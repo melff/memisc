@@ -52,6 +52,7 @@
 \alias{is.missing,atomic-method}
 \alias{is.missing,factor-method}
 \alias{include.missings}
+\alias{include.missings,ANY-method}
 \alias{include.missings,item-method}
 \alias{nvalid}
 \title{Value Filters}
