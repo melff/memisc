@@ -4,7 +4,10 @@ percentages.table <- function(obj,by=NULL,which=NULL,se=FALSE,ci=FALSE,ci.level=
   
   dn <- dimnames(obj)
   ndn <- names(dn)
-  
+  if(!length(ndn) || !any(nzchar(ndn))) {
+    ndn <- as.character(seq_along(dn))
+  }
+
   by <- unique(by)
   which <- unique(which)
   
@@ -19,7 +22,12 @@ percentages.table <- function(obj,by=NULL,which=NULL,se=FALSE,ci=FALSE,ci.level=
       stop("duplicate variables")
     
     all <- union(which,by)
-    ii <- match(all,ndn)
+    if(is.numeric(all)) {
+      ii <- all
+    }
+    else {
+      ii <- match(all,ndn)
+    }
     if(any(is.na(ii))) stop("undefined variables")
     if(length(ii)<length(dn)){
       obj <- margin.table(obj,ii)
@@ -30,12 +38,22 @@ percentages.table <- function(obj,by=NULL,which=NULL,se=FALSE,ci=FALSE,ci.level=
     }
   }
   else if(lby){
-    margin <- match(by,ndn)
-    if(any(is.na(margin))) stop("undefined variables")
+    if(is.numeric(by)) {
+      margin <- by
+    }
+    else {
+      margin <- match(by,ndn)
+      if(any(is.na(margin))) stop("undefined variables")
+    }
   }
   else if(lwi){
-    margin <- match(setdiff(ndn,which),ndn)
-    if(any(is.na(margin))) stop("undefined variables")
+    if(is.numeric(which)) {
+      margin <- setdiff(seq.along(dn),which)
+    }
+    else {
+      margin <- match(setdiff(ndn,which),ndn)
+      if(any(is.na(margin))) stop("undefined variables")
+    }
   }
   
   tab <- obj  # Just another name ...
