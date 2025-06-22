@@ -6,7 +6,7 @@ Date: 2025-05-29
 Authors@R: c(person(given = "Martin",
                     family = "Elff",
                     role = c("aut", "cre"),
-                    email = "memisc@elff.eu"),
+                    email = "martin@elff.eu"),
              person(given = "Christopher N.", family = "Lawrence", role = "ctb"),
              person(given = "Dave", family = "Atkins", role = "ctb"),
              person(given = "Jason W.", family = "Morgan", role = "ctb"),
@@ -14,7 +14,7 @@ Authors@R: c(person(given = "Martin",
              person(given = "Mael", family = "Astruc-Le Souder", role = "ctb"),
              person(given = "Kiril", family = "Mueller", role = "ctb"),
              person(given = "Pieter", family = "Schoonees", role = "ctb"))
-Maintainer: Martin Elff <memisc@elff.eu>
+Maintainer: Martin Elff <martin@elff.eu>
 Description: An infrastructure for the management of survey data including
         value labels, definable missing values, recoding of variables,
         production of code books, and import of (subsets of) 'SPSS' and
