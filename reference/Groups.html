@@ -171,10 +171,10 @@
 <span class="r-in"><span><span class="va">group.means</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    g</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> f          A        B        C        D        E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   a 1.910285 1.813113       NA 4.628047 4.765704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b 3.163240 3.794269 4.147919 4.571508 5.705042</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   c 3.497435 3.662945 5.201009 6.433493 7.067344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   d 4.165605 6.739396 6.982883 7.306113 8.190686</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   a 1.366103 2.313805       NA 4.015704 5.826801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b 3.174157 3.566718 3.681667 4.955042 6.163240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   c 2.912945 4.288701 6.211069 5.887790 6.497435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   d 5.989396 6.232883 6.373659 8.116066 7.531311</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Obtaining a groupwise centered variant of y</span></span></span>
 <span class="r-in"><span><span class="va">some.grouped.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">some.grouped.data</span>,<span class="op">{</span></span></span>
@@ -187,11 +187,11 @@
 <span class="r-in"><span>                    <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y.cent</span><span class="op">)</span>,<span class="fl">15</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">group.means</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> f   A B  C D E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   a 0 0 NA 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b 0 0  0 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   c 0 0  0 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   d 0 0  0 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> f   A B  C     D E</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   a 0 0 NA 0e+00 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b 0 0  0 0e+00 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   c 0 0  0 0e+00 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   d 0 0  0 1e-15 0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The following demonstrates the use of n_, N_, and i_</span></span></span>
 <span class="r-in"><span><span class="co"># An external copy of y</span></span></span>
@@ -208,56 +208,56 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 f</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           a          b          c          d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        1.91028489 3.16323983 3.49743466 4.16560478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        1.36610256 3.17415667 2.91294505 5.98939584</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_             8.00000000 4.00000000 4.00000000 4.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      1.91028489 3.16323983 3.49743466 4.16560478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      1.36610256 3.17415667 2.91294505 5.98939584</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_/N_          0.08333333 0.04166667 0.04166667 0.04166667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.93633741 4.93633741 4.93633741 4.93633741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 1.91028489 3.16323983 3.49743466 4.16560478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.94360924 4.94360924 4.94360924 4.94360924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 1.36610256 3.17415667 2.91294505 5.98939584</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = B</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 f</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           a          b          c          d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        1.81311307 3.79426884 3.66294505 6.73939584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        2.31380497 3.56671812 4.28870074 6.23288284</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_             5.00000000 7.00000000 4.00000000 4.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      1.81311307 3.79426884 3.66294505 6.73939584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      2.31380497 3.56671812 4.28870074 6.23288284</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_/N_          0.05208333 0.07291667 0.04166667 0.04166667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.93633741 4.93633741 4.93633741 4.93633741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 1.81311307 3.79426884 3.66294505 6.73939584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.94360924 4.94360924 4.94360924 4.94360924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 2.31380497 3.56671812 4.28870074 6.23288284</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 f</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   a        b        c          d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        NA 4.147919 5.201009 6.98288284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        NA 3.681667 6.211069 6.37365894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_             NA 6.000000 6.000000 4.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      NA 4.147919 5.201009 6.98288284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      NA 3.681667 6.211069 6.37365894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_/N_          NA 0.062500 0.062500 0.04166667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     NA 4.936337 4.936337 4.93633741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ NA 4.147919 5.201009 6.98288284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     NA 4.943609 4.943609 4.94360924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ NA 3.681667 6.211069 6.37365894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = D</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 f</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           a          b          c          d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        4.62804704 4.57150804 6.43349330 7.30611330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        4.01570424 4.95504209 5.88779021 8.11606610</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_             4.00000000 4.00000000 7.00000000 5.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      4.62804704 4.57150804 6.43349330 7.30611330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      4.01570424 4.95504209 5.88779021 8.11606610</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_/N_          0.04166667 0.04166667 0.07291667 0.05208333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.93633741 4.93633741 4.93633741 4.93633741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 4.62804704 4.57150804 6.43349330 7.30611330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.94360924 4.94360924 4.94360924 4.94360924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 4.01570424 4.95504209 5.88779021 8.11606610</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = E</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 f</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           a          b          c          d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        4.76570424 5.70504209 7.06734352 8.19068598</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean(y)        5.82680091 6.16323983 6.49743466 7.53131116</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_             4.00000000 4.00000000 4.00000000 8.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      4.76570424 5.70504209 7.06734352 8.19068598</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y)/n_      5.82680091 6.16323983 6.49743466 7.53131116</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n_/N_          0.04166667 0.04166667 0.04166667 0.08333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.93633741 4.93633741 4.93633741 4.93633741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 4.76570424 5.70504209 7.06734352 8.19068598</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1)/N_     4.94360924 4.94360924 4.94360924 4.94360924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sum(y1[i_])/n_ 5.82680091 6.16323983 6.49743466 7.53131116</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Names can be attached to the groupwise results</span></span></span>
@@ -267,47 +267,47 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     a       b        c        d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   0.000000 0.00000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 1.910285 3.16324 3.497435 4.165605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     a        b        c        d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   0.000000 0.000000 0.000000 0.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 1.366103 3.174157 2.912945 5.989396</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = B</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             f</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     a        b        c        d</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 1.813113 3.794269 3.662945 6.739396</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 2.313805 3.566718 4.288701 6.232883</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             f</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               a        b        c        d</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   NA 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered NA 4.147919 5.201009 6.982883</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered NA 3.681667 6.211069 6.373659</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = D</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     a        b        c        d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 4.628047 4.571508 6.433493 7.306113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     a        b       c            d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   0.000000 0.000000 0.00000 1.000000e-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 4.015704 4.955042 5.88779 8.116066e+00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = E</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     a        b        c        d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 4.765704 5.705042 7.067344 8.190686</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     a       b        c        d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Centered   0.000000 0.00000 0.000000 0.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Uncentered 5.826801 6.16324 6.497435 7.531311</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">some.data.ungrouped</span> <span class="op">&lt;-</span> <span class="fu">recombine</span><span class="op">(</span><span class="va">some.grouped.data</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">some.data.ungrouped</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	96 obs. of  5 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x     : num  -0.387 -0.785 -1.057 -0.796 -1.756 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y     : num  1.363 0.965 0.693 0.954 0.744 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x     : num  -1.756 -0.691 -0.559 -0.537 0.227 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y     : num  -0.00628 1.05946 1.19146 1.21334 2.72713 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ g     : Factor w/ 5 levels "A","B","C","D",..: 1 1 1 1 2 2 2 2 4 4 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ f     : Factor w/ 4 levels "a","b","c","d": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y.cent: num  -0.547 -0.946 -1.217 -0.956 -1.069 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y.cent: num  -1.372 -0.307 -0.175 -0.153 0.413 ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># It all works with "data.set" objects</span></span></span>
 <span class="r-in"><span><span class="va">some.dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="dataSets.html">as.data.set</a></span><span class="op">(</span><span class="va">some.data</span><span class="op">)</span></span></span>
@@ -319,54 +319,54 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   a        b        c        d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     1.910285 3.163240 3.497435 4.165605</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 1.255861 1.378847 1.465161 2.056243</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    a        b         c        d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     1.3661026 3.174157 2.9129450 5.989396</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 0.4896725 1.168783 0.8136362 1.578382</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = B</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    a         b         c        d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     1.8131131 3.7942688 3.6629450 6.739396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 0.4534572 0.6756092 0.8136362 1.578382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    a        b         c         d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     2.3138050 3.566718 4.2887007 6.2328828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 0.7791656 1.143553 0.3768418 0.5685829</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             a        b         c         d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     NA 4.147919 5.2010090 6.9828828</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance NA 1.381988 0.2987582 0.5685829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a         b          c        d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     NA 3.6816674 6.21106857 6.373659</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance NA 0.4955471 0.04542602 1.360113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = D</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   a        b         c        d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     4.628047 4.571508 6.4334933 7.306113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 1.177018 0.691624 0.8311554 1.186533</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   a         b         c         d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     4.015704 4.9550421 5.8877902 8.1160661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 1.409835 0.5370272 0.5407879 0.5044257</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = E</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   a         b         c        d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     4.765704 5.7050421 7.0673435 8.190686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 1.409835 0.5370272 0.3285284 1.233791</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    a        b        c        d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mean     5.8268009 6.163240 6.497435 7.531311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Variance 0.6140468 1.378847 1.465161 1.323788</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The following two expressions are equivalent:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="fu">Groups</span><span class="op">(</span><span class="va">some.data</span>,<span class="op">~</span><span class="va">f</span><span class="op">+</span><span class="va">g</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    g</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> f          A        B        C        D        E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   a 1.910285 1.813113       NA 4.628047 4.765704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b 3.163240 3.794269 4.147919 4.571508 5.705042</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   c 3.497435 3.662945 5.201009 6.433493 7.067344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   d 4.165605 6.739396 6.982883 7.306113 8.190686</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   a 1.366103 2.313805       NA 4.015704 5.826801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b 3.174157 3.566718 3.681667 4.955042 6.163240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   c 2.912945 4.288701 6.211069 5.887790 6.497435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   d 5.989396 6.232883 6.373659 8.116066 7.531311</span>
 <span class="r-in"><span><span class="fu">withGroups</span><span class="op">(</span><span class="va">some.data</span>,<span class="op">~</span><span class="va">f</span><span class="op">+</span><span class="va">g</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    g</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> f          A        B        C        D        E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   a 1.910285 1.813113       NA 4.628047 4.765704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b 3.163240 3.794269 4.147919 4.571508 5.705042</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   c 3.497435 3.662945 5.201009 6.433493 7.067344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   d 4.165605 6.739396 6.982883 7.306113 8.190686</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   a 1.366103 2.313805       NA 4.015704 5.826801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b 3.174157 3.566718 3.681667 4.955042 6.163240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   c 2.912945 4.288701 6.211069 5.887790 6.497435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   d 5.989396 6.232883 6.373659 8.116066 7.531311</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The following two expressions are equivalent:</span></span></span>
 <span class="r-in"><span><span class="va">some.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="fu">Groups</span><span class="op">(</span><span class="va">some.data</span>,<span class="op">~</span><span class="va">f</span><span class="op">+</span><span class="va">g</span><span class="op">)</span>,<span class="op">{</span></span></span>
@@ -402,16 +402,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      a      b      c d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1 NA  0e+00  0e+00 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2 NA -1e-15 -1e-15 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      a b c d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1 NA 0 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2 NA 0 0 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = D</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     a b c     d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1 0 0 0 0e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2 0 0 0 1e-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a b      c      d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1 0 0  0e+00  1e-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2 0 0 -1e-15 -1e-15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , g = E</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
