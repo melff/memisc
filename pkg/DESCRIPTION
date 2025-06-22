@@ -2,7 +2,7 @@ Package: memisc
 Type: Package
 Title: Management of Survey Data and Presentation of Analysis Results
 Version: 0.99.31.8.4
-Date: 2025-04-25
+Date: 2025-05-29
 Authors@R: c(person(given = "Martin",
                     family = "Elff",
                     role = c("aut", "cre"),
