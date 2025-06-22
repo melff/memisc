@@ -48,7 +48,7 @@ percentages.table <- function(obj,by=NULL,which=NULL,se=FALSE,ci=FALSE,ci.level=
   }
   else if(lwi){
     if(is.numeric(which)) {
-      margin <- setdiff(seq.along(dn),which)
+      margin <- setdiff(seq_along(dn),which)
     }
     else {
       margin <- match(setdiff(ndn,which),ndn)
