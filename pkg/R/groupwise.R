@@ -133,10 +133,12 @@ within1.grouped.data <- function(ii,data,expr,N_,parent=parent.frame(),...){
     if(!length(ii)) return(NULL)
     encl <- new.env(parent=parent)
     n <- length(ii)
+    data_ <- data[ii,,drop=FALSE]
     assign("n_",n,envir=encl)
     assign("N_",N_,envir=encl)
     assign("i_",ii,envir=encl)
-    e <- evalq(environment(),data[ii,,drop=FALSE],encl)
+    assign("data_",data_,envir=encl)
+    e <- evalq(environment(),data_,encl)
     eval(expr,e)
     l <- as.list(e,all.names=TRUE)
     # l[!vapply(l, is.null, NA, USE.NAMES = FALSE)]
@@ -199,10 +201,12 @@ within.grouped.data <- function(data,expr,recombine=FALSE,...){
 
 with1 <- function(ii,data,expr,N_,parent=parent.frame(),...){
     encl <- new.env(parent=parent)
+    data_ <- data[ii,,drop=FALSE]
     assign("n_",length(ii),envir=encl)
     assign("N_",N_,envir=encl)
     assign("i_",ii,envir=encl)
-    eval(expr, data[ii,,drop=FALSE], enclos = encl)
+    assign("data_",data_,envir=encl)
+    eval(expr, data_, enclos = encl)
 }
 
 add_tags <- function(expr,taggables=c("c","list","cbind","rbind")){
@@ -230,7 +234,12 @@ with.grouped.data <- function(data,expr,...){
     sizes <- attr(data,"sizes")
     non_empty <- as.vector(sizes) > 0
     av <- all.vars(mc$expr)
-    av <- intersect(av,names(data))
+    if("data_" %in% av) {
+        av <- names(data)
+    }
+    else {
+        av <- intersect(av,names(data))
+    }
     #with1. <- function(ii) eval(mc$expr,data[ii,av,drop=FALSE],enclos=parent.frame())
     expr <- add_tags(expr)
     
