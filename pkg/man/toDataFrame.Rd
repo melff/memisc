@@ -15,7 +15,7 @@ to.data.frame(X,as.vars=1,name="Freq")
   \item{as.vars}{a numeric value or a character string.
     If it is a numeric value then it indicates the dimensional extend
     which defines the variables. If it is a character string then it is
-    matched against the names of the dimenstional extents. This is
+    matched against the names of the dimensional extents. This is
     applicable e.g. if \code{X} is a contingency table and the
     dimensional extents are named after the cross-classified factors.
     Takes effect only if \code{X} is 
