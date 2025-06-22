@@ -142,6 +142,10 @@ percentages.formula <- function(obj,data=parent.frame(),weights=NULL,...){
     if(is.environment(data)){
         mf <- model.frame(allv.formula,data=data)
         xtc$data <- mf
+    } else if(is.data.set(data)) {
+      data <- as.data.frame(data[allv])
+    } else if(is.data.frame(data)) {
+      data <- data[allv]
     }
     tab <- eval(xtc,parent.frame())
   }
