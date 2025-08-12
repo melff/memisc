@@ -15,7 +15,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">memisc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.8.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31.8.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -473,6 +473,65 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  8.6389748 11.3124171 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Tables with NAs</span></span></span>
+<span class="r-in"><span><span class="va">UCBA_N</span> <span class="op">&lt;-</span> <span class="va">UCBA</span>; <span class="va">UCBA_N</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">6</span><span class="op">:</span><span class="fl">9</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">UCBA_N</span>, <span class="fu">percentages</span><span class="op">(</span><span class="va">Gender</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Male   Female </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52.17391 47.82609 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">UCBA_N</span>, <span class="fu">percentages</span><span class="op">(</span><span class="va">Gender</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Male    Female      &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50.000000 45.833333  4.166667 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">UCBA_N</span>, <span class="fu">percentages</span><span class="op">(</span><span class="va">Gender</span>, weights<span class="op">=</span><span class="va">Freq</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Male   Female </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59.78671 40.21329 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">UCBA_N</span>, <span class="fu">percentages</span><span class="op">(</span><span class="va">Gender</span>, weights<span class="op">=</span><span class="va">Freq</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Male     Female       &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59.5617530 40.0619743  0.3762727 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">UCBA_N</span>, <span class="fu">percentages</span><span class="op">(</span><span class="va">Gender</span>, weights<span class="op">=</span><span class="va">Freq</span>, useNA <span class="op">=</span> <span class="st">"ifany"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Male     Female       &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59.5617530 40.0619743  0.3762727 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">UCBA</span>, <span class="fu">percentages</span><span class="op">(</span><span class="va">Gender</span>, weights<span class="op">=</span><span class="va">Freq</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Male   Female </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59.45647 40.54353 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">UCBA</span>, <span class="fu">percentages</span><span class="op">(</span><span class="va">Gender</span>, weights<span class="op">=</span><span class="va">Freq</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Male   Female     &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59.45647 40.54353  0.00000 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">percentages</span><span class="op">(</span><span class="va">UCBA</span>,weights<span class="op">=</span><span class="va">UCBA</span><span class="op">$</span><span class="va">Freq</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Admit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Admit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Admitted Rejected     &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38.77596 61.22404  0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gender</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Male   Female     &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59.45647 40.54353  0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Dept</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dept</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        A        B        C        D        E        F     &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20.61423 12.92532 20.28281 17.49890 12.90323 15.77552  0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Freq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Freq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          8         17         19         22         24         53         89 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.1767565  0.3756076  0.4197967  0.4860804  0.5302696  1.1710119  1.9664163 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         94        120        131        138        202        205        207 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2.0768891  2.6513478  2.8943880  6.0980999  4.4631021  4.5293858  4.5735749 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        244        279        299        313        317        351        353 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5.3910738  6.1643836  6.6062749  6.9155988  7.0039770  7.7551922  7.7993814 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        391        512       &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8.6389748 11.3124171  0.0000000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
