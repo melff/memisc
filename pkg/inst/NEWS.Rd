@@ -247,6 +247,8 @@
     \item HTML output created by \code{format_html} etc. now uses
           '<style>' elements for formatting. This reduces the size of
           created HTML code.
+    \item The default method of \code{percentages()} heeds the \code{useNA}
+          argument in the same way as \code{table()} does.
     }
  }
   \subsection{BUGFIXES}{

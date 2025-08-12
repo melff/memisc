@@ -94,4 +94,16 @@ percentages(UCBA$Admit,weights=UCBA$Freq)
 
 percentages(UCBA,weights=UCBA$Freq)
 
+# Tables with NAs
+UCBA_N <- UCBA; UCBA_N[cbind(6:9, c(1:2,4,1))] <- NA
+
+with(UCBA_N, percentages(Gender))
+with(UCBA_N, percentages(Gender, useNA = "always"))
+with(UCBA_N, percentages(Gender, weights=Freq))
+with(UCBA_N, percentages(Gender, weights=Freq, useNA = "always"))
+with(UCBA_N, percentages(Gender, weights=Freq, useNA = "ifany"))
+with(UCBA, percentages(Gender, weights=Freq))
+with(UCBA, percentages(Gender, weights=Freq, useNA = "always"))
+
+percentages(UCBA,weights=UCBA$Freq, useNA = "always")
 }

@@ -175,17 +175,32 @@ percentages.list <- function(obj,weights=NULL,...){
 
 percentages.data.frame <- percentages.list
 
-percentages1 <- function(x,weights=NULL,name,...){
-    if(length(weights))
-    {
-        tab <- rowsum(weights,x)
-        dnm <- dimnames(tab)
+percentages1 <- function(x,
+                         weights = NULL,
+                         name,
+                         exclude = if (useNA == "no") c(NA, NaN),
+                         useNA = c("no", "ifany", "always"),
+                         ...){
+    useNA <- match.arg(useNA)
+    if(length(weights)) {
+        keep <- is.finite(weights)
+        tab <- suppressWarnings(rowsum(weights[keep],x[keep]))
+        dnm <- dimnames(tab)[[1]]
         dim(tab) <- dim(tab)[1]
-        dimnames(tab) <- dnm[1]
+        rownames(tab) <- dnm
+        if(useNA == "no") {
+          tab <- tab[!is.na(rownames(tab))]
+        } else if(useNA == "always") {
+          if(!any(is.na(rownames(tab)))) {
+            tab <- c(tab,0)
+            dim(tab) <- length(tab)
+            rownames(tab) <- c(dnm, NA)
+          }
+        }
         class(tab) <- "table"
     }
     else
-        tab <- table(x)
+        tab <- table(x, exclude = exclude, useNA = useNA)
     tab <- percentages.table(tab,...)
     names(dimnames(tab))[1] <- name
     tab
