@@ -1,3 +1,8 @@
+2026-03-16  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/format-html-matrix.R: Fixed format_html()
+	method for matrices
+
 2025-08-13  Martin Elff <memisc@elff.eu>
 
 	* pkg/DESCRIPTION, pkg/R/percentages.R, pkg/inst/ChangeLog,

@@ -226,9 +226,9 @@ format_html.matrix <- function(x,
          text-align: left; 
          /*background-color: green;*/
         "
-        style_dots <- style_mat_cols(id=mat_id,cols=dot_cols+1,style=dot_style)
-        style_before_dots <- style_mat_cols(id=mat_id,cols=dot_cols,style=before_dot_style)
-        style_behind_dots <- style_mat_cols(id=mat_id,cols=dot_cols+2,style=behind_dot_style)
+        style_dots <- style_mat_cols(id=mat_id,cols=dot_cols,style=dot_style)
+        style_before_dots <- style_mat_cols(id=mat_id,cols=dot_cols-1,style=before_dot_style)
+        style_behind_dots <- style_mat_cols(id=mat_id,cols=dot_cols+1,style=behind_dot_style)
         style_content <- paste(style_content,
                                style_dots,
                                style_before_dots,
@@ -251,7 +251,7 @@ format_html.matrix <- function(x,
          padding-left: 0.5ex;
          padding-right: 0px;
          text-align: right; 
-         /*background-color: red;*/
+         /*background-color: yellow;*/
         "
         style_leader <- style_mat_cols(id=mat_id,cols=1,style=leader_style)
         style_content <- paste(style_content,
