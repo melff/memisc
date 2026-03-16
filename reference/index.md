@@ -1,0 +1,384 @@
+# Package index
+
+## Introduction
+
+- [`memisc-package`](https://melff.github.io/memisc/reference/00memisc.md)
+  [`memisc`](https://melff.github.io/memisc/reference/00memisc.md) :
+  Introduction to the 'memisc' Package
+
+## Survey items and survey data sets
+
+- [`annotation()`](https://melff.github.io/memisc/reference/annotations.md)
+  [`` `annotation<-`() ``](https://melff.github.io/memisc/reference/annotations.md)
+  [`description()`](https://melff.github.io/memisc/reference/annotations.md)
+  [`` `description<-`() ``](https://melff.github.io/memisc/reference/annotations.md)
+  [`wording()`](https://melff.github.io/memisc/reference/annotations.md)
+  [`` `wording<-`() ``](https://melff.github.io/memisc/reference/annotations.md)
+  : Adding Annotations to Objects
+- [`codebook()`](https://melff.github.io/memisc/reference/codebook.md) :
+  Generate a Codebook of a Data Set
+- [`codeplan()`](https://melff.github.io/memisc/reference/codeplan.md)
+  [`setCodeplan()`](https://melff.github.io/memisc/reference/codeplan.md)
+  [`` `codeplan<-`() ``](https://melff.github.io/memisc/reference/codeplan.md)
+  [`read_codeplan()`](https://melff.github.io/memisc/reference/codeplan.md)
+  [`write_codeplan()`](https://melff.github.io/memisc/reference/codeplan.md)
+  : Describe structure of Data Sets and Importers
+- [`data.set()`](https://melff.github.io/memisc/reference/dataSets.md)
+  [`as.data.set()`](https://melff.github.io/memisc/reference/dataSets.md)
+  [`is.data.set()`](https://melff.github.io/memisc/reference/dataSets.md)
+  [`as.data.frame(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataSets.md)
+  [`within(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataSets.md)
+  [`dsView()`](https://melff.github.io/memisc/reference/dataSets.md)
+  [`head(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataSets.md)
+  [`tail(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataSets.md)
+  : Data Set Objects
+- [`subset(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataset-manip.md)
+  [`unique(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataset-manip.md)
+  [`cbind(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataset-manip.md)
+  [`rbind(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataset-manip.md)
+  [`merge(`*`<data.set>`*`,`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataset-manip.md)
+  [`merge(`*`<data.set>`*`,`*`<data.frame>`*`)`](https://melff.github.io/memisc/reference/dataset-manip.md)
+  [`merge(`*`<data.frame>`*`,`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/dataset-manip.md)
+  : Manipulation of Data Sets
+- [`deduplicate_labels()`](https://melff.github.io/memisc/reference/dedup-labels.md)
+  : Handle duplicated labels
+- [`duplicated_labels()`](https://melff.github.io/memisc/reference/duplicated-labels.md)
+  : Check for and report duplicated labels
+- [`spss.file()`](https://melff.github.io/memisc/reference/importers.md)
+  [`spss.fixed.file()`](https://melff.github.io/memisc/reference/importers.md)
+  [`spss.portable.file()`](https://melff.github.io/memisc/reference/importers.md)
+  [`spss.system.file()`](https://melff.github.io/memisc/reference/importers.md)
+  [`Stata.file()`](https://melff.github.io/memisc/reference/importers.md)
+  [`subset(`*`<spss.system.importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  [`subset(`*`<spss.portable.importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  [`subset(`*`<spss.fixed.importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  [`subset(`*`<Stata.importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  [`subset(`*`<Stata_new.importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  [`as.data.set(`*`<importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  [`head(`*`<importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  [`tail(`*`<importer>`*`)`](https://melff.github.io/memisc/reference/importers.md)
+  : Object Oriented Interface to Foreign Files
+- [`as.item(`*`<numeric>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<character>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<logical>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<factor>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<ordered>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<POSIXct>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<double.item>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<integer.item>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<character.item>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  [`as.item(`*`<datetime.item>`*`)`](https://melff.github.io/memisc/reference/items.md)
+  : Survey Items
+- [`as.vector(`*`<item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.numeric(`*`<item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.integer(`*`<item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.factor(`*`<item.vector>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.ordered(`*`<item.vector>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.character(`*`<item.vector>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.character(`*`<datetime.item.vector>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.character(`*`<Date.item.vector>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.data.frame(`*`<character.item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.data.frame(`*`<double.item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.data.frame(`*`<integer.item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.data.frame(`*`<Date.item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  [`as.data.frame(`*`<datetime.item>`*`)`](https://melff.github.io/memisc/reference/items-to-vectors.md)
+  : How Survey Items Are Converted into "Ordinary" Data Vectors
+- [`labels()`](https://melff.github.io/memisc/reference/labels.md)
+  [`` `labels<-`() ``](https://melff.github.io/memisc/reference/labels.md)
+  : Value Labels
+- [`measurement(`*`<item>`*`)`](https://melff.github.io/memisc/reference/measurement.md)
+  [`` `measurement<-`( ``*`<item>`*`)`](https://melff.github.io/memisc/reference/measurement.md)
+  [`measurement(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/measurement.md)
+  [`` `measurement<-`( ``*`<data.set>`*`)`](https://melff.github.io/memisc/reference/measurement.md)
+  [`is.nominal()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`is.ordinal()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`is.interval()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`is.ratio()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`as.nominal()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`as.ordinal()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`as.interval()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`as.ratio()`](https://melff.github.io/memisc/reference/measurement.md)
+  [`set_measurement()`](https://melff.github.io/memisc/reference/measurement.md)
+  : Levels of Measurement of Survey Items
+- [`measurement_autolevel()`](https://melff.github.io/memisc/reference/measurement-autolevel.md)
+  : Automatically Adapt Measurement Levels
+- [`neg2mis()`](https://melff.github.io/memisc/reference/neg2mis.md) :
+  Mark Negative Values as Missing
+- [`relabel(`*`<default>`*`)`](https://melff.github.io/memisc/reference/relabel.md)
+  [`relabel(`*`<factor>`*`)`](https://melff.github.io/memisc/reference/relabel.md)
+  [`relabel4(`*`<item>`*`)`](https://melff.github.io/memisc/reference/relabel.md)
+  : Change labels of factors or labelled objects
+- [`as_tibble.data.set()`](https://melff.github.io/memisc/reference/tibbles.md)
+  [`as.item(`*`<haven_labelled>`*`)`](https://melff.github.io/memisc/reference/tibbles.md)
+  [`as.item(`*`<haven_labelled_spss>`*`)`](https://melff.github.io/memisc/reference/tibbles.md)
+  [`as_haven()`](https://melff.github.io/memisc/reference/tibbles.md)
+  [`as.data.set(`*`<tbl_df>`*`)`](https://melff.github.io/memisc/reference/tibbles.md)
+  : Interface to Packages 'tibble' and 'haven'
+- [`trim_labels()`](https://melff.github.io/memisc/reference/trim-labels.md)
+  : Trim Codes from the Labels of an Item
+- [`value.filter()`](https://melff.github.io/memisc/reference/value-filters.md)
+  [`missing.values()`](https://melff.github.io/memisc/reference/value-filters.md)
+  [`` `missing.values<-`() ``](https://melff.github.io/memisc/reference/value-filters.md)
+  [`valid.values()`](https://melff.github.io/memisc/reference/value-filters.md)
+  [`` `valid.values<-`() ``](https://melff.github.io/memisc/reference/value-filters.md)
+  [`valid.range()`](https://melff.github.io/memisc/reference/value-filters.md)
+  [`` `valid.range<-`() ``](https://melff.github.io/memisc/reference/value-filters.md)
+  [`is.valid()`](https://melff.github.io/memisc/reference/value-filters.md)
+  [`nvalid()`](https://melff.github.io/memisc/reference/value-filters.md)
+  [`is.missing()`](https://melff.github.io/memisc/reference/value-filters.md)
+  [`include.missings()`](https://melff.github.io/memisc/reference/value-filters.md)
+  : Value Filters
+- [`wild.codes()`](https://melff.github.io/memisc/reference/wild.codes.md)
+  : Table of frequencies for unlabelled codes
+
+## Tables of model estimates
+
+- [`getSummary(`*`<lm>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<glm>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<merMod>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<clm>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<polr>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<simex>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<aftreg>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<coxph>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<phreg>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<survreg>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<weibreg>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<ivreg>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<tobit>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<hurdle>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<zeroinfl>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<betareg>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary(`*`<multinom>`*`)`](https://melff.github.io/memisc/reference/getSummary.md)
+  [`getSummary_expcoef()`](https://melff.github.io/memisc/reference/getSummary.md)
+  : Get Model Summaries for Use with "mtable"
+- [`mtable()`](https://melff.github.io/memisc/reference/mtable.md)
+  [`relabel(`*`<memisc_mtable>`*`)`](https://melff.github.io/memisc/reference/mtable.md)
+  [`format(`*`<memisc_mtable>`*`)`](https://melff.github.io/memisc/reference/mtable.md)
+  [`print(`*`<memisc_mtable>`*`)`](https://melff.github.io/memisc/reference/mtable.md)
+  [`write.mtable()`](https://melff.github.io/memisc/reference/mtable.md)
+  [`toLatex(`*`<memisc_mtable>`*`)`](https://melff.github.io/memisc/reference/mtable.md)
+  : Comparative Table of Model Estimates
+- [`mtable_format_delim()`](https://melff.github.io/memisc/reference/mtable-format-delim.md)
+  : Format for 'mtable' Objects for Writing into File
+- [`mtable_format_html()`](https://melff.github.io/memisc/reference/mtable-format-html.md)
+  [`format_html(`*`<memisc_mtable>`*`)`](https://melff.github.io/memisc/reference/mtable-format-html.md)
+  : HTML Formatting for 'mtable' Results
+- [`mtable_format_latex()`](https://melff.github.io/memisc/reference/mtable-format-latex.md)
+  : Format 'mtable' Results for LaTeX
+- [`mtable_format_print()`](https://melff.github.io/memisc/reference/mtable-format-print.md)
+  : Print Format for 'mtable' Objects
+- [`setCoefTemplate()`](https://melff.github.io/memisc/reference/styles.md)
+  [`getCoefTemplate()`](https://melff.github.io/memisc/reference/styles.md)
+  [`getSummaryTemplate()`](https://melff.github.io/memisc/reference/styles.md)
+  [`setSummaryTemplate()`](https://melff.github.io/memisc/reference/styles.md)
+  [`summaryTemplate()`](https://melff.github.io/memisc/reference/styles.md)
+  : Formatting Styles for Coefficients, Factor Contrasts, and Summary
+  Statistics
+- [`withSE()`](https://melff.github.io/memisc/reference/withVCov.md)
+  [`withVCov()`](https://melff.github.io/memisc/reference/withVCov.md)
+  [`summary(`*`<withVCov>`*`)`](https://melff.github.io/memisc/reference/withVCov.md)
+  [`summary(`*`<withVCov.lm>`*`)`](https://melff.github.io/memisc/reference/withVCov.md)
+  : Add Alternative Variance Estimates to Models Estimates
+
+## Groupwise computations and tables of summary statistics
+
+- [`By()`](https://melff.github.io/memisc/reference/By.md) : Conditional
+  Evaluation of an Expression
+- [`Descriptives()`](https://melff.github.io/memisc/reference/Descriptives.md)
+  : Vectors of Univariate Sample Statistics
+- [`Aggregate()`](https://melff.github.io/memisc/reference/genTable.md)
+  [`genTable()`](https://melff.github.io/memisc/reference/genTable.md) :
+  Generic Tables and Data Frames of Descriptive Statistics
+- [`cbind(`*`<ftable>`*`)`](https://melff.github.io/memisc/reference/ftable-matrices.md)
+  [`rbind(`*`<ftable>`*`)`](https://melff.github.io/memisc/reference/ftable-matrices.md)
+  [`cbind(`*`<ftable_matrix>`*`)`](https://melff.github.io/memisc/reference/ftable-matrices.md)
+  [`rbind(`*`<ftable_matrix>`*`)`](https://melff.github.io/memisc/reference/ftable-matrices.md)
+  [`format(`*`<ftable_matrix>`*`)`](https://melff.github.io/memisc/reference/ftable-matrices.md)
+  [`Write(`*`<ftable_matrix>`*`)`](https://melff.github.io/memisc/reference/ftable-matrices.md)
+  [`print(`*`<ftable_matrix>`*`)`](https://melff.github.io/memisc/reference/ftable-matrices.md)
+  : Combining flattened tables.
+- [`Groups()`](https://melff.github.io/memisc/reference/Groups.md)
+  [`recombine()`](https://melff.github.io/memisc/reference/Groups.md)
+  [`as.data.frame(`*`<grouped.data>`*`)`](https://melff.github.io/memisc/reference/Groups.md)
+  [`as.data.set(`*`<grouped.data.frame>`*`)`](https://melff.github.io/memisc/reference/Groups.md)
+  [`as.data.set(`*`<grouped.data.set>`*`)`](https://melff.github.io/memisc/reference/Groups.md)
+  [`with(`*`<grouped.data>`*`)`](https://melff.github.io/memisc/reference/Groups.md)
+  [`within(`*`<grouped.data>`*`)`](https://melff.github.io/memisc/reference/Groups.md)
+  [`withGroups()`](https://melff.github.io/memisc/reference/Groups.md)
+  [`withinGroups()`](https://melff.github.io/memisc/reference/Groups.md)
+  : Operate on grouped data in data frames and data sets
+- [`Means()`](https://melff.github.io/memisc/reference/Means.md)
+  [`as.data.frame(`*`<means.table>`*`)`](https://melff.github.io/memisc/reference/Means.md)
+  [`as.data.frame(`*`<xmeans.table>`*`)`](https://melff.github.io/memisc/reference/Means.md)
+  : Means for groups of observations
+- [`percentages()`](https://melff.github.io/memisc/reference/percentages.md)
+  [`as.data.frame(`*`<percentage.table>`*`)`](https://melff.github.io/memisc/reference/percentages.md)
+  [`as.data.frame(`*`<xpercentage.table>`*`)`](https://melff.github.io/memisc/reference/percentages.md)
+  : Easy Creation of Tables of Percentages
+- [`percent()`](https://melff.github.io/memisc/reference/percent.md) :
+  Table of Percentages with Percentage Base
+- [`Table(`*`<atomic>`*`)`](https://melff.github.io/memisc/reference/Table.md)
+  [`Table(`*`<factor>`*`)`](https://melff.github.io/memisc/reference/Table.md)
+  [`Table(`*`<item.vector>`*`)`](https://melff.github.io/memisc/reference/Table.md)
+  : One-Dimensional Table of Frequences and/or Percentages
+
+## Data preparation helpers and convenience functions
+
+- [`cases()`](https://melff.github.io/memisc/reference/cases.md) :
+  Distinguish between Cases Specified by Logical Conditions
+- [`coarsen()`](https://melff.github.io/memisc/reference/coarsen.md) :
+  Coarsen a vector into a factor with a lower number of levels
+- [`collect()`](https://melff.github.io/memisc/reference/collect.md) :
+  Collect Objects
+- [`contr()`](https://melff.github.io/memisc/reference/contrasts.md)
+  [`contr.treatment()`](https://melff.github.io/memisc/reference/contrasts.md)
+  [`contr.sum()`](https://melff.github.io/memisc/reference/contrasts.md)
+  [`contrasts(`*`<item>`*`)`](https://melff.github.io/memisc/reference/contrasts.md)
+  [`` `contrasts<-`( ``*`<item>`*`)`](https://melff.github.io/memisc/reference/contrasts.md)
+  [`contrasts(`*`<ANY>`*`)`](https://melff.github.io/memisc/reference/contrasts.md)
+  [`` `contrasts<-`( ``*`<ANY>`*`)`](https://melff.github.io/memisc/reference/contrasts.md)
+  : Convenience Methods for Setting Contrasts
+- [`contract()`](https://melff.github.io/memisc/reference/contract.md) :
+  Contract data into pattern-frequency format
+- [`dimrename()`](https://melff.github.io/memisc/reference/dimrename.md)
+  [`rowrename()`](https://melff.github.io/memisc/reference/dimrename.md)
+  [`colrename()`](https://melff.github.io/memisc/reference/dimrename.md)
+  : Change dimnames, rownames, or colnames
+- [`foreach()`](https://melff.github.io/memisc/reference/Foreach.md) :
+  Loop over Variables in a Data Frame or Environment
+- [`query()`](https://melff.github.io/memisc/reference/query.md) : Query
+  an Object for Information
+- [`recode()`](https://melff.github.io/memisc/reference/recode.md) :
+  Recode Items, Factors and Numeric Vectors
+- [`rename()`](https://melff.github.io/memisc/reference/rename.md) :
+  Change Names of a Named Object
+- [`reorder(`*`<array>`*`)`](https://melff.github.io/memisc/reference/reorder.array.md)
+  [`reorder(`*`<matrix>`*`)`](https://melff.github.io/memisc/reference/reorder.array.md)
+  : Reorder an Array or Matrix
+- [`Reshape()`](https://melff.github.io/memisc/reference/Reshape.md) :
+  Reshape data frames or data sets
+- [`retain()`](https://melff.github.io/memisc/reference/retain.md) :
+  Retain Objects in an Environment
+- [`reversed()`](https://melff.github.io/memisc/reference/reversed.md) :
+  Reverse the codes of a survey item or the levels of a factor
+- [`sample(`*`<data.frame>`*`)`](https://melff.github.io/memisc/reference/sample-methods.md)
+  [`sample(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/sample-methods.md)
+  [`sample(`*`<importer>`*`)`](https://melff.github.io/memisc/reference/sample-methods.md)
+  : Take a Sample from a Data Frame-like Object
+- [`sort(`*`<data.frame>`*`)`](https://melff.github.io/memisc/reference/sort-methods.md)
+  [`sort(`*`<data.set>`*`)`](https://melff.github.io/memisc/reference/sort-methods.md)
+  : Convenience Methods to Sort Data Frames and Data Sets
+- [`Mean()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Median()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Min()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Max()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Weighted.Mean()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Var()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`StdDev()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Cov()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Cor()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  [`Range()`](https://melff.github.io/memisc/reference/stats-conveniences.md)
+  : Convenience wrappers for common statistical functions
+
+## Syntactic sugar
+
+- [`` `%if%` ``](https://melff.github.io/memisc/reference/assign-if.md)
+  : Assign a values to a variable for instances where a condition is met
+- [`` `%#%` ``](https://melff.github.io/memisc/reference/attr-operators.md)
+  [`` `%##%` ``](https://melff.github.io/memisc/reference/attr-operators.md)
+  [`` `%@%` ``](https://melff.github.io/memisc/reference/attr-operators.md)
+  [`` `%@%<-`() ``](https://melff.github.io/memisc/reference/attr-operators.md)
+  : Operators for Setting Annotations and Attributes
+- [`` `%nin%` ``](https://melff.github.io/memisc/reference/nin.md) :
+  Negative Match
+- [`` `%$%` ``](https://melff.github.io/memisc/reference/within-operators.md)
+  [`` `%$$%` ``](https://melff.github.io/memisc/reference/within-operators.md)
+  [`Within()`](https://melff.github.io/memisc/reference/within-operators.md)
+  : Operators to abbreviate use of "with" and "within"
+
+## HTML and LaTeX formatting
+
+- [`show_html()`](https://melff.github.io/memisc/reference/format_html.md)
+  [`write_html()`](https://melff.github.io/memisc/reference/format_html.md)
+  [`format_html()`](https://melff.github.io/memisc/reference/format_html.md)
+  : Format Objects in HTML, show the HTML Format or Write it to a File
+- [`format_html(`*`<ftable>`*`)`](https://melff.github.io/memisc/reference/format_html.ftable.md)
+  [`format_html(`*`<ftable_matrix>`*`)`](https://melff.github.io/memisc/reference/format_html.ftable.md)
+  : Format "Flattened Tables" as HTML
+- [`format_html(`*`<codebook>`*`)`](https://melff.github.io/memisc/reference/format_html.codebook.md)
+  : Format Codebooks as HTML
+- [`format_md(`*`<codebook>`*`)`](https://melff.github.io/memisc/reference/format_md.md)
+  [`format_md(`*`<codebookEntry>`*`)`](https://melff.github.io/memisc/reference/format_md.md)
+  : Format Codebooks as Markdown
+- [`html()`](https://melff.github.io/memisc/reference/html.md)
+  [`html_group()`](https://melff.github.io/memisc/reference/html.md)
+  [`as.html_group()`](https://melff.github.io/memisc/reference/html.md)
+  [`content()`](https://melff.github.io/memisc/reference/html.md)
+  [`` `content<-`() ``](https://melff.github.io/memisc/reference/html.md)
+  [`setContent()`](https://melff.github.io/memisc/reference/html.md)
+  [`attribs()`](https://melff.github.io/memisc/reference/html.md)
+  [`` `attribs<-`() ``](https://melff.github.io/memisc/reference/html.md)
+  [`setAttribs()`](https://melff.github.io/memisc/reference/html.md)
+  [`css()`](https://melff.github.io/memisc/reference/html.md)
+  [`as.css()`](https://melff.github.io/memisc/reference/html.md)
+  [`style()`](https://melff.github.io/memisc/reference/html.md)
+  [`` `style<-`() ``](https://melff.github.io/memisc/reference/html.md)
+  [`setStyle()`](https://melff.github.io/memisc/reference/html.md) :
+  Building Blocks for HTML Code
+- [`toLatex(`*`<default>`*`)`](https://melff.github.io/memisc/reference/toLatexExtra.md)
+  [`toLatex(`*`<matrix>`*`)`](https://melff.github.io/memisc/reference/toLatexExtra.md)
+  [`toLatex(`*`<data.frame>`*`)`](https://melff.github.io/memisc/reference/toLatexExtra.md)
+  [`toLatex(`*`<ftable>`*`)`](https://melff.github.io/memisc/reference/toLatexExtra.md)
+  [`toLatex(`*`<ftable_matrix>`*`)`](https://melff.github.io/memisc/reference/toLatexExtra.md)
+  : Additional Methods for LaTeX Representations for R objects
+
+## Other tools and utilities
+
+- [`applyTemplate()`](https://melff.github.io/memisc/reference/applyTemplate.md)
+  : Apply a Formatting Template to a Numeric or Character Vector
+- [`as.array(`*`<data.frame>`*`)`](https://melff.github.io/memisc/reference/as-array.md)
+  : Converting Data Frames into Arrays
+- [`as.symbols()`](https://melff.github.io/memisc/reference/as.symbols.md)
+  [`syms()`](https://melff.github.io/memisc/reference/as.symbols.md) :
+  Construction of Lists of Symbols
+- [`charTrans()`](https://melff.github.io/memisc/reference/charTrans.md)
+  : Character Translation of Aspects of Objects
+- [`Iconv()`](https://melff.github.io/memisc/reference/Iconv.md) :
+  Convert Annotations, and Value Labels between Encodings
+- [`List()`](https://melff.github.io/memisc/reference/List.md) : Create
+  a list and conveniently supply names to its elements
+- [`Sapply()`](https://melff.github.io/memisc/reference/Sapply.md)
+  [`Lapply()`](https://melff.github.io/memisc/reference/Sapply.md) : A
+  Dimension Preserving Variant of "sapply" and "lapply"
+- [`Substitute()`](https://melff.github.io/memisc/reference/Substitute.md)
+  : Substitutions in Language Objects
+- [`to.data.frame()`](https://melff.github.io/memisc/reference/toDataFrame.md)
+  : Convert an Array into a Data Frame
+- [`named.list`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`item.list`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`named.list-class`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`item.list-class`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`initialize,item.list-method`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`initialize,named.list-method`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`coerce,data.set,named.list-method`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`show,named.list-method`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`atomic-class`](https://melff.github.io/memisc/reference/utility-classes.md)
+  [`double-class`](https://melff.github.io/memisc/reference/utility-classes.md)
+  : Named Lists, Lists of Items, and Atomic Vectors
+- [`view()`](https://melff.github.io/memisc/reference/view.md)
+  [`viewPrep()`](https://melff.github.io/memisc/reference/view.md) : A
+  Generic Viewing Function
+- [`view_html()`](https://melff.github.io/memisc/reference/view_html.md)
+  : HTML Output for 'view.
+- [`Write()`](https://melff.github.io/memisc/reference/Write.md) : Write
+  Codebooks and Variable Descriptions into a Text File
+- [`xapply()`](https://melff.github.io/memisc/reference/xapply.md) :
+  Apply a function to ranges of variables
+
+## Deprecated
+
+- [`fapply()`](https://melff.github.io/memisc/reference/memisc-deprecated.md)
+  :
+
+  Deprecated Functions in Package memisc
