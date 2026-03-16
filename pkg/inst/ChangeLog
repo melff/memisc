@@ -1,3 +1,9 @@
+2025-08-13  Martin Elff <memisc@elff.eu>
+
+	* pkg/DESCRIPTION, pkg/R/percentages.R, pkg/inst/ChangeLog,
+	pkg/inst/NEWS.Rd, pkg/man/percentages.Rd: Implement useNA arg for
+	percentages
+
 2025-06-22  Martin Elff <memisc@elff.eu>
 
 	* pkg/DESCRIPTION: martin@elff.eu instead of memisc@elff.eu
